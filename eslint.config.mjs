@@ -23,6 +23,9 @@ const eslintConfig = [
   pluginReact.configs.flat.recommended,
   ...tseslint.configs.recommended,
   {
+    ignores: ['.next/**', 'node_modules/**'],
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}', './*.{js,mjs,cjs,ts,jsx,tsx}'],
     plugins: {
       prettier: eslintPluginPrettier,
