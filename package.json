@@ -8,7 +8,8 @@
     "start": "next start",
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
-    "lint:eslint:check": "next lint ."
+    "lint:eslint:check": "next lint .",
+    "prepare": "husky"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
@@ -19,6 +20,8 @@
     "tailwind-merge": "3.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "19.8.0",
+    "@commitlint/config-conventional": "19.8.0",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -30,6 +33,8 @@
     "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-simple-import-sort": "12.1.1",
+    "husky": "9.1.7",
+    "lint-staged": "15.5.0",
     "prettier-plugin-tailwindcss": "0.6.11",
     "tailwindcss": "^4",
     "typescript": "^5",
