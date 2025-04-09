@@ -1,7 +1,7 @@
 {
   "name": "abnmo-frontend",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -25,6 +25,7 @@
     "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-simple-import-sort": "12.1.1",
+    "prettier-plugin-tailwindcss": "0.6.11",
     "tailwindcss": "^4",
     "typescript": "^5",
     "typescript-eslint": "8.29.0"
