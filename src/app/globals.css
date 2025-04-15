@@ -14,10 +14,18 @@
   --color-border: #e2e4e9;
 
   --color-primary: #008b62;
+  --color-primary-foreground: #ffffff;
+
+  --color-accent: #efefef;
+  --color-accent-foreground: #0a0d14;
 
   --color-success: #38c793;
   --color-warning: #f17b2c;
   --color-error: #df1c41;
+
+  --color-ring: #008b62;
+
+  --inset-shadow-md: inset 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 body {
