@@ -12,6 +12,7 @@ const config = {
   semi: false,
   singleQuote: true,
   tabWidth: 2,
+  tailwindFunctions: ['clsx', 'tw', 'cva'],
 }
 
 export default config
