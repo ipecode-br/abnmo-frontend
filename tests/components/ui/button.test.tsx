@@ -16,4 +16,38 @@ describe('Button', () => {
     expect(buttonElement).toHaveClass('h-10')
     expect(buttonElement).toHaveClass('px-4')
   })
+
+  it('should render a fancy button', () => {
+    const buttonText = 'Fancy Button'
+    render(<Button variant='fancy'>{buttonText}</Button>)
+
+    const buttonElement = screen.getByRole('button', { name: buttonText })
+
+    expect(buttonElement).toHaveClass('bg-primary')
+    expect(buttonElement).toHaveClass('text-primary-foreground')
+    expect(buttonElement).toHaveClass('inset-shadow-md')
+  })
+
+  it('should render a outline button', () => {
+    const buttonText = 'Outline Button'
+    render(<Button variant='outline'>{buttonText}</Button>)
+
+    const buttonElement = screen.getByRole('button', { name: buttonText })
+
+    expect(buttonElement).toHaveClass('bg-transparent')
+    expect(buttonElement).toHaveClass('text-accent-foreground')
+    expect(buttonElement).toHaveClass('border')
+    expect(buttonElement).toHaveClass('border-border')
+  })
+
+  it('should render a small button', () => {
+    const buttonText = 'Small Button'
+    render(<Button size='sm'>{buttonText}</Button>)
+
+    const buttonElement = screen.getByRole('button', { name: buttonText })
+
+    expect(buttonElement).toHaveClass('h-9')
+    expect(buttonElement).toHaveClass('rounded-md')
+    expect(buttonElement).toHaveClass('px-3')
+  })
 })
