@@ -6,8 +6,8 @@ import { inter } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Gestão Conecta ABNMO',
-    default: 'Gestão Conecta ABNMO',
+    template: '%s | Sistema Viver Melhor - SVM',
+    default: 'Sistema Viver Melhor - SVM',
   },
   description:
     'Simplificando a gestão de pacientes, centralizando informações e dados sobre os processos de atendimento de pacientes.',
