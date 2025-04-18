@@ -4,7 +4,8 @@
   --font-sans: var(--font-inter);
 
   /* Colors */
-  --color-background: #f6f8fa;
+  --color-background: #ffffff;
+  --color-background-soft: #f6f8fa;
   --color-card: #ffffff;
 
   --color-foreground: #0a0d14;
