@@ -20,8 +20,6 @@ export function NavButton({
     <Link
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-    >
-      Entrar
-    </Link>
+    />
   )
 }
