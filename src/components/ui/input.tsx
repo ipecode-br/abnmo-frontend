@@ -19,7 +19,7 @@ const inputVariants = cva(
   },
 )
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
   VariantProps<typeof inputVariants> & {
     icon?: LucideIcon
   }
