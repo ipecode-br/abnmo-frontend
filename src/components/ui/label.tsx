@@ -9,7 +9,7 @@ export function Label({
   return (
     <label
       htmlFor={htmlFor}
-      className={cn('text-sm font-medium', className)}
+      className={cn('text-sm font-medium peer-disabled:opacity-50', className)}
       {...props}
     >
       {children}
