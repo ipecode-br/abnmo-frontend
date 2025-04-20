@@ -5,6 +5,6 @@ export function FormContainer({
   ...props
 }: Readonly<React.FormHTMLAttributes<HTMLFormElement>>) {
   return (
-    <form className={cn('flex w-full flex-col gap-3', className)} {...props} />
+    <form className={cn('flex w-full flex-col gap-6', className)} {...props} />
   )
 }
