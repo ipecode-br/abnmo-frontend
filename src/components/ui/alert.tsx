@@ -7,6 +7,7 @@ const alertVariants = cva('rounded-lg border px-3 py-2 text-sm', {
   variants: {
     variant: {
       default: 'border-disabled/50 bg-disabled/5 text-foreground',
+      success: 'border-success text-success bg-success/5',
       error: 'border-error text-error bg-error/5',
     },
   },
