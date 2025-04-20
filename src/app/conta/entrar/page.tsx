@@ -1,3 +1,4 @@
+import image from '@images/auth/sign-in.svg'
 import type { Metadata } from 'next'
 
 import { AuthCard } from '@/components/auth/auth-card'
@@ -14,8 +15,9 @@ export const metadata: Metadata = {
 export default function SignInPage() {
   return (
     <AuthCard
+      image={image}
       title='Bem vindo(a)'
-      description='Insira seus dados para entrar na sua conta.'
+      description='Insira seus dados para entrar na sua conta'
     >
       <SignInForm />
 
