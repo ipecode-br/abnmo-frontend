@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
+import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
@@ -46,19 +47,21 @@ export function SignInForm() {
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(signIn)}>
-        <TextInput
-          name='email'
-          label='E-mail'
-          icon={MailIcon}
-          placeholder='Digite seu e-mail'
-        />
-        <PasswordInput
-          name='password'
-          label='Senha'
-          placeholder='Digite sua senha'
-        />
+        <FormField>
+          <TextInput
+            name='email'
+            label='E-mail'
+            icon={MailIcon}
+            placeholder='Digite seu e-mail'
+          />
+          <PasswordInput
+            name='password'
+            label='Senha'
+            placeholder='Digite sua senha'
+          />
+        </FormField>
 
-        <div className='flex w-full items-center justify-between gap-x-3 gap-y-5 py-3 text-sm max-[26rem]:flex-col'>
+        <div className='flex w-full items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
