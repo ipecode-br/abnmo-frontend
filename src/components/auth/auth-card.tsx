@@ -7,7 +7,7 @@ import { Divider } from '@/components/ui/divider'
 interface AuthCardProps {
   image: string | StaticImport
   title: string
-  description: string
+  description?: string
   children: ReactNode
 }
 
@@ -22,7 +22,7 @@ export function AuthCard({
       <header className='flex flex-col items-center gap-1 text-center'>
         {image && <Image src={image} alt='' className='size-20' />}
         <h1 className='text-2xl font-medium'>{title}</h1>
-        <p className='text-foreground-soft'>{description}</p>
+        {description && <p className='text-foreground-soft'>{description}</p>}
       </header>
 
       <Divider />
