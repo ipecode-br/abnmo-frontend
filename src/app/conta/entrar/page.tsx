@@ -15,11 +15,11 @@ export default function SignInPage() {
 
       <Divider text='ou' />
 
-      <p className='text-foreground-soft text-sm'>
+      <p className='text-foreground-soft text-center text-sm'>
         Não tem uma conta?{' '}
         <NavLink
           href={ROUTES.auth.signUp}
-          className='text-foreground font-medium'
+          className='text-foreground font-medium whitespace-nowrap'
         >
           Crie sua conta aqui
         </NavLink>

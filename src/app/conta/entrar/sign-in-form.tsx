@@ -58,7 +58,7 @@ export function SignInForm() {
           placeholder='Digite sua senha'
         />
 
-        <div className='flex w-full flex-wrap items-center justify-between gap-3 py-3 text-sm'>
+        <div className='flex w-full items-center justify-between gap-x-3 gap-y-5 py-3 text-sm max-[26rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
