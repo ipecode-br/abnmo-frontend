@@ -27,7 +27,7 @@ export function CheckboxInput({
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <fieldset className='flex flex-col gap-1'>
+        <div className='flex flex-col gap-1'>
           <div className='flex items-center gap-2'>
             <Checkbox
               id={name}
@@ -41,7 +41,7 @@ export function CheckboxInput({
             </Label>
           </div>
           <FormMessage error>{fieldState.error?.message}</FormMessage>
-        </fieldset>
+        </div>
       )}
     />
   )

@@ -25,7 +25,7 @@ export function TextInput({
   }
 
   return (
-    <fieldset className='flex w-full flex-col gap-1'>
+    <div className='flex w-full flex-col gap-1'>
       <Label htmlFor={name}>{label}</Label>
 
       <Controller
@@ -45,6 +45,6 @@ export function TextInput({
           </>
         )}
       />
-    </fieldset>
+    </div>
   )
 }
