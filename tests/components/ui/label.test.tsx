@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 
 describe('Label', () => {
   it('should render a default Label', () => {
-    const text = ' Label name'
+    const text = 'Label name'
 
     render(<Label htmlFor='name'>{text}</Label>)
 
