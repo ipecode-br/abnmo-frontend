@@ -1,9 +1,15 @@
+import type { Metadata } from 'next'
+
 import { AuthCard } from '@/components/auth/auth-card'
 import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
 
 import { SignInForm } from './sign-in-form'
+
+export const metadata: Metadata = {
+  title: 'Acessar conta',
+}
 
 export default function SignInPage() {
   return (
