@@ -1,4 +1,5 @@
 import { AuthCard } from '@/components/auth/auth-card'
+import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
 
@@ -12,7 +13,7 @@ export default function SignInPage() {
     >
       <SignInForm />
 
-      <div className='bg-border h-px w-full' />
+      <Divider text='ou' />
 
       <p className='text-foreground-soft text-sm'>
         Não tem uma conta?{' '}

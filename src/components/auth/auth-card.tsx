@@ -2,6 +2,8 @@ import icon from '@images/auth/icon.svg'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 
+import { Divider } from '@/components/ui/divider'
+
 interface AuthCardProps {
   title: string
   description: string
@@ -21,7 +23,7 @@ export function AuthCard({
         <p className='text-foreground-soft'>{description}</p>
       </header>
 
-      <div className='bg-border h-px w-full' />
+      <Divider />
 
       {children}
     </div>
