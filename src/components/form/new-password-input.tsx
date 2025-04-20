@@ -6,39 +6,41 @@ import { Input, type InputProps } from '@/components/ui/input'
 
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
+import { PasswordRequirements } from './password-requirements'
 import { RequiredInput } from './required-input'
 
-interface RequiredPasswordInputProps {
+interface RequiredNewPasswordInputProps {
   name: string
   label: string
+  triggerOnChange: () => void
   type?: never
 }
 
-type PasswordInputProps = RequiredPasswordInputProps &
+type NewPasswordInputProps = RequiredNewPasswordInputProps &
   InputProps & {
     isRequired?: boolean
   }
 
-export function PasswordInput({
+export function NewPasswordInput({
   name,
   label,
   isRequired,
+  triggerOnChange,
   ...props
-}: Readonly<PasswordInputProps>) {
+}: Readonly<NewPasswordInputProps>) {
   const [showPassword, setShowPassword] = useState(false)
   const { control } = useFormContext()
 
   if (!control) {
-    throw new Error('PasswordInput must be used within a FormProvider')
+    throw new Error('NewPasswordInput must be used within a FormProvider')
   }
 
   return (
-    <div className='flex w-full flex-col gap-1'>
+    <div className='group/password flex w-full flex-col gap-1'>
       <Label htmlFor={name}>
         {label}
         {isRequired && <RequiredInput />}
       </Label>
-
       <Controller
         name={name}
         control={control}
@@ -52,6 +54,11 @@ export function PasswordInput({
                 type={showPassword ? 'text' : 'password'}
                 {...props}
                 {...field}
+                // Override default behaviour to validate on "onChange".
+                onChange={(e) => {
+                  field.onChange(e)
+                  triggerOnChange()
+                }}
               />
 
               <button
@@ -64,6 +71,7 @@ export function PasswordInput({
             </div>
 
             <FormMessage error>{fieldState.error?.message}</FormMessage>
+            <PasswordRequirements value={field.value} />
           </>
         )}
       />

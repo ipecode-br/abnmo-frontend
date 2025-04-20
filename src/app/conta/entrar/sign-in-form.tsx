@@ -1,16 +1,19 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { MailIcon } from 'lucide-react'
+import { Loader2, MailIcon } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
+import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { TextInput } from '@/components/form/text-input'
+import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
+import { wait } from '@/utils/wait'
 
 import {
   signInFormDefaultValues,
@@ -24,28 +27,41 @@ export function SignInForm() {
     defaultValues: signInFormDefaultValues,
     mode: 'onBlur',
   })
+  const isSubmitting = formMethods.formState.isSubmitting
+  const formErrorMessage = formMethods.formState.errors.root?.message
 
-  function signIn(data: SignInFormSchema) {
+  async function signIn(data: SignInFormSchema) {
     // TODO: implement sign in function when API is available
+    await wait(500)
+
+    if (data.email === 'erro@ipecode.com.br') {
+      formMethods.setError('root', {
+        message: 'Credenciais inválidas. Por favor, tente novamente.',
+      })
+      return
+    }
+
     console.log(data)
   }
 
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(signIn)}>
-        <TextInput
-          name='email'
-          label='E-mail'
-          icon={MailIcon}
-          placeholder='Digite seu e-mail'
-        />
-        <PasswordInput
-          name='password'
-          label='Senha'
-          placeholder='Digite sua senha'
-        />
+        <FormField>
+          <TextInput
+            name='email'
+            label='E-mail'
+            icon={MailIcon}
+            placeholder='Digite seu e-mail'
+          />
+          <PasswordInput
+            name='password'
+            label='Senha'
+            placeholder='Digite sua senha'
+          />
+        </FormField>
 
-        <div className='flex w-full flex-wrap items-center justify-between gap-3 py-3 text-sm'>
+        <div className='flex w-full items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
@@ -56,9 +72,15 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button variant='fancy' type='submit'>
-          Entrar
+        <Button variant='fancy' type='submit' disabled={isSubmitting}>
+          {isSubmitting ? <Loader2 className='animate-spin' /> : 'Entrar'}
         </Button>
+
+        {formErrorMessage && (
+          <Alert error className='text-center'>
+            {formErrorMessage}
+          </Alert>
+        )}
       </FormContainer>
     </FormProvider>
   )

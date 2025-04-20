@@ -4,17 +4,22 @@ import { Input, type InputProps } from '@/components/ui/input'
 
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
+import { RequiredInput } from './required-input'
 
 interface RequiredTextInputProps {
   name: string
   label: string
 }
 
-type TextInputProps = RequiredTextInputProps & InputProps
+type TextInputProps = RequiredTextInputProps &
+  InputProps & {
+    isRequired?: boolean
+  }
 
 export function TextInput({
   name,
   label,
+  isRequired,
   icon,
   ...props
 }: Readonly<TextInputProps>) {
@@ -25,8 +30,11 @@ export function TextInput({
   }
 
   return (
-    <fieldset className='flex w-full flex-col gap-1'>
-      <Label htmlFor={name}>{label}</Label>
+    <div className='flex w-full flex-col gap-1'>
+      <Label htmlFor={name}>
+        {label}
+        {isRequired && <RequiredInput />}
+      </Label>
 
       <Controller
         name={name}
@@ -45,6 +53,6 @@ export function TextInput({
           </>
         )}
       />
-    </fieldset>
+    </div>
   )
 }
