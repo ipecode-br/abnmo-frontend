@@ -76,7 +76,11 @@ export function SignInForm() {
           {isSubmitting ? <Loader2 className='animate-spin' /> : 'Entrar'}
         </Button>
 
-        {formErrorMessage && <Alert error>{formErrorMessage}</Alert>}
+        {formErrorMessage && (
+          <Alert error className='text-center'>
+            {formErrorMessage}
+          </Alert>
+        )}
       </FormContainer>
     </FormProvider>
   )
