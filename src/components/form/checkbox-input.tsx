@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Checkbox, type CheckboxProps } from '../ui/checkbox'
@@ -7,7 +8,7 @@ import { RequiredInput } from './required-input'
 
 interface RequiredCheckboxInputProps {
   name: string
-  label: string
+  label: string | ReactNode
 }
 
 type CheckboxInputProps = RequiredCheckboxInputProps &
