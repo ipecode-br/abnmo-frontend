@@ -6,7 +6,7 @@ import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
 
-import { RecoverForm } from './recover-in-form'
+import { RecoverForm } from './recover-form'
 
 export const metadata: Metadata = {
   title: 'Recuperar senha',
