@@ -1,5 +1,5 @@
-export const NON_NUMBER_REGEX = /\D/g
-export const NUMBER_REGEX = /[\d]/g
+export const NON_NUMBER_REGEX = /\D/
+export const NUMBER_REGEX = /[\d]/
 
 export const NAME_REGEX = /\w+(?:\s+\w+)+/
 export const UPPERCASE_REGEX = /^(?=.*[A-Z]).*$/
