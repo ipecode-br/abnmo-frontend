@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
+import { redirect } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -11,6 +12,7 @@ import { NewPasswordInput } from '@/components/form/new-password-input'
 import { PasswordInput } from '@/components/form/password-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { ROUTES } from '@/constants/routes'
 import { wait } from '@/utils/wait'
 
 import {
@@ -35,7 +37,9 @@ export function NewPasswordForm() {
     setSuccess(false)
     await wait(500)
     console.log(data)
+
     setSuccess(true)
+    setTimeout(() => redirect(ROUTES.auth.signIn), 2000)
   }
 
   return (
