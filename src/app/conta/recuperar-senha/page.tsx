@@ -1,4 +1,4 @@
-import image from '@images/auth/sign-in.svg'
+import image from '@images/auth/recover.svg'
 import type { Metadata } from 'next'
 
 import { AuthCard } from '@/components/auth/auth-card'
@@ -6,30 +6,30 @@ import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
 
-import { SignInForm } from './sign-in-form'
+import { RecoverForm } from './recover-form'
 
 export const metadata: Metadata = {
-  title: 'Acessar conta',
+  title: 'Recuperar senha',
 }
 
-export default function SignInPage() {
+export default function RecoverPasswordPage() {
   return (
     <AuthCard
       image={image}
-      title='Bem vindo(a)'
-      description='Insira seus dados para entrar na sua conta'
+      title='Recuperar senha'
+      description='Insira seu e-mail para recuperar sua senha'
     >
-      <SignInForm />
+      <RecoverForm />
 
-      <Divider text='ou' />
+      <Divider />
 
       <p className='text-foreground-soft text-center text-sm'>
-        Não tem uma conta?{' '}
+        Mudou de ideia?{' '}
         <NavLink
-          href={ROUTES.auth.signUp}
+          href={ROUTES.auth.signIn}
           className='text-foreground font-medium whitespace-nowrap'
         >
-          Crie sua conta aqui
+          Acesse sua conta
         </NavLink>
       </p>
     </AuthCard>
