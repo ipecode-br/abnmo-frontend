@@ -50,7 +50,6 @@ export function NewPasswordForm() {
             name='password'
             label='Senha'
             placeholder='Digite sua senha'
-            triggerOnChange={() => formMethods.trigger('password')}
             isRequired
           />
           <PasswordInput
