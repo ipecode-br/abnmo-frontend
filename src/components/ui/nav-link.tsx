@@ -9,7 +9,7 @@ export function NavLink({ className, ...props }: Readonly<NavLinkProps>) {
   return (
     <Link
       className={cn(
-        'hover:text-primary underline underline-offset-3 transition-colors',
+        'hover:text-primary ring-offset-background focus-visible:ring-ring underline underline-offset-3 transition-colors focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
         className,
       )}
       {...props}

@@ -20,7 +20,7 @@
   --color-accent: #efefef;
   --color-accent-foreground: #0a0d14;
 
-  --color-success: #38c793;
+  --color-success: #059669;
   --color-warning: #f17b2c;
   --color-error: #df1c41;
 
@@ -33,4 +33,8 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-inter);
+}
+
+strong {
+  font-weight: 600;
 }

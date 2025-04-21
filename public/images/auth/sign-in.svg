@@ -1,0 +1,29 @@
+<svg width="88" height="89" viewBox="0 0 88 89" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.875977" width="87" height="87" rx="43.5" fill="url(#paint0_linear_6_18)"/>
+<rect x="0.5" y="0.875977" width="87" height="87" rx="43.5" stroke="url(#paint1_linear_6_18)"/>
+<g filter="url(#filter0_d_6_18)">
+<rect x="16" y="16.376" width="56" height="56" rx="28" fill="white"/>
+<rect x="16.5" y="16.876" width="55" height="55" rx="27.5" stroke="#E2E4E9"/>
+<path d="M35.6 54.8759C35.6 52.6481 36.485 50.5115 38.0603 48.9362C39.6356 47.3609 41.7722 46.4759 44 46.4759C46.2278 46.4759 48.3644 47.3609 49.9397 48.9362C51.515 50.5115 52.4 52.6481 52.4 54.8759H35.6ZM44 45.4259C40.5193 45.4259 37.7 42.6067 37.7 39.1259C37.7 35.6452 40.5193 32.8259 44 32.8259C47.4808 32.8259 50.3 35.6452 50.3 39.1259C50.3 42.6067 47.4808 45.4259 44 45.4259Z" fill="#525866"/>
+</g>
+<defs>
+<filter id="filter0_d_6_18" x="12" y="14.376" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.105882 0 0 0 0 0.109804 0 0 0 0 0.113725 0 0 0 0.04 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_6_18"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_6_18" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_6_18" x1="44" y1="0.375977" x2="44" y2="88.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E5E7" stop-opacity="0.48"/>
+<stop offset="1" stop-color="#F7F8F8" stop-opacity="0"/>
+<stop offset="1" stop-color="#E4E5E7" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_6_18" x1="44" y1="0.375977" x2="44" y2="88.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E5E7"/>
+<stop offset="0.765625" stop-color="#E4E5E7" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

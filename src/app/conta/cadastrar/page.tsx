@@ -6,30 +6,30 @@ import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
 
-import { SignInForm } from './sign-in-form'
+import { SignUpForm } from './sign-up-form'
 
 export const metadata: Metadata = {
-  title: 'Acessar conta',
+  title: 'Cadastrar conta',
 }
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <AuthCard
       image={image}
-      title='Bem vindo(a)'
-      description='Insira seus dados para entrar na sua conta'
+      title='Cadastrar conta'
+      description='Insira seus dados para criar sua conta'
     >
-      <SignInForm />
+      <SignUpForm />
 
       <Divider text='ou' />
 
       <p className='text-foreground-soft text-center text-sm'>
-        Não tem uma conta?{' '}
+        Já tem uma conta?{' '}
         <NavLink
-          href={ROUTES.auth.signUp}
+          href={ROUTES.auth.signIn}
           className='text-foreground font-medium whitespace-nowrap'
         >
-          Crie sua conta aqui
+          Acesse sua conta
         </NavLink>
       </p>
     </AuthCard>
