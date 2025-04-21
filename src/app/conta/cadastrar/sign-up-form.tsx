@@ -8,7 +8,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
-import { NewPasswordInput } from '@/components/form/new-password-input'
 import { PasswordInput } from '@/components/form/password-input'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
@@ -70,11 +69,12 @@ export function SignUpForm() {
             placeholder='Digite seu e-mail'
             isRequired
           />
-          <NewPasswordInput
+          <PasswordInput
             name='password'
             label='Senha'
             placeholder='Digite sua senha'
             isRequired
+            showRequirements
           />
           <PasswordInput
             name='confirmPassword'

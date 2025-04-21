@@ -8,7 +8,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
-import { NewPasswordInput } from '@/components/form/new-password-input'
 import { PasswordInput } from '@/components/form/password-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -46,11 +45,12 @@ export function NewPasswordForm() {
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(saveNewPassword)}>
         <FormField>
-          <NewPasswordInput
+          <PasswordInput
             name='password'
             label='Senha'
             placeholder='Digite sua senha'
             isRequired
+            showRequirements
           />
           <PasswordInput
             name='confirmPassword'

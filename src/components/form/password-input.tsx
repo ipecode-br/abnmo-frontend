@@ -6,6 +6,7 @@ import { Input, type InputProps } from '@/components/ui/input'
 
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
+import { PasswordRequirements } from './password-requirements'
 import { RequiredInput } from './required-input'
 
 interface RequiredPasswordInputProps {
@@ -17,12 +18,14 @@ interface RequiredPasswordInputProps {
 type PasswordInputProps = RequiredPasswordInputProps &
   InputProps & {
     isRequired?: boolean
+    showRequirements?: boolean
   }
 
 export function PasswordInput({
   name,
   label,
   isRequired,
+  showRequirements,
   ...props
 }: Readonly<PasswordInputProps>) {
   const [showPassword, setShowPassword] = useState(false)
@@ -64,6 +67,7 @@ export function PasswordInput({
             </div>
 
             <FormMessage error>{fieldState.error?.message}</FormMessage>
+            {showRequirements && <PasswordRequirements value={field.value} />}
           </>
         )}
       />
