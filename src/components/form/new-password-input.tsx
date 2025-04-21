@@ -12,7 +12,6 @@ import { RequiredInput } from './required-input'
 interface RequiredNewPasswordInputProps {
   name: string
   label: string
-  triggerOnChange: () => void
   type?: never
 }
 
@@ -25,7 +24,6 @@ export function NewPasswordInput({
   name,
   label,
   isRequired,
-  triggerOnChange,
   ...props
 }: Readonly<NewPasswordInputProps>) {
   const [showPassword, setShowPassword] = useState(false)
@@ -36,7 +34,7 @@ export function NewPasswordInput({
   }
 
   return (
-    <div className='group/password flex w-full flex-col gap-1'>
+    <div className='flex w-full flex-col gap-1'>
       <Label htmlFor={name}>
         {label}
         {isRequired && <RequiredInput />}
@@ -54,11 +52,6 @@ export function NewPasswordInput({
                 type={showPassword ? 'text' : 'password'}
                 {...props}
                 {...field}
-                // Override default behaviour to validate on "onChange".
-                onChange={(e) => {
-                  field.onChange(e)
-                  triggerOnChange()
-                }}
               />
 
               <button

@@ -18,7 +18,7 @@ export function PasswordRequirements({
 
   function getStrengthStatus() {
     if (passwordStrength > 4) return 'strong'
-    if (passwordStrength >= 2) return 'medium'
+    if (passwordStrength > 2) return 'medium'
     return 'weak'
   }
 
@@ -32,11 +32,14 @@ export function PasswordRequirements({
     if (strengthStatus === 'medium') {
       return item <= 2 ? 'bg-warning' : defaultColor
     }
-    return item === 1 ? 'bg-error' : defaultColor
+    if (strengthStatus === 'weak') {
+      return value && item === 1 ? 'bg-error' : defaultColor
+    }
+    return defaultColor
   }
 
   return (
-    <div className='hidden flex-col gap-1.5 group-focus-within/password:flex'>
+    <div className='flex flex-col gap-1.5'>
       <div className='mt-1 flex gap-2'>
         {strenghtLevels.map((item) => (
           <div
