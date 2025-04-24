@@ -46,10 +46,12 @@ export function Input({
         )}
       >
         <input
+          role='textbox'
           className={cn(inputVariants({ variant, className }), 'pl-10')}
           {...props}
         />
         <Icon
+          role='img'
           className={cn(
             'pointer-events-none absolute left-3 shrink-0 transition-colors',
             iconColors[variant ?? 'default'],
@@ -60,6 +62,10 @@ export function Input({
   }
 
   return (
-    <input className={cn(inputVariants({ variant, className }))} {...props} />
+    <input
+      role='textbox'
+      className={cn(inputVariants({ variant, className }))}
+      {...props}
+    />
   )
 }
