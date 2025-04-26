@@ -50,6 +50,7 @@ export function Input({
           {...props}
         />
         <Icon
+          data-testid='input-icon'
           className={cn(
             'pointer-events-none absolute left-3 shrink-0 transition-colors',
             iconColors[variant ?? 'default'],
