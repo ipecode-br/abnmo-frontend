@@ -28,7 +28,7 @@ describe('Input', () => {
     render(<Input icon={Atom} />)
 
     const inputElement = screen.getByRole('textbox')
-    const iconElement = screen.getByRole('img')
+    const iconElement = screen.getByTestId('input-icon')
 
     expect(inputElement).toBeInTheDocument()
     expect(iconElement).toBeInTheDocument()
@@ -42,7 +42,7 @@ describe('Input', () => {
     render(<Input icon={Atom} variant='error' />)
 
     const inputElement = screen.getByRole('textbox')
-    const iconElement = screen.getByRole('img')
+    const iconElement = screen.getByTestId('input-icon')
 
     expect(inputElement).toBeInTheDocument()
     expect(iconElement).toBeInTheDocument()

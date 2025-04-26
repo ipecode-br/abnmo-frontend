@@ -18,7 +18,7 @@ export function Divider({
   if (orientation === 'vertical') {
     return (
       <div
-        role='separator'
+        data-testid='separator'
         className={cn('bg-border w-px', flexItem && 'self-stretch', height)}
       />
     )
@@ -31,10 +31,13 @@ export function Divider({
           <p className='bg-background text-foreground-soft z-10 px-3 text-sm'>
             {text}
           </p>
-          <div role='separator' className='bg-border absolute h-px w-full' />
+          <div
+            data-testid='separator'
+            className='bg-border absolute h-px w-full'
+          />
         </div>
       ) : (
-        <div role='separator' className={cn('bg-border h-px', width)} />
+        <div data-testid='separator' className={cn('bg-border h-px', width)} />
       )}
     </>
   )

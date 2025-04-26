@@ -8,7 +8,7 @@ describe('Divider', () => {
   it('should render a default Divider', () => {
     render(<Divider />)
 
-    const dividerElement = screen.getByRole('separator')
+    const dividerElement = screen.getByTestId('separator')
     expect(dividerElement).toBeInTheDocument()
     expect(dividerElement).toHaveClass('bg-border h-px')
   })
@@ -21,21 +21,21 @@ describe('Divider', () => {
       'bg-background text-foreground-soft z-10 px-3 text-sm',
     )
 
-    const line = screen.getByRole('separator')
+    const line = screen.getByTestId('separator')
     expect(line).toBeInTheDocument()
     expect(line).toHaveClass('bg-border absolute h-px w-full')
   })
   it('should render a vertical Divider', () => {
     render(<Divider orientation='vertical' height='h-4' />)
 
-    const dividerElement = screen.getByRole('separator')
+    const dividerElement = screen.getByTestId('separator')
     expect(dividerElement).toBeInTheDocument()
     expect(dividerElement).toHaveClass('bg-border w-px h-4')
   })
   it('should render a vertical Divider in container with flex class', () => {
     render(<Divider orientation='vertical' height='h-4' flexItem />)
 
-    const dividerElement = screen.getByRole('separator')
+    const dividerElement = screen.getByTestId('separator')
     expect(dividerElement).toBeInTheDocument()
     expect(dividerElement).toHaveClass('bg-border w-px h-4 self-stretch')
   })
