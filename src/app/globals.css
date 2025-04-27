@@ -1,12 +1,14 @@
 @import 'tailwindcss';
 
-@theme inline {
+@theme {
   --font-sans: var(--font-inter);
 
   /* Colors */
+
   --color-background: #ffffff;
   --color-background-soft: #f6f8fa;
   --color-card: #ffffff;
+  --color-popover: #fcfcfc;
 
   --color-foreground: #0a0d14;
   --color-foreground-soft: #525866;
@@ -27,6 +29,35 @@
   --color-ring: #008b62;
 
   --inset-shadow-md: inset 0 1px 6px rgba(0, 0, 0, 0.1);
+
+  /* Animations */
+
+  --animate-fade-in: fade-in 150ms ease-in-out;
+  --animate-fade-out: fade-out 150ms ease-in-out;
+
+  /* Keyframes */
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      visibility: hidden;
+    }
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  @keyframes fade-out {
+    0% {
+      opacity: 1;
+      visibility: visible;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 }
 
 body {
