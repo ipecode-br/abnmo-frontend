@@ -8,8 +8,7 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          'border-border text-foreground placeholder:text-foreground-soft',
+        default: 'border-border text-foreground placeholder:text-disabled',
         error: 'border-error text-error focus-visible:ring-error',
       },
     },
