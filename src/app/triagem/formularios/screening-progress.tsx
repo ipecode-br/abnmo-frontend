@@ -1,39 +1,43 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
-import { steps } from './form-steps'
+import { cn } from '@/utils/class-name-merge'
+
+import { STEPS } from './form-steps'
 
 export function ScreeningProgress() {
-  const [activeStep, setActiveStep] = useState<number>()
-  const pathname = usePathname()
-
-  useEffect(() => {
-    const activeIndex = steps.findIndex((step) => step.path === pathname)
-    setActiveStep(activeIndex)
-  }, [pathname])
+  const currentPathname = usePathname()
 
   return (
-    <aside className='w-72'>
-      <h1 className='text-soft-400 pb-8 text-xs'>TRIAGEM</h1>
+    <aside className='max-w-72 space-y-8'>
+      <h1 className='text-disabled text-xs'>TRIAGEM</h1>
 
-      {steps.map((step, idx) => (
-        <div key={idx}>
-          <div
-            className={`inline-flex items-center gap-4 text-base font-medium ${activeStep === idx ? 'font-semibold' : 'text-neutras-500'}`}
-          >
-            <span
-              className={`flex size-6 items-center justify-center rounded-full border p-1 text-sm ${activeStep === idx ? 'bg-primaria-700 border-priamria-400 text-white' : 'text-sub-500 border-neutras-100'}`}
+      {STEPS.map((step, idx) => {
+        const isActive = step.path === currentPathname
+        return (
+          <div key={step.label} className='flex gap-4'>
+            <div
+              className={cn(
+                'bg-background text-foreground-soft flex size-6 shrink-0 items-center justify-center rounded-full border border-neutral-200 text-sm',
+                isActive && 'bg-primary border-primary-soft text-white',
+              )}
             >
-              {step.indicator}
-            </span>
-            {step.label}
+              {idx + 1}
+            </div>
+            <div className='space-y-2'>
+              <h2
+                className={cn(
+                  'text-foreground-soft font-semibold',
+                  isActive && 'text-foreground',
+                )}
+              >
+                {step.label}
+              </h2>
+              <p className='text-foreground-soft text-sm'>{step.info}</p>
+            </div>
           </div>
-          <p className='text-neutras-500 mt-2 mb-8 pl-10 text-sm'>
-            {step.info}
-          </p>
-        </div>
-      ))}
+        )
+      })}
     </aside>
   )
 }
