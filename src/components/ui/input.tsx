@@ -4,12 +4,11 @@ import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 const inputVariants = cva(
-  'ring-offset-background focus-visible:ring-ring [&_svg]: h-10 w-full shrink-0 rounded-lg border bg-transparent px-3 text-sm shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'ring-offset-background focus-visible:ring-ring h-10 w-full shrink-0 rounded-lg border bg-transparent px-3 text-sm shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
-        default:
-          'border-border text-foreground placeholder:text-foreground-soft',
+        default: 'border-border text-foreground placeholder:text-disabled',
         error: 'border-error text-error focus-visible:ring-error',
       },
     },
@@ -50,6 +49,7 @@ export function Input({
           {...props}
         />
         <Icon
+          data-testid='input-icon'
           className={cn(
             'pointer-events-none absolute left-3 shrink-0 transition-colors',
             iconColors[variant ?? 'default'],
