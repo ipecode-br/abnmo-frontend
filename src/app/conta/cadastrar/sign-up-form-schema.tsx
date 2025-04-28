@@ -7,8 +7,6 @@ import {
   PASSWORD_REGEX,
 } from '@/constants/regex'
 
-// TODO: validate user type
-
 export const signUpFormSchema = z
   .object({
     name: z
@@ -30,7 +28,6 @@ export const signUpFormSchema = z
       )
       .regex(PASSWORD_REGEX, 'Senha inválida'),
     confirmPassword: z.string(),
-    type: z.string(),
     consent: z.boolean(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -38,7 +35,7 @@ export const signUpFormSchema = z
     path: ['confirmPassword'],
   })
   .refine((data) => data.consent === true, {
-    message: 'Seu consentimento aos termos é obrigatório',
+    message: 'Seu consentimento é obrigatório',
     path: ['consent'],
   })
 
@@ -46,7 +43,6 @@ export type SignUpFormSchema = z.infer<typeof signUpFormSchema>
 
 export const signUpFormDefaultValues: SignUpFormSchema = {
   name: '',
-  type: '',
   email: '',
   password: '',
   confirmPassword: '',

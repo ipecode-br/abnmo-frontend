@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ClipboardListIcon, Loader2, MailIcon, User2Icon } from 'lucide-react'
+import { Loader2, MailIcon, User2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -32,8 +32,6 @@ export function SignUpForm() {
   const isSubmitting = formMethods.formState.isSubmitting
   const errorMessage = formMethods.formState.errors.root?.message
 
-  console.log(formMethods.formState.errors)
-
   async function registerUser({ email }: SignUpFormSchema) {
     // TODO: implement function when API is available
     setSuccess(false)
@@ -48,7 +46,6 @@ export function SignUpForm() {
     setSuccess(true)
   }
 
-  // TODO: add select component for type
   // TODO: add link to policies
 
   return (
@@ -83,14 +80,6 @@ export function SignUpForm() {
             isRequired
           />
         </FormField>
-
-        <TextInput
-          name='type'
-          label='Cadastrar como'
-          icon={ClipboardListIcon}
-          placeholder='Paciente'
-          isRequired
-        />
 
         <CheckboxInput
           name='consent'
