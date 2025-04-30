@@ -20,3 +20,5 @@ export const PHONE_REGEX = /^\(\d{2}\) \d{4,5}-\d{4}$/
 */
 export const PASSWORD_REGEX =
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).*$/
+
+export const CPF_REGEX = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
