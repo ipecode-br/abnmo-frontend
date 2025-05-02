@@ -36,40 +36,37 @@ export function CpfInput({
   }
 
   return (
-    <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-      <Label htmlFor={name}>
-        {label}
-        {isRequired && <RequiredInput />}
-      </Label>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => {
+        const showMessage = fieldState.error?.message ?? message
 
-      <Controller
-        name={name}
-        control={control}
-        render={({ field, fieldState }) => {
-          const showMessage = fieldState.error?.message ?? message
+        return (
+          <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
+            <Label htmlFor={name}>
+              {label}
+              {isRequired && <RequiredInput />}
+            </Label>
+            <Input
+              id={name}
+              icon={icon}
+              variant={fieldState.error && 'error'}
+              {...props}
+              {...field}
+              // Overrides default onChange function to format value
+              onChange={(e) => {
+                const formattedValue = formatCpfNumber(e.target.value)
+                field.onChange(formattedValue)
+              }}
+            />
 
-          return (
-            <>
-              <Input
-                id={name}
-                icon={icon}
-                variant={fieldState.error && 'error'}
-                {...props}
-                {...field}
-                // Overrides default onChange function to format value
-                onChange={(e) => {
-                  const formattedValue = formatCpfNumber(e.target.value)
-                  field.onChange(formattedValue)
-                }}
-              />
-
-              <FormMessage error={!!fieldState.error?.message}>
-                {showMessage}
-              </FormMessage>
-            </>
-          )
-        }}
-      />
-    </div>
+            <FormMessage error={!!fieldState.error?.message}>
+              {showMessage}
+            </FormMessage>
+          </div>
+        )
+      }}
+    />
   )
 }

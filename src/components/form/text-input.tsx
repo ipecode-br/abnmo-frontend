@@ -1,6 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Input, type InputProps } from '@/components/ui/input'
+import { cn } from '@/utils/class-name-merge'
 
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
@@ -14,12 +15,16 @@ interface RequiredTextInputProps {
 type TextInputProps = RequiredTextInputProps &
   InputProps & {
     isRequired?: boolean
+    message?: string
+    wrapperClassName?: InputProps['className']
   }
 
 export function TextInput({
   name,
   label,
   isRequired,
+  message,
+  wrapperClassName,
   icon,
   ...props
 }: Readonly<TextInputProps>) {
@@ -30,17 +35,18 @@ export function TextInput({
   }
 
   return (
-    <div className='flex w-full flex-col gap-1'>
-      <Label htmlFor={name}>
-        {label}
-        {isRequired && <RequiredInput />}
-      </Label>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => {
+        const showMessage = fieldState.error?.message ?? message
 
-      <Controller
-        name={name}
-        control={control}
-        render={({ field, fieldState }) => (
-          <>
+        return (
+          <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
+            <Label htmlFor={name}>
+              {label}
+              {isRequired && <RequiredInput />}
+            </Label>
             <Input
               id={name}
               icon={icon}
@@ -49,10 +55,12 @@ export function TextInput({
               {...field}
             />
 
-            <FormMessage error>{fieldState.error?.message}</FormMessage>
-          </>
-        )}
-      />
-    </div>
+            <FormMessage error={!!fieldState.error?.message}>
+              {showMessage}
+            </FormMessage>
+          </div>
+        )
+      }}
+    />
   )
 }
