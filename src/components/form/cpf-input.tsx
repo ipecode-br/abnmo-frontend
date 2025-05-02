@@ -2,24 +2,25 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import { Input, type InputProps } from '@/components/ui/input'
 import { cn } from '@/utils/class-name-merge'
+import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
 import { RequiredInput } from './required-input'
 
-interface RequiredTextInputProps {
+interface RequiredCpfInputProps {
   name: string
   label: string
 }
 
-type TextInputProps = RequiredTextInputProps &
+type CpfInputProps = RequiredCpfInputProps &
   InputProps & {
     isRequired?: boolean
     message?: string
     wrapperClassName?: InputProps['className']
   }
 
-export function TextInput({
+export function CpfInput({
   name,
   label,
   isRequired,
@@ -27,11 +28,11 @@ export function TextInput({
   wrapperClassName,
   icon,
   ...props
-}: Readonly<TextInputProps>) {
+}: Readonly<CpfInputProps>) {
   const { control } = useFormContext()
 
   if (!control) {
-    throw new Error('TextInput must be used within a FormProvider')
+    throw new Error('CpfInput must be used within a FormProvider')
   }
 
   return (
@@ -53,6 +54,11 @@ export function TextInput({
               variant={fieldState.error && 'error'}
               {...props}
               {...field}
+              // Overrides default onChange function to format value
+              onChange={(e) => {
+                const formattedValue = formatCpfNumber(e.target.value)
+                field.onChange(formattedValue)
+              }}
             />
 
             <FormMessage error={!!fieldState.error?.message}>

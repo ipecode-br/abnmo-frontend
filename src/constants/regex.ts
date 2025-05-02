@@ -1,4 +1,4 @@
-export const NON_NUMBER_REGEX = /\D/
+export const NON_NUMBER_REGEX = /\D/g
 export const NUMBER_REGEX = /\d/
 
 export const NAME_REGEX =
@@ -10,6 +10,9 @@ export const NON_SPECIAL_CHAR_REGEX = /^[a-zA-ZÀ-ÿ\s'-]{1,50}$/
 
 // Pattern: (00) 0000-0000 or (00) 00000-0000
 export const PHONE_REGEX = /^\(\d{2}\) \d{4,5}-\d{4}$/
+
+// Pattern: 000.000.000-00
+export const CPF_REGEX = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
 
 /*
   (?=.*\d)    should contain at least 1 digit

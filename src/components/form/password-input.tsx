@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Input, type InputProps } from '@/components/ui/input'
+import { cn } from '@/utils/class-name-merge'
 
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
@@ -18,14 +19,18 @@ interface RequiredPasswordInputProps {
 type PasswordInputProps = RequiredPasswordInputProps &
   InputProps & {
     isRequired?: boolean
+    message?: string
     showRequirements?: boolean
+    wrapperClassName?: InputProps['className']
   }
 
 export function PasswordInput({
   name,
   label,
   isRequired,
+  message,
   showRequirements,
+  wrapperClassName,
   ...props
 }: Readonly<PasswordInputProps>) {
   const [showPassword, setShowPassword] = useState(false)
@@ -36,17 +41,18 @@ export function PasswordInput({
   }
 
   return (
-    <div className='flex w-full flex-col gap-1'>
-      <Label htmlFor={name}>
-        {label}
-        {isRequired && <RequiredInput />}
-      </Label>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => {
+        const showMessage = fieldState.error?.message ?? message
 
-      <Controller
-        name={name}
-        control={control}
-        render={({ field, fieldState }) => (
-          <>
+        return (
+          <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
+            <Label htmlFor={name}>
+              {label}
+              {isRequired && <RequiredInput />}
+            </Label>
             <div className='relative flex'>
               <Input
                 id={name}
@@ -66,11 +72,14 @@ export function PasswordInput({
               </button>
             </div>
 
-            <FormMessage error>{fieldState.error?.message}</FormMessage>
+            <FormMessage error={!!fieldState.error?.message}>
+              {showMessage}
+            </FormMessage>
+
             {showRequirements && <PasswordRequirements value={field.value} />}
-          </>
-        )}
-      />
-    </div>
+          </div>
+        )
+      }}
+    />
   )
 }
