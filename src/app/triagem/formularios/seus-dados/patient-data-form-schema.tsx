@@ -7,7 +7,7 @@ import {
   PHONE_REGEX,
 } from '@/constants/regex'
 
-export const yourDataFormSchema = z.object({
+export const patientDataFormSchema = z.object({
   name: z
     .string()
     .min(1, 'Insira seu nome completo')
@@ -33,21 +33,22 @@ export const yourDataFormSchema = z.object({
     .regex(
       NON_SPECIAL_CHAR_REGEX,
       'A cidade não pode conter números ou caracteres especiais',
-    ),
+    )
+    .refine((c) => c.trim(), { message: 'Informe a sua cidade' }),
   state: z.string().nonempty('Informe o seu estado'),
   phone: z
     .string()
     .nonempty('Informe o seu telefone')
-    .regex(PHONE_REGEX, 'Insira um número de telefone válido, com DDD'),
+    .regex(PHONE_REGEX, 'Insira um número de telefone válido'),
   cpf: z
     .string()
     .nonempty('Informe o seu CPF')
-    .regex(CPF_REGEX, 'Informe um CPF válido (ex: 123.456.789-00)'),
+    .regex(CPF_REGEX, 'Informe um CPF válido'),
 })
 
-export type YourDataFormSchema = z.infer<typeof yourDataFormSchema>
+export type PatientDataFormSchema = z.infer<typeof patientDataFormSchema>
 
-export const yourDataFormDefaultValues: YourDataFormSchema = {
+export const patientDataFormDefaultValues: PatientDataFormSchema = {
   name: '',
   gender: '',
   dateBirth: '',
