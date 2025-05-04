@@ -23,5 +23,3 @@ export const CPF_REGEX = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
 */
 export const PASSWORD_REGEX =
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).*$/
-
-export const CPF_REGEX = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
