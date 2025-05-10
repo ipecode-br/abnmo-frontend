@@ -1,9 +1,9 @@
 'use client'
+
 import { usePathname } from 'next/navigation'
 
+import { ROUTES } from '@/constants/routes'
 import { cn } from '@/utils/class-name-merge'
-
-import { STEPS } from './form-steps'
 
 export function ScreeningProgress() {
   const currentPathname = usePathname()
@@ -12,7 +12,7 @@ export function ScreeningProgress() {
     <aside className='max-w-72 space-y-8'>
       <h1 className='text-disabled text-xs'>TRIAGEM</h1>
 
-      {STEPS.map((step, idx) => {
+      {FORM_STEPS.map((step, idx) => {
         const isActive = step.path === currentPathname
         return (
           <div key={step.label} className='flex gap-4'>
@@ -41,3 +41,21 @@ export function ScreeningProgress() {
     </aside>
   )
 }
+
+export const FORM_STEPS = [
+  {
+    label: 'Seus dados',
+    info: 'Preencha os campos para prosseguir para a próxima etapa.',
+    path: ROUTES.screening.forms.patientData,
+  },
+  {
+    label: 'Laudo Médico',
+    info: 'Preencha os campos e anexe os documentos necessários.',
+    path: ROUTES.screening.forms.medicalReport,
+  },
+  {
+    label: 'Rede de apoio',
+    info: 'Informe os dados de contato necessários.',
+    path: ROUTES.screening.forms.supportNetwork,
+  },
+]

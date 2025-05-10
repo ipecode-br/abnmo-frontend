@@ -1,10 +1,9 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { CpfInput } from '@/components/form/cpf-input'
 import { FormContainer } from '@/components/form/form-container'
-import { PhoneInput } from '@/components/form/phone-input'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
@@ -13,38 +12,50 @@ import { GENDERS } from '@/constants/genders'
 import { ROUTES } from '@/constants/routes'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
 
-import { useFormNavigation } from '../hooks/use-form-navigation'
+import { useScreeningFormNavigation } from '../hooks'
 import {
-  patientDataFormDefaultValues,
-  type PatientDataFormSchema,
-  patientDataFormSchema,
+  screeningPatientDataFormDefaultValues,
+  type ScreeningPatientDataFormSchema,
+  screeningPatientDataFormSchema,
 } from './patient-data-form-schema'
 
-export function PatientDataForm() {
-  const { goPage, getStored } = useFormNavigation(
+export function ScreeningPatientDataForm() {
+  const { getStoredFormData, saveFormAndGoToPage } = useScreeningFormNavigation(
     SCREENING_STORAGE_KEYS.screening.patientData,
   )
 
-  const formMethods = useForm<PatientDataFormSchema>({
-    resolver: zodResolver(patientDataFormSchema),
-    defaultValues: {
-      ...patientDataFormDefaultValues,
-      ...getStored(patientDataFormSchema),
-    },
+  const formMethods = useForm<ScreeningPatientDataFormSchema>({
+    resolver: zodResolver(screeningPatientDataFormSchema),
+    defaultValues: screeningPatientDataFormDefaultValues,
     mode: 'onBlur',
   })
+  const { setValue } = formMethods
+
+  useEffect(() => {
+    const savedFormData = getStoredFormData(screeningPatientDataFormSchema)
+
+    if (savedFormData) {
+      for (const [key, value] of Object.entries(savedFormData)) {
+        setValue(key as keyof ScreeningPatientDataFormSchema, value)
+      }
+    }
+  }, [setValue, getStoredFormData])
+
   return (
     <FormProvider {...formMethods}>
       <FormContainer
-        className='grid max-w-xl grid-cols-2'
+        className='grid grid-cols-2'
         onSubmit={formMethods.handleSubmit((data) =>
-          goPage({ data, path: ROUTES.screening.forms.medicalReport }),
+          saveFormAndGoToPage({
+            data,
+            path: ROUTES.screening.forms.medicalReport,
+          }),
         )}
       >
         <TextInput
-          maxLength={100}
           name='name'
           label='Nome completo'
+          maxLength={50}
           placeholder='Insira seu nome completo'
           wrapperClassName='col-span-full'
           isRequired
@@ -52,8 +63,8 @@ export function PatientDataForm() {
 
         <SelectInput
           name='gender'
-          options={GENDERS}
           label='Gênero'
+          options={GENDERS}
           placeholder='Selecione seu gênero'
           isRequired
         />
@@ -66,29 +77,33 @@ export function PatientDataForm() {
 
         <TextInput
           name='city'
-          maxLength={50}
           label='Cidade'
+          maxLength={50}
           placeholder='Insira sua cidade'
           isRequired
         />
         <SelectInput
           name='state'
           label='Estado'
-          isRequired
-          placeholder='Selecione seu estado'
           options={BRAZILIAN_STATES}
-        />
-        <PhoneInput
-          name='phone'
-          label='Telefone'
-          placeholder='Insira seu telefone'
+          placeholder='Selecione seu estado'
           isRequired
         />
 
-        <CpfInput
+        <TextInput
+          name='phone'
+          label='Telefone'
+          mask='phone'
+          placeholder='Insira seu telefone'
+          inputMode='tel'
+          isRequired
+        />
+        <TextInput
           name='cpf'
           label='CPF'
+          mask='cpf'
           placeholder='Insira seu CPF'
+          inputMode='numeric'
           isRequired
         />
 

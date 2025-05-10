@@ -7,7 +7,7 @@ import {
   PHONE_REGEX,
 } from '@/constants/regex'
 
-export const patientDataFormSchema = z.object({
+export const screeningPatientDataFormSchema = z.object({
   name: z
     .string()
     .min(1, 'Insira seu nome completo')
@@ -19,8 +19,8 @@ export const patientDataFormSchema = z.object({
     .regex(NAME_REGEX, 'Insira seu nome e sobrenome'),
   gender: z.string().nonempty('Informe seu gênero'),
   dateBirth: z.string().refine(
-    (d) => {
-      const date = new Date(d)
+    (input) => {
+      const date = new Date(input)
       return date >= new Date('1900-01-01') && date <= new Date()
     },
     {
@@ -34,7 +34,7 @@ export const patientDataFormSchema = z.object({
       NON_SPECIAL_CHAR_REGEX,
       'A cidade não pode conter números ou caracteres especiais',
     )
-    .refine((c) => c.trim(), { message: 'Informe a sua cidade' }),
+    .refine((input) => input.trim(), { message: 'Informe a sua cidade' }),
   state: z.string().nonempty('Informe o seu estado'),
   phone: z
     .string()
@@ -46,14 +46,17 @@ export const patientDataFormSchema = z.object({
     .regex(CPF_REGEX, 'Informe um CPF válido'),
 })
 
-export type PatientDataFormSchema = z.infer<typeof patientDataFormSchema>
+export type ScreeningPatientDataFormSchema = z.infer<
+  typeof screeningPatientDataFormSchema
+>
 
-export const patientDataFormDefaultValues: PatientDataFormSchema = {
-  name: '',
-  gender: '',
-  dateBirth: '',
-  city: '',
-  state: '',
-  phone: '',
-  cpf: '',
-}
+export const screeningPatientDataFormDefaultValues: ScreeningPatientDataFormSchema =
+  {
+    name: '',
+    gender: '',
+    dateBirth: '',
+    city: '',
+    state: '',
+    phone: '',
+    cpf: '',
+  }
