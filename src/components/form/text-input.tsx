@@ -2,10 +2,14 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import { Input, type InputProps } from '@/components/ui/input'
 import { cn } from '@/utils/class-name-merge'
+import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
+import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
 import { RequiredInput } from './required-input'
+
+type InputMaskType = 'phone' | 'cpf'
 
 interface RequiredTextInputProps {
   name: string
@@ -15,6 +19,7 @@ interface RequiredTextInputProps {
 type TextInputProps = RequiredTextInputProps &
   InputProps & {
     isRequired?: boolean
+    mask?: InputMaskType
     message?: string
     wrapperClassName?: InputProps['className']
   }
@@ -23,6 +28,7 @@ export function TextInput({
   name,
   label,
   isRequired,
+  mask,
   message,
   wrapperClassName,
   icon,
@@ -32,6 +38,12 @@ export function TextInput({
 
   if (!control) {
     throw new Error('TextInput must be used within a FormProvider')
+  }
+
+  function formatter(input: string) {
+    if (mask === 'phone') return formatPhoneNumber(input)
+    if (mask === 'cpf') return formatCpfNumber(input)
+    return input
   }
 
   return (
@@ -48,11 +60,15 @@ export function TextInput({
               {isRequired && <RequiredInput />}
             </Label>
             <Input
+              {...props}
+              {...field}
               id={name}
               icon={icon}
               variant={fieldState.error && 'error'}
-              {...props}
-              {...field}
+              onChange={(e) => {
+                const formattedValue = formatter(e.target.value)
+                field.onChange(formattedValue)
+              }}
             />
 
             <FormMessage error={!!fieldState.error?.message}>
