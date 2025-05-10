@@ -5,6 +5,7 @@ export const BRAZILIAN_STATES = [
   { label: 'Amazonas', value: 'AM' },
   { label: 'Bahia', value: 'BA' },
   { label: 'Ceará', value: 'CE' },
+  { label: 'Distrito Federal', value: 'DF' },
   { label: 'Espírito Santo', value: 'ES' },
   { label: 'Goiás', value: 'GO' },
   { label: 'Maranhão', value: 'MA' },
