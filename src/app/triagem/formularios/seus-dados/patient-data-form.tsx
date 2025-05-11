@@ -21,12 +21,12 @@ import {
 
 export function ScreeningPatientDataForm() {
   const { getStoredFormData, saveFormAndGoToPage } = useScreeningFormNavigation(
-    SCREENING_STORAGE_KEYS.screening.patientData,
+    { storageKey: SCREENING_STORAGE_KEYS.screening.patientData },
   )
 
   const formMethods = useForm<ScreeningPatientDataFormSchema>({
     resolver: zodResolver(screeningPatientDataFormSchema),
-    defaultValues: screeningPatientDataFormDefaultValues,
+    values: screeningPatientDataFormDefaultValues,
     mode: 'onBlur',
   })
   const { setValue } = formMethods

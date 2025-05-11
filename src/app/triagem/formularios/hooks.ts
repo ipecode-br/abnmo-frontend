@@ -3,12 +3,18 @@ import type { ZodSchema } from 'zod'
 
 import { getStorageItem, setStorageItem } from '@/helpers/local-storage'
 
+interface UseScreeningFormNavigationProps {
+  storageKey: string
+}
+
 interface SaveFormAndGoToPageProps<Schema> {
   data: Schema
   path: string
 }
 
-export function useScreeningFormNavigation(storageKey: string) {
+export function useScreeningFormNavigation({
+  storageKey,
+}: Readonly<UseScreeningFormNavigationProps>) {
   const router = useRouter()
 
   function getStoredFormData<T>(schema: ZodSchema<T>) {
