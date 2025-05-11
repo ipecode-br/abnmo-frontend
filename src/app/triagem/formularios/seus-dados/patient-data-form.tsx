@@ -95,6 +95,7 @@ export function ScreeningPatientDataForm() {
           label='Telefone'
           mask='phone'
           placeholder='Insira seu telefone'
+          message='Insira somente números'
           inputMode='tel'
           isRequired
         />
@@ -103,6 +104,7 @@ export function ScreeningPatientDataForm() {
           label='CPF'
           mask='cpf'
           placeholder='Insira seu CPF'
+          message='Insira somente números'
           inputMode='numeric'
           isRequired
         />
