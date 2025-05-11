@@ -14,6 +14,7 @@ const buttonVariants = cva(
           'bg-primary text-primary-foreground hover:bg-primary/80 inset-shadow-md shadow-xs',
         outline:
           'border-border hover:bg-accent text-accent-foreground border bg-transparent',
+        muted: 'bg-background-soft text-accent-foreground hover:bg-accent',
       },
       size: {
         default: 'h-10 px-4 [&_svg]:size-5',
