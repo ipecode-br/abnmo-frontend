@@ -4,9 +4,9 @@ export default function ScreeningFormsLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <main className='container mx-auto grid grid-cols-[20rem_1fr] gap-16 px-8'>
+    <main className='container mx-auto grid max-w-5xl grid-cols-[20rem_1fr] gap-16 px-8 pt-16'>
       <ScreeningProgress />
-      <main className='max-w-xl'>{children}</main>
+      {children}
     </main>
   )
 }
