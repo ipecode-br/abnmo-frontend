@@ -18,7 +18,7 @@ export function ScreeningProgress() {
           <div key={step.label} className='flex gap-4'>
             <div
               className={cn(
-                'bg-background text-foreground-soft flex size-6 shrink-0 items-center justify-center rounded-full border border-neutral-200 text-sm',
+                'bg-background text-foreground-soft flex size-6 shrink-0 items-center justify-center rounded-full border border-neutral-200 text-xs',
                 isActive && 'bg-primary border-primary-soft text-white',
               )}
             >
