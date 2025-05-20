@@ -1,53 +1,60 @@
 import { z } from 'zod'
 
-import { yesOrNoEnum } from '@/constants/yes-no-enums'
+import { YesOrNoTuple } from '@/constants/enums.'
 
 export const screeningMedicalReportFormSchema = z
   .object({
-    hasDisability: z.enum([yesOrNoEnum.YES, yesOrNoEnum.NO], {
+    hasDisability: z.enum(YesOrNoTuple, {
       message: 'Selecione uma opção acima',
     }),
-    disabilityDescription: z.string().optional(),
-    needLegalAssistance: z.enum([yesOrNoEnum.YES, yesOrNoEnum.NO], {
+    disabilityDescription: z
+      .string()
+      .optional()
+      .transform((data) => data?.trim()),
+    needLegalAssistance: z.enum(YesOrNoTuple, {
       message: 'Selecione uma opção acima',
     }),
-    takeMedication: z.enum([yesOrNoEnum.YES, yesOrNoEnum.NO], {
+    takeMedication: z.enum(YesOrNoTuple, {
       message: 'Selecione uma opção acima',
     }),
-    medicationDescription: z.string().optional(),
-    hasNmoDiagnosis: z.enum([yesOrNoEnum.YES, yesOrNoEnum.NO], {
+    medicationDescription: z
+      .string()
+      .optional()
+      .transform((data) => data?.trim()),
+    hasNmoDiagnosis: z.enum(YesOrNoTuple, {
       message: 'Selecione uma opção acima',
     }),
   })
   .refine(
-    (data) =>
-      data.hasDisability === yesOrNoEnum.NO ||
-      (data.disabilityDescription && data.disabilityDescription.trim() !== ''),
+    (data) => {
+      if (data.hasDisability === 'yes' && !data.disabilityDescription) {
+        return false
+      }
+      if (data.hasDisability === 'no') {
+        data.disabilityDescription = undefined
+      }
+      return true
+    },
     {
       path: ['disabilityDescription'],
       message: 'Descrição da deficiência é obrigatória',
     },
   )
   .refine(
-    (data) =>
-      data.takeMedication === yesOrNoEnum.NO ||
-      (data.medicationDescription && data.medicationDescription.trim() !== ''),
+    (data) => {
+      if (data.takeMedication === 'yes' && !data.medicationDescription) {
+        return false
+      }
+      if (data.takeMedication === 'no') {
+        data.medicationDescription = undefined
+      }
+      return true
+    },
     {
       path: ['medicationDescription'],
       message: 'Descrição do medicamento é obrigatória',
     },
   )
-  .transform((data) => ({
-    ...data,
-    disabilityDescription:
-      data.hasDisability === yesOrNoEnum.NO
-        ? undefined
-        : data.disabilityDescription,
-    medicationDescription:
-      data.takeMedication === yesOrNoEnum.NO
-        ? undefined
-        : data.medicationDescription,
-  }))
 
 export type ScreeningMedicalReportFormSchema = z.infer<
   typeof screeningMedicalReportFormSchema
