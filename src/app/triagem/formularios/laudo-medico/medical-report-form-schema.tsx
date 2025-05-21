@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { YesOrNoTuple } from '@/constants/enums.'
+import { YesOrNoTuple } from '@/constants/enums'
 
 export const screeningMedicalReportFormSchema = z
   .object({
