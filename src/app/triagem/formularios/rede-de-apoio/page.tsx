@@ -1,3 +1,9 @@
+import { ScreeningSupportNetworkForm } from './support-network-form'
+
 export default function SupportNetworkPage() {
-  return <div>Formulário - Rede de apoio</div>
+  return (
+    <div>
+      <ScreeningSupportNetworkForm />
+    </div>
+  )
 }
