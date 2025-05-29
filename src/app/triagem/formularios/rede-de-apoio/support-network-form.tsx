@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import user from '@images/screening/user-icon.svg'
+import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -9,16 +10,20 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
+import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
 
 import { useScreeningFormNavigation } from '../hooks'
 import {
+  screeningSupportNetworkContactsSchema,
   screeningSupportNetworkFormDefaultValues,
   type ScreeningSupportNetworkFormSchema,
   screeningSupportNetworkFormSchema,
 } from './support-network-form-schema'
+
+type Contact = ScreeningSupportNetworkFormSchema & { id: string }
 
 export function ScreeningSupportNetworkForm() {
   const router = useRouter()
@@ -37,15 +42,19 @@ export function ScreeningSupportNetworkForm() {
 
   const { handleSubmit, reset, getValues, trigger } = formMethods
 
-  const [contacts, setContacts] = useState<ScreeningSupportNetworkFormSchema[]>(
-    [],
-  )
+  const [contacts, setContacts] = useState<Contact[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [alert, setAlert] = useState<{
+    type: 'success' | 'error'
+    message: string
+  } | null>(null)
 
   useEffect(() => {
-    const savedFormData = getStoredFormData(screeningSupportNetworkFormSchema)
+    const savedData = getStoredFormData(screeningSupportNetworkContactsSchema)
+    console.log('Dados restaurados:', savedData)
 
-    if (savedFormData) {
-      setContacts([savedFormData])
+    if (savedData?.contacts) {
+      setContacts(savedData.contacts)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -57,7 +66,12 @@ export function ScreeningSupportNetworkForm() {
 
     const data = getValues()
 
-    setContacts((prev) => [...prev, data])
+    const newContact: Contact = {
+      ...data,
+      id: Date.now().toString() + Math.random().toString(36).substring(2, 15),
+    }
+
+    setContacts((prev) => [...prev, newContact])
     reset(screeningSupportNetworkFormDefaultValues)
   }
 
@@ -65,17 +79,38 @@ export function ScreeningSupportNetworkForm() {
     setContacts((prev) => prev.filter((_, i) => i !== index))
   }
 
-  const handleFinalize = () => {
-    if (contacts.length === 0) return
+  const handleFinalize = async () => {
+    setIsLoading(true)
+    setAlert(null)
 
-    // TODO: Enviar todos os dados para a API
-    saveFormAndGoToPage({
-      data: { supportNetwork: contacts },
-      path: ROUTES.screening.forms.patientData,
-    })
+    try {
+      // Simula envio à API
+      await new Promise((resolve) => setTimeout(resolve, 3000))
 
-    reset()
-    setContacts([])
+      setAlert({
+        type: 'success',
+        message:
+          'Obrigado por enviar suas informações. Estamos analisando seu cadastro e entraremos em contato em breve.',
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 3000))
+
+      saveFormAndGoToPage({
+        data: { contacts },
+        path: ROUTES.screening.forms.patientData,
+      })
+
+      reset()
+      setContacts([])
+    } catch (error) {
+      setAlert({
+        type: 'error',
+        message: 'Erro ao salvar os contatos. Tente novamente.',
+      })
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -127,7 +162,7 @@ export function ScreeningSupportNetworkForm() {
             <div className='flex flex-col gap-4'>
               {contacts.map((contact, index) => (
                 <div
-                  key={index}
+                  key={contact.id}
                   className='flex items-center justify-between rounded-2xl border border-[#E2E4E9] p-4'
                 >
                   <div className='flex items-center gap-2'>
@@ -138,7 +173,7 @@ export function ScreeningSupportNetworkForm() {
                         fill
                         className='object-cover'
                         quality={100}
-                        priority={true}
+                        priority
                       />
                     </div>
                     <div className='flex flex-col gap-1'>
@@ -151,6 +186,7 @@ export function ScreeningSupportNetworkForm() {
 
                   <button
                     type='button'
+                    disabled={isLoading}
                     className='cursor-pointer text-sm text-red-500 underline'
                     onClick={() => handleRemoveContact(index)}
                   >
@@ -162,14 +198,24 @@ export function ScreeningSupportNetworkForm() {
           </div>
         )}
 
-        <div className='col-span-full mt-6 flex flex-col gap-2 md:flex-row-reverse'>
+        {alert && (
+          <Alert
+            variant={alert.type === 'success' ? 'success' : 'error'}
+            className='col-span-full mt-1'
+          >
+            {alert.message}
+          </Alert>
+        )}
+
+        <div className='col-span-full mt-6 flex flex-col gap-2 md:flex-row-reverse md:pb-5'>
           <Button
             type='button'
             className='md:flex-1'
-            disabled={contacts.length === 0}
+            disabled={contacts.length === 0 || isLoading}
             onClick={handleFinalize}
           >
-            Finalizar
+            {isLoading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+            {isLoading ? 'Enviando' : 'Finalizar'}
           </Button>
 
           <Button
@@ -177,6 +223,7 @@ export function ScreeningSupportNetworkForm() {
             variant='muted'
             className='md:flex-1'
             onClick={() => router.back()}
+            disabled={isLoading}
           >
             Voltar
           </Button>
