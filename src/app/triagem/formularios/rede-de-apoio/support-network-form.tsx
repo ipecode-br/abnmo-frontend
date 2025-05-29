@@ -51,7 +51,6 @@ export function ScreeningSupportNetworkForm() {
 
   useEffect(() => {
     const savedData = getStoredFormData(screeningSupportNetworkContactsSchema)
-    console.log('Dados restaurados:', savedData)
 
     if (savedData?.contacts) {
       setContacts(savedData.contacts)
@@ -68,7 +67,7 @@ export function ScreeningSupportNetworkForm() {
 
     const newContact: Contact = {
       ...data,
-      id: Date.now().toString() + Math.random().toString(36).substring(2, 15),
+      id: crypto.randomUUID(),
     }
 
     setContacts((prev) => [...prev, newContact])
