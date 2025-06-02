@@ -42,6 +42,7 @@ function Button({
   variant,
   size,
   loading,
+  disabled,
   asChild = false,
   children,
   ...props
@@ -49,6 +50,7 @@ function Button({
   const Comp = asChild ? Slot : 'button'
   return (
     <Comp
+      disabled={disabled || loading}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
