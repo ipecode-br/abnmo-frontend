@@ -61,10 +61,6 @@
   }
 }
 
-* {
-  border-color: var(--color-border);
-}
-
 body {
   background: var(--color-background);
   color: var(--color-foreground);
