@@ -1,5 +1,6 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { Loader2Icon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
 
@@ -15,6 +16,7 @@ const buttonVariants = cva(
         outline:
           'border-border hover:bg-accent text-accent-foreground border bg-transparent',
         muted: 'bg-background-soft text-accent-foreground hover:bg-accent',
+        ghost: 'text-accent-foreground hover:bg-accent/50 bg-transparent',
       },
       size: {
         default: 'h-10 px-4 [&_svg]:size-5',
@@ -32,6 +34,7 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  loading?: boolean
   asChild?: boolean
 }
 
@@ -39,15 +42,21 @@ function Button({
   className,
   variant,
   size,
+  loading,
+  disabled,
   asChild = false,
+  children,
   ...props
 }: Readonly<ButtonProps>) {
   const Comp = asChild ? Slot : 'button'
   return (
     <Comp
+      disabled={disabled || loading}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-    />
+    >
+      {loading ? <Loader2Icon className='animate-spin' /> : children}
+    </Comp>
   )
 }
 
