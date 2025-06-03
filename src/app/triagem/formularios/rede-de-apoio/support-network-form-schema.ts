@@ -7,7 +7,7 @@ import {
 } from '@/constants/regex'
 
 export const screeningSupportNetworkFormSchema = z.object({
-  fullName: z
+  name: z
     .string()
     .min(1, 'Insira o nome completo')
     .min(3, 'O nome deve conter mais de 3 caracteres')
@@ -28,7 +28,6 @@ export const screeningSupportNetworkFormSchema = z.object({
     .string()
     .nonempty('Insira o seu telefone')
     .regex(PHONE_REGEX, 'Insira um número de telefone válido'),
-  id: z.string(),
 })
 
 export type ScreeningSupportNetworkFormSchema = z.infer<
@@ -37,15 +36,14 @@ export type ScreeningSupportNetworkFormSchema = z.infer<
 
 export const screeningSupportNetworkFormDefaultValues: ScreeningSupportNetworkFormSchema =
   {
-    fullName: '',
+    name: '',
     kinship: '',
     phone: '',
-    id: '',
   }
 
-export const screeningSupportNetworkContactsSchema = z.object({
-  contacts: z.array(screeningSupportNetworkFormSchema),
-})
+export const screeningSupportNetworkContactsSchema = z.array(
+  screeningSupportNetworkFormSchema,
+)
 
 export type ScreeningSupportNetworkContactsSchema = z.infer<
   typeof screeningSupportNetworkContactsSchema
