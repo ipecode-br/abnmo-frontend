@@ -1,3 +1,11 @@
-export default function SupportNetworkPage() {
-  return <div>Formulário - Rede de apoio</div>
+import type { Metadata } from 'next'
+
+import { ScreeningSupportNetworkForm } from './support-network-form'
+
+export const metadata: Metadata = {
+  title: 'Rede de apoio',
+}
+
+export default function ScreeningSupportNetworkPage() {
+  return <ScreeningSupportNetworkForm />
 }

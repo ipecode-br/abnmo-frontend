@@ -1,7 +1,9 @@
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import type { ZodSchema } from 'zod'
 
 import { getStorageItem, setStorageItem } from '@/helpers/local-storage'
+import { wait } from '@/utils/wait'
 
 interface UseScreeningFormNavigationProps {
   storageKey: string
@@ -29,5 +31,14 @@ export function useScreeningFormNavigation({
     router.push(path)
   }
 
-  return { getStoredFormData, saveFormAndGoToPage }
+  async function finishScreening() {
+    await wait(1000)
+
+    toast.success(
+      'Obrigado por enviar suas informações. Estamos analisando seu cadastro e entraremos em contato em breve.',
+      { duration: 7000 },
+    )
+  }
+
+  return { getStoredFormData, saveFormAndGoToPage, finishScreening }
 }
