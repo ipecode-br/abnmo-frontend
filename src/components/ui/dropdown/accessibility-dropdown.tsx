@@ -1,4 +1,3 @@
-// components/ScreeningDropdown() {.tsx
 'use client'
 
 import { Accessibility, ALargeSmall, Contrast } from 'lucide-react'
@@ -10,10 +9,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown/dropdown'
 import { cn } from '@/utils/class-name-merge'
-
-{
-  /* className='hover:bg-muted rounded-full border' */
-}
 
 export function AccessibilityDropdown() {
   return (

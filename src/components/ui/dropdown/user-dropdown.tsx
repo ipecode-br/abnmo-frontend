@@ -1,4 +1,3 @@
-// components/ScreeningDropdown() {.tsx
 'use client'
 
 import { ChevronDown, LogOut, User } from 'lucide-react'
