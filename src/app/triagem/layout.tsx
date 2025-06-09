@@ -1,5 +1,5 @@
+import { ScreeningHeader } from '@/app/triagem/screening-header'
 import { Divider } from '@/components/ui/divider'
-import { ScreeningHeader } from '@/components/ui/dropdown/screening-header'
 
 export default function ScreeningLayout({
   children,
