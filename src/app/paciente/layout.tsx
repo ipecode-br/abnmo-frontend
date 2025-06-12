@@ -1,11 +1,13 @@
+import { PatientHeader } from '@/app/paciente/_header'
+import { Divider } from '@/components/ui/divider'
+
 export default function ScreeningLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div>
-      <header className='container mx-auto grid grid-cols-[20rem_1fr] px-8'>
-        Header
-      </header>
+      <PatientHeader />
+      <Divider />
       {children}
     </div>
   )

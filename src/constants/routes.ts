@@ -4,12 +4,12 @@ export const ROUTES = {
     signUp: '/conta/cadastrar',
     forgotPassword: '/conta/recuperar-senha',
   },
-  screening: {
-    main: '/triagem',
-    forms: {
-      patientData: '/triagem/formularios/seus-dados',
-      medicalReport: '/triagem/formularios/laudo-medico',
-      supportNetwork: '/triagem/formularios/rede-de-apoio',
+  patient: {
+    main: '/paciente',
+    screening: {
+      patientData: '/paciente/triagem/seus-dados',
+      medicalReport: '/paciente/triagem/laudo-medico',
+      supportNetwork: '/paciente/triagem/rede-de-apoio',
     },
   },
 } as const
