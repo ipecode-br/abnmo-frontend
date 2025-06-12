@@ -1,4 +1,4 @@
-import { ScreeningHeader } from '@/app/triagem/screening-header'
+import { PatientHeader } from '@/app/paciente/header'
 import { Divider } from '@/components/ui/divider'
 
 export default function ScreeningLayout({
@@ -6,7 +6,7 @@ export default function ScreeningLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div>
-      <ScreeningHeader />
+      <PatientHeader />
       <Divider />
       {children}
     </div>

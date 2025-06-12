@@ -2,12 +2,12 @@ import logo from '@images/logo/logo-triagem.svg'
 import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
 
+import { PatientHeaderAccessibilityDropdown } from '@/app/paciente/header/accessibility-dropdown'
+import { PatientHeaderUserDropdown } from '@/app/paciente/header/user-dropdown'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
-import { PatientHeaderAccessibilityDropdown } from '@/components/ui/dropdown/accessibility-dropdown'
-import { PatientHeaderUserDropdown } from '@/components/ui/dropdown/user-dropdown'
 
-export function ScreeningHeader() {
+export function PatientHeader() {
   return (
     <header className='container mx-auto flex items-center gap-8 px-8 py-4'>
       <div className='flex items-center gap-4'>

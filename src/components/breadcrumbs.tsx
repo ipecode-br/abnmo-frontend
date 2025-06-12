@@ -11,7 +11,7 @@ import { cn } from '@/utils/class-name-merge'
 export function Breadcrumbs() {
   const pathnames = usePathname().split('/')
 
-  const breadcrumbs = [BREADCRUMBS['home']]
+  const breadcrumbs = []
 
   for (const path of pathnames) {
     const breadcrumb = BREADCRUMBS[path as BreadcrumbsType]

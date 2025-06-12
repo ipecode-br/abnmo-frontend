@@ -2,12 +2,11 @@
 
 import { LogOutIcon, User2Icon } from 'lucide-react'
 
+import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
-
-import { Divider } from '../divider'
-import { DropdownMenuContent } from './content'
-import { DropdownMenuItem } from './item'
-import { DropdownMenuTrigger } from './trigger'
+import { DropdownMenuContent } from '@/components/ui/dropdown/content'
+import { DropdownMenuItem } from '@/components/ui/dropdown/item'
+import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
 export function PatientHeaderUserDropdown() {
   return (

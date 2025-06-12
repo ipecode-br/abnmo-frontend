@@ -3,10 +3,9 @@
 import { Accessibility, ALargeSmall, Contrast } from 'lucide-react'
 
 import { DropdownMenu } from '@/components/ui/dropdown'
-
-import { DropdownMenuContent } from './content'
-import { DropdownMenuItem } from './item'
-import { DropdownMenuTrigger } from './trigger'
+import { DropdownMenuContent } from '@/components/ui/dropdown/content'
+import { DropdownMenuItem } from '@/components/ui/dropdown/item'
+import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
 export function PatientHeaderAccessibilityDropdown() {
   return (

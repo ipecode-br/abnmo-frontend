@@ -12,7 +12,7 @@ import { GENDERS } from '@/constants/genders'
 import { ROUTES } from '@/constants/routes'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
 
-import { useScreeningFormNavigation } from '../hooks'
+import { useScreening } from '../hooks'
 import {
   screeningPatientDataFormDefaultValues,
   type ScreeningPatientDataFormSchema,
@@ -20,9 +20,9 @@ import {
 } from './patient-data-form-schema'
 
 export function ScreeningPatientDataForm() {
-  const { getStoredFormData, saveFormAndGoToPage } = useScreeningFormNavigation(
-    { storageKey: SCREENING_STORAGE_KEYS.screening.patientData },
-  )
+  const { getStoredFormData, saveFormAndGoToPage } = useScreening({
+    storageKey: SCREENING_STORAGE_KEYS.screening.patientData,
+  })
 
   const formMethods = useForm<ScreeningPatientDataFormSchema>({
     resolver: zodResolver(screeningPatientDataFormSchema),
@@ -48,7 +48,7 @@ export function ScreeningPatientDataForm() {
         onSubmit={formMethods.handleSubmit((data) =>
           saveFormAndGoToPage({
             data,
-            path: ROUTES.screening.forms.medicalReport,
+            path: ROUTES.patient.screening.medicalReport,
           }),
         )}
       >
