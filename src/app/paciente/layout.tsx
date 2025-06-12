@@ -1,4 +1,4 @@
-import { PatientHeader } from '@/app/paciente/header'
+import { PatientHeader } from '@/app/paciente/_header'
 import { Divider } from '@/components/ui/divider'
 
 export default function ScreeningLayout({

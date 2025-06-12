@@ -2,8 +2,8 @@ import logo from '@images/logo/logo-triagem.svg'
 import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
 
-import { PatientHeaderAccessibilityDropdown } from '@/app/paciente/header/accessibility-dropdown'
-import { PatientHeaderUserDropdown } from '@/app/paciente/header/user-dropdown'
+import { PatientHeaderAccessibilityDropdown } from '@/app/paciente/_header/accessibility-dropdown'
+import { PatientHeaderUserDropdown } from '@/app/paciente/_header/user-dropdown'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
 
