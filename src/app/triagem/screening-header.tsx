@@ -4,8 +4,8 @@ import Image from 'next/image'
 
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
-import { AccessibilityDropdown } from '@/components/ui/dropdown/accessibility-dropdown'
-import { UserDropdown } from '@/components/ui/dropdown/user-dropdown'
+import { PatientHeaderAccessibilityDropdown } from '@/components/ui/dropdown/accessibility-dropdown'
+import { PatientHeaderUserDropdown } from '@/components/ui/dropdown/user-dropdown'
 
 export function ScreeningHeader() {
   return (
@@ -18,7 +18,7 @@ export function ScreeningHeader() {
       <Breadcrumbs />
 
       <section className='ml-auto flex items-center gap-2'>
-        <AccessibilityDropdown />
+        <PatientHeaderAccessibilityDropdown />
 
         <Button
           size='icon'
@@ -29,7 +29,7 @@ export function ScreeningHeader() {
           <SettingsIcon />
         </Button>
 
-        <UserDropdown />
+        <PatientHeaderUserDropdown />
       </section>
     </header>
   )

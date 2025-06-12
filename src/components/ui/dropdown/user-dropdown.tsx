@@ -1,35 +1,34 @@
 'use client'
 
-import { ChevronDown, LogOut, User } from 'lucide-react'
+import { LogOutIcon, User2Icon } from 'lucide-react'
 
-import {
-  DropdownMenu,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown/dropdown'
+import { DropdownMenu } from '@/components/ui/dropdown'
 
+import { Divider } from '../divider'
 import { DropdownMenuContent } from './content'
 import { DropdownMenuItem } from './item'
 import { DropdownMenuTrigger } from './trigger'
 
-export function UserDropdown() {
+export function PatientHeaderUserDropdown() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button aria-label='Abrir menu do usuário'>
-          <p className='text-sm font-medium'>Usuário</p>
-          <ChevronDown />
-        </button>
+      <DropdownMenuTrigger
+        aria-label='Abrir menu'
+        className='rounded-full'
+        indicator
+      >
+        Usuário
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent sideOffset={8}>
+      <DropdownMenuContent align='end'>
         <DropdownMenuItem>
-          <User /> Perfil
+          <User2Icon /> Perfil
         </DropdownMenuItem>
 
-        <DropdownMenuSeparator />
+        <Divider />
 
-        <DropdownMenuItem variant='destructive'>
-          <LogOut /> Sair
+        <DropdownMenuItem>
+          <LogOutIcon /> Sair
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
