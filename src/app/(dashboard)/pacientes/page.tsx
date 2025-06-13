@@ -5,5 +5,5 @@ export const metadata: Metadata = {
 }
 
 export default function PatientsPage() {
-  return <div>table here</div>
+  return <div>Patient page content here</div>
 }
