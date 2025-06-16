@@ -1,4 +1,4 @@
-import { ClipboardListIcon, HomeIcon } from 'lucide-react'
+import { ClipboardListIcon, HomeIcon, Users } from 'lucide-react'
 
 import { ROUTES } from '@/constants/routes'
 
@@ -15,6 +15,14 @@ const PATIENT_SCREENING_BREADCRUMBS = {
   },
 }
 
+const DASHBOARD_BREADCRUMBS = {
+  pacientes: {
+    icon: Users,
+    name: 'Pacientes',
+    path: ROUTES.dashboard.patients,
+  },
+}
+
 export const BREADCRUMBS = {
   home: {
     icon: HomeIcon,
@@ -22,6 +30,7 @@ export const BREADCRUMBS = {
     path: '/',
   },
   ...PATIENT_SCREENING_BREADCRUMBS,
+  ...DASHBOARD_BREADCRUMBS,
 }
 
 export type BreadcrumbsType = keyof typeof BREADCRUMBS
