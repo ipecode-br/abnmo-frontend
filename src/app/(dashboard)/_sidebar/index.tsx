@@ -7,11 +7,11 @@ import {
   UserRoundSearch,
 } from 'lucide-react'
 
-import { UserInfo } from './sidebar.user-info'
 import { Header } from './sidebar-header'
 import { HelpCard } from './sidebar-help-card'
 import { NavLink } from './sidebar-nav-link'
 import { NavSection } from './sidebar-nav-section'
+import { UserInfo } from './sidebar-user-info'
 
 export function DashboardSidebar() {
   return (
