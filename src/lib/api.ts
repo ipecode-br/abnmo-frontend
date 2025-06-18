@@ -1,8 +1,17 @@
 import { getAllCookies } from '@/actions/cookies'
 import { env } from '@/config/env'
 
-type BaseResponse = { success: false; message: string }
-type ApiResponse<Data> = BaseResponse | (BaseResponse & { data?: Data })
+type SuccessResponse<Data> = {
+  success: true
+  data: Data
+}
+
+type FailureResponse = {
+  success: false
+  message: string
+}
+
+type ApiResponse<Data> = SuccessResponse<Data> | FailureResponse
 
 export const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
@@ -36,9 +45,19 @@ export async function api<T>(
       headers,
     })
 
-    const responseData: ApiResponse<T> = await response.json()
+    const responseData = await response.json()
 
-    return responseData
+    if (responseData.success === true) {
+      return {
+        success: true,
+        data: responseData.data,
+      }
+    } else {
+      return {
+        success: false,
+        message: responseData.message || 'Erro desconhecido',
+      }
+    }
   } catch (error) {
     console.error('API request error:', error)
     return {
