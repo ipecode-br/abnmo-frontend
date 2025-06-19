@@ -1,8 +1,21 @@
-import { ClipboardListIcon, HomeIcon, Users } from 'lucide-react'
+import {
+  ClipboardListIcon,
+  HomeIcon,
+  type LucideIcon,
+  Users,
+} from 'lucide-react'
 
 import { ROUTES } from '@/constants/routes'
 
-const PATIENT_SCREENING_BREADCRUMBS = {
+type BreadcrumbDataType = {
+  icon: LucideIcon
+  name: string
+  path: string
+}
+
+type Breadcrumbs = Record<string, BreadcrumbDataType>
+
+const PATIENT_SCREENING_BREADCRUMBS: Breadcrumbs = {
   paciente: {
     icon: HomeIcon,
     name: 'Início',
@@ -15,15 +28,15 @@ const PATIENT_SCREENING_BREADCRUMBS = {
   },
 }
 
-const DASHBOARD_BREADCRUMBS = {
+const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   pacientes: {
     icon: Users,
     name: 'Pacientes',
-    path: ROUTES.dashboard.patients,
+    path: ROUTES.dashboard.patients.main,
   },
 }
 
-export const BREADCRUMBS = {
+export const BREADCRUMBS: Breadcrumbs = {
   home: {
     icon: HomeIcon,
     name: 'Início',
@@ -33,4 +46,4 @@ export const BREADCRUMBS = {
   ...DASHBOARD_BREADCRUMBS,
 }
 
-export type BreadcrumbsType = keyof typeof BREADCRUMBS
+export type BreadcrumbType = keyof typeof BREADCRUMBS
