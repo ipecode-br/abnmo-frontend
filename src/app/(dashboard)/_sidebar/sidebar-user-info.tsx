@@ -5,7 +5,7 @@ interface UserInfoProps {
   role: string
 }
 
-export function UserInfo({ name, role }: UserInfoProps) {
+export function UserInfo({ name, role }: Readonly<UserInfoProps>) {
   return (
     <div className='border-border flex items-center justify-between border-t pt-4'>
       <div className='flex items-center gap-3'>

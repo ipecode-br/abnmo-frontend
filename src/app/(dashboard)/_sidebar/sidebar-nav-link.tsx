@@ -8,7 +8,11 @@ interface NavLinkProps extends LinkProps {
   children: string
 }
 
-export function NavLink({ icon: Icon, children, ...rest }: NavLinkProps) {
+export function NavLink({
+  icon: Icon,
+  children,
+  ...rest
+}: Readonly<NavLinkProps>) {
   return (
     <ActiveLink {...rest}>
       <div className='flex flex-row justify-between px-2 py-3'>

@@ -5,7 +5,7 @@ interface NavSectionProps {
   children: ReactNode
 }
 
-export function NavSection({ title, children }: NavSectionProps) {
+export function NavSection({ title, children }: Readonly<NavSectionProps>) {
   return (
     <div className=''>
       <p className='text-disabled mb-4 text-xs font-medium uppercase'>

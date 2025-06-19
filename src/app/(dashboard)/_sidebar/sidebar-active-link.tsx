@@ -8,7 +8,7 @@ import { cn } from '@/utils/class-name-merge'
 interface ActiveLinkProps extends LinkProps {
   children: ReactElement<{ className?: string }>
 }
-export function ActiveLink({ children, ...rest }: ActiveLinkProps) {
+export function ActiveLink({ children, ...rest }: Readonly<ActiveLinkProps>) {
   const pathName = usePathname()
   let isActive = false
 

@@ -6,7 +6,7 @@ interface HeaderProps {
   name: string
 }
 
-export function Header({ name }: HeaderProps) {
+export function Header({ name }: Readonly<HeaderProps>) {
   return (
     <header className='border-border flex items-center justify-between border-b pb-4'>
       <div className='flex items-center'>
