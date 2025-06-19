@@ -7,7 +7,7 @@ import { Divider } from '@/components/ui/divider'
 export function DashboardHeader() {
   return (
     <>
-      <header className='container mx-auto flex items-center gap-4 px-8 py-4'>
+      <header className='flex items-center gap-4 px-8 py-4'>
         <h1 className='text-xl font-medium'>Geral</h1>
         <Divider orientation='vertical' height='h-5' />
         <Breadcrumbs />
@@ -19,7 +19,7 @@ export function DashboardHeader() {
             className='rounded-full'
             aria-label='Ajuda'
           >
-            <CircleHelp className='text-[var(--color-foreground-soft)]' />
+            <CircleHelp className='text-foreground-soft' />
           </Button>
 
           <Button
@@ -28,7 +28,7 @@ export function DashboardHeader() {
             className='rounded-full'
             aria-label='Notificações'
           >
-            <Bell className='text-[var(--color-foreground-soft)]' />
+            <Bell className='text-foreground-soft' />
           </Button>
         </section>
       </header>
