@@ -13,6 +13,8 @@ export const ROUTES = {
     },
   },
   dashboard: {
-    patients: '/pacientes',
+    patients: {
+      main: '/pacientes',
+    },
   },
 } as const
