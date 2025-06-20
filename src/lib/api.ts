@@ -4,18 +4,13 @@ import { env } from '@/config/env'
 type BaseResponse = { success: false; message: string }
 type ApiResponse<Data> = BaseResponse | (BaseResponse & { data?: Data })
 
-export const DEFAULT_HEADERS = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
-}
-
 interface ApiOptions extends RequestInit {
   includeCookies?: boolean
 }
 
 export async function api<T>(
   path: string,
-  { includeCookies, ...options }: ApiOptions,
+  options?: ApiOptions,
 ): Promise<ApiResponse<T>> {
   try {
     let headers: HeadersInit = {
@@ -24,7 +19,7 @@ export async function api<T>(
       ...options?.headers,
     }
 
-    if (includeCookies) {
+    if (options && options.includeCookies) {
       const cookies = await getAllCookies()
       headers = { ...headers, Cookie: cookies.toString() }
     }
