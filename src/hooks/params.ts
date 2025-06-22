@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 type ParamType = {
   key: string
-  value: string
+  value: string | number
 }
 
 interface UpdateParamsProps {
@@ -25,7 +25,7 @@ export function useParams() {
 
     if (set) {
       for (const param of set) {
-        pageParams.set(param.key, param.value)
+        pageParams.set(param.key, String(param.value))
       }
     }
 
