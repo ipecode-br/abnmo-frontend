@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, MailIcon } from 'lucide-react'
+import { MailIcon } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
@@ -13,7 +13,7 @@ import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
-import { wait } from '@/utils/wait'
+import { api } from '@/lib/api'
 
 import {
   signInFormDefaultValues,
@@ -31,17 +31,17 @@ export function SignInForm() {
   const formErrorMessage = formMethods.formState.errors.root?.message
 
   async function signIn(data: SignInFormSchema) {
-    // TODO: implement sign in function when API is available
-    await wait(500)
+    // TODO: redirect to initial page according to user role
+    // TODO: implement keep me logged in option when API is updated with refresh token
 
-    if (data.email === 'erro@ipecode.com.br') {
-      formMethods.setError('root', {
-        message: 'Credenciais inválidas. Por favor, tente novamente.',
-      })
-      return
+    const response = await api('/login', {
+      method: 'POST',
+      body: JSON.stringify({ email: data.email, password: data.password }),
+    })
+
+    if (!response.success) {
+      formMethods.setError('root', { message: response.message })
     }
-
-    console.log(data)
   }
 
   return (
@@ -61,7 +61,7 @@ export function SignInForm() {
           />
         </FormField>
 
-        <div className='flex w-full items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
+        <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
@@ -72,8 +72,8 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button variant='fancy' type='submit' disabled={isSubmitting}>
-          {isSubmitting ? <Loader2 className='animate-spin' /> : 'Entrar'}
+        <Button variant='fancy' type='submit' loading={isSubmitting}>
+          Entrar
         </Button>
 
         {formErrorMessage && (

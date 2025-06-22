@@ -1,9 +1,10 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, MailIcon, User2Icon } from 'lucide-react'
-import { useState } from 'react'
+import { MailIcon, User2Icon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
@@ -13,6 +14,8 @@ import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
+import { ROUTES } from '@/constants/routes'
+import { api } from '@/lib/api'
 import { wait } from '@/utils/wait'
 
 import {
@@ -22,28 +25,30 @@ import {
 } from './sign-up-form-schema'
 
 export function SignUpForm() {
-  const [success, setSuccess] = useState(false)
-
+  const router = useRouter()
   const formMethods = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: signUpFormDefaultValues,
     mode: 'onBlur',
   })
+
   const isSubmitting = formMethods.formState.isSubmitting
   const errorMessage = formMethods.formState.errors.root?.message
 
-  async function registerUser({ email }: SignUpFormSchema) {
-    // TODO: implement function when API is available
-    setSuccess(false)
+  async function registerUser({ name, email, password }: SignUpFormSchema) {
     await wait(500)
 
-    if (email === 'erro@ipecode.com.br') {
-      return formMethods.setError('root', {
-        message: 'Ocorreu algum erro. Por favor, tente novamente.',
-      })
+    const response = await api('/register', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password }),
+    })
+
+    if (!response.success) {
+      return formMethods.setError('root', { message: response.message })
     }
 
-    setSuccess(true)
+    toast.success(response.message)
+    router.push(ROUTES.patient.main)
   }
 
   // TODO: add link to policies
@@ -91,15 +96,9 @@ export function SignUpForm() {
           }
         />
 
-        <Button variant='fancy' type='submit' disabled={isSubmitting}>
-          {isSubmitting ? <Loader2 className='animate-spin' /> : 'Cadastrar'}
+        <Button variant='fancy' type='submit' loading={isSubmitting}>
+          Cadastrar
         </Button>
-
-        {success && (
-          <Alert variant='success' className='text-center'>
-            Cadastro realizado com sucesso.
-          </Alert>
-        )}
 
         {errorMessage && (
           <Alert error={!!errorMessage} className='text-center'>

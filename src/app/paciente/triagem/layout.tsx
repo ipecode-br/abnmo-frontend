@@ -1,6 +1,6 @@
-import { ScreeningProgress } from './screening-progress'
+import { ScreeningProgress } from './progress'
 
-export default function ScreeningFormsLayout({
+export default function ScreeningLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (

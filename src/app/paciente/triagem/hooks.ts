@@ -14,7 +14,7 @@ interface SaveFormAndGoToPageProps<Schema> {
   path: string
 }
 
-export function useScreeningFormNavigation({
+export function useScreening({
   storageKey,
 }: Readonly<UseScreeningFormNavigationProps>) {
   const router = useRouter()

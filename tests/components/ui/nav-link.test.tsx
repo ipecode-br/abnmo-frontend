@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants/routes'
 describe('NavLink', () => {
   it('should render a default NavLink', () => {
     const LinkText = 'Triagem'
-    const href = ROUTES.screening.main
+    const href = ROUTES.patient.main
     render(<NavLink href={href}>{LinkText}</NavLink>)
 
     const navLinkElement = screen.getByText(LinkText)

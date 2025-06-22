@@ -1,6 +1,6 @@
 import { Trash2Icon, UserIcon } from 'lucide-react'
 
-import type { ScreeningSupportNetworkFormSchema } from '@/app/triagem/formularios/rede-de-apoio/support-network-form-schema'
+import type { ScreeningSupportNetworkFormSchema } from '@/app/paciente/triagem/rede-de-apoio/support-network-form-schema'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 

@@ -14,7 +14,7 @@ import { ROUTES } from '@/constants/routes'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
 import { convertEnumToOptions } from '@/helpers/convert-enum-to-options'
 
-import { useScreeningFormNavigation } from '../hooks'
+import { useScreening } from '../hooks'
 import {
   screeningMedicalReportFormDefaultValues,
   type ScreeningMedicalReportFormSchema,
@@ -23,9 +23,9 @@ import {
 
 export function ScreeningMedicalReportForm() {
   const router = useRouter()
-  const { getStoredFormData, saveFormAndGoToPage } = useScreeningFormNavigation(
-    { storageKey: SCREENING_STORAGE_KEYS.screening.medicalReport },
-  )
+  const { getStoredFormData, saveFormAndGoToPage } = useScreening({
+    storageKey: SCREENING_STORAGE_KEYS.screening.medicalReport,
+  })
 
   const formMethods = useForm<ScreeningMedicalReportFormSchema>({
     resolver: zodResolver(screeningMedicalReportFormSchema),
@@ -55,7 +55,7 @@ export function ScreeningMedicalReportForm() {
         onSubmit={formMethods.handleSubmit((data) =>
           saveFormAndGoToPage({
             data,
-            path: ROUTES.screening.forms.supportNetwork,
+            path: ROUTES.patient.screening.supportNetwork,
           }),
         )}
       >

@@ -7,14 +7,14 @@ import { useEffect, useState, useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
+import { ScreeningSupportNetworkCards } from '@/app/paciente/triagem/rede-de-apoio/support-netword-cards'
 import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { ScreeningSupportNetworkCards } from '@/components/ui/support-netword-cards'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
 import { setStorageItem } from '@/helpers/local-storage'
 
-import { useScreeningFormNavigation } from '../hooks'
+import { useScreening } from '../hooks'
 import {
   screeningSupportNetworkContactsSchema,
   screeningSupportNetworkFormDefaultValues,
@@ -29,7 +29,7 @@ export function ScreeningSupportNetworkForm() {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
-  const { getStoredFormData, finishScreening } = useScreeningFormNavigation({
+  const { getStoredFormData, finishScreening } = useScreening({
     storageKey: SCREENING_STORAGE_KEYS.screening.supportNetwork,
   })
 
