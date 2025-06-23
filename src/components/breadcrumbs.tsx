@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
-import { BREADCRUMBS, type BreadcrumbsType } from '@/constants/breadcrumbs'
+import { BREADCRUMBS, type BreadcrumbType } from '@/constants/breadcrumbs'
 import { cn } from '@/utils/class-name-merge'
 
 export function Breadcrumbs() {
@@ -14,7 +14,7 @@ export function Breadcrumbs() {
   const breadcrumbs = []
 
   for (const path of pathnames) {
-    const breadcrumb = BREADCRUMBS[path as BreadcrumbsType]
+    const breadcrumb = BREADCRUMBS[path as BreadcrumbType]
     if (breadcrumb) {
       breadcrumbs.push(breadcrumb)
     }

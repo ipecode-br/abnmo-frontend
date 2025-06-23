@@ -12,4 +12,9 @@ export const ROUTES = {
       supportNetwork: '/paciente/triagem/rede-de-apoio',
     },
   },
+  dashboard: {
+    patients: {
+      main: '/pacientes',
+    },
+  },
 } as const
