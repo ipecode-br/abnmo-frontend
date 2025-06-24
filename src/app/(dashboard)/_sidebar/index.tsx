@@ -1,3 +1,4 @@
+'use client'
 import {
   Bolt,
   Headset,
@@ -6,47 +7,91 @@ import {
   UserRoundCheck,
   UserRoundSearch,
 } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
-import { Header } from './sidebar-header'
-import { HelpCard } from './sidebar-help-card'
-import { NavLink } from './sidebar-nav-link'
-import { NavSection } from './sidebar-nav-section'
-import { UserInfo } from './sidebar-user-info'
+import { NavButton } from '@/components/ui/nav-button'
+import { ROUTES } from '@/constants/routes'
+import { cn } from '@/utils/class-name-merge'
+
+import { SidebarHeader } from './header'
+import { SidebarHelpCard } from './help-card'
+import { SidebarNavSection } from './nav-section'
+import { SidebarUserInfo } from './user-info'
 
 export function DashboardSidebar() {
+  const pathName = usePathname()
   return (
-    <aside className='border-border flex h-screen w-[274px] flex-col border-r px-6 py-8'>
+    <aside className='border-border flex h-screen w-68 flex-col border-r px-6 py-8'>
       <div className='flex flex-1 flex-col gap-8 overflow-y-auto'>
-        <Header name={'Cleide Systems'} />
-
-        <NavSection title='GERAL'>
-          <NavLink href='#' icon={LayoutDashboard}>
-            Visão Geral
-          </NavLink>
-          <NavLink href='/pacientes' icon={UserRoundSearch}>
-            Pacientes
-          </NavLink>
-          <NavLink href='/encaminhados' icon={Share2}>
-            Encaminhamentos
-          </NavLink>
-          <NavLink href='#' icon={UserRoundCheck}>
-            Aprovação
-          </NavLink>
-        </NavSection>
-
-        <NavSection title='OUTROS'>
-          <NavLink href='#' icon={Bolt}>
-            Configurações
-          </NavLink>
-          <NavLink href='#' icon={Headset}>
-            Suporte
-          </NavLink>
-        </NavSection>
-
-        <HelpCard />
+        <SidebarHeader name='Cleide Systems' />
+        {SIDEBAR_SECTION.map((section) => (
+          <SidebarNavSection key={section.title} title={section.title}>
+            {section.links.map((link) => {
+              const isActive = link.path === pathName
+              return (
+                <NavButton
+                  key={link.label}
+                  variant='ghost'
+                  href={link.path}
+                  size='lg'
+                  className={cn(
+                    'text-foreground-soft justify-start',
+                    isActive && 'bg-accent hover:bg-accent',
+                  )}
+                >
+                  {link.icon}
+                  {link.label}
+                </NavButton>
+              )
+            })}
+          </SidebarNavSection>
+        ))}
+        <SidebarHelpCard />
       </div>
-
-      <UserInfo name={'Claudio Oliveira'} role={'Enfermagem'} />
+      <SidebarUserInfo name='Claudio Oliveira' role='Enfermagem' />
     </aside>
   )
 }
+
+const SIDEBAR_SECTION = [
+  {
+    title: 'Geral',
+    links: [
+      {
+        label: 'Visão geral',
+        icon: <LayoutDashboard />,
+        path: ROUTES.dashboard.main,
+      },
+      {
+        label: 'Pacientes',
+        icon: <UserRoundSearch />,
+        path: ROUTES.dashboard.patients.main,
+      },
+      {
+        label: 'Encaminhados',
+        icon: <Share2 />,
+        path: ROUTES.dashboard.forwarded.main,
+      },
+      {
+        label: 'Aprovações',
+        icon: <UserRoundCheck />,
+        path: ROUTES.dashboard.approvals.main,
+      },
+    ],
+  },
+  {
+    title: 'Outros',
+    links: [
+      {
+        label: 'Configurações',
+        icon: <Bolt />,
+        path: ROUTES.dashboard.settings.main,
+      },
+      {
+        label: 'Suporte',
+        icon: <Headset />,
+        path: ROUTES.dashboard.support.main,
+      },
+    ],
+  },
+]

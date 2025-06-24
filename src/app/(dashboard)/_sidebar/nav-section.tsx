@@ -5,9 +5,12 @@ interface NavSectionProps {
   children: ReactNode
 }
 
-export function NavSection({ title, children }: Readonly<NavSectionProps>) {
+export function SidebarNavSection({
+  title,
+  children,
+}: Readonly<NavSectionProps>) {
   return (
-    <div className=''>
+    <div>
       <p className='text-disabled mb-4 text-xs font-medium uppercase'>
         {title}
       </p>

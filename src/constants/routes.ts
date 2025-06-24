@@ -13,8 +13,21 @@ export const ROUTES = {
     },
   },
   dashboard: {
+    main: '/',
     patients: {
       main: '/pacientes',
+    },
+    forwarded: {
+      main: '/encaminhados',
+    },
+    approvals: {
+      main: '/aprovacoes',
+    },
+    settings: {
+      main: '/configuracoes',
+    },
+    support: {
+      main: '/suporte',
     },
   },
 } as const
