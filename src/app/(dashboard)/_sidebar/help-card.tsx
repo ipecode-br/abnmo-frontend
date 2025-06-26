@@ -1,0 +1,25 @@
+import { Headset, X } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+
+export function SidebarHelpCard() {
+  return (
+    <div className='bg-background-soft relative space-y-3 rounded-2xl p-4'>
+      <div className='flex items-center gap-2.5'>
+        <Headset className='size-5' />
+        <p className='font-medium tracking-tight'>Precisa de ajuda?</p>
+      </div>
+
+      <Button
+        size='icon'
+        variant='ghost'
+        className='text-foreground-soft absolute top-1.5 right-1.5 size-8 [&_svg]:size-4'
+      >
+        <X />
+      </Button>
+      <p className='text-foreground-soft text-sm leading-tight'>
+        Entre em contato com a nossa equipe de suporte.
+      </p>
+    </div>
+  )
+}
