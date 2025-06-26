@@ -5,7 +5,7 @@ import {
   LayoutDashboard,
   Share2,
   UserRoundCheck,
-  UserRoundSearch,
+  Users2Icon,
 } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
@@ -13,58 +13,65 @@ import { NavButton } from '@/components/ui/nav-button'
 import { ROUTES } from '@/constants/routes'
 import { cn } from '@/utils/class-name-merge'
 
+import { SidebarAccount } from './account'
 import { SidebarHeader } from './header'
 import { SidebarHelpCard } from './help-card'
-import { SidebarNavSection } from './nav-section'
-import { SidebarUserInfo } from './user-info'
 
 export function DashboardSidebar() {
   const pathName = usePathname()
+
   return (
-    <aside className='border-border flex h-screen w-68 flex-col border-r px-6 py-8'>
-      <div className='flex flex-1 flex-col gap-8 overflow-y-auto'>
-        <SidebarHeader name='Cleide Systems' />
-        {SIDEBAR_SECTION.map((section) => (
-          <SidebarNavSection key={section.title} title={section.title}>
-            {section.links.map((link) => {
-              const isActive = link.path === pathName
-              return (
-                <NavButton
-                  key={link.label}
-                  variant='ghost'
-                  href={link.path}
-                  size='lg'
-                  className={cn(
-                    'text-foreground-soft justify-start',
-                    isActive && 'bg-accent hover:bg-accent',
-                  )}
-                >
-                  {link.icon}
-                  {link.label}
-                </NavButton>
-              )
-            })}
-          </SidebarNavSection>
+    <aside className='border-border flex h-screen w-68 flex-col gap-8 border-r p-6'>
+      <SidebarHeader />
+
+      <section className='mb-auto space-y-8'>
+        {SIDEBAR_SECTIONS.map((section) => (
+          <div key={section.title}>
+            <p className='text-disabled mb-4 text-xs font-medium uppercase'>
+              {section.title}
+            </p>
+            <nav className='flex flex-col gap-2'>
+              {section.links.map((link) => {
+                const isActive = link.path === pathName
+                return (
+                  <NavButton
+                    key={link.label}
+                    variant='ghost'
+                    href={link.path}
+                    size='lg'
+                    className={cn(
+                      '[&_svg]:text-disabled text-foreground-soft justify-start gap-3',
+                      isActive && 'bg-accent pointer-events-none',
+                    )}
+                  >
+                    {link.icon}
+                    {link.label}
+                  </NavButton>
+                )
+              })}
+            </nav>
+          </div>
         ))}
-        <SidebarHelpCard />
-      </div>
-      <SidebarUserInfo name='Claudio Oliveira' role='Enfermagem' />
+      </section>
+
+      <SidebarHelpCard />
+      <SidebarAccount />
     </aside>
   )
 }
 
-const SIDEBAR_SECTION = [
+const SIDEBAR_SECTIONS = [
   {
     title: 'Geral',
     links: [
       {
-        label: 'Visão geral',
+        label: 'Visão Geral',
         icon: <LayoutDashboard />,
         path: ROUTES.dashboard.main,
       },
       {
         label: 'Pacientes',
-        icon: <UserRoundSearch />,
+        icon: <Users2Icon />,
         path: ROUTES.dashboard.patients.main,
       },
       {
