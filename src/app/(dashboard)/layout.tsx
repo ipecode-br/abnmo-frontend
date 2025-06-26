@@ -1,5 +1,4 @@
 import { DashboardSidebar } from '@/app/(dashboard)/_sidebar'
-import { DashboardContainer } from '@/app/(dashboard)/container'
 
 import { DashboardHeader } from './_header'
 
@@ -10,9 +9,9 @@ export default function DashboardLayout({
     <div className='flex min-h-svh'>
       <DashboardSidebar />
 
-      <div className='flex-1'>
+      <div className='flex flex-1 flex-col'>
         <DashboardHeader />
-        <DashboardContainer>{children}</DashboardContainer>
+        {children}
       </div>
     </div>
   )

@@ -4,21 +4,29 @@ import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 const inputVariants = cva(
-  'ring-offset-background focus-visible:ring-ring h-10 w-full shrink-0 rounded-lg border bg-transparent px-3 text-sm shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'ring-offset-background focus-visible:ring-ring bg-background h-10 w-full shrink-0 rounded-lg border px-3 text-sm shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default: 'border-border text-foreground placeholder:text-disabled',
         error: 'border-error text-error focus-visible:ring-error',
       },
+      size: {
+        default: 'h-10',
+        sm: 'h-9',
+      },
     },
     defaultVariants: {
       variant: 'default',
+      size: 'default',
     },
   },
 )
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
+export type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size'
+> &
   VariantProps<typeof inputVariants> & {
     icon?: LucideIcon
   }
@@ -27,6 +35,7 @@ export function Input({
   icon,
   className,
   variant,
+  size,
   ...props
 }: Readonly<InputProps>) {
   const Icon = icon
@@ -45,7 +54,8 @@ export function Input({
         )}
       >
         <input
-          className={cn(inputVariants({ variant, className }), 'pl-10')}
+          type={props.type ?? 'text'}
+          className={cn(inputVariants({ variant, size, className }), 'pl-10')}
           {...props}
         />
         <Icon
@@ -60,6 +70,10 @@ export function Input({
   }
 
   return (
-    <input className={cn(inputVariants({ variant, className }))} {...props} />
+    <input
+      type={props.type ?? 'text'}
+      className={cn(inputVariants({ variant, size, className }))}
+      {...props}
+    />
   )
 }

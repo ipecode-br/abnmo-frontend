@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { yesOrNoEnum } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
-import { convertEnumToOptions } from '@/helpers/convert-enum-to-options'
+import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 import { useScreening } from '../hooks'
 import {
@@ -35,7 +35,7 @@ export function ScreeningMedicalReportForm() {
   const { setValue, watch } = formMethods
   const hasDisability = watch('hasDisability') === 'yes'
   const takeMedication = watch('takeMedication') === 'yes'
-  const yesOrNoOptions = convertEnumToOptions(yesOrNoEnum)
+  const yesOrNoOptions = convertObjectToOptions(yesOrNoEnum)
 
   useEffect(() => {
     const savedFormData = getStoredFormData(screeningMedicalReportFormSchema)
