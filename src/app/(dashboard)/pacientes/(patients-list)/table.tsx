@@ -1,7 +1,7 @@
 'use client'
 
 import { EllipsisIcon, PlusIcon, UserIcon, Users2Icon } from 'lucide-react'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 
 import { DataTableFilters } from '@/components/data-table/filters'
 import { DataTableFilterDate } from '@/components/data-table/filters/date'
@@ -120,7 +120,9 @@ export default function PatientsListTable() {
         </Table>
       </Card>
 
-      <Pagination totalItems={patients.length} />
+      <Suspense>
+        <Pagination totalItems={patients.length} />
+      </Suspense>
     </>
   )
 }
