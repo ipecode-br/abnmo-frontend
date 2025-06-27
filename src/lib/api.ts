@@ -1,17 +1,8 @@
 import { getAllCookies } from '@/actions/cookies'
 import { env } from '@/config/env'
 
-type SuccessResponse<Data> = {
-  success: true
-  data: Data
-}
-
-type FailureResponse = {
-  success: false
-  message: string
-}
-
-type ApiResponse<Data> = SuccessResponse<Data> | FailureResponse
+type BaseResponse = { success: false; message: string }
+type ApiResponse<Data> = BaseResponse | (BaseResponse & { data?: Data })
 
 interface ApiOptions extends RequestInit {
   includeCookies?: boolean
@@ -40,19 +31,9 @@ export async function api<T>(
       headers,
     })
 
-    const responseData = await response.json()
+    const responseData: ApiResponse<T> = await response.json()
 
-    if (responseData.success === true) {
-      return {
-        success: true,
-        data: responseData.data,
-      }
-    } else {
-      return {
-        success: false,
-        message: responseData.message || 'Erro desconhecido',
-      }
-    }
+    return responseData
   } catch (error) {
     console.error('API request error:', error)
     return {
