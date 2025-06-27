@@ -14,14 +14,14 @@ const buttonVariants = cva(
         fancy:
           'bg-primary text-primary-foreground hover:bg-primary/80 inset-shadow-md shadow-xs',
         outline:
-          'border-border hover:bg-accent text-accent-foreground border bg-transparent',
+          'border-border hover:bg-accent text-accent-foreground bg-background border shadow-xs',
         muted: 'bg-background-soft text-accent-foreground hover:bg-accent',
         ghost: 'text-accent-foreground hover:bg-accent/50 bg-transparent',
       },
       size: {
         default: 'h-10 px-4 [&_svg]:size-5',
         xs: 'h-8 rounded-md px-2.5 text-xs [&_svg]:size-4',
-        sm: 'h-9 rounded-md px-3 [&_svg]:size-4',
+        sm: 'h-9 px-4 [&_svg]:size-4',
         icon: 'size-10 [&_svg]:size-5',
         lg: 'h-11 rounded-xl px-3 text-base [&_svg]:size-5',
       },
