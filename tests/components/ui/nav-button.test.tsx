@@ -56,7 +56,7 @@ describe('NavButton', () => {
     expect(outlinedButtonElement).toHaveClass('border-border')
     expect(outlinedButtonElement).toHaveClass('hover:bg-accent')
     expect(outlinedButtonElement).toHaveClass('border')
-    expect(outlinedButtonElement).toHaveClass('bg-transparent')
+    expect(outlinedButtonElement).toHaveClass('bg-background')
   })
   it('should render a small NavButton', () => {
     const buttonText = 'Small'
@@ -72,8 +72,8 @@ describe('NavButton', () => {
     expect(smallButtonElement).toHaveAttribute('href', '/')
 
     expect(smallButtonElement).toHaveClass('h-9')
-    expect(smallButtonElement).toHaveClass('rounded-md')
-    expect(smallButtonElement).toHaveClass('px-3')
+    expect(smallButtonElement).toHaveClass('rounded-lg')
+    expect(smallButtonElement).toHaveClass('px-4')
   })
   it('should render an icon NavButton with icon size', () => {
     const buttonText = 'icon'

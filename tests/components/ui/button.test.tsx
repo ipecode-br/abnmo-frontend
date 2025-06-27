@@ -34,7 +34,7 @@ describe('Button', () => {
 
     const buttonElement = screen.getByRole('button', { name: buttonText })
 
-    expect(buttonElement).toHaveClass('bg-transparent')
+    expect(buttonElement).toHaveClass('bg-background')
     expect(buttonElement).toHaveClass('text-accent-foreground')
     expect(buttonElement).toHaveClass('border')
     expect(buttonElement).toHaveClass('border-border')
@@ -47,7 +47,7 @@ describe('Button', () => {
     const buttonElement = screen.getByRole('button', { name: buttonText })
 
     expect(buttonElement).toHaveClass('h-9')
-    expect(buttonElement).toHaveClass('rounded-md')
-    expect(buttonElement).toHaveClass('px-3')
+    expect(buttonElement).toHaveClass('rounded-lg')
+    expect(buttonElement).toHaveClass('px-4')
   })
 })
