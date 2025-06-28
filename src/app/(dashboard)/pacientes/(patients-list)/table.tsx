@@ -10,7 +10,7 @@ import { DataTableHeader } from '@/components/data-table/header'
 import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderFilterButton } from '@/components/data-table/header/filter-button'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
-import { DataTableHeaderOrder } from '@/components/data-table/header/order'
+import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
 import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
@@ -54,7 +54,7 @@ export default function PatientsListTable() {
           <DataTableHeaderFilterButton
             onClick={() => setShowFilters(!showFilters)}
           />
-          <DataTableHeaderOrder options={orderOptions} className='min-w-48' />
+          <DataTableHeaderOrderBy options={orderOptions} className='min-w-48' />
 
           <Button size='sm'>
             <PlusIcon />
