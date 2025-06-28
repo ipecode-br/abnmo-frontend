@@ -1,6 +1,6 @@
 import { cn } from '@/utils/class-name-merge'
 
-interface DividerProps {
+interface DividerProps extends React.ComponentProps<'div'> {
   flexItem?: boolean
   height?: string
   orientation?: 'horizontal' | 'vertical'
@@ -14,12 +14,20 @@ export function Divider({
   orientation = 'horizontal',
   text,
   width = 'w-full',
+  className,
+  ...props
 }: Readonly<DividerProps>) {
   if (orientation === 'vertical') {
     return (
       <div
         data-testid='separator'
-        className={cn('bg-border w-px', flexItem && 'self-stretch', height)}
+        className={cn(
+          'bg-border w-px',
+          flexItem && 'self-stretch',
+          height,
+          className,
+        )}
+        {...props}
       />
     )
   }
@@ -27,7 +35,14 @@ export function Divider({
   return (
     <>
       {text ? (
-        <div className={cn('relative flex items-center justify-center', width)}>
+        <div
+          className={cn(
+            'relative flex items-center justify-center',
+            width,
+            className,
+          )}
+          {...props}
+        >
           <p className='bg-background text-foreground-soft z-10 px-3 text-sm'>
             {text}
           </p>
@@ -37,7 +52,11 @@ export function Divider({
           />
         </div>
       ) : (
-        <div data-testid='separator' className={cn('bg-border h-px', width)} />
+        <div
+          data-testid='separator'
+          className={cn('bg-border h-px', width, className)}
+          {...props}
+        />
       )}
     </>
   )
