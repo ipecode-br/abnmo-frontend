@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input, type InputProps } from '@/components/ui/input'
+import { QUERY_PARAMS } from '@/constants/params'
 import { useDebounce } from '@/hooks/debounce'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
@@ -13,16 +14,17 @@ export function DataTableHeaderSearch({
   className,
   ...props
 }: Readonly<InputProps>) {
+  const queryParam = QUERY_PARAMS.search
   const { getParam, updateParams } = useParams()
-  const searchQuery = getParam('query') || ''
+  const searchQuery = getParam(queryParam) || ''
 
   const [query, setQuery] = useState(searchQuery)
   const debouncedQuery = useDebounce(query)
 
   useEffect(() => {
     updateParams({
-      set: [{ key: 'query', value: debouncedQuery }],
-      remove: !debouncedQuery ? ['query'] : undefined,
+      set: [{ key: queryParam, value: debouncedQuery }],
+      remove: !debouncedQuery ? [queryParam] : undefined,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery])
