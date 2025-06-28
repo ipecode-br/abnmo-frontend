@@ -3,10 +3,19 @@
 import { ListFilterIcon } from 'lucide-react'
 
 import { Button, type ButtonProps } from '@/components/ui/button'
+import { cn } from '@/utils/class-name-merge'
 
-export function DataTableHeaderFilterButton(props: Readonly<ButtonProps>) {
+export function DataTableHeaderFilterButton({
+  className,
+  ...props
+}: Readonly<ButtonProps>) {
   return (
-    <Button variant='outline' size='sm' {...props}>
+    <Button
+      size='sm'
+      variant='outline'
+      className={cn('[&_svg]:text-disabled', className)}
+      {...props}
+    >
       <ListFilterIcon />
       Filtros
     </Button>
