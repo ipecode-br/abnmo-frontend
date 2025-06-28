@@ -21,7 +21,7 @@ export function DashboardSidebar() {
   const pathName = usePathname()
 
   return (
-    <aside className='border-border flex h-screen w-68 flex-col gap-8 border-r p-6'>
+    <aside className='border-border flex h-screen w-68 shrink-0 flex-col gap-8 border-r p-6'>
       <SidebarHeader />
 
       <section className='mb-auto space-y-8'>
