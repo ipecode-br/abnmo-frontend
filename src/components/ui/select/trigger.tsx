@@ -13,12 +13,12 @@ export interface SelectTriggerProps
 }
 
 const triggerVariants = cva(
-  'ring-offset-background focus-visible:ring-ring bg-background flex h-10 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm whitespace-nowrap shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>svg]:size-4.5 [&>svg]:shrink-0',
+  'ring-offset-background focus-visible:ring-ring bg-background flex h-10 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm whitespace-nowrap shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:size-4.5 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
         default:
-          'border-border text-foreground hover:bg-accent data-[placeholder]:text-disabled',
+          'border-border text-foreground hover:bg-accent data-[placeholder]:text-disabled [&_svg]:text-disabled',
         error: 'border-error text-error focus-visible:ring-error',
       },
       size: {
