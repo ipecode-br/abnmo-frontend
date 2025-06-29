@@ -71,6 +71,18 @@ strong {
   font-weight: 600;
 }
 
+::-webkit-scrollbar {
+  @apply h-4 w-4 bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-border border-background cursor-pointer rounded-full border-5 transition-colors;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-foreground-soft/40;
+}
+
 .focus {
   @apply ring-offset-background focus-visible:ring-ring rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none;
 }
