@@ -1,6 +1,6 @@
 'use client'
 
-import { EllipsisIcon, PlusIcon, UserIcon, Users2Icon } from 'lucide-react'
+import { EllipsisIcon, PlusIcon, Users2Icon } from 'lucide-react'
 import { Suspense, useEffect, useState } from 'react'
 
 import { DataTableFilters } from '@/components/data-table/filters'
@@ -13,6 +13,7 @@ import { DataTableHeaderInfo } from '@/components/data-table/header/info'
 import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
 import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
+import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import {
@@ -108,9 +109,7 @@ export default function PatientsListTable() {
                 <TableRow key={patient.id}>
                   <TableCell isLastRow={isLastRow}>
                     <div className='flex items-center gap-2'>
-                      <div className='border-border rounded-full border p-1.5'>
-                        <UserIcon className='text-disabled size-5' />
-                      </div>
+                      <Avatar className='size-9' />
                       {patient.name}
                     </div>
                   </TableCell>

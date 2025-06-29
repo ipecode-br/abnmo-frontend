@@ -1,13 +1,12 @@
-import { ChevronRight, UserRound } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 
+import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 
 export function SidebarAccount() {
   return (
     <div className='border-border flex items-center gap-3 border-t pt-8'>
-      <div className='border-border text-foreground-soft rounded-full border p-2.5'>
-        <UserRound className='size-5' />
-      </div>
+      <Avatar />
 
       <div className='flex-1 space-y-1 truncate'>
         <p className='truncate text-sm'>José Fernandes</p>

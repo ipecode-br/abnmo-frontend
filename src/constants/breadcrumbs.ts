@@ -2,7 +2,7 @@ import {
   ClipboardListIcon,
   HomeIcon,
   type LucideIcon,
-  Users,
+  Users2,
 } from 'lucide-react'
 
 import { ROUTES } from '@/constants/routes'
@@ -30,7 +30,7 @@ const PATIENT_SCREENING_BREADCRUMBS: Breadcrumbs = {
 
 const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   pacientes: {
-    icon: Users,
+    icon: Users2,
     name: 'Pacientes',
     path: ROUTES.dashboard.patients.main,
   },

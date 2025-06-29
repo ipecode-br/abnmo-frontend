@@ -1,6 +1,7 @@
-import { Trash2Icon, UserIcon } from 'lucide-react'
+import { Trash2Icon } from 'lucide-react'
 
 import type { ScreeningSupportNetworkFormSchema } from '@/app/paciente/triagem/rede-de-apoio/support-network-form-schema'
+import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
@@ -22,9 +23,7 @@ export function ScreeningSupportNetworkCards({
       <p className='text-sm font-medium'>Contatos adicionados:</p>
       {contacts.map((contact) => (
         <Card key={contact.name} className='flex items-center gap-3'>
-          <div className='border-border rounded-full border p-2'>
-            <UserIcon className='text-disabled size-5' />
-          </div>
+          <Avatar />
 
           <div className='space-y-1'>
             <p className='text-sm font-medium'>{contact.name}</p>
