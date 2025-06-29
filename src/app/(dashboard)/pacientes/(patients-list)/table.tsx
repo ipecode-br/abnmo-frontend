@@ -93,10 +93,12 @@ export default function PatientsListTable() {
           <TableHeader>
             <TableRow>
               <TableHead>Nome do paciente</TableHead>
-              <TableHead className='w-40'>Data de cadastro</TableHead>
               <TableHead className='w-36'>Telefone</TableHead>
               <TableHead>E-mail</TableHead>
               <TableHead className='w-24'>Status</TableHead>
+              <TableHead className='w-40 whitespace-nowrap'>
+                Data de cadastro
+              </TableHead>
               <TableHead className='w-20 text-center'>Ações</TableHead>
             </TableRow>
           </TableHeader>
@@ -107,22 +109,31 @@ export default function PatientsListTable() {
               const StatusIcon = statusTag.icon
               return (
                 <TableRow key={patient.id}>
-                  <TableCell isLastRow={isLastRow}>
+                  <TableCell
+                    isLastRow={isLastRow}
+                    className='whitespace-nowrap'
+                  >
                     <div className='flex items-center gap-2'>
                       <Avatar className='size-9' />
                       {patient.name}
                     </div>
                   </TableCell>
-                  <TableCell isLastRow={isLastRow}>
-                    {formatDate(patient.created_at)}
+
+                  <TableCell
+                    isLastRow={isLastRow}
+                    className='whitespace-nowrap'
+                  >
+                    {patient.phone}
                   </TableCell>
-                  <TableCell isLastRow={isLastRow}>{patient.phone}</TableCell>
                   <TableCell isLastRow={isLastRow}>{patient.email}</TableCell>
                   <TableCell isLastRow={isLastRow}>
                     <Tag className={statusTag.class}>
                       <StatusIcon />
                       {PATIENT_STATUS[patient.status]}
                     </Tag>
+                  </TableCell>
+                  <TableCell isLastRow={isLastRow}>
+                    {formatDate(patient.created_at)}
                   </TableCell>
                   <TableCell isLastRow={isLastRow} className='text-center'>
                     <Button variant='ghost' size='icon' className='size-8'>

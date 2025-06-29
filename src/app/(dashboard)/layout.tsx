@@ -9,7 +9,7 @@ export default function DashboardLayout({
     <div className='flex min-h-svh'>
       <DashboardSidebar />
 
-      <div className='flex flex-1 flex-col'>
+      <div className='flex flex-1 flex-col overflow-hidden'>
         <DashboardHeader />
         {children}
       </div>

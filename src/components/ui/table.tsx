@@ -2,16 +2,18 @@ import { cn } from '@/utils/class-name-merge'
 
 export function Table({
   className,
+  children,
   ...props
-}: Readonly<React.ComponentProps<'table'>>) {
+}: Readonly<React.ComponentProps<'div'>>) {
   return (
-    <table
-      className={cn(
-        'w-full border-separate border-spacing-y-0 text-left text-sm',
-        className,
-      )}
+    <div
+      className={cn('w-full overflow-x-auto text-left text-sm', className)}
       {...props}
-    />
+    >
+      <table className='w-full border-separate border-spacing-y-0'>
+        {children}
+      </table>
+    </div>
   )
 }
 
