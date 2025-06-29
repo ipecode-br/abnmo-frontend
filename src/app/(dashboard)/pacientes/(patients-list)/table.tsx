@@ -1,7 +1,7 @@
 'use client'
 
 import { EllipsisIcon, PlusIcon, UserIcon, Users2Icon } from 'lucide-react'
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
 import { DataTableFilters } from '@/components/data-table/filters'
 import { DataTableFilterDate } from '@/components/data-table/filters/date'
@@ -26,6 +26,7 @@ import {
 import { Tag } from '@/components/ui/tag'
 import { QUERY_PARAMS } from '@/constants/params'
 import { STATUS_TAGS } from '@/constants/utils'
+import { useParams } from '@/hooks/params'
 import {
   PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
@@ -39,10 +40,19 @@ import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 // TODO: include new patient dialog
 export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
+  const { getParam } = useParams()
 
   const patients = PATIENTS_MOCKS
   const { search, orderBy, status, startDate, endDate } = QUERY_PARAMS
   const filterQueries = [search, orderBy, status, startDate, endDate]
+
+  useEffect(() => {
+    const statusParam = getParam(status)
+
+    if (statusParam) {
+      setShowFilters(true)
+    }
+  }, [getParam, status])
 
   return (
     <>
