@@ -24,6 +24,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
+import { QUERY_PARAMS } from '@/constants/params'
 import { STATUS_TAGS } from '@/constants/utils'
 import {
   PATIENT_STATUS,
@@ -40,6 +41,8 @@ export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
 
   const patients = PATIENTS_MOCKS
+  const { search, orderBy, status, startDate, endDate } = QUERY_PARAMS
+  const filterQueries = [search, orderBy, status, startDate, endDate]
 
   return (
     <>
@@ -68,7 +71,7 @@ export default function PatientsListTable() {
       </DataTableHeader>
 
       {showFilters && (
-        <DataTableFilters>
+        <DataTableFilters queries={filterQueries}>
           <DataTableFilterStatus options={PATIENT_STATUS_OPTIONS} />
           <DataTableFilterDate />
         </DataTableFilters>
