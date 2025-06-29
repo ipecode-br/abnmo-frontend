@@ -28,10 +28,10 @@ export function Breadcrumbs() {
 
         return (
           <React.Fragment key={step.name}>
-            <div className='flex items-center gap-1'>
+            <div className='flex items-center gap-1.5'>
               <Icon
                 className={cn(
-                  'text-disabled size-5',
+                  'text-disabled size-4.5',
                   isLastPathname && 'text-foreground',
                 )}
               />
