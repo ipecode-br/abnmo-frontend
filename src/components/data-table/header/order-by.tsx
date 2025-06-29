@@ -1,12 +1,12 @@
 'use client'
 
 import type { SelectTriggerProps } from '@radix-ui/react-select'
-import { ArrowDownWideNarrow, XIcon } from 'lucide-react'
+import { ArrowDownWideNarrow } from 'lucide-react'
 
-import { Divider } from '@/components/ui/divider'
 import { Select, type SelectOptions, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
 import { SelectItem } from '@/components/ui/select/item'
+import { SelectItemReset } from '@/components/ui/select/item-reset'
 import { SelectTrigger } from '@/components/ui/select/trigger'
 import { QUERY_PARAMS } from '@/constants/params'
 import { useParams } from '@/hooks/params'
@@ -47,13 +47,8 @@ export function DataTableHeaderOrderBy({
             {filter.label}
           </SelectItem>
         ))}
-        <Divider className='my-2' />
-        <SelectItem value='reset'>
-          <div className='flex items-center gap-2 [&_svg]:size-4'>
-            <XIcon />
-            Limpar ordem
-          </div>
-        </SelectItem>
+
+        {orderBy && <SelectItemReset title='Limpar ordem' />}
       </SelectContent>
     </Select>
   )

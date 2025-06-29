@@ -56,7 +56,7 @@ export function SelectTrigger({
 
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronsUpDownIcon className='text-disabled ml-auto size-5 shrink-0' />
+        <ChevronsUpDownIcon className='text-disabled ml-auto shrink-0' />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )

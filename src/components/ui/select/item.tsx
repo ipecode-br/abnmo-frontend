@@ -14,7 +14,7 @@ export function SelectItem({
   return (
     <SelectPrimitive.Item
       className={cn(
-        'focus:bg-primary focus:text-primary-foreground flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm outline-none',
+        'focus:bg-primary focus:text-primary-foreground group flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm outline-none [&_svg]:size-4',
         disabled && 'pointer-events-none opacity-50',
         className,
       )}
@@ -23,7 +23,7 @@ export function SelectItem({
     >
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator>
-        <CheckIcon className='size-4' />
+        <CheckIcon />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   )
