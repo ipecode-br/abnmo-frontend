@@ -25,8 +25,11 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { STATUS_TAGS } from '@/constants/utils'
-import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
-import { PATIENT_STATUS, PATIENTS_ORDER } from '@/types/patients'
+import {
+  PATIENT_STATUS,
+  PATIENT_STATUS_OPTIONS,
+  PATIENTS_ORDER_OPTIONS,
+} from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
@@ -37,8 +40,6 @@ export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
 
   const patients = PATIENTS_MOCKS
-  const orderOptions = convertObjectToOptions(PATIENTS_ORDER)
-  const statusOptions = convertObjectToOptions(PATIENT_STATUS)
 
   return (
     <>
@@ -54,7 +55,10 @@ export default function PatientsListTable() {
           <DataTableHeaderFilterButton
             onClick={() => setShowFilters(!showFilters)}
           />
-          <DataTableHeaderOrderBy options={orderOptions} className='min-w-48' />
+          <DataTableHeaderOrderBy
+            options={PATIENTS_ORDER_OPTIONS}
+            className='min-w-48'
+          />
 
           <Button size='sm'>
             <PlusIcon />
@@ -65,7 +69,7 @@ export default function PatientsListTable() {
 
       {showFilters && (
         <DataTableFilters>
-          <DataTableFilterStatus statusOptions={statusOptions} />
+          <DataTableFilterStatus options={PATIENT_STATUS_OPTIONS} />
           <DataTableFilterDate />
         </DataTableFilters>
       )}

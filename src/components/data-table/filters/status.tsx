@@ -1,9 +1,14 @@
 'use client'
 
-import { Select, type SelectOptions, SelectValue } from '@/components/ui/select'
+import { type LucideIcon } from 'lucide-react'
+
+import { Select, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
 import { SelectItem } from '@/components/ui/select/item'
+import { SelectItemReset } from '@/components/ui/select/item-reset'
 import { SelectTrigger } from '@/components/ui/select/trigger'
+import { QUERY_PARAMS } from '@/constants/params'
+import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 
 import {
@@ -11,32 +16,63 @@ import {
   type DataTableFilterContainerProps,
 } from './container'
 
+type StatusOption = {
+  label: string
+  value: string
+  icon?: LucideIcon
+  color?: string
+}
+
 interface DataTableFilterStatusProps
   extends Omit<DataTableFilterContainerProps, 'title'> {
-  statusOptions: SelectOptions
+  options: StatusOption[]
 }
 
 export function DataTableFilterStatus({
-  statusOptions,
+  options,
   className,
   ...props
 }: Readonly<DataTableFilterStatusProps>) {
+  const { getParam, updateParams } = useParams()
+
+  const statusParam = QUERY_PARAMS.status
+  const status = getParam(statusParam) || ''
+
+  function handleSelect(value: string) {
+    if (value === 'reset') {
+      updateParams({ remove: [statusParam] })
+      return
+    }
+
+    updateParams({ set: [{ key: statusParam, value: value }] })
+  }
+
   return (
     <DataTableFilterContainer
-      className={cn('w-48', className)}
       title='Status'
+      className={cn('w-48 shrink-0', className)}
       {...props}
     >
-      <Select>
+      <Select value={status} onValueChange={handleSelect}>
         <SelectTrigger size='sm' className='w-full'>
           <SelectValue placeholder='Selecione o status' />
         </SelectTrigger>
         <SelectContent>
-          {statusOptions.map((filter) => (
-            <SelectItem key={filter.value} value={filter.value}>
-              {filter.label}
+          {options.map(({ label, value, icon: Icon, color }) => (
+            <SelectItem key={value} value={value}>
+              <div
+                className={cn(
+                  '[&_svg]:group-focus:text-primary-foreground flex items-center gap-2',
+                  color,
+                )}
+              >
+                {Icon && <Icon />}
+                {label}
+              </div>
             </SelectItem>
           ))}
+
+          {status && <SelectItemReset title='Limpar status' />}
         </SelectContent>
       </Select>
     </DataTableFilterContainer>
