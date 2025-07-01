@@ -31,7 +31,7 @@ export function TableHead({
   return (
     <th
       className={cn(
-        'text-foreground-soft border-border bg-background-soft/50 border-y px-4 py-3 font-normal first-of-type:rounded-l-lg first-of-type:border-l last-of-type:rounded-r-lg last-of-type:border-r',
+        'text-foreground-soft border-border bg-background-soft/50 border-y px-4 py-3 font-normal whitespace-nowrap first-of-type:rounded-l-lg first-of-type:border-l last-of-type:rounded-r-lg last-of-type:border-r',
         className,
       )}
       {...props}
@@ -58,7 +58,7 @@ export function TableCell({
   return (
     <td
       className={cn(
-        'border-border border-b px-4 py-3',
+        'border-border border-b px-4 py-3 whitespace-nowrap',
         isLastRow && 'border-none',
         className,
       )}
