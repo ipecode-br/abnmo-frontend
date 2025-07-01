@@ -10,7 +10,7 @@ import { RadioInput } from '@/components/form/radio-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { yesOrNoEnum } from '@/constants/enums'
-import { ROUTES } from '@/constants/routes'
+import { getRoutes } from '@/constants/routes'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
@@ -36,6 +36,7 @@ export function ScreeningMedicalReportForm() {
   const hasDisability = watch('hasDisability') === 'yes'
   const takeMedication = watch('takeMedication') === 'yes'
   const yesOrNoOptions = convertObjectToOptions(yesOrNoEnum)
+  const routes = getRoutes()
 
   useEffect(() => {
     const savedFormData = getStoredFormData(screeningMedicalReportFormSchema)
@@ -55,7 +56,7 @@ export function ScreeningMedicalReportForm() {
         onSubmit={formMethods.handleSubmit((data) =>
           saveFormAndGoToPage({
             data,
-            path: ROUTES.patient.screening.supportNetwork,
+            path: routes.patient.screening.supportNetwork,
           }),
         )}
       >
