@@ -12,7 +12,7 @@ export function Avatar({ src, className, ...props }: Readonly<AvatarProps>) {
   return (
     <div
       className={cn(
-        'border-border text-foreground-soft flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border [&_svg]:size-5',
+        'border-border text-foreground-soft bg-background flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border [&_svg]:size-5',
         className,
       )}
       {...props}
