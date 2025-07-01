@@ -1,6 +1,7 @@
 'use client'
 
 import { EllipsisIcon, PlusIcon, Users2Icon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState } from 'react'
 
 import { DataTableFilters } from '@/components/data-table/filters'
@@ -26,6 +27,7 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_PARAMS } from '@/constants/params'
+import { getRoutes } from '@/constants/routes'
 import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
 import {
@@ -39,13 +41,20 @@ import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 // TODO: implement Tanstack Query to fetch data from API
 // TODO: create patient actions menu
 // TODO: include new patient dialog
+// TODO: add focus styles to cell button
 export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
   const { getParam } = useParams()
+  const router = useRouter()
 
   const patients = PATIENTS_MOCKS
   const { search, orderBy, status, startDate, endDate } = QUERY_PARAMS
   const filterQueries = [search, orderBy, status, startDate, endDate]
+
+  function handleNavigation(id: string) {
+    const routes = getRoutes(id)
+    router.push(routes.dashboard.patients.details.info)
+  }
 
   useEffect(() => {
     const statusParam = getParam(status)
@@ -109,22 +118,19 @@ export default function PatientsListTable() {
               const StatusIcon = statusTag.icon
               return (
                 <TableRow key={patient.id}>
-                  <TableCell
-                    isLastRow={isLastRow}
-                    className='whitespace-nowrap'
-                  >
-                    <div className='flex items-center gap-2'>
-                      <Avatar className='size-9' />
-                      {patient.name}
-                    </div>
+                  <TableCell isLastRow={isLastRow} className='p-0'>
+                    <button
+                      className='cursor-pointer px-4'
+                      onClick={() => handleNavigation(patient.id.toString())}
+                    >
+                      <div className='flex items-center gap-2'>
+                        <Avatar className='size-9' />
+                        {patient.name}
+                      </div>
+                    </button>
                   </TableCell>
 
-                  <TableCell
-                    isLastRow={isLastRow}
-                    className='whitespace-nowrap'
-                  >
-                    {patient.phone}
-                  </TableCell>
+                  <TableCell isLastRow={isLastRow}>{patient.phone}</TableCell>
                   <TableCell isLastRow={isLastRow}>{patient.email}</TableCell>
                   <TableCell isLastRow={isLastRow}>
                     <Tag className={statusTag.class}>
