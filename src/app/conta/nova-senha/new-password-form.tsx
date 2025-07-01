@@ -11,7 +11,7 @@ import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { ROUTES } from '@/constants/routes'
+import { getRoutes } from '@/constants/routes'
 import { wait } from '@/utils/wait'
 
 import {
@@ -38,7 +38,8 @@ export function NewPasswordForm() {
     console.log(data)
 
     setSuccess(true)
-    setTimeout(() => redirect(ROUTES.auth.signIn), 2000)
+    const routes = getRoutes()
+    setTimeout(() => redirect(routes.auth.signIn), 2000)
   }
 
   return (

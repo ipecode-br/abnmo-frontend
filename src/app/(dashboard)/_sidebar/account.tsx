@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 
 export function SidebarAccount() {
   return (
-    <div className='border-border flex items-center gap-3 border-t pt-8'>
+    <div className='flex items-center gap-3'>
       <Avatar />
 
       <div className='flex-1 space-y-1 truncate'>

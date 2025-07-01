@@ -1,8 +1,15 @@
+'use client'
+
 import { Headset, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { useSidebar } from '@/store/sidebar'
 
 export function SidebarHelpCard() {
+  const expanded = useSidebar((state) => state.expanded)
+
+  if (!expanded) return null
+
   return (
     <div className='bg-background-soft relative space-y-3 rounded-2xl p-4'>
       <div className='flex items-center gap-2.5'>

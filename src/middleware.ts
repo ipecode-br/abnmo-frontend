@@ -1,13 +1,15 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-import { ROUTES } from '@/constants/routes'
+import { getRoutes } from '@/constants/routes'
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  const routes = getRoutes()
+
   if (pathname === '/') {
-    return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
+    return NextResponse.redirect(new URL(routes.auth.signIn, request.url))
   }
 
   return NextResponse.next()

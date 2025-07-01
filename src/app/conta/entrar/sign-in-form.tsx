@@ -12,7 +12,7 @@ import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
-import { ROUTES } from '@/constants/routes'
+import { getRoutes } from '@/constants/routes'
 import { api } from '@/lib/api'
 
 import {
@@ -29,6 +29,8 @@ export function SignInForm() {
   })
   const isSubmitting = formMethods.formState.isSubmitting
   const formErrorMessage = formMethods.formState.errors.root?.message
+
+  const routes = getRoutes()
 
   async function signIn(data: SignInFormSchema) {
     // TODO: redirect to initial page according to user role
@@ -65,7 +67,7 @@ export function SignInForm() {
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
-            href={ROUTES.auth.forgotPassword}
+            href={routes.auth.forgotPassword}
             className='whitespace-nowrap'
           >
             Esqueceu sua senha?

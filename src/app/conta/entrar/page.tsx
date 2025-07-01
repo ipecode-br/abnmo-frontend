@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { AuthCard } from '@/components/auth/auth-card'
 import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
-import { ROUTES } from '@/constants/routes'
+import { getRoutes } from '@/constants/routes'
 
 import { SignInForm } from './sign-in-form'
 
@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default function SignInPage() {
+  const routes = getRoutes()
+
   return (
     <AuthCard
       image={image}
@@ -26,7 +28,7 @@ export default function SignInPage() {
       <p className='text-foreground-soft text-center text-sm'>
         Não tem uma conta?{' '}
         <NavLink
-          href={ROUTES.auth.signUp}
+          href={routes.auth.signUp}
           className='text-foreground font-medium whitespace-nowrap'
         >
           Crie sua conta aqui
