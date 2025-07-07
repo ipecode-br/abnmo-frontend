@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useTransition } from 'react'
 
 type ParamType = {
   key: string
@@ -15,28 +16,34 @@ interface UpdateParamsProps {
 export function useParams() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const [, startTransition] = useTransition()
 
   function getParam(key: string): string | null {
     return searchParams.get(key)
   }
 
-  function updateParams({ set, remove }: Readonly<UpdateParamsProps>) {
-    const pageParams = new URLSearchParams(searchParams)
+  const updateParams = useCallback(
+    ({ set, remove }: UpdateParamsProps) => {
+      const params = new URLSearchParams(searchParams.toString())
 
-    if (set) {
-      for (const param of set) {
-        pageParams.set(param.key, String(param.value))
+      if (set) {
+        for (const { key, value } of set) {
+          params.set(key, String(value))
+        }
       }
-    }
 
-    if (remove) {
-      for (const param of remove) {
-        pageParams.delete(param)
+      if (remove) {
+        for (const key of remove) {
+          params.delete(key)
+        }
       }
-    }
 
-    router.replace(`?${pageParams.toString()}`)
-  }
+      startTransition(() => {
+        router.replace(`?${params.toString()}`)
+      })
+    },
+    [router, searchParams],
+  )
 
   return {
     searchParams,
