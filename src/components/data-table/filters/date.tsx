@@ -12,10 +12,10 @@ export function DataTableFilterDate({
 }: Readonly<React.ComponentProps<'div'>>) {
   return (
     <div className={cn('flex w-96 gap-2', className)} {...props}>
-      <DataTableFilterContainer className='flex-1' title='Status'>
+      <DataTableFilterContainer className='flex-1' title='Data inicial'>
         <Input placeholder='Data inicial' size='sm' />
       </DataTableFilterContainer>
-      <DataTableFilterContainer className='flex-1' title='Status'>
+      <DataTableFilterContainer className='flex-1' title='Data final'>
         <Input placeholder='Data final' size='sm' />
       </DataTableFilterContainer>
     </div>
