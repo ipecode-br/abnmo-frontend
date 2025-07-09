@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 
 import { getRoutes } from '@/constants/routes'
 
+import PatientHistoryTable from './patient-history-table'
+
 export const metadata: Metadata = {
   title: 'Histórico',
 }
@@ -21,5 +23,5 @@ export default async function PatientHistoryPage({
     redirect(routes.dashboard.patients.main)
   }
 
-  return <div>ID do paciente: {patientId}</div>
+  return <PatientHistoryTable />
 }
