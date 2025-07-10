@@ -4,6 +4,10 @@ export const metadata: Metadata = {
   title: 'Encaminhados',
 }
 
-export default function forwardedPage() {
-  return <div>page content forwarded here</div>
+export default function ForwardedPage() {
+  return (
+    <div>
+      <h1>page content forwarded here</h1>
+    </div>
+  )
 }
