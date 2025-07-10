@@ -26,14 +26,25 @@ export function Modal({
   description,
   cancelText,
   confirmText,
-}: ModalProps) {
+}: Readonly<ModalProps>) {
   if (!isOpen) {
     return null
   }
 
+  const handleBackdropKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      onCloseAction()
+    }
+  }
+
   return (
     <div
+      role='button'
+      tabIndex={0}
       onClick={onCloseAction}
+      onKeyDown={handleBackdropKeyDown}
       className='bg-foreground/25 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm'
     >
       <Card

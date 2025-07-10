@@ -15,7 +15,7 @@ export function ExpandableText({
   text,
   maxLength = 230,
   className,
-}: ExpandableTextProps) {
+}: Readonly<ExpandableTextProps>) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const toggleExpanded = () => {
