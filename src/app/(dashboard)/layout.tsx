@@ -1,8 +1,4 @@
-'use client'
-
 import { DashboardSidebar } from '@/app/(dashboard)/_sidebar'
-import { Modal } from '@/components/modal'
-import { ModalContent } from '@/components/modal/content'
 
 import { DashboardHeader } from './_header'
 
@@ -16,13 +12,6 @@ export default function DashboardLayout({
       <div className='flex flex-1 flex-col overflow-hidden'>
         <DashboardHeader />
         {children}
-      </div>
-      <div>
-        <Modal position='center'>
-          <ModalContent>
-            <h1>teste</h1>
-          </ModalContent>
-        </Modal>
       </div>
     </div>
   )
