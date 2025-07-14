@@ -2,7 +2,7 @@
 
 import { EllipsisIcon, PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DataTableFilters } from '@/components/data-table/filters'
 import { DataTableFilterDate } from '@/components/data-table/filters/date'
@@ -153,9 +153,7 @@ export default function PatientsListTable() {
         </Table>
       </Card>
 
-      <Suspense>
-        <Pagination totalItems={patients.length} />
-      </Suspense>
+      <Pagination totalItems={patients.length} />
     </>
   )
 }
