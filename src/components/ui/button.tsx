@@ -19,12 +19,11 @@ const buttonVariants = cva(
         ghost: 'text-accent-foreground hover:bg-accent/50 bg-transparent',
       },
       size: {
-        default: 'h-10 px-4 [&_svg]:size-5',
-        close: 'rounded-full p-1.5 [&_svg]:size-5',
-        xs: 'h-8 rounded-md px-2.5 text-xs [&_svg]:size-4',
-        sm: 'h-9 px-4 [&_svg]:size-4',
-        icon: 'size-10 [&_svg]:size-5',
-        lg: 'h-11 rounded-xl px-3 text-base [&_svg]:size-5',
+        default: 'h-10 min-h-10 px-4 [&_svg]:size-5',
+        xs: 'h-8 min-h-8 rounded-md px-2.5 text-xs [&_svg]:size-4',
+        sm: 'h-9 min-h-9 px-4 [&_svg]:size-4',
+        lg: 'h-11 min-h-11 rounded-xl px-3 text-base [&_svg]:size-5',
+        icon: 'min-size-10 size-10 [&_svg]:size-5',
       },
     },
     defaultVariants: {
