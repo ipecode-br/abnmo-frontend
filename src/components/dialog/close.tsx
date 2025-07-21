@@ -1,4 +1,3 @@
-'use client'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { VariantProps } from 'class-variance-authority'
 
@@ -14,7 +13,7 @@ interface DialogCloseProps
     VariantProps<typeof buttonVariants> {}
 
 export function DialogClose({
-  variant = 'default',
+  variant = 'outline',
   size,
   children,
   className,
