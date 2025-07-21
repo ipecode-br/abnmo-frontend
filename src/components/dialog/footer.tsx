@@ -1,15 +1,13 @@
-'use client'
-
 import { cn } from '@/utils/class-name-merge'
 
 export function DialogFooter({
   className,
   ...props
-}: Readonly<React.HTMLAttributes<HTMLDivElement>>) {
+}: Readonly<React.ComponentProps<'footer'>>) {
   return (
-    <div
+    <footer
       className={cn(
-        'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
+        'border-border flex flex-col gap-2 border-t p-5 md:flex-row-reverse',
         className,
       )}
       {...props}
