@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 import { DashboardContainer } from '@/components/dashboard/container'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
@@ -24,7 +25,9 @@ export default function PatientsListPage() {
     <>
       <DashboardTabButtons buttons={tabButtons} />
       <DashboardContainer className='flex flex-col gap-6'>
-        <PatientsListTable />
+        <Suspense>
+          <PatientsListTable />
+        </Suspense>
       </DashboardContainer>
     </>
   )
