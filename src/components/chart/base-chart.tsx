@@ -16,6 +16,7 @@ import { cn } from '@/utils/class-name-merge'
 
 import { Card } from '../ui/card'
 import { Divider } from '../ui/divider'
+import { CustomTooltip } from './custom-tooltip'
 
 interface ChartDataItem {
   name: string
@@ -86,7 +87,10 @@ export function BaseChart({
               axisLine={false}
               tickLine={false}
             />
-            <Tooltip cursor={{ fill: 'transparent' }} />
+            <Tooltip
+              content={<CustomTooltip />}
+              cursor={{ fill: 'transparent' }}
+            />
             <Bar dataKey='value' fill={barColor} barSize={20}>
               {data.map((_entry, index) => (
                 <Cell key={`cell-${index}`} fill={barColor} />
