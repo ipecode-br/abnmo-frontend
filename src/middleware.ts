@@ -1,15 +1,14 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-import { getRoutes } from '@/constants/routes'
-
 export async function middleware(request: NextRequest) {
+  const cookies = request.cookies
   const pathname = request.nextUrl.pathname
 
-  const routes = getRoutes()
+  const accessToken = cookies.get('access_token')
 
-  if (pathname === '/') {
-    return NextResponse.redirect(new URL(routes.auth.signIn, request.url))
+  if (pathname.startsWith('/auth') && accessToken) {
+    return NextResponse.redirect('/')
   }
 
   return NextResponse.next()
