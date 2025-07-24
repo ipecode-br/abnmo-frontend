@@ -14,7 +14,7 @@ export function getRoutes(id?: string) {
       },
     },
     dashboard: {
-      main: '/',
+      main: '/visao-geral',
       patients: {
         main: '/pacientes',
         details: {

@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 
-type CardProps = HTMLAttributes<HTMLDivElement>
+export type CardProps = HTMLAttributes<HTMLDivElement>
 
 export function Card({ className, ...props }: Readonly<CardProps>) {
   return (
