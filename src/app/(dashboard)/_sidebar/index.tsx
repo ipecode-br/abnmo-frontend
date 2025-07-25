@@ -4,15 +4,19 @@ import {
   Bolt,
   Headset,
   LayoutDashboard,
+  LogOutIcon,
   Share2,
   UserRoundCheck,
   Users2Icon,
 } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
+import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
 import { NavButton } from '@/components/ui/nav-button'
 import { ROUTES } from '@/constants/routes'
+import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
@@ -23,6 +27,20 @@ import { SidebarHelpCard } from './help-card'
 export function DashboardSidebar() {
   const expanded = useSidebar((state) => state.expanded)
   const pathName = usePathname()
+
+  const router = useRouter()
+
+  async function logout() {
+    const response = await api('/logout', { method: 'POST' })
+
+    if (!response.success) {
+      toast.error(response.message)
+      return
+    }
+
+    toast.success(response.message)
+    router.replace(ROUTES.auth.signIn)
+  }
 
   return (
     <aside
@@ -69,6 +87,11 @@ export function DashboardSidebar() {
       </section>
 
       <SidebarHelpCard />
+
+      <Button variant='ghost' className='justify-start' onClick={logout}>
+        <LogOutIcon />
+        Sair
+      </Button>
 
       <Divider />
 
