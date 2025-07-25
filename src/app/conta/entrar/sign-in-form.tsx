@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
@@ -22,6 +23,7 @@ import {
 } from './sign-in-form-schema'
 
 export function SignInForm() {
+  const router = useRouter()
   const formMethods = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: signInFormDefaultValues,
@@ -32,18 +34,18 @@ export function SignInForm() {
 
   const routes = getRoutes()
 
-  async function signIn(data: SignInFormSchema) {
-    // TODO: redirect to initial page according to user role
-    // TODO: implement keep me logged in option when API is updated with refresh token
-
+  async function signIn({ email, password, rememberMe }: SignInFormSchema) {
     const response = await api('/login', {
       method: 'POST',
-      body: JSON.stringify({ email: data.email, password: data.password }),
+      body: JSON.stringify({ email, password, rememberMe }),
     })
 
     if (!response.success) {
       formMethods.setError('root', { message: response.message })
+      return
     }
+
+    router.push(routes.dashboard.main)
   }
 
   return (

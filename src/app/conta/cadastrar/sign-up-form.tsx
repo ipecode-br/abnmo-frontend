@@ -16,7 +16,6 @@ import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
 import { getRoutes } from '@/constants/routes'
 import { api } from '@/lib/api'
-import { wait } from '@/utils/wait'
 
 import {
   signUpFormDefaultValues,
@@ -37,7 +36,6 @@ export function SignUpForm() {
 
   async function registerUser({ name, email, password }: SignUpFormSchema) {
     const routes = getRoutes()
-    await wait(500)
 
     const response = await api('/register', {
       method: 'POST',
