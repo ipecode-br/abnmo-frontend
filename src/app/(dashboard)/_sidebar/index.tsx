@@ -12,7 +12,7 @@ import { usePathname } from 'next/navigation'
 
 import { Divider } from '@/components/ui/divider'
 import { NavButton } from '@/components/ui/nav-button'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 import { useSidebar } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
@@ -77,7 +77,6 @@ export function DashboardSidebar() {
   )
 }
 
-const routes = getRoutes()
 const SIDEBAR_SECTIONS = [
   {
     title: 'Geral',
@@ -85,22 +84,22 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Visão Geral',
         icon: <LayoutDashboard />,
-        path: routes.dashboard.main,
+        path: ROUTES.dashboard.main,
       },
       {
         label: 'Pacientes',
         icon: <Users2Icon />,
-        path: routes.dashboard.patients.main,
+        path: ROUTES.dashboard.patients.main,
       },
       {
         label: 'Encaminhados',
         icon: <Share2 />,
-        path: routes.dashboard.forwarded.main,
+        path: ROUTES.dashboard.forwarded.main,
       },
       {
         label: 'Aprovações',
         icon: <UserRoundCheck />,
-        path: routes.dashboard.approvals.main,
+        path: ROUTES.dashboard.approvals.main,
       },
     ],
   },
@@ -110,12 +109,12 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Configurações',
         icon: <Bolt />,
-        path: routes.dashboard.settings.main,
+        path: ROUTES.dashboard.settings.main,
       },
       {
         label: 'Suporte',
         icon: <Headset />,
-        path: routes.dashboard.support.main,
+        path: ROUTES.dashboard.support.main,
       },
     ],
   },

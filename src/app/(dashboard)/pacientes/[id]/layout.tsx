@@ -1,6 +1,6 @@
 import { DashboardContainer } from '@/components/dashboard/container'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 
 interface PatientDetailsLayoutProps {
   params: Promise<{ id: string }>
@@ -12,16 +12,15 @@ export default async function PatientDetailsLayout({
   children,
 }: Readonly<PatientDetailsLayoutProps>) {
   const patientId = (await params).id
-  const routes = getRoutes(patientId)
 
   const tabButtons = [
     {
       title: 'Informações do paciente',
-      path: routes.dashboard.patients.details.info,
+      path: ROUTES.dashboard.patients.details.info(patientId),
     },
     {
       title: 'Histórico do paciente',
-      path: routes.dashboard.patients.details.history,
+      path: ROUTES.dashboard.patients.details.history(patientId),
     },
   ]
 

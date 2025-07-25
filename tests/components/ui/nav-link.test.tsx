@@ -3,14 +3,12 @@ import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 
 import { NavLink } from '@/components/ui/nav-link'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 
 describe('NavLink', () => {
   it('should render a default NavLink', () => {
-    const routes = getRoutes()
-
     const LinkText = 'Triagem'
-    const href = routes.patient.main
+    const href = ROUTES.patient.main
     render(<NavLink href={href}>{LinkText}</NavLink>)
 
     const navLinkElement = screen.getByText(LinkText)

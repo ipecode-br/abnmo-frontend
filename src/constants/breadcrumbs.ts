@@ -7,7 +7,7 @@ import {
   Users2,
 } from 'lucide-react'
 
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from './routes'
 
 type BreadcrumbDataType = {
   icon: LucideIcon
@@ -17,18 +17,16 @@ type BreadcrumbDataType = {
 
 type Breadcrumbs = Record<string, BreadcrumbDataType>
 
-const routes = getRoutes()
-
 const PATIENT_SCREENING_BREADCRUMBS: Breadcrumbs = {
   paciente: {
     icon: HomeIcon,
     name: 'Início',
-    path: routes.patient.main,
+    path: ROUTES.patient.main,
   },
   triagem: {
     icon: ClipboardListIcon,
     name: 'Formulário de triagem',
-    path: routes.patient.screening.patientData,
+    path: ROUTES.patient.screening.patientData,
   },
 }
 
@@ -36,17 +34,17 @@ const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   pacientes: {
     icon: Users2,
     name: 'Pacientes',
-    path: routes.dashboard.patients.main,
+    path: ROUTES.dashboard.patients.main,
   },
   informacoes: {
     icon: User2,
     name: 'Informações do paciente',
-    path: routes.dashboard.patients.main,
+    path: ROUTES.dashboard.patients.main,
   },
   historico: {
     icon: History,
     name: 'Histórico do paciente',
-    path: routes.dashboard.patients.main,
+    path: ROUTES.dashboard.patients.main,
   },
 }
 

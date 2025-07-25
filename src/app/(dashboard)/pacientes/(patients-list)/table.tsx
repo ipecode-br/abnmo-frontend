@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_PARAMS } from '@/constants/params'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
 import {
@@ -52,8 +52,7 @@ export default function PatientsListTable() {
   const filterQueries = [search, orderBy, status, startDate, endDate]
 
   function handleNavigation(id: string) {
-    const routes = getRoutes(id)
-    router.push(routes.dashboard.patients.details.info)
+    router.push(ROUTES.dashboard.patients.details.info(id))
   }
 
   useEffect(() => {

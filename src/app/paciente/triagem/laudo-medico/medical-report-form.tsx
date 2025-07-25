@@ -1,4 +1,5 @@
 'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -10,7 +11,7 @@ import { RadioInput } from '@/components/form/radio-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { yesOrNoEnum } from '@/constants/enums'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
@@ -36,7 +37,6 @@ export function ScreeningMedicalReportForm() {
   const hasDisability = watch('hasDisability') === 'yes'
   const takeMedication = watch('takeMedication') === 'yes'
   const yesOrNoOptions = convertObjectToOptions(yesOrNoEnum)
-  const routes = getRoutes()
 
   useEffect(() => {
     const savedFormData = getStoredFormData(screeningMedicalReportFormSchema)
@@ -56,7 +56,7 @@ export function ScreeningMedicalReportForm() {
         onSubmit={formMethods.handleSubmit((data) =>
           saveFormAndGoToPage({
             data,
-            path: routes.patient.screening.supportNetwork,
+            path: ROUTES.patient.screening.supportNetwork,
           }),
         )}
       >

@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from './constants/routes'
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -9,10 +9,8 @@ export async function middleware(request: NextRequest) {
 
   const accessToken = cookies.get('access_token')
 
-  const routes = getRoutes()
-
   if (pathname.startsWith('/conta') && accessToken) {
-    return NextResponse.redirect(new URL(routes.dashboard.main, request.url))
+    return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
   }
 
   return NextResponse.next()
