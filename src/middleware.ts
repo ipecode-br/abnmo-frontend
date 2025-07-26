@@ -8,12 +8,13 @@ export async function middleware(request: NextRequest) {
   const cookies = request.cookies
 
   const accessToken = cookies.get('access_token')
+  const isAuthRoute = pathname.startsWith('/conta')
 
-  if (pathname.startsWith('/conta') && accessToken) {
+  if (isAuthRoute && accessToken) {
     return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
   }
 
-  if (!accessToken) {
+  if (!isAuthRoute && !accessToken) {
     return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
   }
 
