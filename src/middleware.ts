@@ -13,6 +13,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
   }
 
+  if (!accessToken) {
+    return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
+  }
+
   return NextResponse.next()
 }
 
