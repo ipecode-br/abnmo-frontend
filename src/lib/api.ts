@@ -1,17 +1,21 @@
 import { getAllCookies } from '@/actions/cookies'
 import { env } from '@/config/env'
 
-type BaseResponse = { success: false; message: string }
-type ApiResponse<Data> = BaseResponse | (BaseResponse & { data?: Data })
+type ApiResponse = {
+  success: boolean
+  message: string
+  data?: unknown
+  total?: number
+}
 
 interface ApiOptions extends RequestInit {
   includeCookies?: boolean
 }
 
-export async function api<T>(
+export async function api<Data extends ApiResponse>(
   path: string,
   options?: ApiOptions,
-): Promise<ApiResponse<T>> {
+): Promise<Data> {
   try {
     let headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -31,7 +35,7 @@ export async function api<T>(
       headers,
     })
 
-    const responseData: ApiResponse<T> = await response.json()
+    const responseData: Data = await response.json()
 
     return responseData
   } catch (error) {
@@ -39,6 +43,6 @@ export async function api<T>(
     return {
       success: false,
       message: 'Não foi possível se conectar ao servidor.',
-    }
+    } as Data
   }
 }

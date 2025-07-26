@@ -10,7 +10,6 @@ const envSchema = z.object({
     .default('development'),
 })
 
-// export const env = envSchema.parse(process.env)
 export const env = envSchema.parse({
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
 })

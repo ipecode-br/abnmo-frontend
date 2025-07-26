@@ -64,7 +64,7 @@ export function SignInForm() {
         </FormField>
 
         <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
-          <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
+          <CheckboxInput name='rememberMe' label='Manter conectado' />
 
           <NavLink
             href={ROUTES.auth.forgotPassword}
