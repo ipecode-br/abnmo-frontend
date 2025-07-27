@@ -12,7 +12,7 @@ export default async function DashboardLayout({
   const user = await getProfile()
 
   // TODO: implement role validation
-  if ((user as { role?: string })?.role === 'patient') {
+  if (user?.role === 'patient') {
     redirect(ROUTES.patient.main)
   }
 

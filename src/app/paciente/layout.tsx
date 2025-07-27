@@ -11,15 +11,15 @@ export default async function PatientLayout({
   const user = await getProfile()
 
   // TODO: implement role validation
-  if ((user as { role?: string })?.role !== 'patient') {
+  if (user?.role !== 'patient') {
     redirect(ROUTES.dashboard.main)
   }
 
   return (
-    <div>
+    <>
       <PatientHeader />
       <Divider />
       {children}
-    </div>
+    </>
   )
 }
