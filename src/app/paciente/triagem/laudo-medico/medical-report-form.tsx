@@ -12,7 +12,7 @@ import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { yesOrNoEnum } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
-import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
+import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 import { useScreening } from '../hooks'
@@ -25,7 +25,7 @@ import {
 export function ScreeningMedicalReportForm() {
   const router = useRouter()
   const { getStoredFormData, saveFormAndGoToPage } = useScreening({
-    storageKey: SCREENING_STORAGE_KEYS.screening.medicalReport,
+    storageKey: PATIENT_STORAGE_KEYS.screening.medicalReport,
   })
 
   const formMethods = useForm<ScreeningMedicalReportFormSchema>({

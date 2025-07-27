@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { BRAZILIAN_STATES } from '@/constants/brazilian-states'
 import { GENDERS } from '@/constants/genders'
 import { ROUTES } from '@/constants/routes'
-import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
+import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 
 import { useScreening } from '../hooks'
 import {
@@ -21,7 +21,7 @@ import {
 
 export function ScreeningPatientDataForm() {
   const { getStoredFormData, saveFormAndGoToPage } = useScreening({
-    storageKey: SCREENING_STORAGE_KEYS.screening.patientData,
+    storageKey: PATIENT_STORAGE_KEYS.screening.patientData,
   })
 
   const formMethods = useForm<ScreeningPatientDataFormSchema>({
