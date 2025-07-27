@@ -5,7 +5,7 @@ import type React from 'react'
 import { cn } from '@/utils/class-name-merge'
 
 interface AvatarProps extends React.ComponentProps<'div'> {
-  src?: ImageProps['src']
+  src?: ImageProps['src'] | null
 }
 
 export function Avatar({ src, className, ...props }: Readonly<AvatarProps>) {

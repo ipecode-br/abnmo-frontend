@@ -45,8 +45,8 @@ export function DashboardSidebar() {
   return (
     <aside
       className={cn(
-        'border-border flex min-h-screen shrink-0 flex-col gap-8 border-r transition-all',
-        expanded ? 'w-68 p-6' : 'w-18 p-4',
+        'border-border flex min-h-screen shrink-0 flex-col gap-8 border-r py-6 transition-all duration-500',
+        expanded ? 'w-68 px-6' : 'w-18 px-4',
       )}
     >
       <SidebarHeader />
@@ -69,15 +69,21 @@ export function DashboardSidebar() {
                     key={link.label}
                     variant='ghost'
                     href={link.path}
-                    size={expanded ? 'lg' : 'icon'}
+                    data-visible={expanded}
+                    data-active={isActive}
                     className={cn(
-                      '[&_svg]:text-disabled text-foreground-soft gap-3 transition-all',
-                      expanded && 'justify-start',
-                      isActive && 'bg-accent pointer-events-none',
+                      '[&_svg]:text-disabled text-foreground-soft size-10 justify-start gap-3 px-2.5 text-base transition-all duration-200',
+                      'data-[visible=true]:w-full',
+                      'data-[active=true]:bg-accent data-[active=true]:pointer-events-none data-[active=true]:size-10',
                     )}
                   >
                     {link.icon}
-                    {expanded && link.label}
+                    <span
+                      data-visible={expanded}
+                      className='opacity-0 transition-opacity duration-200 data-[visible=true]:opacity-100 data-[visible=true]:delay-150'
+                    >
+                      {link.label}
+                    </span>
                   </NavButton>
                 )
               })}
