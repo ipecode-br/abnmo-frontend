@@ -30,14 +30,14 @@ export function DropdownMenuTrigger({
       data-slot='dropdown-menu-trigger'
       className={cn(
         buttonVariants({ variant, size }),
-        indicator && 'gap-3',
+        indicator && 'pr-3',
         '[&_svg]:size-4',
         className,
       )}
       {...props}
     >
       {children}
-      {indicator && <ChevronsUpDownIcon className='opacity-50' />}
+      {indicator && <ChevronsUpDownIcon className='ml-1 opacity-50' />}
     </DropdownMenuPrimitive.Trigger>
   )
 }
