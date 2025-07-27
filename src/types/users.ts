@@ -1,3 +1,5 @@
+import type { PatientType } from './patients'
+
 export type UserType = {
   id: string
   name: string
@@ -6,4 +8,5 @@ export type UserType = {
   avatar_url: string | null
   created_at: Date
   updated_at: Date
+  patient: PatientType | null
 }

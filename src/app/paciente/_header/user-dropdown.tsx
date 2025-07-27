@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 
+import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
@@ -12,10 +13,19 @@ import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
+import type { UserType } from '@/types/users'
 
-export function PatientHeaderUserDropdown() {
+interface PatientHeaderUserDropdownProps {
+  user: UserType
+}
+
+export function PatientHeaderUserDropdown({
+  user,
+}: Readonly<PatientHeaderUserDropdownProps>) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
+
+  const [firstName] = user.name.split(' ')
 
   async function logout() {
     startTransition(async () => {
@@ -35,10 +45,11 @@ export function PatientHeaderUserDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label='Abrir menu'
-        className='rounded-full'
+        className='rounded-full pl-1'
         indicator
       >
-        Usuário
+        <Avatar src={user.avatar_url} className='size-8 [&_svg]:size-4' />
+        {firstName}
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align='end'>
