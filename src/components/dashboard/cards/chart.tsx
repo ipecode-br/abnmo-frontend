@@ -1,16 +1,15 @@
 import type { LucideIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 import { Card, type CardProps } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
-import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuContent } from '@/components/ui/dropdown/content'
-import { DropdownMenuItem } from '@/components/ui/dropdown/item'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { cn } from '@/utils/class-name-merge'
 
 interface DashboardCardChartProps extends CardProps {
   title: string
   icon: LucideIcon
+  menu?: ReactNode
+  chartClassName?: string
 }
 
 export function DashboardCardChart({
@@ -18,6 +17,8 @@ export function DashboardCardChart({
   title,
   className,
   children,
+  chartClassName,
+  menu,
   ...props
 }: Readonly<DashboardCardChartProps>) {
   const Icon = icon
@@ -27,23 +28,10 @@ export function DashboardCardChart({
         <Icon className='size-5' />
         <h3 className='font-medium'>{title}</h3>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            aria-label='Abrir menu'
-            className='ml-auto rounded-lg'
-            indicator
-          >
-            No último ano
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align='end'>
-            <DropdownMenuItem>No último mês</DropdownMenuItem>
-            <DropdownMenuItem>Na última semana</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {menu && <div className='ml-auto'>{menu}</div>}
       </header>
       <Divider />
-      {children}
+      <div className={chartClassName}>{children}</div>
     </Card>
   )
 }

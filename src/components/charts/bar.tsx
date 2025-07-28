@@ -3,7 +3,6 @@
 import {
   Bar,
   BarChart as RechartBarChart,
-  Cell,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -48,11 +47,7 @@ export function BarChart({ data, barColor }: BaseChartProps) {
           tickLine={false}
         />
         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
-        <Bar dataKey='value' fill={barColor} barSize={20}>
-          {data.map((_entry, index) => (
-            <Cell key={`cell-${index}`} fill={barColor} />
-          ))}
-        </Bar>
+        <Bar dataKey='value' fill={barColor} barSize={20} />
       </RechartBarChart>
     </ResponsiveContainer>
   )
