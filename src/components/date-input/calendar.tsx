@@ -31,7 +31,7 @@ export function Calendar({ onSelectedDate, onOpen }: CalendarProps) {
       selected={selected}
       onSelect={(selected) => onSelectedDate(selected)}
       classNames={{
-        root: `${defaultClassNames.root} border-border rounded-2xl border`,
+        root: `${defaultClassNames.root} bg-background border-border rounded-2xl border`,
         months: 'p-5',
         month_caption: 'hidden',
         outside: 'text-disabled opacity-30',
