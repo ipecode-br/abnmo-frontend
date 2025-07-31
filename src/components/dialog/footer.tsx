@@ -8,6 +8,7 @@ export function DialogFooter({
     <footer
       className={cn(
         'border-border flex flex-col gap-2 border-t p-5 md:flex-row-reverse',
+
         className,
       )}
       {...props}
