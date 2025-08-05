@@ -11,7 +11,8 @@
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "next lint .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "format": "npm run lint:prettier:fix"
   },
   "dependencies": {
     "@hookform/resolvers": "5.0.1",
