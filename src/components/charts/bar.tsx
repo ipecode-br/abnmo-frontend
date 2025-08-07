@@ -3,6 +3,7 @@
 import {
   Bar,
   BarChart as RechartBarChart,
+  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -16,37 +17,45 @@ interface ChartDataItem {
   value: number
 }
 
-interface BaseChartProps {
+interface BarChartProps {
   data: ChartDataItem[]
   barColor?: string
 }
 
-export function BarChart({ data, barColor }: BaseChartProps) {
+export function BarChart({
+  data,
+  barColor = 'var(--color-primary)',
+}: Readonly<BarChartProps>) {
   return (
     <ResponsiveContainer width='100%' height='100%'>
-      <RechartBarChart
-        layout='vertical'
-        data={data}
-        margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
-      >
+      <RechartBarChart data={data} layout='vertical'>
+        <CartesianGrid
+          horizontal={false}
+          strokeDasharray='4 2'
+          stroke='var(--color-border)'
+        />
+
         <XAxis
           type='number'
           dataKey='value'
           axisLine={false}
           tickLine={false}
-          tick={{ fontSize: 11, fill: '#6b7280' }}
+          tick={{ fontSize: 12, fill: 'var(--color-disabled)' }}
+          tickMargin={8}
         />
 
         <YAxis
           dataKey='name'
           type='category'
-          width={100}
-          tick={{ fontSize: 12, fill: '#6b7280' }}
-          tickMargin={6}
-          axisLine={false}
+          width='auto'
+          tick={{ fontSize: 12, fill: 'var(--color-foreground-soft)' }}
+          tickMargin={8}
           tickLine={false}
+          axisLine={{ stroke: 'var(--color-border)', strokeWidth: 1 }}
         />
+
         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
+
         <Bar dataKey='value' fill={barColor} barSize={20} />
       </RechartBarChart>
     </ResponsiveContainer>
