@@ -6,39 +6,18 @@ export function CustomTooltip({ active, payload, coordinate }: any) {
   const value = payload[0].value
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: x - 8,
-        top: y - 33.1,
-        pointerEvents: 'none',
-      }}
-    >
+    <div>
       <div
-        style={{
-          textAlign: 'center',
-          color: '#fff',
-          fontSize: '12px',
-          fontWeight: 600,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          padding: '2px 6px',
-          borderRadius: '4px',
-          marginBottom: '4px',
-        }}
+        className='bg-foreground text-background pointer-events-none absolute flex min-w-8 flex-col items-center rounded-md px-2 py-1.5 text-center text-sm transition-all duration-300 ease-out'
+        style={{ left: x, top: y, transform: 'translate(-50%, -155%)' }}
       >
         {value}
+        <div className='bg-foreground absolute -bottom-0.5 -z-10 size-4 rotate-45' />
       </div>
-
-      <svg width={14} height={14}>
-        <circle
-          cx={7}
-          cy={7}
-          r={5}
-          fill='#37b8e7'
-          stroke='#fff'
-          strokeWidth={2}
-        />
-      </svg>
+      <div
+        className='bg-primary-soft border-background pointer-events-none absolute size-3 rounded-full border-2 transition-all duration-150 ease-out'
+        style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
+      />
     </div>
   )
 }
