@@ -20,7 +20,7 @@ export interface DropdownMenuTriggerProps
 export function DropdownMenuTrigger({
   variant = 'outline',
   size,
-  indicator,
+  indicator = true,
   className,
   children,
   ...props
