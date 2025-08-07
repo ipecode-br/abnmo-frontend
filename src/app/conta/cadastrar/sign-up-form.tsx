@@ -14,9 +14,8 @@ import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
-import { wait } from '@/utils/wait'
 
 import {
   signUpFormDefaultValues,
@@ -36,9 +35,6 @@ export function SignUpForm() {
   const errorMessage = formMethods.formState.errors.root?.message
 
   async function registerUser({ name, email, password }: SignUpFormSchema) {
-    const routes = getRoutes()
-    await wait(500)
-
     const response = await api('/register', {
       method: 'POST',
       body: JSON.stringify({ name, email, password }),
@@ -49,7 +45,7 @@ export function SignUpForm() {
     }
 
     toast.success(response.message)
-    router.push(routes.patient.main)
+    router.push(ROUTES.patient.main)
   }
 
   // TODO: add link to policies

@@ -9,8 +9,8 @@ import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { BRAZILIAN_STATES } from '@/constants/brazilian-states'
 import { GENDERS } from '@/constants/genders'
-import { getRoutes } from '@/constants/routes'
-import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
+import { ROUTES } from '@/constants/routes'
+import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 
 import { useScreening } from '../hooks'
 import {
@@ -21,7 +21,7 @@ import {
 
 export function ScreeningPatientDataForm() {
   const { getStoredFormData, saveFormAndGoToPage } = useScreening({
-    storageKey: SCREENING_STORAGE_KEYS.screening.patientData,
+    storageKey: PATIENT_STORAGE_KEYS.screening.patientData,
   })
 
   const formMethods = useForm<ScreeningPatientDataFormSchema>({
@@ -30,7 +30,6 @@ export function ScreeningPatientDataForm() {
     mode: 'onBlur',
   })
   const { setValue } = formMethods
-  const routes = getRoutes()
 
   useEffect(() => {
     const savedFormData = getStoredFormData(screeningPatientDataFormSchema)
@@ -49,7 +48,7 @@ export function ScreeningPatientDataForm() {
         onSubmit={formMethods.handleSubmit((data) =>
           saveFormAndGoToPage({
             data,
-            path: routes.patient.screening.medicalReport,
+            path: ROUTES.patient.screening.medicalReport,
           }),
         )}
       >

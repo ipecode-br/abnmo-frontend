@@ -1,5 +1,6 @@
 export function setStorageItem<T>(key: string, value: T): void {
   if (typeof window === 'undefined') return
+
   localStorage.setItem(key, JSON.stringify(value))
 }
 
@@ -15,15 +16,15 @@ export function getStorageItem<T>(key: string): T | null {
   }
 }
 
-export function removeStorageItem(key: string): void {
-  if (typeof window === 'undefined') return
-  localStorage.removeItem(key)
-}
-
-export function removeStorageItems(keys: string[]): void {
+export function removeStorageItem(key: string | string[]): void {
   if (typeof window === 'undefined') return
 
-  for (const key of keys) {
-    localStorage.removeItem(key)
+  if (Array.isArray(key)) {
+    for (const item of key) {
+      localStorage.removeItem(item)
+    }
+    return
   }
+
+  localStorage.removeItem(key)
 }

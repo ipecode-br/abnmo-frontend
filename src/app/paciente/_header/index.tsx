@@ -2,12 +2,17 @@ import logo from '@images/logo/logo-triagem.svg'
 import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
 
+import { getProfile } from '@/actions/users'
 import { PatientHeaderAccessibilityDropdown } from '@/app/paciente/_header/accessibility-dropdown'
 import { PatientHeaderUserDropdown } from '@/app/paciente/_header/user-dropdown'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
 
-export function PatientHeader() {
+export async function PatientHeader() {
+  const user = await getProfile()
+
+  if (!user) return null
+
   return (
     <header className='container mx-auto flex items-center gap-8 px-8 py-4'>
       <div className='flex items-center gap-4'>
@@ -29,7 +34,7 @@ export function PatientHeader() {
           <SettingsIcon />
         </Button>
 
-        <PatientHeaderUserDropdown />
+        <PatientHeaderUserDropdown user={user} />
       </section>
     </header>
   )

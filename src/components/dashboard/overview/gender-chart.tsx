@@ -20,6 +20,7 @@ export function DashboardGenderChartCard() {
       title='Gênero'
       icon={ChartBarDecreasingIcon}
       chartClassName='h-30'
+      className='col-span-1 md:col-span-3'
       menu={
         <DropdownMenu>
           <DropdownMenuTrigger aria-label='Abrir menu' size='sm'>

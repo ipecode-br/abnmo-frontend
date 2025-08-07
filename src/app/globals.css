@@ -61,6 +61,11 @@
   }
 }
 
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);

@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Encaminhados',
+  title: 'Aprovações',
 }
 
 import { DashboardContainer } from '@/components/dashboard/container'
 
-export default function ForwardedPage() {
+export default function ApprovalsPage() {
   return (
     <DashboardContainer className='flex flex-col gap-6'>
-      Encaminhados
+      Aprovações
     </DashboardContainer>
   )
 }

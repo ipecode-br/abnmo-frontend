@@ -4,15 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 import { useSidebar } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
 export function SidebarHeader() {
   const expanded = useSidebar((state) => state.expanded)
   const toogleSidebar = useSidebar((state) => state.toogleSidebar)
-
-  const routes = getRoutes()
 
   return (
     <header
@@ -21,7 +19,7 @@ export function SidebarHeader() {
         !expanded && 'flex-col',
       )}
     >
-      <Link href={routes.dashboard.main}>
+      <Link href={ROUTES.dashboard.main}>
         <div className={cn('mr-auto flex items-center', !expanded && 'p-1')}>
           <Image src={logo} alt='Símbolo do SVM' className='size-8 shrink-0' />
           {expanded && <p className='ml-2 text-base font-bold'>SVM</p>}

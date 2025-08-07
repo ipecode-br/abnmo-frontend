@@ -1,16 +1,20 @@
-import type { Metadata } from 'next'
-
 import { DashboardContainer } from '@/components/dashboard/container'
 import { DashboardGenderChartCard } from '@/components/dashboard/overview/gender-chart'
 
-export const metadata: Metadata = {
-  title: 'Visão Geral',
-}
-
-export default function DashboardOverviewPage() {
+export default function DashboardOverview() {
   return (
-    <DashboardContainer className='flex flex-col gap-6'>
-      <DashboardGenderChartCard />
+    <DashboardContainer>
+      <div className='grid gap-6 md:grid-cols-6'>
+        <div className='bg-primary text-primary-foreground space-y-4 rounded-2xl p-8'>
+          <h2 className='text-xl'>Visão Geral</h2>
+          <p className='text-sm'>
+            Esta é uma visão geral do sistema para monitorar e gerenciar
+            atendimentos.
+          </p>
+        </div>
+
+        <DashboardGenderChartCard />
+      </div>
     </DashboardContainer>
   )
 }
