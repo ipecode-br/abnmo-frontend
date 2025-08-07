@@ -1,5 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function CustomTooltip({ active, payload, coordinate }: any) {
+import type { TooltipProps } from 'recharts'
+import type {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent'
+
+interface CustomTooltipProps extends TooltipProps<ValueType, NameType> {
+  coordinate?: { x: number; y: number }
+  payload: { value: number }[]
+}
+
+export function CustomTooltip({
+  active,
+  payload,
+  coordinate,
+}: CustomTooltipProps) {
   if (!active || !payload || !payload.length || !coordinate) return null
 
   const { x, y } = coordinate
