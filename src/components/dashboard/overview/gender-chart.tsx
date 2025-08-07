@@ -9,11 +9,10 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { DashboardCardChart } from '../cards/chart'
 
 export function DashboardGenderChartCard() {
-  // dados do backend
   const data = [
-    { name: 'Feminino', value: 10, color: '#008b62' },
-    { name: 'Masculino', value: 7, color: '#008b62' },
-    { name: 'Outros', value: 5, color: '#008b62' },
+    { name: 'Feminino', value: 10 },
+    { name: 'Masculino', value: 7 },
+    { name: 'Outros', value: 5 },
   ]
 
   return (
@@ -23,11 +22,7 @@ export function DashboardGenderChartCard() {
       chartClassName='h-30'
       menu={
         <DropdownMenu>
-          <DropdownMenuTrigger
-            aria-label='Abrir menu'
-            className='rounded-lg'
-            indicator
-          >
+          <DropdownMenuTrigger aria-label='Abrir menu' size='sm'>
             No último ano
           </DropdownMenuTrigger>
 
@@ -38,7 +33,7 @@ export function DashboardGenderChartCard() {
         </DropdownMenu>
       }
     >
-      <BarChart data={data} barColor={data[0].color} />
+      <BarChart data={data} />
     </DashboardCardChart>
   )
 }
