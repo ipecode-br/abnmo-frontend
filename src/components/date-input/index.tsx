@@ -12,8 +12,8 @@ import { formatDate } from '@/utils/formatters/format-date'
 import { Popover } from '../popover'
 import { PopoverContent } from '../popover/content'
 import { PopoverTrigger } from '../popover/trigger'
+import { Calendar } from '../ui/calendar'
 import { Input, inputVariants } from '../ui/input'
-import { Calendar } from './calendar'
 
 export interface DateInputProps extends VariantProps<typeof inputVariants> {
   label: string
@@ -51,24 +51,24 @@ export function DateInput({
         </label>
         <div className={cn('relative flex w-full items-center')}>
           <Input
-            defaultValue={date}
             name={name}
-            className={cn(inputVariants({ className, variant, size }), 'pl-10')}
-            placeholder='DD / MM / YYYY'
+            defaultValue={date}
+            className={cn(inputVariants({ variant, size, className }), 'pl-10')}
+            placeholder='DD/MM/YYYY'
           />
 
           <PopoverTrigger
-            className='text-disabled absolute ml-1'
+            className='text-disabled absolute left-1'
             type='button'
             variant='ghost'
-            size='xs'
+            size='icon'
           >
             <CalendarDays />
           </PopoverTrigger>
         </div>
       </div>
-      <PopoverContent side='bottom' align='start' sideOffset={4}>
-        <Calendar onSelectedDate={handleDateSelect} onOpen={setOpen} />
+      <PopoverContent side='bottom' align='start' sideOffset={12}>
+        <Calendar onSelect={handleDateSelect} />
       </PopoverContent>
     </Popover>
   )
