@@ -9,11 +9,11 @@ import React, { useState } from 'react'
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
 
-import { Popover } from '../popover'
-import { PopoverContent } from '../popover/content'
-import { PopoverTrigger } from '../popover/trigger'
 import { Calendar } from '../ui/calendar'
 import { Input, inputVariants } from '../ui/input'
+import { Popover } from '../ui/popover'
+import { PopoverContent } from '../ui/popover/content'
+import { PopoverTrigger } from '../ui/popover/trigger'
 
 export interface DateInputProps extends VariantProps<typeof inputVariants> {
   label: string
@@ -58,16 +58,15 @@ export function DateInput({
           />
 
           <PopoverTrigger
-            className='text-disabled absolute left-1'
-            type='button'
-            variant='ghost'
             size='icon'
+            variant='ghost'
+            className='text-disabled absolute left-1 size-8'
           >
             <CalendarDays />
           </PopoverTrigger>
         </div>
       </div>
-      <PopoverContent side='bottom' align='start' sideOffset={12}>
+      <PopoverContent>
         <Calendar onSelect={handleDateSelect} />
       </PopoverContent>
     </Popover>
