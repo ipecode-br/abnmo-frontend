@@ -68,6 +68,7 @@ export function ScreeningPatientDataForm() {
           placeholder='Selecione seu gênero'
           isRequired
         />
+
         <TextInput
           type='date'
           name='dateBirth'
@@ -75,18 +76,18 @@ export function ScreeningPatientDataForm() {
           isRequired
         />
 
-        <TextInput
-          name='city'
-          label='Cidade'
-          maxLength={50}
-          placeholder='Insira sua cidade'
-          isRequired
-        />
         <SelectInput
           name='state'
           label='Estado'
           options={BRAZILIAN_STATES}
           placeholder='Selecione seu estado'
+          isRequired
+        />
+        <TextInput
+          name='city'
+          label='Cidade'
+          maxLength={50}
+          placeholder='Insira sua cidade'
           isRequired
         />
 
