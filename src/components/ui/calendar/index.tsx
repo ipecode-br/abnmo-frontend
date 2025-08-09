@@ -9,9 +9,17 @@ import {
 
 import { cn } from '@/utils/class-name-merge'
 
+import { CalendarDropdownNav } from './dropdown-nav'
 import { CalendarStepNav } from './step-nav'
 
-export function Calendar(props: Readonly<Omit<PropsSingle, 'mode'>>) {
+interface CalendarProps extends Omit<PropsSingle, 'mode'> {
+  navMode?: 'step' | 'dropdown'
+}
+
+export function Calendar({
+  navMode = 'step',
+  ...props
+}: Readonly<CalendarProps>) {
   const defaultClassNames = getDefaultClassNames()
 
   return (
@@ -36,7 +44,9 @@ export function Calendar(props: Readonly<Omit<PropsSingle, 'mode'>>) {
           return format(weekday, 'EEEEE', option)
         },
       }}
-      components={{ Nav: CalendarStepNav }}
+      components={{
+        Nav: navMode === 'step' ? CalendarStepNav : CalendarDropdownNav,
+      }}
       {...props}
     />
   )
