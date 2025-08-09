@@ -9,7 +9,7 @@ import {
 
 import { cn } from '@/utils/class-name-merge'
 
-import { CalendarNav } from '../date-input/nav'
+import { CalendarStepNav } from './step-nav'
 
 export function Calendar(props: Readonly<Omit<PropsSingle, 'mode'>>) {
   const defaultClassNames = getDefaultClassNames()
@@ -26,9 +26,9 @@ export function Calendar(props: Readonly<Omit<PropsSingle, 'mode'>>) {
         weekday: cn(defaultClassNames.weekday, 'text-xs text-disabled'),
         day: 'rounded-md overflow-hidden',
         day_button:
-          'size-8 text-sm cursor-pointer hover:bg-accent hover:text-accent-foreground',
+          'size-8 text-sm cursor-pointer hover:bg-primary hover:text-primary-foreground outline-none',
         selected: 'bg-primary text-white font-medium',
-        focused: 'text-white bg-primary',
+        focused: 'text-white bg-primary ',
         today: 'text-primary font-medium',
       }}
       formatters={{
@@ -36,7 +36,7 @@ export function Calendar(props: Readonly<Omit<PropsSingle, 'mode'>>) {
           return format(weekday, 'EEEEE', option)
         },
       }}
-      components={{ Nav: CalendarNav }}
+      components={{ Nav: CalendarStepNav }}
       {...props}
     />
   )
