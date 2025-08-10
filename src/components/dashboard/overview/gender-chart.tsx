@@ -34,7 +34,9 @@ export function DashboardGenderChartCard() {
         </DropdownMenu>
       }
     >
-      <BarChart data={data} />
+      <div className='h-30 w-full'>
+        <BarChart data={data} />
+      </div>
     </DashboardCardChart>
   )
 }
