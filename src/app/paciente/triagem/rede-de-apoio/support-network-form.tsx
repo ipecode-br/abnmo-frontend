@@ -7,7 +7,7 @@ import { useEffect, useState, useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { ScreeningSupportNetworkCards } from '@/app/paciente/triagem/rede-de-apoio/support-netword-cards'
+import { ScreeningSupportNetworkCards } from '@/app/paciente/triagem/rede-de-apoio/support-network-cards'
 import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'

@@ -10,11 +10,19 @@ import {
   setStorageItem,
 } from '@/helpers/local-storage'
 import { api } from '@/lib/api'
+import { GenderType, PatientType } from '@/types/patients'
+import { sanitizeCpf } from '@/utils/sanitize/sanitize-cpf-number'
+import { sanitizePhone } from '@/utils/sanitize/sanitize-phone-number'
 import { wait } from '@/utils/wait'
 
 import { screeningMedicalReportFormSchema } from './laudo-medico/medical-report-form-schema'
 import { screeningSupportNetworkContactsSchema } from './rede-de-apoio/support-network-form-schema'
 import { screeningPatientDataFormSchema } from './seus-dados/patient-data-form-schema'
+
+type CreatePatientPayload = Omit<
+  PatientType,
+  'id' | 'user_id' | 'status' | 'created_at' | 'updated_at' | 'user'
+> & {}
 
 interface UseScreeningProps {
   storageKey: string
@@ -50,7 +58,6 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
 
     const parsedPacientInfo =
       screeningPatientDataFormSchema.safeParse(patientInfo)
-
     const parsedMedicalReportInfo =
       screeningMedicalReportFormSchema.safeParse(medicalReportInfo)
     const parsedSupportNetworkInfo =
@@ -67,9 +74,40 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
       return
     }
 
+    const [year, month, day] = parsedPacientInfo.data.dateBirth
+      .split('-')
+      .map(Number)
+
+    const patientInfoMapper = {
+      name: parsedPacientInfo.data.name,
+      cpf: sanitizeCpf(parsedPacientInfo.data.cpf),
+      phone: sanitizePhone(parsedPacientInfo.data.phone),
+      date_of_birth: new Date(year, month - 1, day),
+      gender: parsedPacientInfo.data.gender as GenderType,
+      state: parsedPacientInfo.data.state,
+      city: parsedPacientInfo.data.city,
+    }
+
+    const medicalReportInfoMapper = {
+      has_disability: parsedMedicalReportInfo.data.hasDisability === 'yes',
+      disability_desc:
+        parsedMedicalReportInfo.data.disabilityDescription ?? null,
+      has_nmo_diagnosis: parsedMedicalReportInfo.data.hasNmoDiagnosis === 'yes',
+      medication_desc:
+        parsedMedicalReportInfo.data.medicationDescription ?? null,
+      need_legal_assistance:
+        parsedMedicalReportInfo.data.needLegalAssistance === 'yes',
+      take_medication: parsedMedicalReportInfo.data.takeMedication === 'yes',
+    }
+
+    const payload: CreatePatientPayload = {
+      ...patientInfoMapper,
+      ...medicalReportInfoMapper,
+    }
+
     const response = await api('/patients', {
       method: 'POST',
-      // body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify(payload),
     })
 
     if (!response.success) {
