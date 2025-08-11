@@ -37,7 +37,7 @@ export function PatientHeaderUserDropdown({
       }
 
       toast.success(response.message)
-      router.replace(ROUTES.auth.signIn)
+      router.push(ROUTES.auth.signIn)
     })
   }
 
