@@ -122,7 +122,7 @@ export default function PatientsListTable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Nome do paciente</TableHead>
+              <TableHead className='w-64'>Nome do paciente</TableHead>
               <TableHead className='w-36'>Telefone</TableHead>
               <TableHead>E-mail</TableHead>
               <TableHead className='w-24'>Status</TableHead>
@@ -141,7 +141,7 @@ export default function PatientsListTable() {
                 <TableRow key={patient.id}>
                   <TableCell isLastRow={isLastRow} className='p-0'>
                     <button
-                      className='cursor-pointer px-4'
+                      className='w-64 cursor-pointer px-4'
                       onClick={() =>
                         router.push(
                           ROUTES.dashboard.patients.details.info(
@@ -155,7 +155,7 @@ export default function PatientsListTable() {
                           className='size-9'
                           src={patient.user.avatar_url}
                         />
-                        {patient.user.name}
+                        <span className='truncate'>{patient.user.name}</span>
                       </div>
                     </button>
                   </TableCell>
