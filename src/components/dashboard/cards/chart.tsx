@@ -4,12 +4,13 @@ import type { ReactNode } from 'react'
 import { Card, type CardProps } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
 import { cn } from '@/utils/class-name-merge'
-
-interface DashboardCardChartProps extends CardProps {
+export interface DashboardCardChartProps extends CardProps {
   title: string
   icon: LucideIcon
   menu?: ReactNode
   chartClassName?: string
+  className?: string
+  children?: ReactNode
 }
 
 export function DashboardCardChart({

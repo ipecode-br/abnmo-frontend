@@ -1,6 +1,5 @@
 export const QUERY_PARAMS = {
-  page: 'page',
-  search: 'search',
+  search: 'query',
   order: 'order',
   orderBy: 'orderBy',
   status: 'status',

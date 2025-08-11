@@ -1,10 +1,8 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { getCitiesByUF } from '@/actions/ibge'
 import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
@@ -31,17 +29,7 @@ export function ScreeningPatientDataForm() {
     values: screeningPatientDataFormDefaultValues,
     mode: 'onBlur',
   })
-  const { setValue, watch, clearErrors } = formMethods
-  const UF = watch('state')
-
-  const { data: cities, isLoading: isLoadingCities } = useQuery({
-    queryKey: [`cities/${UF}`],
-    queryFn: () => getCitiesByUF(UF),
-  })
-
-  const cityOptions = cities
-    ? cities.map((city) => ({ label: city, value: city }))
-    : []
+  const { setValue } = formMethods
 
   useEffect(() => {
     const savedFormData = getStoredFormData(screeningPatientDataFormSchema)
@@ -52,13 +40,6 @@ export function ScreeningPatientDataForm() {
       }
     }
   }, [setValue, getStoredFormData])
-
-  useEffect(() => {
-    if (UF) {
-      clearErrors('city')
-      setValue('city', '')
-    }
-  }, [UF, clearErrors, setValue])
 
   return (
     <FormProvider {...formMethods}>
@@ -94,24 +75,18 @@ export function ScreeningPatientDataForm() {
           isRequired
         />
 
+        <TextInput
+          name='city'
+          label='Cidade'
+          maxLength={50}
+          placeholder='Insira sua cidade'
+          isRequired
+        />
         <SelectInput
           name='state'
           label='Estado'
           options={BRAZILIAN_STATES}
           placeholder='Selecione seu estado'
-          isRequired
-        />
-        <SelectInput
-          name='city'
-          label='Cidade'
-          options={cityOptions}
-          placeholder={
-            UF && isLoadingCities
-              ? 'Carregando cidades...'
-              : 'Selecione sua cidade'
-          }
-          loading={!!UF && isLoadingCities}
-          disabled={!UF}
           isRequired
         />
 

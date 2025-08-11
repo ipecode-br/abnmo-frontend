@@ -1,20 +1,38 @@
+'use client'
+
 import { DashboardContainer } from '@/components/dashboard/container'
-import { DashboardGenderChartCard } from '@/components/dashboard/overview/gender-chart'
+import { DashboardOverviewCard } from '@/components/dashboard/overview/card'
+import DashboardOverview from '@/components/dashboard/overview/dashboard-overview'
 
-export default function DashboardOverview() {
+import { PATIENTS_MOCKS } from '../../utils/mock/patients'
+
+export default function SupportPage() {
+  const totalPatients = PATIENTS_MOCKS.length
+  const activePatients = PATIENTS_MOCKS.filter(
+    (patient) => patient.status === 'active',
+  ).length
+  const inactivePatients = PATIENTS_MOCKS.filter(
+    (patient) => patient.status === 'inactive',
+  ).length
+
   return (
-    <DashboardContainer>
-      <div className='grid gap-6 md:grid-cols-6'>
-        <div className='bg-primary text-primary-foreground space-y-4 rounded-2xl p-8'>
-          <h2 className='text-xl'>Visão Geral</h2>
-          <p className='text-sm'>
-            Esta é uma visão geral do sistema para monitorar e gerenciar
-            atendimentos.
-          </p>
-        </div>
-
-        <DashboardGenderChartCard />
-      </div>
+    <DashboardContainer className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+      <DashboardOverview />
+      <DashboardOverviewCard
+        title='Total de Pacientes'
+        value={totalPatients}
+        variant='default'
+      />
+      <DashboardOverviewCard
+        title='Total de Pacientes Ativos'
+        value={activePatients}
+        variant='active'
+      />
+      <DashboardOverviewCard
+        title='Total de Pacientes Inativos'
+        value={inactivePatients}
+        variant='inactive'
+      />
     </DashboardContainer>
   )
 }

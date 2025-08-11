@@ -8,7 +8,6 @@ interface DashboardTabButtonsProps {
   buttons: Array<{ title: string; path: string }>
 }
 
-// TODO: add focus state style
 export function DashboardTabButtons({
   buttons,
 }: Readonly<DashboardTabButtonsProps>) {

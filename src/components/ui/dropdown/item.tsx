@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/utils/class-name-merge'
 
 const triggerItemVariants = cva(
-  'focus:bg-primary focus:text-primary-foreground flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:size-4',
+  'focus:bg-primary focus:text-primary-foreground flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm font-medium outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:size-4',
   {
     variants: {
       variant: {

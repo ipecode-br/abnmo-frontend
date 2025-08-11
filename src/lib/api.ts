@@ -10,7 +10,6 @@ type ApiResponse<Data> = {
 
 interface ApiOptions extends RequestInit {
   includeCookies?: boolean
-  params?: Record<string, string | number | boolean | undefined | null>
 }
 
 export async function api<Data>(
@@ -30,15 +29,6 @@ export async function api<Data>(
     }
 
     const url = new URL(path, env.NEXT_PUBLIC_API_URL)
-
-    if (options?.params) {
-      for (const [key, value] of Object.entries(options.params)) {
-        if (value !== undefined && value !== null) {
-          url.searchParams.append(key, String(value))
-        }
-      }
-    }
-
     const response = await fetch(url.toString(), {
       credentials: 'include',
       ...options,

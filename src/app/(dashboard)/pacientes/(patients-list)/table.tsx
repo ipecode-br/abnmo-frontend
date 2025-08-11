@@ -1,6 +1,5 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import { EllipsisIcon, PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -27,64 +26,49 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
-import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAMS } from '@/constants/params'
 import { ROUTES } from '@/constants/routes'
 import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
-import { api } from '@/lib/api'
 import {
   PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
-  type PatientType,
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
-import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
+// TODO: implement Tanstack Query to fetch data from API
 // TODO: create patient actions menu
-// TODO: redirect to register new patient page
+// TODO: include new patient dialog
 // TODO: add focus styles to cell button
-// TODO: add loading state to table
 export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
   const { getParam } = useParams()
   const router = useRouter()
 
-  const page = getParam(QUERY_PARAMS.page)
-  const search = getParam(QUERY_PARAMS.search)
-  const status = getParam(QUERY_PARAMS.status)
-  const orderBy = getParam(QUERY_PARAMS.orderBy)
-  const startDate = getParam(QUERY_PARAMS.startDate)
-  const endDate = getParam(QUERY_PARAMS.endDate)
-  const filterQueries = [page, search, orderBy, status, startDate, endDate]
+  const patients = PATIENTS_MOCKS
+  const { search, orderBy, status, startDate, endDate } = QUERY_PARAMS
+  const filterQueries = [search, orderBy, status, startDate, endDate]
 
-  const { data: response } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.patients, filterQueries],
-    queryFn: () =>
-      api<{ patients: PatientType[]; total: number }>('/patients', {
-        params: { page, search, orderBy, status, startDate, endDate },
-      }),
-  })
-
-  const total = response?.data?.total ?? 0
-  const patients = response?.data?.patients ?? []
+  function handleNavigation(id: string) {
+    router.push(ROUTES.dashboard.patients.details.info(id))
+  }
 
   useEffect(() => {
-    if (status || startDate || endDate) {
+    const statusParam = getParam(status)
+
+    if (statusParam) {
       setShowFilters(true)
-    } else {
-      setShowFilters(false)
     }
-  }, [status, startDate, endDate])
+  }, [getParam, status])
 
   return (
     <>
       <DataTableHeader>
         <DataTableHeaderInfo
           icon={<Users2Icon />}
-          total={total}
+          total={60}
           title='Pacientes cadastrados'
           emptyTitle='Nenhum paciente cadastrado'
         />
@@ -106,13 +90,7 @@ export default function PatientsListTable() {
       </DataTableHeader>
 
       {showFilters && (
-        <DataTableFilters
-          queries={[
-            QUERY_PARAMS.status,
-            QUERY_PARAMS.startDate,
-            QUERY_PARAMS.endDate,
-          ]}
-        >
+        <DataTableFilters queries={filterQueries}>
           <DataTableFilterStatus options={PATIENT_STATUS_OPTIONS} />
           <DataTableFilterDate />
         </DataTableFilters>
@@ -122,7 +100,7 @@ export default function PatientsListTable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className='w-64'>Nome do paciente</TableHead>
+              <TableHead>Nome do paciente</TableHead>
               <TableHead className='w-36'>Telefone</TableHead>
               <TableHead>E-mail</TableHead>
               <TableHead className='w-24'>Status</TableHead>
@@ -141,31 +119,18 @@ export default function PatientsListTable() {
                 <TableRow key={patient.id}>
                   <TableCell isLastRow={isLastRow} className='p-0'>
                     <button
-                      className='w-64 cursor-pointer px-4'
-                      onClick={() =>
-                        router.push(
-                          ROUTES.dashboard.patients.details.info(
-                            patient.id.toString(),
-                          ),
-                        )
-                      }
+                      className='cursor-pointer px-4'
+                      onClick={() => handleNavigation(patient.id.toString())}
                     >
                       <div className='flex items-center gap-2'>
-                        <Avatar
-                          className='size-9'
-                          src={patient.user.avatar_url}
-                        />
-                        <span className='truncate'>{patient.user.name}</span>
+                        <Avatar className='size-9' />
+                        {patient.name}
                       </div>
                     </button>
                   </TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
-                    {formatPhoneNumber(patient.phone)}
-                  </TableCell>
-                  <TableCell isLastRow={isLastRow}>
-                    {patient.user.email}
-                  </TableCell>
+                  <TableCell isLastRow={isLastRow}>{patient.phone}</TableCell>
+                  <TableCell isLastRow={isLastRow}>{patient.email}</TableCell>
                   <TableCell isLastRow={isLastRow}>
                     <Tag className={statusTag.class}>
                       <StatusIcon />
@@ -187,7 +152,7 @@ export default function PatientsListTable() {
         </Table>
       </Card>
 
-      <Pagination totalItems={total} />
+      <Pagination totalItems={patients.length} />
     </>
   )
 }

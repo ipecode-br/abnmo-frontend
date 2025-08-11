@@ -7,7 +7,7 @@ export const GENDERS = {
   female_cis: 'Mulher (Cis)',
   male_trans: 'Homem (Trans)',
   female_trans: 'Mulher (Trans)',
-  non_binary: 'Não binário',
+  non_binary: 'Bão binário',
   prefer_not_to_say: 'Prefiro não informar',
 }
 export type GenderType = keyof typeof GENDERS
@@ -36,11 +36,6 @@ export type PatientType = {
   has_nmo_diagnosis: boolean
   created_at: Date
   updated_at: Date
-  user: {
-    name: string
-    email: string
-    avatar_url: string
-  }
 }
 
 const PATIENT_STATUS_ICONS_AND_COLOR = {
