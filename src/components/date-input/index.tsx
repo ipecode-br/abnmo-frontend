@@ -19,6 +19,7 @@ export interface DateInputProps extends VariantProps<typeof inputVariants> {
   label: string
   name: string
   className?: string
+  navMode?: 'step' | 'dropdown'
 }
 
 export function DateInput({
@@ -27,6 +28,7 @@ export function DateInput({
   className,
   variant,
   size,
+  navMode,
 }: DateInputProps) {
   const [open, setOpen] = useState(false)
   const [dateSelected, setDateSelected] = useState<Date | undefined>(undefined)
@@ -67,7 +69,7 @@ export function DateInput({
         </div>
       </div>
       <PopoverContent>
-        <Calendar onSelect={handleDateSelect} />
+        <Calendar onSelect={handleDateSelect} navMode={navMode} />
       </PopoverContent>
     </Popover>
   )
