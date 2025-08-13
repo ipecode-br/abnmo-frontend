@@ -3,7 +3,6 @@
 import { CheckCircleIcon, Users, XCircleIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
-
 interface DashboardCardProps {
   title: string
   value: number
