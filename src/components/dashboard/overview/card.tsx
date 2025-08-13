@@ -3,6 +3,7 @@
 import { CheckCircleIcon, Users, XCircleIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
+
 interface DashboardCardProps {
   title: string
   value: number
@@ -23,10 +24,11 @@ function HighlightSpecificWords({
       {words.map((word, index) => {
         const upperWord = word.toUpperCase()
         const isHighlighted = highlightWords?.includes(upperWord)
+        const key = `${word}-${index}`
 
         return (
           <span
-            key={index}
+            key={key}
             className={cn(
               isHighlighted ? 'font-semibold text-gray-700' : 'text-gray-500',
             )}

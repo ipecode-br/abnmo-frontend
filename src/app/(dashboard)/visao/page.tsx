@@ -6,7 +6,7 @@ import DashboardOverview from '@/components/dashboard/overview/dashboard-overvie
 
 import { PATIENTS_MOCKS } from '../../../utils/mock/patients'
 
-export default function Overview() {
+export default function SupportPage() {
   const totalPatients = PATIENTS_MOCKS.length
   const activePatients = PATIENTS_MOCKS.filter(
     (patient) => patient.status === 'active',

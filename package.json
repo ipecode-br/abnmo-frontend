@@ -13,7 +13,8 @@
     "lint:eslint:check": "next lint .",
     "prepare": "husky",
     "format": "prettier --write . && eslint . --fix",
-    "checkpes": "prettier --check . && next lint ."
+    "checkpes": "prettier --check . && next lint .",
+    "resolve": "npm install --save-dev prettier && npm install eslint --save-dev --force"
   },
   "dependencies": {
     "@hookform/resolvers": "5.0.1",
@@ -66,5 +67,13 @@
     "ts-node": "10.9.2",
     "typescript": "^5",
     "typescript-eslint": "8.29.0"
+  },
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    }
   }
 }
