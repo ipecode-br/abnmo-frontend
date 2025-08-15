@@ -1,7 +1,5 @@
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavProps, useDayPicker } from 'react-day-picker'
 
 import { Button } from '../button'
@@ -11,22 +9,22 @@ import { SelectItem } from '../select/item'
 import { SelectTrigger } from '../select/trigger'
 
 const monthsOfYear = [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril',
-  'Maio',
-  'Junho',
-  'Julho',
-  'Agosto',
-  'Setembro',
-  'Outubro',
-  'Novembro',
-  'Dezembro',
+  'jan.',
+  'fev.',
+  'mar.',
+  'abr.',
+  'mai.',
+  'jun.',
+  'jul.',
+  'ago.',
+  'set.',
+  'out.',
+  'nov.',
+  'dez.',
 ]
 
-const startYear = 2000
-const endYear = 2025
+const startYear = 1900
+const endYear = new Date().getFullYear()
 
 const years: number[] = []
 for (let y = startYear; y <= endYear; y++) {
@@ -36,13 +34,18 @@ for (let y = startYear; y <= endYear; y++) {
 // TODO: implement a dropdown for month and year selection
 export function CalendarDropdownNav(props: Readonly<NavProps>) {
   const { months, goToMonth } = useDayPicker()
+  const { date: dateCurrent } = months[0]
 
-  const [yearSelected, setYearSeleted] = useState<number>(2025)
+  const [yearSelected, setYearSeleted] = useState<number>(0)
   const [monthSelected, setMonthSeleted] = useState<string>('')
   const { onPreviousClick, onNextClick, previousMonth, nextMonth } = props
 
-  const currentMonth = months[0].date
-  const label = format(currentMonth, 'MMM', { locale: ptBR })
+  useEffect(() => {
+    if (!months.length) return
+
+    setMonthSeleted(monthsOfYear[dateCurrent.getMonth()])
+    setYearSeleted(dateCurrent.getFullYear())
+  }, [dateCurrent, months.length])
 
   return (
     <div className='bg-background-soft mb-2 flex items-center justify-center gap-1 rounded-lg p-1.5'>
@@ -57,13 +60,14 @@ export function CalendarDropdownNav(props: Readonly<NavProps>) {
       </Button>
 
       <Select
+        value={monthSelected}
         onValueChange={(value) => {
           setMonthSeleted(value)
-          goToMonth(new Date(yearSelected, monthsOfYear.indexOf(value), 1))
+          goToMonth(new Date(yearSelected, monthsOfYear.indexOf(value)))
         }}
       >
         <SelectTrigger size='sm' className='w-18 gap-1 px-2 pr-1'>
-          <SelectValue placeholder={label} />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {monthsOfYear.map((month) => (
@@ -75,12 +79,11 @@ export function CalendarDropdownNav(props: Readonly<NavProps>) {
       </Select>
 
       <Select
+        value={yearSelected.toString()}
         onValueChange={(value) => {
           const year = Number(value)
           setYearSeleted(year)
-          goToMonth(
-            new Date(yearSelected, monthsOfYear.indexOf(monthSelected), 1),
-          )
+          goToMonth(new Date(year, monthsOfYear.indexOf(monthSelected)))
         }}
       >
         <SelectTrigger size='sm' className='gap-1 px-2 pr-1'>

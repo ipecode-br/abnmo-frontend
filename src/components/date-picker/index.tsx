@@ -15,35 +15,34 @@ import { Popover } from '../ui/popover'
 import { PopoverContent } from '../ui/popover/content'
 import { PopoverTrigger } from '../ui/popover/trigger'
 
-export interface DateInputProps extends VariantProps<typeof inputVariants> {
-  label: string
+export interface DatePickerProps extends VariantProps<typeof inputVariants> {
+  label?: string
   name: string
   className?: string
   navMode?: 'step' | 'dropdown'
+  onSelectDate?: (date: string) => void
+  value?: string
 }
 
-export function DateInput({
+export function DatePicker({
   label,
   name,
   className,
   variant,
   size,
   navMode,
-}: DateInputProps) {
+  onSelectDate,
+  value,
+}: DatePickerProps) {
   const [open, setOpen] = useState(false)
-  const [dateSelected, setDateSelected] = useState<Date | undefined>(undefined)
 
-  const date = dateSelected
-    ? formatDate(dateSelected, {
+  const dateFormatted = value
+    ? formatDate(value, {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
       })
     : ''
-
-  function handleDateSelect(date: Date | undefined) {
-    setDateSelected(date)
-  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -53,8 +52,10 @@ export function DateInput({
         </label>
         <div className={cn('relative flex w-full items-center')}>
           <Input
-            name={name}
-            defaultValue={date}
+            id={name}
+            value={dateFormatted}
+            variant={variant}
+            readOnly
             className={cn(inputVariants({ variant, size, className }), 'pl-10')}
             placeholder='DD/MM/YYYY'
           />
@@ -69,7 +70,15 @@ export function DateInput({
         </div>
       </div>
       <PopoverContent>
-        <Calendar onSelect={handleDateSelect} navMode={navMode} />
+        <Calendar
+          selected={value ? new Date(value) : undefined}
+          onSelect={(date) => {
+            if (onSelectDate) {
+              onSelectDate(date ? date.toISOString() : '')
+            }
+          }}
+          navMode={navMode}
+        />
       </PopoverContent>
     </Popover>
   )
