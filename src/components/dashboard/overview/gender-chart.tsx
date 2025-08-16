@@ -6,7 +6,7 @@ import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
-import { DashboardCardChart } from '../cards/chart'
+import { DashboardCardChart } from '../../charts/chart'
 
 export function DashboardGenderChartCard() {
   const data = [
@@ -19,7 +19,7 @@ export function DashboardGenderChartCard() {
     <DashboardCardChart
       title='Gênero'
       icon={ChartBarDecreasingIcon}
-      chartClassName='h-30'
+      chartClassName='h-32'
       className='col-span-1 md:col-span-3'
       menu={
         <DropdownMenu>

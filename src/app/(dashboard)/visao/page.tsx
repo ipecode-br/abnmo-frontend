@@ -16,8 +16,9 @@ export default function SupportPage() {
   ).length
 
   return (
-    <DashboardContainer className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-      <DashboardOverview />
+    <DashboardContainer className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4'>
+      <DashboardOverview className='max-h-35 min-h-25' />
+
       <DashboardOverviewCard
         title='Total de Pacientes'
         value={totalPatients}

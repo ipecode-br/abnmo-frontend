@@ -5,18 +5,18 @@ import { CheckCircleIcon, Users, XCircleIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 interface DashboardCardProps {
-  title: string
-  value: number
-  variant?: 'default' | 'active' | 'inactive'
+  readonly title: string
+  readonly value: number
+  readonly variant?: 'default' | 'active' | 'inactive'
 }
 
 function HighlightSpecificWords({
   title,
   highlightWords,
-}: {
+}: Readonly<{
   title: string
-  highlightWords?: string[]
-}) {
+  highlightWords?: readonly string[]
+}>) {
   const words = title.split(' ')
 
   return (
@@ -46,7 +46,7 @@ export function DashboardOverviewCard({
   title,
   value,
   variant = 'default',
-}: DashboardCardProps) {
+}: Readonly<DashboardCardProps>) {
   const iconBase =
     'rounded-[12px] border p-4 shadow-sm border-[#DCDCDC] text-[#0A0D14] min-h-20 max-h-35 font-inter font-medium'
   const iconStyles = 'w-10 h-10 p-2 rounded-full border border-[#DCDCDC]'
@@ -54,7 +54,7 @@ export function DashboardOverviewCard({
   const variants = {
     default: {
       icon: <Users className={cn(iconStyles, 'text-[#00ce83]')} />,
-      highlightWords: ['TOTAL'],
+      highlightWords: ['TOTAL'] as string[],
     },
     active: {
       icon: <CheckCircleIcon className={cn(iconStyles, 'text-[#38C793]')} />,

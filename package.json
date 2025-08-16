@@ -14,7 +14,7 @@
     "prepare": "husky",
     "format": "prettier --write . && eslint . --fix",
     "checkpes": "prettier --check . && next lint .",
-    "resolve": "npm install --save-dev prettier && npm install eslint --save-dev --force"
+    "resolve": "husky && npm install --save-dev prettier && npm install eslint --save-dev --force"
   },
   "dependencies": {
     "@hookform/resolvers": "5.0.1",
@@ -33,6 +33,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "7.55.0",
+    "recharts": "3.1.2",
     "sonner": "2.0.4",
     "tailwind-merge": "3.2.0",
     "zod": "3.24.3",
@@ -51,6 +52,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/recharts": "1.8.29",
     "eslint": "9.33.0",
     "eslint-config-next": "15.2.4",
     "eslint-config-prettier": "10.1.1",
