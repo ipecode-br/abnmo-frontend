@@ -42,7 +42,7 @@ function HighlightSpecificWords({
   )
 }
 
-export function DashboardOverviewCard({
+export function DashboardOverviewPatientsCard({
   title,
   value,
   variant = 'default',
