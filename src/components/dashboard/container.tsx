@@ -1,13 +1,10 @@
-import { cn } from '@/utils/class-name-merge'
-
 export function DashboardContainer({
+  children,
   className,
-  ...props
-}: Readonly<React.ComponentProps<'main'>>) {
+}: React.PropsWithChildren<{ className?: string }>) {
   return (
-    <main
-      className={cn('bg-background-soft flex-1 p-8', className)}
-      {...props}
-    />
+    <main className={`bg-background-soft flex-1 p-8 ${className ?? ''}`}>
+      {children}
+    </main>
   )
 }
