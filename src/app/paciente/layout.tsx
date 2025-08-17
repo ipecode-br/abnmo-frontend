@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { getProfile } from '@/actions/users'
+import { canUser } from '@/actions/auth'
 import { PatientHeader } from '@/app/paciente/_header'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
@@ -8,10 +8,9 @@ import { ROUTES } from '@/constants/routes'
 export default async function PatientLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const user = await getProfile()
+  const canAccess = await canUser('view', 'PatientDashboard')
 
-  // TODO: implement role validation
-  if (user?.role !== 'patient') {
+  if (!canAccess) {
     redirect(ROUTES.dashboard.main)
   }
 

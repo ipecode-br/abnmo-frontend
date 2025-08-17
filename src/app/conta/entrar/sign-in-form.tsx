@@ -5,6 +5,7 @@ import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
 
+import { getDataFromToken } from '@/actions/token'
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
@@ -43,7 +44,12 @@ export function SignInForm() {
       return
     }
 
-    router.push(ROUTES.dashboard.main)
+    const data = await getDataFromToken()
+
+    const redirectPath =
+      data?.userRole === 'admin' ? ROUTES.dashboard.main : ROUTES.patient.main
+
+    router.push(redirectPath)
   }
 
   return (
