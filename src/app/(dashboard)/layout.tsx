@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { getProfile } from '@/actions/users'
+import { canUser } from '@/actions/auth'
 import { DashboardSidebar } from '@/app/(dashboard)/_sidebar'
 import { ROUTES } from '@/constants/routes'
 
@@ -9,10 +9,9 @@ import { DashboardHeader } from './_header'
 export default async function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const user = await getProfile()
+  const canAccess = await canUser('view', 'Dashboard')
 
-  // TODO: implement role validation
-  if (user?.role === 'patient') {
+  if (!canAccess) {
     redirect(ROUTES.patient.main)
   }
 
