@@ -5,12 +5,15 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 
+import { revalidateCache } from '@/actions/cache'
+import { getDataFromToken } from '@/actions/token'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import type { UserType } from '@/types/users'
@@ -29,6 +32,10 @@ export function PatientHeaderUserDropdown({
 
   async function logout() {
     startTransition(async () => {
+      const data = await getDataFromToken()
+
+      if (!data?.userId) return
+
       const response = await api('/logout', { method: 'POST' })
 
       if (!response.success) {
@@ -36,6 +43,7 @@ export function PatientHeaderUserDropdown({
         return
       }
 
+      revalidateCache(NEXT_CACHE_TAGS.user(data.userId))
       toast.success(response.message)
       router.push(ROUTES.auth.signIn)
     })

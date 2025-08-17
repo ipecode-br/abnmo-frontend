@@ -1,3 +1,5 @@
+'use client'
+
 import logo from '@images/logo/logo-triagem.svg'
 import { PanelLeftCloseIcon, PanelLeftOpenIcon } from 'lucide-react'
 import Image from 'next/image'
