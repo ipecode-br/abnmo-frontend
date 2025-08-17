@@ -1,8 +1,9 @@
 import { ChartPie } from 'lucide-react'
+import type { HTMLAttributes } from 'react'
 
+import { ChartSummary } from '@/components/charts/cities-chart/chart-summary'
 import { Cities } from '@/components/charts/cities-chart/cities'
 import { PieChart } from '@/components/charts/cities-chart/pie'
-import { PieCities } from '@/components/charts/cities-chart/pie-cities'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
@@ -10,14 +11,18 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
 import { DashboardCardChart } from '../cards/chart'
 
-export function DashboardCitiesChartCard() {
+type DashboardCitiesChartCardProps = HTMLAttributes<HTMLDivElement>
+
+export function DashboardCitiesChartCard(
+  props: Readonly<DashboardCitiesChartCardProps>,
+) {
   const citiesData = [
-    { city: 'Recife', percentage: 35 },
-    { city: 'Rio de Janeiro', percentage: 30 },
-    { city: 'São Paulo', percentage: 20 },
-    { city: 'Curitiba', percentage: 7 },
-    { city: 'Manaus', percentage: 5 },
-    { city: 'Ceará', percentage: 3 },
+    { name: 'Recife', percentage: 35 },
+    { name: 'Rio de Janeiro', percentage: 30 },
+    { name: 'São Paulo', percentage: 20 },
+    { name: 'Curitiba', percentage: 7 },
+    { name: 'Manaus', percentage: 5 },
+    { name: 'Ceará', percentage: 3 },
   ]
 
   const PIE_COLORS = [
@@ -39,7 +44,6 @@ export function DashboardCitiesChartCard() {
       title='Cidades'
       icon={ChartPie}
       chartClassName='h-full'
-      className='col-span-1 md:col-span-3'
       menu={
         <DropdownMenu>
           <DropdownMenuTrigger aria-label='Abrir menu' size='sm'>
@@ -52,11 +56,12 @@ export function DashboardCitiesChartCard() {
           </DropdownMenuContent>
         </DropdownMenu>
       }
+      {...props}
     >
       <div className='flex w-full items-end gap-4'>
         <div className='relative h-30 w-40'>
           <PieChart data={data} />
-          <PieCities count={citiesData.length} />
+          <ChartSummary label='cidades' value={data.length} />
         </div>
         <div className='flex-1'>
           <Cities data={data} />

@@ -7,10 +7,8 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-import { PieCities } from './pie-cities'
-
 interface ChartDataItem {
-  city: string
+  name: string
   percentage: number
   color: string
 }
@@ -35,10 +33,9 @@ export function PieChart({ data }: Readonly<PieChartProps>) {
           dataKey={'percentage'}
         >
           {data.map((entry) => (
-            <Cell key={`cell-${entry.city}`} fill={entry.color} />
+            <Cell key={`cell-${entry.name}`} fill={entry.color} />
           ))}
         </Pie>
-        <PieCities count={data.length} />
       </RechartPieChart>
     </ResponsiveContainer>
   )
