@@ -1,5 +1,3 @@
-'use client'
-
 import { CheckCircleIcon, Users, XCircleIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
@@ -20,7 +18,7 @@ function HighlightSpecificWords({
   const words = title.split(' ')
 
   return (
-    <h3 className='font-inter mt-8 text-sm font-medium uppercase'>
+    <h3 className='font-inter mt-2 text-sm font-medium uppercase'>
       {words.map((word, index) => {
         const upperWord = word.toUpperCase()
         const isHighlighted = highlightWords?.includes(upperWord)
@@ -42,7 +40,7 @@ function HighlightSpecificWords({
   )
 }
 
-export function DashboardOverviewPatientsCard({
+export default function PatientsCard({
   title,
   value,
   variant = 'default',
@@ -54,15 +52,15 @@ export function DashboardOverviewPatientsCard({
   const variants = {
     default: {
       icon: <Users className={cn(iconStyles, 'text-[#00ce83]')} />,
-      highlightWords: ['TOTAL'] as string[],
+      highlightWords: ['TOTAL'] as readonly string[],
     },
     active: {
       icon: <CheckCircleIcon className={cn(iconStyles, 'text-[#38C793]')} />,
-      highlightWords: ['ATIVOS'],
+      highlightWords: ['ATIVOS'] as readonly string[],
     },
     inactive: {
       icon: <XCircleIcon className={cn(iconStyles, 'text-[#DF1C41]')} />,
-      highlightWords: ['INATIVOS'],
+      highlightWords: ['INATIVOS'] as readonly string[],
     },
   }
 
