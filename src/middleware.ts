@@ -4,6 +4,11 @@ import { NextResponse } from 'next/server'
 import { ROUTES } from './constants/routes'
 
 export async function middleware(request: NextRequest) {
+  // TODO: remove it when integrations is completed
+  if (process.env.BYPASS_AUTH === 'true') {
+    return NextResponse.next()
+  }
+
   const cookies = request.cookies
   const pathname = request.nextUrl.pathname
 

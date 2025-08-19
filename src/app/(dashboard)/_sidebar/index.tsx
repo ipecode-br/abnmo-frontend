@@ -20,7 +20,8 @@ import { DashboardSidebarMenuSection } from './menu-section'
 export async function DashboardSidebar() {
   const user = await getProfile()
 
-  if (!user) return null
+  // TODO: uncomment it after integrations is completed
+  // if (!user) return null
 
   return (
     <DashboardSidebarContainer>
