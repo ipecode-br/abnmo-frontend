@@ -20,7 +20,7 @@ export function DashboardOverviewPatientsCard({
           {icon}
         </div>
       </div>
-      <p className='text-disabled text-xs uppercase'>{title}</p>
+      <p className='text-disabled mt-auto text-xs uppercase'>{title}</p>
     </Card>
   )
 }
