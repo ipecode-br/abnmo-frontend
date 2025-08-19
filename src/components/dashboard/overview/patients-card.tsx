@@ -1,29 +1,26 @@
-import { ReactNode } from 'react'
+import { Card } from '@/components/ui/card'
 
-interface DashboardOverviewPatientsCardProps {
-  title: ReactNode
+interface DashboardOverviewPatientsCard {
+  title: string | React.ReactNode
   value: number
-  icon: ReactNode
+  icon: React.ReactNode
+  variant?: 'default' | 'active' | 'inactive'
 }
 
-export default function DashboardOverviewPatientsCard({
+export function DashboardOverviewPatientsCard({
   title,
   value,
   icon,
-}: Readonly<DashboardOverviewPatientsCardProps>) {
-  const cardBase =
-    'rounded-2xl border p-4 shadow-sm min-h-[5rem] max-h-[9rem] font-inter font-medium text-[var(--color-foreground)] border-[var(--color-border)] bg-[var(--color-card)]'
-
-  const iconWrapper =
-    'w-10 h-10 p-2 rounded-full border border-[var(--color-border)] flex items-center justify-center'
-
+}: Readonly<DashboardOverviewPatientsCard>) {
   return (
-    <div className={cardBase}>
-      <div className='flex items-start justify-between'>
-        <span className='text-2xl font-bold'>{value}</span>
-        <div className={iconWrapper}>{icon}</div>
+    <Card className='p-6'>
+      <div className='flex items-start justify-between space-y-3'>
+        <span className='text-4xl font-semibold'>{value}</span>
+        <div className='border-border rounded-full border p-2 [&_svg]:size-5'>
+          {icon}
+        </div>
       </div>
-      <div>{title}</div>
-    </div>
+      <p className='text-disabled text-xs uppercase'>{title}</p>
+    </Card>
   )
 }

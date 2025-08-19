@@ -1,3 +1,9 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Suporte',
+}
+
 import { DashboardContainer } from '@/components/dashboard/container'
 
 export default function SupportPage() {
