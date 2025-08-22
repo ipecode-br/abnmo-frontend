@@ -1,13 +1,11 @@
-'use client'
-
 import { useQuery } from '@tanstack/react-query'
 import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import {
-  DataTableFilters,
   DataTableFilterDate,
+  DataTableFilters,
   DataTableFilterStatus,
   DataTableHeader,
   DataTableHeaderActions,
@@ -16,7 +14,6 @@ import {
   DataTableHeaderOrderBy,
   DataTableHeaderSearch,
 } from '@/components/data-table'
-
 import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -78,20 +75,20 @@ export default function PatientsListTable() {
   const total = response?.data?.total ?? 0
   const patients = response?.data?.patients ?? []
 
-  // useEffect(() => {
-  //    if (status || startDate || endDate) {
-  //     setShowFilters(true)
-  //   } else {
-  //     setShowFilters(false)
-  //   }
-  // }, [status, startDate, endDate])
+  useEffect(() => {
+    if (status || startDate || endDate) {
+      setShowFilters(true)
+    } else {
+      setShowFilters(false)
+    }
+  }, [status, startDate, endDate])
 
   return (
     <>
       <DataTableHeader>
         <DataTableHeaderInfo
           icon={<Users2Icon />}
-          total={12}
+          total={total}
           title='Pacientes cadastrados'
           emptyTitle='Nenhum paciente cadastrado'
         />
@@ -140,16 +137,17 @@ export default function PatientsListTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* {patients.map((patient, index) => {
+            {patients.map((patient, index) => {
               const isLastRow = index === patients.length - 1
-              const statusTag = STATUS_TAGS[patient.status]
+              const statusTag =
+                STATUS_TAGS[patient.status as keyof typeof STATUS_TAGS]
               const StatusIcon = statusTag.icon
 
               return (
                 <TableRow key={patient.id}>
-                  <TableCell isLastRow={isLastRow} className="p-0">
+                  <TableCell isLastRow={isLastRow} className='p-0'>
                     <button
-                      className="w-64 cursor-pointer px-4"
+                      className='w-64 cursor-pointer px-4'
                       onClick={() =>
                         router.push(
                           ROUTES.dashboard.patients.details.info(
@@ -158,9 +156,12 @@ export default function PatientsListTable() {
                         )
                       }
                     >
-                      <div className="flex items-center gap-2">
-                        <Avatar className="size-9" src={patient.user.avatar_url} />
-                        <span className="truncate">{patient.user.name}</span>
+                      <div className='flex items-center gap-2'>
+                        <Avatar
+                          className='size-9'
+                          src={patient.user.avatar_url}
+                        />
+                        <span className='truncate'>{patient.user.name}</span>
                       </div>
                     </button>
                   </TableCell>
@@ -174,23 +175,27 @@ export default function PatientsListTable() {
                   <TableCell isLastRow={isLastRow}>
                     <Tag className={statusTag.class}>
                       <StatusIcon />
-                      {PATIENT_STATUS[patient.status]}
+                      {
+                        PATIENT_STATUS[
+                          patient.status as keyof typeof PATIENT_STATUS
+                        ]
+                      }
                     </Tag>
                   </TableCell>
                   <TableCell isLastRow={isLastRow}>
                     {formatDate(patient.created_at)}
                   </TableCell>
-                  <TableCell isLastRow={isLastRow} className="text-center">
+                  <TableCell isLastRow={isLastRow} className='text-center'>
                     <PatientsListTableActions />
                   </TableCell>
                 </TableRow>
               )
-            })} */}
+            })}
           </TableBody>
         </Table>
       </Card>
 
-      <Pagination totalItems={20} />
+      <Pagination totalItems={total} />
     </>
   )
 }

@@ -1,12 +1,9 @@
-'use client'
-
-import { Edit, Share2, Slash, MoreVertical } from 'lucide-react'
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
+import { Edit, MoreVertical, Share2, Slash } from 'lucide-react'
 
 import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
+import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
 export function PatientsListTableActions() {
   return (
