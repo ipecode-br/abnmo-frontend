@@ -1,4 +1,5 @@
-import type { Metadata } from 'next'
+'use client'
+
 import { Suspense } from 'react'
 
 import { DashboardContainer } from '@/components/dashboard/container'
@@ -6,10 +7,6 @@ import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { ROUTES } from '@/constants/routes'
 
 import PatientsListTable from './table'
-
-export const metadata: Metadata = {
-  title: 'Pacientes',
-}
 
 export default function PatientsListPage() {
   const tabButtons = [
@@ -23,7 +20,7 @@ export default function PatientsListPage() {
     <>
       <DashboardTabButtons buttons={tabButtons} />
       <DashboardContainer className='flex flex-col gap-6'>
-        <Suspense>
+        <Suspense fallback={<div>Carregando...</div>}>
           <PatientsListTable />
         </Suspense>
       </DashboardContainer>

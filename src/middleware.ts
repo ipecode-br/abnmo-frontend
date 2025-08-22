@@ -15,13 +15,13 @@ export async function middleware(request: NextRequest) {
   const accessToken = cookies.get('access_token')
   const isAuthRoute = pathname.startsWith('/conta')
 
-  if (isAuthRoute && accessToken) {
-    return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
-  }
+  // if (isAuthRoute && accessToken) {
+  return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
+  // }
 
-  if (!isAuthRoute && !accessToken) {
-    return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
-  }
+  // if (!isAuthRoute && !accessToken) {
+  return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
+  // }
 
   return NextResponse.next()
 }

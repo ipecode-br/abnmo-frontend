@@ -1,19 +1,22 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { EllipsisIcon, PlusIcon, Users2Icon } from 'lucide-react'
+import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { DataTableFilters } from '@/components/data-table/filters'
-import { DataTableFilterDate } from '@/components/data-table/filters/date'
-import { DataTableFilterStatus } from '@/components/data-table/filters/status'
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderFilterButton } from '@/components/data-table/header/filter-button'
-import { DataTableHeaderInfo } from '@/components/data-table/header/info'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import {
+  DataTableFilters,
+  DataTableFilterDate,
+  DataTableFilterStatus,
+  DataTableHeader,
+  DataTableHeaderActions,
+  DataTableHeaderFilterButton,
+  DataTableHeaderInfo,
+  DataTableHeaderOrderBy,
+  DataTableHeaderSearch,
+} from '@/components/data-table'
+
 import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -41,12 +44,9 @@ import {
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
-import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
-// TODO: create patient actions menu
-// TODO: redirect to register new patient page
-// TODO: add focus styles to cell button
-// TODO: add loading state to table
+import { PatientsListTableActions } from './actions'
+
 export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
   const { getParam } = useParams()
@@ -64,27 +64,34 @@ export default function PatientsListTable() {
     queryKey: [QUERY_CACHE_KEYS.patients, filterQueries],
     queryFn: () =>
       api<{ patients: PatientType[]; total: number }>('/patients', {
-        params: { page, search, orderBy, status, startDate, endDate },
+        params: {
+          ...(page && { page }),
+          ...(search && { search }),
+          ...(orderBy && { orderBy }),
+          ...(status && { status }),
+          ...(startDate && { startDate }),
+          ...(endDate && { endDate }),
+        },
       }),
   })
 
   const total = response?.data?.total ?? 0
   const patients = response?.data?.patients ?? []
 
-  useEffect(() => {
-    if (status || startDate || endDate) {
-      setShowFilters(true)
-    } else {
-      setShowFilters(false)
-    }
-  }, [status, startDate, endDate])
+  // useEffect(() => {
+  //    if (status || startDate || endDate) {
+  //     setShowFilters(true)
+  //   } else {
+  //     setShowFilters(false)
+  //   }
+  // }, [status, startDate, endDate])
 
   return (
     <>
       <DataTableHeader>
         <DataTableHeaderInfo
           icon={<Users2Icon />}
-          total={total}
+          total={12}
           title='Pacientes cadastrados'
           emptyTitle='Nenhum paciente cadastrado'
         />
@@ -133,15 +140,16 @@ export default function PatientsListTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {patients.map((patient, index) => {
-              const isLastRow = index === PATIENTS_MOCKS.length - 1
+            {/* {patients.map((patient, index) => {
+              const isLastRow = index === patients.length - 1
               const statusTag = STATUS_TAGS[patient.status]
               const StatusIcon = statusTag.icon
+
               return (
                 <TableRow key={patient.id}>
-                  <TableCell isLastRow={isLastRow} className='p-0'>
+                  <TableCell isLastRow={isLastRow} className="p-0">
                     <button
-                      className='w-64 cursor-pointer px-4'
+                      className="w-64 cursor-pointer px-4"
                       onClick={() =>
                         router.push(
                           ROUTES.dashboard.patients.details.info(
@@ -150,12 +158,9 @@ export default function PatientsListTable() {
                         )
                       }
                     >
-                      <div className='flex items-center gap-2'>
-                        <Avatar
-                          className='size-9'
-                          src={patient.user.avatar_url}
-                        />
-                        <span className='truncate'>{patient.user.name}</span>
+                      <div className="flex items-center gap-2">
+                        <Avatar className="size-9" src={patient.user.avatar_url} />
+                        <span className="truncate">{patient.user.name}</span>
                       </div>
                     </button>
                   </TableCell>
@@ -175,19 +180,17 @@ export default function PatientsListTable() {
                   <TableCell isLastRow={isLastRow}>
                     {formatDate(patient.created_at)}
                   </TableCell>
-                  <TableCell isLastRow={isLastRow} className='text-center'>
-                    <Button variant='ghost' size='icon' className='size-8'>
-                      <EllipsisIcon />
-                    </Button>
+                  <TableCell isLastRow={isLastRow} className="text-center">
+                    <PatientsListTableActions />
                   </TableCell>
                 </TableRow>
               )
-            })}
+            })} */}
           </TableBody>
         </Table>
       </Card>
 
-      <Pagination totalItems={total} />
+      <Pagination totalItems={20} />
     </>
   )
 }
