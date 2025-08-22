@@ -1,12 +1,16 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { FormProvider, useForm } from 'react-hook-form'
 
+import { getCitiesByUF } from '@/actions/ibge'
 import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
+import { BRAZILIAN_STATES } from '@/constants/brazilian-states'
+import { GENDERS } from '@/constants/genders'
 import { PatientType } from '@/types/patients'
 
 interface PatientsInfoFormProps {
@@ -16,30 +20,31 @@ interface PatientsInfoFormProps {
 
 export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
   const formMethods = useForm({
-    defaultValues: patient,
+    defaultValues: {
+      ...patient,
+
+      has_disability: patient?.has_disability ? 'Sim' : 'Não',
+      take_medication: patient?.take_medication ? 'Sim' : 'Não',
+      has_nmo_diagnosis: patient?.has_nmo_diagnosis ? 'Sim' : 'Não',
+      need_legal_assistance: patient?.need_legal_assistance ? 'Sim' : 'Não',
+    },
     mode: 'onBlur',
   })
-  const isDisabled = mode === 'view'
+  const { watch } = formMethods
+  const UF = watch('state') || ''
+  const { data: cities, isLoading: isLoadingCities } = useQuery({
+    queryKey: [`cities/${UF}`],
+    queryFn: () => getCitiesByUF(UF),
+  })
 
-  const genderOptions: { label: string; value: string }[] = patient?.gender
-    ? [{ label: patient.gender, value: patient.gender }]
-    : [
-        { label: 'Masculino', value: 'male' },
-        { label: 'Feminino', value: 'female' },
-      ]
+  const cityOptions = cities
+    ? cities.map((city) => ({ label: city, value: city }))
+    : []
 
-  const stateOptions: { label: string; value: string }[] = patient?.state
-    ? [{ label: patient.state, value: patient.state }]
-    : [
-        { label: 'Masculino', value: 'male' },
-        { label: 'Feminino', value: 'female' },
-      ]
-  const cityOptions: { label: string; value: string }[] = patient?.city
-    ? [{ label: patient.city, value: patient.city }]
-    : [
-        { label: 'Masculino', value: 'male' },
-        { label: 'Feminino', value: 'female' },
-      ]
+  const booleanOptions = [
+    { label: 'Sim', value: 'Sim' },
+    { label: 'Não', value: 'Não' },
+  ]
 
   return (
     <FormProvider {...formMethods}>
@@ -47,93 +52,110 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
         <div className='flex gap-x-4'>
           <TextInput
             label='Nome completo'
+            maxLength={50}
             {...formMethods.register('user.name')}
-            disabled={isDisabled}
+            placeholder='Insira seu nome completo'
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
+
           <TextInput
+            name='date_of_birth'
             label='Data de nascimento'
-            {...formMethods.register('date_of_birth')}
-            disabled={isDisabled}
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
           <TextInput
+            name='cpf'
             label='CPF'
-            {...formMethods.register(`cpf`)}
-            disabled={isDisabled}
+            mask='cpf'
+            placeholder='Insira seu CPF'
+            message={mode === 'view' ? '' : 'Insira somente números'}
+            inputMode='numeric'
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
         </div>
 
         <div className='flex flex-auto gap-x-4'>
           <SelectInput
+            name='gender'
             label='Gênero'
-            options={genderOptions}
-            {...formMethods.register('gender')}
-            disabled={isDisabled}
+            options={GENDERS}
+            placeholder='Selecione seu gênero'
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
           <SelectInput
+            name='state'
             label='Estado'
-            options={stateOptions}
-            {...formMethods.register('state')}
-            disabled={isDisabled}
+            options={BRAZILIAN_STATES}
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
           <SelectInput
+            name='city'
             label='Cidade'
             options={cityOptions}
-            {...formMethods.register('city')}
-            disabled={isDisabled}
+            loading={!!UF && isLoadingCities}
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
           <TextInput
+            name='phone'
             label='Telefone'
-            {...formMethods.register('phone')}
-            disabled={isDisabled}
+            mask='phone'
+            placeholder='Insira seu telefone'
+            message={mode === 'view' ? '' : 'Insira somente números'}
+            inputMode='tel'
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
         </div>
 
         <div className='flex gap-x-4'>
           <SelectInput
+            name='has_disability'
             label='Você possui alguma deficiência?'
-            options={[
-              { label: 'sim', value: 'sim' },
-              { label: 'nao', value: 'Não' },
-            ]}
-            {...formMethods.register('disability_desc')}
-            disabled={isDisabled}
+            options={booleanOptions}
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
           <TextInput
-            label='Se sim, qual? '
-            {...formMethods.register('disability_desc')}
-            disabled={isDisabled}
+            name='disability_desc'
+            label='Se sim, qual?'
+            disabled={mode === 'view'}
           />
         </div>
+
         <div className='flex gap-x-4'>
           <SelectInput
+            name='take_medication'
             label='Faz uso de algum medicamento regularmente?'
-            options={[
-              { label: 'sim', value: 'sim' },
-              { label: 'nao', value: 'Não' },
-            ]}
-            {...formMethods.register('disability_desc')}
-            disabled={isDisabled}
+            options={booleanOptions}
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
           <TextInput
-            label='Se sim, qual? '
-            {...formMethods.register('medication_desc')}
-            disabled={isDisabled}
+            name='medication_desc'
+            label='Se sim, qual?'
+            disabled={mode === 'view'}
           />
         </div>
+
         <div className='flex gap-x-4'>
           <SelectInput
+            name='has_nmo_diagnosis'
             label='Possui diagnóstico de NMO?'
-            options={[
-              { label: 'sim', value: 'sim' },
-              { label: 'nao', value: 'Não' },
-            ]}
-            {...formMethods.register('disability_desc')}
-            disabled={isDisabled}
+            options={booleanOptions}
+            disabled={mode === 'view'}
+            isRequired={mode === 'edit'}
           />
-          <TextInput
+          <SelectInput
+            name='need_legal_assistance'
             label='Precisa de assistência legal?'
-            {...formMethods.register('medication_desc')}
-            disabled={isDisabled}
+            options={booleanOptions}
+            disabled={mode === 'view'}
           />
         </div>
         <Divider />
@@ -145,22 +167,29 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
               <TextInput
                 label='Nome do contato'
                 {...formMethods.register('user.name')}
-                disabled={isDisabled}
+                disabled={mode === 'view'}
+                isRequired={mode === 'edit'}
               />
               <TextInput
                 label='Parentesco'
                 {...formMethods.register('user.name')}
-                disabled={isDisabled}
+                disabled={mode === 'view'}
+                isRequired={mode === 'edit'}
               />
               <TextInput
+                name='phone'
                 label='Telefone para contato (Whatsapp)'
-                {...formMethods.register('phone')}
-                disabled={isDisabled}
+                disabled={mode === 'view'}
+                isRequired={mode === 'edit'}
               />
             </div>
           </>
         )}
-        <Button variant='outline' className='text-primary ml-auto max-w-20'>
+        <Button
+          type='button'
+          variant='outline'
+          className='text-primary ml-auto max-w-20'
+        >
           Editar
         </Button>
       </FormContainer>
