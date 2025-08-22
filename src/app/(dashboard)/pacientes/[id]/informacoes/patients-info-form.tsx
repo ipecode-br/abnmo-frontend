@@ -5,12 +5,15 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { getCitiesByUF } from '@/actions/ibge'
 import { FormContainer } from '@/components/form/form-container'
+import { FormField } from '@/components/form/form-field'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
 import { BRAZILIAN_STATES } from '@/constants/brazilian-states'
+import { yesOrNoEnum } from '@/constants/enums'
 import { GENDERS } from '@/constants/genders'
+import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 import { PatientType } from '@/types/patients'
 
 interface PatientsInfoFormProps {
@@ -19,15 +22,19 @@ interface PatientsInfoFormProps {
 }
 
 export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
+  function booleanToYesNo(value?: boolean) {
+    return value ? 'yes' : 'no'
+  }
+  const formDefaultValues = {
+    ...patient,
+    has_disability: booleanToYesNo(patient?.has_disability),
+    take_medication: booleanToYesNo(patient?.take_medication),
+    has_nmo_diagnosis: booleanToYesNo(patient?.has_nmo_diagnosis),
+    need_legal_assistance: booleanToYesNo(patient?.need_legal_assistance),
+  }
+  const yesOrNoOptions = convertObjectToOptions(yesOrNoEnum)
   const formMethods = useForm({
-    defaultValues: {
-      ...patient,
-
-      has_disability: patient?.has_disability ? 'Sim' : 'Não',
-      take_medication: patient?.take_medication ? 'Sim' : 'Não',
-      has_nmo_diagnosis: patient?.has_nmo_diagnosis ? 'Sim' : 'Não',
-      need_legal_assistance: patient?.need_legal_assistance ? 'Sim' : 'Não',
-    },
+    defaultValues: formDefaultValues,
     mode: 'onBlur',
   })
   const { watch } = formMethods
@@ -41,83 +48,80 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
     ? cities.map((city) => ({ label: city, value: city }))
     : []
 
-  const booleanOptions = [
-    { label: 'Sim', value: 'Sim' },
-    { label: 'Não', value: 'Não' },
-  ]
-
   return (
     <FormProvider {...formMethods}>
       <FormContainer>
-        <div className='flex gap-x-4'>
-          <TextInput
-            label='Nome completo'
-            maxLength={50}
-            {...formMethods.register('user.name')}
-            placeholder='Insira seu nome completo'
-            disabled={mode === 'view'}
-            isRequired={mode === 'edit'}
-          />
+        <FormField>
+          <div className='flex gap-x-3'>
+            <TextInput
+              label='Nome completo'
+              maxLength={50}
+              {...formMethods.register('user.name')}
+              placeholder='Insira seu nome completo'
+              disabled={mode === 'view'}
+              isRequired={mode === 'edit'}
+            />
 
-          <TextInput
-            name='date_of_birth'
-            label='Data de nascimento'
-            disabled={mode === 'view'}
-            isRequired={mode === 'edit'}
-          />
-          <TextInput
-            name='cpf'
-            label='CPF'
-            mask='cpf'
-            placeholder='Insira seu CPF'
-            message={mode === 'view' ? '' : 'Insira somente números'}
-            inputMode='numeric'
-            disabled={mode === 'view'}
-            isRequired={mode === 'edit'}
-          />
-        </div>
+            <TextInput
+              //Temporary Date field, will use new DateInput with formatting after merge
+              name='date_of_birth'
+              label='Data de nascimento'
+              disabled={mode === 'view'}
+              isRequired={mode === 'edit'}
+            />
+            <TextInput
+              name='cpf'
+              label='CPF'
+              mask='cpf'
+              placeholder='Insira seu CPF'
+              message={mode === 'view' ? '' : 'Insira somente números'}
+              inputMode='numeric'
+              disabled={mode === 'view'}
+              isRequired={mode === 'edit'}
+            />
+          </div>
+          <div className='flex gap-x-3'>
+            <SelectInput
+              name='gender'
+              label='Gênero'
+              options={GENDERS}
+              placeholder='Selecione seu gênero'
+              disabled={mode === 'view'}
+              isRequired={mode === 'edit'}
+            />
+            <SelectInput
+              name='state'
+              label='Estado'
+              options={BRAZILIAN_STATES}
+              disabled={mode === 'view'}
+              isRequired={mode === 'edit'}
+            />
+            <SelectInput
+              name='city'
+              label='Cidade'
+              options={cityOptions}
+              loading={!!UF && isLoadingCities}
+              disabled={mode === 'view'}
+              isRequired={mode === 'edit'}
+            />
+            <TextInput
+              name='phone'
+              label='Telefone'
+              mask='phone'
+              placeholder='Insira seu telefone'
+              message={mode === 'view' ? '' : 'Insira somente números'}
+              inputMode='tel'
+              disabled={mode === 'view'}
+              isRequired={mode === 'edit'}
+            />
+          </div>
+        </FormField>
 
-        <div className='flex flex-auto gap-x-4'>
-          <SelectInput
-            name='gender'
-            label='Gênero'
-            options={GENDERS}
-            placeholder='Selecione seu gênero'
-            disabled={mode === 'view'}
-            isRequired={mode === 'edit'}
-          />
-          <SelectInput
-            name='state'
-            label='Estado'
-            options={BRAZILIAN_STATES}
-            disabled={mode === 'view'}
-            isRequired={mode === 'edit'}
-          />
-          <SelectInput
-            name='city'
-            label='Cidade'
-            options={cityOptions}
-            loading={!!UF && isLoadingCities}
-            disabled={mode === 'view'}
-            isRequired={mode === 'edit'}
-          />
-          <TextInput
-            name='phone'
-            label='Telefone'
-            mask='phone'
-            placeholder='Insira seu telefone'
-            message={mode === 'view' ? '' : 'Insira somente números'}
-            inputMode='tel'
-            disabled={mode === 'view'}
-            isRequired={mode === 'edit'}
-          />
-        </div>
-
-        <div className='flex gap-x-4'>
+        <FormField className='flex-row'>
           <SelectInput
             name='has_disability'
             label='Você possui alguma deficiência?'
-            options={booleanOptions}
+            options={yesOrNoOptions}
             disabled={mode === 'view'}
             isRequired={mode === 'edit'}
           />
@@ -126,13 +130,13 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
             label='Se sim, qual?'
             disabled={mode === 'view'}
           />
-        </div>
+        </FormField>
 
-        <div className='flex gap-x-4'>
+        <FormField className='flex-row'>
           <SelectInput
             name='take_medication'
             label='Faz uso de algum medicamento regularmente?'
-            options={booleanOptions}
+            options={yesOrNoOptions}
             disabled={mode === 'view'}
             isRequired={mode === 'edit'}
           />
@@ -141,29 +145,28 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
             label='Se sim, qual?'
             disabled={mode === 'view'}
           />
-        </div>
+        </FormField>
 
-        <div className='flex gap-x-4'>
+        <FormField className='flex-row'>
           <SelectInput
             name='has_nmo_diagnosis'
             label='Possui diagnóstico de NMO?'
-            options={booleanOptions}
+            options={yesOrNoOptions}
             disabled={mode === 'view'}
             isRequired={mode === 'edit'}
           />
           <SelectInput
             name='need_legal_assistance'
             label='Precisa de assistência legal?'
-            options={booleanOptions}
+            options={yesOrNoOptions}
             disabled={mode === 'view'}
           />
-        </div>
+        </FormField>
         <Divider />
         {patient?.need_legal_assistance && (
           <>
             <h1 className='text-xl font-medium'>Rede de apoio</h1>
-
-            <div className='flex gap-x-4'>
+            <FormField className='flex-row'>
               <TextInput
                 label='Nome do contato'
                 {...formMethods.register('user.name')}
@@ -182,7 +185,7 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
                 disabled={mode === 'view'}
                 isRequired={mode === 'edit'}
               />
-            </div>
+            </FormField>
           </>
         )}
         <Button

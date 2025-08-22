@@ -71,7 +71,7 @@ export default async function PatientInfoPage({
           </Button>
         </div>
       </section>
-      <PatientsInfoForm patient={mockPatientData} mode='view' />
+      <PatientsInfoForm patient={mockPatientData} mode='edit' />
     </div>
   )
 }
