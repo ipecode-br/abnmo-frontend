@@ -3,17 +3,15 @@ import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import {
-  DataTableFilterDate,
-  DataTableFilters,
-  DataTableFilterStatus,
-  DataTableHeader,
-  DataTableHeaderActions,
-  DataTableHeaderFilterButton,
-  DataTableHeaderInfo,
-  DataTableHeaderOrderBy,
-  DataTableHeaderSearch,
-} from '@/components/data-table'
+import { DataTableFilters } from '@/components/data-table/filters'
+import { DataTableFilterDate } from '@/components/data-table/filters/date'
+import { DataTableFilterStatus } from '@/components/data-table/filters/status'
+import { DataTableHeader } from '@/components/data-table/header'
+import { DataTableHeaderActions } from '@/components/data-table/header/actions'
+import { DataTableHeaderFilterButton } from '@/components/data-table/header/filter-button'
+import { DataTableHeaderInfo } from '@/components/data-table/header/info'
+import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
+import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -44,6 +42,10 @@ import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 import { PatientsListTableActions } from './actions'
 
+// TODO: create patient actions menu
+// TODO: redirect to register new patient page
+// TODO: add focus styles to cell button
+// TODO: add loading state to table
 export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
   const { getParam } = useParams()
@@ -61,14 +63,7 @@ export default function PatientsListTable() {
     queryKey: [QUERY_CACHE_KEYS.patients, filterQueries],
     queryFn: () =>
       api<{ patients: PatientType[]; total: number }>('/patients', {
-        params: {
-          ...(page && { page }),
-          ...(search && { search }),
-          ...(orderBy && { orderBy }),
-          ...(status && { status }),
-          ...(startDate && { startDate }),
-          ...(endDate && { endDate }),
-        },
+        params: { page, search, orderBy, status, startDate, endDate },
       }),
   })
 

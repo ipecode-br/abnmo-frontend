@@ -11,6 +11,7 @@
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "next lint .",
+    "lint:eslint:fix": "next lint --fix .",
     "prepare": "husky"
   },
   "dependencies": {

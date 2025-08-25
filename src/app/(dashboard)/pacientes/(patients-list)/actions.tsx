@@ -1,5 +1,6 @@
-import { Edit, MoreVertical, Share2, Slash } from 'lucide-react'
+import { CircleXIcon, Edit, EllipsisIcon, SendIcon } from 'lucide-react'
 
+import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
@@ -12,24 +13,26 @@ export function PatientsListTableActions() {
         variant='ghost'
         size='icon'
         indicator={false}
-        className='focus:ring-primary rounded-md p-2 hover:bg-gray-100 focus:ring-2 focus:ring-offset-2 focus:outline-none'
+        className='size-8'
       >
-        <MoreVertical className='text-foreground-soft h-5 w-5' />
+        <EllipsisIcon />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className='w-44'>
+      <DropdownMenuContent align='end'>
         <DropdownMenuItem>
-          <Edit className='mr-2 h-4 w-4' />
+          <Edit />
           Editar paciente
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Share2 className='mr-2 h-4 w-4' />
+          <SendIcon />
           Encaminhar
         </DropdownMenuItem>
 
+        <Divider />
+
         <DropdownMenuItem variant='destructive'>
-          <Slash className='mr-2 h-4 w-4' />
+          <CircleXIcon />
           Inativar paciente
         </DropdownMenuItem>
       </DropdownMenuContent>
