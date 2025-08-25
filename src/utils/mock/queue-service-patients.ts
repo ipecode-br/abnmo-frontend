@@ -1,0 +1,42 @@
+export const QUEUE_SERVICE_PATIENTS_MOCK = [
+  {
+    id: '1',
+    name: 'João da Silva',
+    appointmentDate: new Date('2023-10-01T10:00:00Z'),
+    professional: 'Dr. Ana Souza',
+    specialty: 'Cardiologista',
+    general_condition: 'outbreak',
+  },
+  {
+    id: '2',
+    name: 'Maria Oliveira',
+    appointmentDate: new Date('2023-10-01T11:00:00Z'),
+    professional: 'Dr. Carlos Pereira',
+    specialty: 'Neurologista',
+    general_condition: 'stable',
+  },
+  {
+    id: '3',
+    name: 'Pedro Santos',
+    appointmentDate: new Date('2023-10-01T12:00:00Z'),
+    professional: 'Dr. Fernanda Lima',
+    specialty: 'Neurologista',
+    general_condition: 'outbreak',
+  },
+  {
+    id: '4',
+    name: 'Ana Costa',
+    appointmentDate: new Date('2023-10-01T13:00:00Z'),
+    professional: 'Dr. Lucas Almeida',
+    specialty: 'Cardiologista',
+    general_condition: 'stable',
+  },
+  {
+    id: '5',
+    name: 'Roberto Silva',
+    appointmentDate: new Date('2023-10-01T14:00:00Z'),
+    professional: 'Dr. Juliana Rocha',
+    specialty: 'Cardiologista',
+    general_condition: 'stable',
+  },
+]

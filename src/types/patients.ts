@@ -1,4 +1,9 @@
-import { CheckCircle2Icon, CircleXIcon } from 'lucide-react'
+import {
+  AlertTriangleIcon,
+  CheckCircle2Icon,
+  CircleXIcon,
+  Flag,
+} from 'lucide-react'
 
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
@@ -64,3 +69,22 @@ export const PATIENTS_ORDER = {
 }
 export type PatientsOrderType = keyof typeof PATIENTS_ORDER
 export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDER)
+
+export const PATIENT_CONDITIONS = {
+  outbreak: 'Em surto',
+  stable: 'Estável',
+} as const
+export type PatientConditionType = keyof typeof PATIENT_CONDITIONS
+
+export const PATIENT_CONDITION_ICONS_AND_COLOR = {
+  outbreak: {
+    icon: AlertTriangleIcon,
+    tagClassName: 'bg-warning/10 text-warning border-none',
+    iconClassName: 'fill-warning text-white',
+  },
+  stable: {
+    icon: Flag,
+    tagClassName: 'bg-foreground-soft/5 border-none',
+    iconClassName: 'fill-foreground-soft',
+  },
+}
