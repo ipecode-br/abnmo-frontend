@@ -147,9 +147,7 @@ export default function PatientsListTable() {
                       className='w-64 cursor-pointer px-4'
                       onClick={() =>
                         router.push(
-                          ROUTES.dashboard.patients.details.info(
-                            patient.id.toString(),
-                          ),
+                          ROUTES.dashboard.patients.details.info(patient.id),
                         )
                       }
                     >
