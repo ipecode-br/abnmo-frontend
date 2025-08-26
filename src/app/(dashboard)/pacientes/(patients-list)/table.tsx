@@ -41,6 +41,7 @@ import {
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
+import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
 import { PatientsListTableActions } from './actions'
 
@@ -70,7 +71,7 @@ export default function PatientsListTable() {
   })
 
   const total = response?.data?.total ?? 0
-  const patients = response?.data?.patients ?? []
+  const patients = response?.data?.patients ?? PATIENTS_MOCKS
 
   useEffect(() => {
     if (status || startDate || endDate) {
