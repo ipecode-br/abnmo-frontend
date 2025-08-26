@@ -1,3 +1,5 @@
+'use client'
+
 import { CircleXIcon, Edit, EllipsisIcon, SendIcon } from 'lucide-react'
 
 import { Divider } from '@/components/ui/divider'

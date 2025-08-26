@@ -1,3 +1,5 @@
+'use client'
+
 import { useQuery } from '@tanstack/react-query'
 import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -170,11 +172,7 @@ export default function PatientsListTable() {
                   <TableCell isLastRow={isLastRow}>
                     <Tag className={statusTag.class}>
                       <StatusIcon />
-                      {
-                        PATIENT_STATUS[
-                          patient.status as keyof typeof PATIENT_STATUS
-                        ]
-                      }
+                      {PATIENT_STATUS[patient.status]}
                     </Tag>
                   </TableCell>
                   <TableCell isLastRow={isLastRow}>
