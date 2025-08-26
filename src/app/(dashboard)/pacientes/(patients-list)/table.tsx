@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { EllipsisIcon, PlusIcon, Users2Icon } from 'lucide-react'
+import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -43,6 +43,8 @@ import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
+import { PatientsListTableActions } from './actions'
+
 // TODO: create patient actions menu
 // TODO: redirect to register new patient page
 // TODO: add focus styles to cell button
@@ -69,7 +71,7 @@ export default function PatientsListTable() {
   })
 
   const total = response?.data?.total ?? 0
-  const patients = response?.data?.patients ?? []
+  const patients = response?.data?.patients ?? PATIENTS_MOCKS
 
   useEffect(() => {
     if (status || startDate || endDate) {
@@ -134,9 +136,11 @@ export default function PatientsListTable() {
           </TableHeader>
           <TableBody>
             {patients.map((patient, index) => {
-              const isLastRow = index === PATIENTS_MOCKS.length - 1
-              const statusTag = STATUS_TAGS[patient.status]
+              const isLastRow = index === patients.length - 1
+              const statusTag =
+                STATUS_TAGS[patient.status as keyof typeof STATUS_TAGS]
               const StatusIcon = statusTag.icon
+
               return (
                 <TableRow key={patient.id}>
                   <TableCell isLastRow={isLastRow} className='p-0'>
@@ -144,9 +148,7 @@ export default function PatientsListTable() {
                       className='w-64 cursor-pointer px-4'
                       onClick={() =>
                         router.push(
-                          ROUTES.dashboard.patients.details.info(
-                            patient.id.toString(),
-                          ),
+                          ROUTES.dashboard.patients.details.info(patient.id),
                         )
                       }
                     >
@@ -176,9 +178,7 @@ export default function PatientsListTable() {
                     {formatDate(patient.created_at)}
                   </TableCell>
                   <TableCell isLastRow={isLastRow} className='text-center'>
-                    <Button variant='ghost' size='icon' className='size-8'>
-                      <EllipsisIcon />
-                    </Button>
+                    <PatientsListTableActions />
                   </TableCell>
                 </TableRow>
               )
