@@ -1,4 +1,4 @@
 {
-  "*.{ts,tsx,js,jsx}": ["prettier --check", "npx eslint"],
+  "*.{js,jsx,ts,tsx}": ["prettier --check", "npx eslint"],
   "*.{json,md,mdx,css,yaml,yml}": "prettier --check"
 }
