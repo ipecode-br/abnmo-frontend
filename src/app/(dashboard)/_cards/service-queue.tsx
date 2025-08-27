@@ -1,6 +1,14 @@
 'use client'
 
-import { MoreVerticalIcon, PlusIcon, Users2Icon } from 'lucide-react'
+import {
+  ClipboardClock,
+  ClipboardList,
+  ClipboardPen,
+  EllipsisIcon,
+  PlusIcon,
+  Users2Icon,
+  XCircle,
+} from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { DataTableHeader } from '@/components/data-table/header'
@@ -10,6 +18,11 @@ import { AppointmentConditionTag } from '@/components/tags/appointment-condition
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { Divider } from '@/components/ui/divider'
+import { DropdownMenu } from '@/components/ui/dropdown'
+import { DropdownMenuContent } from '@/components/ui/dropdown/content'
+import { DropdownMenuItem } from '@/components/ui/dropdown/item'
+import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import {
   Table,
   TableBody,
@@ -99,10 +112,42 @@ export default function ServiceQueueCard() {
                   />
                 </TableCell>
 
-                <TableCell isLastRow={isLastRow}>
-                  <Button variant='ghost' size='icon'>
-                    <MoreVerticalIcon />
-                  </Button>
+                <TableCell isLastRow={isLastRow} className='text-center'>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      indicator={false}
+                      size='icon'
+                      variant='ghost'
+                      className='size-8'
+                    >
+                      <EllipsisIcon />
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent align='end'>
+                      <DropdownMenuItem>
+                        <ClipboardPen />
+                        Editar
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <ClipboardList />
+                        Informações do paciente
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <ClipboardClock />
+                        Histórico do paciente
+                      </DropdownMenuItem>
+
+                      <Divider />
+
+                      <DropdownMenuItem
+                        variant='destructive'
+                        className='text-center'
+                      >
+                        <XCircle />
+                        Cancelar
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             )
