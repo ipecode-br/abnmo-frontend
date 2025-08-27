@@ -3,7 +3,7 @@ import { XIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
 
-import { buttonVariants } from '../ui/button'
+import { buttonVariants } from '../button'
 
 interface DialogContentProps
   extends React.ComponentProps<typeof DialogPrimitive.Content> {
