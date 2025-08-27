@@ -25,9 +25,12 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
   function booleanToYesNo(value?: boolean) {
     return value ? 'yes' : 'no'
   }
+
   const formDefaultValues = {
     ...patient,
     has_disability: booleanToYesNo(patient?.has_disability),
+    disability_desc: patient?.disability_desc ?? '',
+    medication_desc: patient?.medication_desc ?? '',
     take_medication: booleanToYesNo(patient?.take_medication),
     has_nmo_diagnosis: booleanToYesNo(patient?.has_nmo_diagnosis),
     need_legal_assistance: booleanToYesNo(patient?.need_legal_assistance),
@@ -58,16 +61,16 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
               maxLength={50}
               {...formMethods.register('user.name')}
               placeholder='Insira seu nome completo'
-              disabled={mode === 'view'}
               isRequired={mode === 'edit'}
+              readOnly
             />
 
             <TextInput
               //Temporary Date field, will use new DateInput with formatting after merge
               name='date_of_birth'
               label='Data de nascimento'
-              disabled={mode === 'view'}
               isRequired={mode === 'edit'}
+              readOnly
             />
             <TextInput
               name='cpf'
@@ -76,8 +79,8 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
               placeholder='Insira seu CPF'
               message={mode === 'view' ? '' : 'Insira somente números'}
               inputMode='numeric'
-              disabled={mode === 'view'}
               isRequired={mode === 'edit'}
+              readOnly
             />
           </div>
           <div className='flex gap-x-3'>
@@ -86,14 +89,12 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
               label='Gênero'
               options={GENDERS}
               placeholder='Selecione seu gênero'
-              disabled={mode === 'view'}
               isRequired={mode === 'edit'}
             />
             <SelectInput
               name='state'
               label='Estado'
               options={BRAZILIAN_STATES}
-              disabled={mode === 'view'}
               isRequired={mode === 'edit'}
             />
             <SelectInput
@@ -101,7 +102,6 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
               label='Cidade'
               options={cityOptions}
               loading={!!UF && isLoadingCities}
-              disabled={mode === 'view'}
               isRequired={mode === 'edit'}
             />
             <TextInput
@@ -111,8 +111,8 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
               placeholder='Insira seu telefone'
               message={mode === 'view' ? '' : 'Insira somente números'}
               inputMode='tel'
-              disabled={mode === 'view'}
               isRequired={mode === 'edit'}
+              readOnly
             />
           </div>
         </FormField>
@@ -122,14 +122,9 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
             name='has_disability'
             label='Você possui alguma deficiência?'
             options={yesOrNoOptions}
-            disabled={mode === 'view'}
             isRequired={mode === 'edit'}
           />
-          <TextInput
-            name='disability_desc'
-            label='Se sim, qual?'
-            disabled={mode === 'view'}
-          />
+          <TextInput name='disability_desc' label='Se sim, qual?' readOnly />
         </FormField>
 
         <FormField className='flex-row'>
@@ -137,14 +132,9 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
             name='take_medication'
             label='Faz uso de algum medicamento regularmente?'
             options={yesOrNoOptions}
-            disabled={mode === 'view'}
             isRequired={mode === 'edit'}
           />
-          <TextInput
-            name='medication_desc'
-            label='Se sim, qual?'
-            disabled={mode === 'view'}
-          />
+          <TextInput name='medication_desc' label='Se sim, qual?' readOnly />
         </FormField>
 
         <FormField className='flex-row'>
@@ -152,40 +142,40 @@ export function PatientsInfoForm({ patient, mode }: PatientsInfoFormProps) {
             name='has_nmo_diagnosis'
             label='Possui diagnóstico de NMO?'
             options={yesOrNoOptions}
-            disabled={mode === 'view'}
             isRequired={mode === 'edit'}
           />
           <SelectInput
             name='need_legal_assistance'
             label='Precisa de assistência legal?'
             options={yesOrNoOptions}
-            disabled={mode === 'view'}
           />
         </FormField>
         <Divider />
         {patient?.need_legal_assistance && (
           <>
             <h1 className='text-xl font-medium'>Rede de apoio</h1>
-            <FormField className='flex-row'>
-              <TextInput
-                label='Nome do contato'
-                {...formMethods.register('user.name')}
-                disabled={mode === 'view'}
-                isRequired={mode === 'edit'}
-              />
-              <TextInput
-                label='Parentesco'
-                {...formMethods.register('user.name')}
-                disabled={mode === 'view'}
-                isRequired={mode === 'edit'}
-              />
-              <TextInput
-                name='phone'
-                label='Telefone para contato (Whatsapp)'
-                disabled={mode === 'view'}
-                isRequired={mode === 'edit'}
-              />
-            </FormField>
+            {patient.supports?.map((support, i) => (
+              <FormField className='flex-row' key={support.id}>
+                <TextInput
+                  label='Nome do contato'
+                  {...formMethods.register(`supports.${i}.name`)}
+                  isRequired={mode === 'edit'}
+                  readOnly
+                />
+                <TextInput
+                  label='Parentesco'
+                  {...formMethods.register(`supports.${i}.kinship`)}
+                  isRequired={mode === 'edit'}
+                  readOnly
+                />
+                <TextInput
+                  label='Telefone para contato (Whatsapp)'
+                  {...formMethods.register(`supports.${i}.phone`)}
+                  isRequired={mode === 'edit'}
+                  readOnly
+                />
+              </FormField>
+            ))}
           </>
         )}
         <Button

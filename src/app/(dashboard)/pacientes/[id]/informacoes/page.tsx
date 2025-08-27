@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
-import { GenderType, PatientStatusType } from '@/types/patients'
+import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
 import { PatientsInfoForm } from './patients-info-form'
 
@@ -16,35 +16,28 @@ interface PatientHistoryPageParams {
   params: Promise<{ id: string }>
 }
 
-//mock only for testing on the form
-const mockPatientData = {
-  id: '123456ff',
-  user_id: '123456ff',
-  gender: 'male' as GenderType,
-  date_of_birth: new Date('1990-05-20'),
-  phone: '+55 71 91234-5678',
-  status: 'active' as PatientStatusType,
-  cpf: '123.456.789-00',
-  state: 'BA',
-  city: 'Salvador',
-  has_disability: true,
-  disability_desc: 'Dificuldade de locomoção',
-  need_legal_assistance: true,
-  take_medication: true,
-  medication_desc: 'Antidepressivo',
-  has_nmo_diagnosis: false,
-  created_at: new Date('2025-01-01'),
-  updated_at: new Date('2025-08-19'),
-  user: {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    avatar_url: '',
-  },
-}
-
 export default async function PatientInfoPage({
   params,
 }: Readonly<PatientHistoryPageParams>) {
+  const patient = {
+    ...PATIENTS_MOCKS[4],
+    need_legal_assistance: true,
+    supports: [
+      {
+        id: '12323',
+        name: 'John Doe',
+        phone: '(11) 91234-5678',
+        kinship: 'Mãe',
+      },
+      {
+        id: '123232',
+        name: 'John Doe',
+        phone: '(11) 91234-5678',
+        kinship: 'Mãe',
+      },
+    ],
+  }
+
   const patientId = (await params).id
 
   if (!patientId) {
@@ -71,7 +64,7 @@ export default async function PatientInfoPage({
           </Button>
         </div>
       </section>
-      <PatientsInfoForm patient={mockPatientData} mode='edit' />
+      <PatientsInfoForm patient={patient} mode='view' />
     </div>
   )
 }
