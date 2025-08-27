@@ -3,7 +3,7 @@ import { VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utils/class-name-merge'
 
-import { buttonVariants } from '../ui/button'
+import { buttonVariants } from '../button'
 
 interface DialogTriggerProps
   extends Omit<React.ComponentProps<typeof DialogPrimitive.Trigger>, 'asChild'>,
