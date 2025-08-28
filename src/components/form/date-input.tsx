@@ -3,7 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import { cn } from '@/utils/class-name-merge'
 
-import { DatePicker } from '../date-picker'
+import { DatePicker } from '../ui/date-picker'
 import { InputProps } from '../ui/input'
 import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
@@ -47,11 +47,12 @@ export function DateInput({
               {label}
               {isRequired && <RequiredInput />}
             </Label>
+
             <DatePicker
-              navMode={navMode}
               name={name}
-              onSelectDate={field.onChange}
+              navMode={navMode}
               value={field.value}
+              onSelectDate={field.onChange}
               variant={fieldState.error && 'error'}
             />
             <FormMessage error={!!fieldState.error?.message}>

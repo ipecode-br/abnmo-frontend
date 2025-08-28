@@ -1,5 +1,4 @@
 'use client'
-
 import 'react-day-picker/style.css'
 
 import { VariantProps } from 'class-variance-authority'
@@ -9,14 +8,13 @@ import React, { useState } from 'react'
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
 
-import { Calendar } from '../ui/calendar'
-import { Input, inputVariants } from '../ui/input'
-import { Popover } from '../ui/popover'
-import { PopoverContent } from '../ui/popover/content'
-import { PopoverTrigger } from '../ui/popover/trigger'
+import { Calendar } from './calendar'
+import { Input, inputVariants } from './input'
+import { Popover } from './popover'
+import { PopoverContent } from './popover/content'
+import { PopoverTrigger } from './popover/trigger'
 
 export interface DatePickerProps extends VariantProps<typeof inputVariants> {
-  label?: string
   name: string
   className?: string
   navMode?: 'step' | 'dropdown'
@@ -25,7 +23,6 @@ export interface DatePickerProps extends VariantProps<typeof inputVariants> {
 }
 
 export function DatePicker({
-  label,
   name,
   className,
   variant,
@@ -46,30 +43,26 @@ export function DatePicker({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <div>
-        <label htmlFor={name} className='text-xs font-medium'>
-          {label}
-        </label>
-        <div className={cn('relative flex w-full items-center')}>
-          <Input
-            id={name}
-            value={dateFormatted}
-            variant={variant}
-            readOnly
-            className={cn(inputVariants({ variant, size, className }), 'pl-10')}
-            placeholder='DD/MM/YYYY'
-          />
+      <div className='relative flex w-full items-center'>
+        <Input
+          id={name}
+          value={dateFormatted}
+          variant={variant}
+          className={cn(inputVariants({ variant, size, className }), 'pl-10')}
+          placeholder='DD/MM/YYYY'
+          readOnly
+        />
 
-          <PopoverTrigger
-            size='icon'
-            variant='ghost'
-            className='text-disabled absolute left-1 size-8'
-          >
-            <CalendarDays />
-          </PopoverTrigger>
-        </div>
+        <PopoverTrigger
+          size='icon'
+          variant='ghost'
+          className='text-disabled absolute left-1 size-8'
+        >
+          <CalendarDays />
+        </PopoverTrigger>
       </div>
-      <PopoverContent>
+
+      <PopoverContent sideOffset={8}>
         <Calendar
           selected={value ? new Date(value) : undefined}
           onSelect={(date) => {
