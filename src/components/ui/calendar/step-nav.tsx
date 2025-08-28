@@ -10,10 +10,10 @@ export function CalendarStepNav(props: Readonly<NavProps>) {
 
   const { onPreviousClick, onNextClick, previousMonth, nextMonth } = props
   const currentMonth = months[0].date
-  const label = format(currentMonth, 'MMM, yyyy', { locale: ptBR })
+  const label = format(currentMonth, 'MMMM yyyy', { locale: ptBR })
 
   return (
-    <div className='bg-background-soft mb-2 flex items-center justify-between rounded-lg p-1.5'>
+    <div className='bg-background-soft flex items-center justify-between rounded-lg p-1.5'>
       <Button
         size='icon'
         variant='outline'
@@ -23,7 +23,9 @@ export function CalendarStepNav(props: Readonly<NavProps>) {
       >
         <ChevronLeft />
       </Button>
+
       <span className='text-sm font-medium capitalize'>{label}</span>
+
       <Button
         size='icon'
         variant='outline'

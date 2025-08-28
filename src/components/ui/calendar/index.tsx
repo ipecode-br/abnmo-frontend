@@ -1,4 +1,5 @@
 'use client'
+
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import {
@@ -28,7 +29,7 @@ export function Calendar({
       locale={ptBR}
       showOutsideDays
       classNames={{
-        months: 'p-0',
+        months: 'p-0 space-y-2',
         month_caption: 'hidden',
         outside: 'text-disabled/50',
         weekday: cn(defaultClassNames.weekday, 'text-xs text-disabled'),
@@ -45,7 +46,7 @@ export function Calendar({
         },
       }}
       components={{
-        Nav: navMode === 'step' ? CalendarStepNav : CalendarDropdownNav,
+        Nav: navMode !== 'step' ? CalendarStepNav : CalendarDropdownNav,
       }}
       {...props}
     />
