@@ -43,6 +43,22 @@ export function CalendarDropdownNav({
   const [yearSelected, setYearSeleted] = useState<number>(currentYear)
   const [monthSelected, setMonthSeleted] = useState<string>('')
 
+  // Check if we're in a restricted mode (no nextMonth means we're at the limit)
+  const isRestricted =
+    !nextMonth &&
+    dateCurrent.getMonth() === new Date().getMonth() &&
+    dateCurrent.getFullYear() === new Date().getFullYear()
+
+  // Determine available years and months based on restrictions
+  const availableYears = isRestricted
+    ? years.filter((year) => year <= new Date().getFullYear())
+    : years
+
+  const availableMonths =
+    isRestricted && yearSelected === new Date().getFullYear()
+      ? monthsOfYear.filter((_, index) => index <= new Date().getMonth())
+      : monthsOfYear
+
   useEffect(() => {
     if (!months.length) return
 
@@ -73,7 +89,7 @@ export function CalendarDropdownNav({
           <SelectValue />
         </SelectTrigger>
         <SelectContent className='min-w-24'>
-          {monthsOfYear.map((month) => (
+          {availableMonths.map((month) => (
             <SelectItem value={month} key={month}>
               {month}
             </SelectItem>
@@ -93,7 +109,7 @@ export function CalendarDropdownNav({
           <SelectValue />
         </SelectTrigger>
         <SelectContent className='min-w-24'>
-          {years.map((year) => (
+          {availableYears.map((year) => (
             <SelectItem value={String(year)} key={year}>
               {year}
             </SelectItem>
@@ -104,7 +120,7 @@ export function CalendarDropdownNav({
       <Button
         size='icon'
         variant='ghost'
-        className='size-7'
+        className='size-7 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-25'
         onClick={onNextClick}
         disabled={!nextMonth}
       >

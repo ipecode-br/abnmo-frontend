@@ -7,6 +7,10 @@ import React, { useState } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
+import {
+  formatDateInput,
+  parseDateInput,
+} from '@/utils/formatters/format-date-input'
 
 import { Calendar } from './calendar'
 import { Input, inputVariants } from './input'
@@ -20,6 +24,8 @@ export interface DatePickerProps extends VariantProps<typeof inputVariants> {
   navMode?: 'step' | 'dropdown'
   onSelectDate?: (date: string) => void
   value?: string
+  allowTextInput?: boolean
+  blockFutureDates?: boolean
 }
 
 export function DatePicker({
@@ -30,8 +36,11 @@ export function DatePicker({
   navMode,
   onSelectDate,
   value,
+  allowTextInput = true,
+  blockFutureDates = false,
 }: DatePickerProps) {
   const [open, setOpen] = useState(false)
+  const [inputValue, setInputValue] = useState('')
 
   const dateFormatted = value
     ? formatDate(value, {
@@ -41,16 +50,49 @@ export function DatePicker({
       })
     : ''
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!allowTextInput) return
+
+    const formattedValue = formatDateInput(e.target.value)
+    setInputValue(formattedValue)
+
+    // If the date is complete (DD/MM/YYYY), try to parse and update
+    if (formattedValue.length === 10) {
+      const parsedDate = parseDateInput(formattedValue)
+      if (parsedDate) {
+        // Check if future dates should be blocked
+        if (blockFutureDates && parsedDate > new Date()) {
+          // Don't update if the date is in the future and blocked
+          return
+        }
+        if (onSelectDate) {
+          onSelectDate(parsedDate.toISOString())
+        }
+      }
+    }
+  }
+
+  const handleCalendarSelect = (date: Date | undefined) => {
+    if (onSelectDate) {
+      onSelectDate(date ? date.toISOString() : '')
+    }
+    setInputValue('')
+    setOpen(false)
+  }
+
+  const displayValue = inputValue || dateFormatted
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <div className='relative flex w-full items-center'>
         <Input
           id={name}
-          value={dateFormatted}
+          value={displayValue}
+          onChange={handleInputChange}
           variant={variant}
           className={cn(inputVariants({ variant, size, className }), 'pl-10')}
           placeholder='DD/MM/YYYY'
-          readOnly
+          readOnly={!allowTextInput}
         />
 
         <PopoverTrigger
@@ -64,13 +106,10 @@ export function DatePicker({
 
       <PopoverContent sideOffset={8}>
         <Calendar
-          selected={value ? new Date(value) : undefined}
-          onSelect={(date) => {
-            if (onSelectDate) {
-              onSelectDate(date ? date.toISOString() : '')
-            }
-          }}
           navMode={navMode}
+          selected={value ? new Date(value) : undefined}
+          onSelect={handleCalendarSelect}
+          blockFutureDates={blockFutureDates}
         />
       </PopoverContent>
     </Popover>

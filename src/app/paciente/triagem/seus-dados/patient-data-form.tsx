@@ -92,6 +92,7 @@ export function ScreeningPatientDataForm() {
           name='dateBirth'
           label='Data de nascimento'
           navMode='dropdown'
+          blockFutureDates
           isRequired
         />
 

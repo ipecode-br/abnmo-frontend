@@ -14,6 +14,9 @@ export const PHONE_REGEX = /^\(\d{2}\) \d{4,5}-\d{4}$/
 // Pattern: 000.000.000-00
 export const CPF_REGEX = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
 
+// Pattern: DD/MM/YYYY
+export const DATE_REGEX = /^\d{2}\/\d{2}\/\d{4}$/
+
 /*
   (?=.*\d)    should contain at least 1 digit
   (?=.*[a-z]) should contain at least 1 lowercase letter

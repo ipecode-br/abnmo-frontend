@@ -29,7 +29,7 @@ export function CalendarStepNav(props: Readonly<NavProps>) {
       <Button
         size='icon'
         variant='outline'
-        className='size-8'
+        className='size-8 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-25'
         onClick={onNextClick}
         disabled={!nextMonth}
       >

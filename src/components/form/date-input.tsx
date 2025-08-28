@@ -19,6 +19,8 @@ type DateInputProps = RequiredDateInputProps & {
   message?: string
   wrapperClassName?: InputProps['className']
   navMode?: 'step' | 'dropdown'
+  allowTextInput?: boolean
+  blockFutureDates?: boolean
 }
 
 export function DateInput({
@@ -28,6 +30,8 @@ export function DateInput({
   message,
   wrapperClassName,
   navMode,
+  allowTextInput = true,
+  blockFutureDates = false,
 }: Readonly<DateInputProps>) {
   const { control } = useFormContext()
 
@@ -54,6 +58,8 @@ export function DateInput({
               value={field.value}
               onSelectDate={field.onChange}
               variant={fieldState.error && 'error'}
+              allowTextInput={allowTextInput}
+              blockFutureDates={blockFutureDates}
             />
             <FormMessage error={!!fieldState.error?.message}>
               {showMessage}
