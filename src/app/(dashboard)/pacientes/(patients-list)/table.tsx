@@ -178,7 +178,7 @@ export default function PatientsListTable() {
                     {formatDate(patient.created_at)}
                   </TableCell>
                   <TableCell isLastRow={isLastRow} className='text-center'>
-                    <PatientsListTableActions />
+                    <PatientsListTableActions patientId={patient.id} />
                   </TableCell>
                 </TableRow>
               )

@@ -1,6 +1,7 @@
 'use client'
 
 import { CircleXIcon, Edit, EllipsisIcon, SendIcon } from 'lucide-react'
+import { useState } from 'react'
 
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
@@ -8,36 +9,57 @@ import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
-export function PatientsListTableActions() {
+import { PatientInactivateModal } from '../(patients-list)/inactivate-patient'
+
+interface PatientsListTableActionsProps {
+  patientId: string
+}
+
+export function PatientsListTableActions({
+  patientId,
+}: PatientsListTableActionsProps) {
+  const [openInactivate, setOpenInactivate] = useState(false)
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        variant='ghost'
-        size='icon'
-        indicator={false}
-        className='size-8'
-      >
-        <EllipsisIcon />
-      </DropdownMenuTrigger>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          variant='ghost'
+          size='icon'
+          indicator={false}
+          className='size-8'
+        >
+          <EllipsisIcon />
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent align='end'>
-        <DropdownMenuItem>
-          <Edit />
-          Editar paciente
-        </DropdownMenuItem>
+        <DropdownMenuContent align='end'>
+          <DropdownMenuItem>
+            <Edit />
+            Editar paciente
+          </DropdownMenuItem>
 
-        <DropdownMenuItem>
-          <SendIcon />
-          Encaminhar
-        </DropdownMenuItem>
+          <DropdownMenuItem>
+            <SendIcon />
+            Encaminhar
+          </DropdownMenuItem>
 
-        <Divider />
+          <Divider />
 
-        <DropdownMenuItem variant='destructive'>
-          <CircleXIcon />
-          Inativar paciente
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem
+            variant='destructive'
+            onClick={() => setOpenInactivate(true)}
+          >
+            <CircleXIcon />
+            Inativar paciente
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <PatientInactivateModal
+        open={openInactivate}
+        onClose={() => setOpenInactivate(false)}
+        patientId={patientId}
+      />
+    </>
   )
 }
