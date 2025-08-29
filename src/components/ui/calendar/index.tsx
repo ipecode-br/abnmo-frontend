@@ -68,3 +68,14 @@ export function Calendar({
     />
   )
 }
+
+/* USAGE
+
+  <Calendar
+    selected={selectedDate}
+    onSelect={setSelectedDate}
+    navMode="dropdown" | "step" (default)
+    blockFutureDates={true | false (default)} - optional
+  />
+
+*/

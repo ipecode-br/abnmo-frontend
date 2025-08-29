@@ -6,3 +6,26 @@ export function Dialog(
 ) {
   return <DialogPrimitive.Root {...props} />
 }
+
+/* USAGE
+
+  <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <DialogTrigger>
+      Open Dialog
+    </DialogTrigger>
+    <DialogContainer>
+      <DialogHeader icon={IconComponent}>
+        <DialogTitle>Dialog Title</DialogTitle>
+        <DialogDescription>Optional description</DialogDescription>
+      </DialogHeader>
+      <DialogContent>
+        Content here
+      </DialogContent>
+      <DialogFooter>
+        <DialogClose>Cancel</DialogClose>
+        <Button>Confirm</Button>
+      </DialogFooter>
+    </DialogContainer>
+  </Dialog>
+
+*/

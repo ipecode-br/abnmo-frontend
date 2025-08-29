@@ -6,3 +6,16 @@ export function Popover(
 ) {
   return <PopoverPrimitive.Root {...props} />
 }
+
+/* USAGE
+
+  <Popover>
+    <PopoverTrigger>
+      Open Popover
+    </PopoverTrigger>
+    <PopoverContent>
+      Content here
+    </PopoverContent>
+  </Popover>
+
+*/
