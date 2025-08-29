@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { getCitiesByUF } from '@/actions/ibge'
+import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
@@ -87,10 +88,11 @@ export function ScreeningPatientDataForm() {
           placeholder='Selecione seu gênero'
           isRequired
         />
-        <TextInput
-          type='date'
+        <DateInput
           name='dateBirth'
           label='Data de nascimento'
+          navMode='dropdown'
+          blockFutureDates
           isRequired
         />
 
@@ -124,6 +126,7 @@ export function ScreeningPatientDataForm() {
           inputMode='tel'
           isRequired
         />
+
         <TextInput
           name='cpf'
           label='CPF'
