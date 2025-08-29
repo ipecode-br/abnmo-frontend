@@ -38,7 +38,7 @@ export function DatePicker({
   value,
   allowTextInput = true,
   blockFutureDates = false,
-}: DatePickerProps) {
+}: Readonly<DatePickerProps>) {
   const [open, setOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
 
