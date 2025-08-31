@@ -2,12 +2,11 @@ import { ChartBarDecreasingIcon } from 'lucide-react'
 import type { HTMLAttributes } from 'react'
 
 import { BarChart } from '@/components/charts/bar'
+import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
-
-import { DashboardCardChart } from '../cards/chart'
 
 type DashboardGenderChartCardProps = HTMLAttributes<HTMLDivElement>
 

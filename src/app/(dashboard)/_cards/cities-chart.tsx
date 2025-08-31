@@ -4,12 +4,11 @@ import type { HTMLAttributes } from 'react'
 import { ChartSummary } from '@/components/charts/cities-chart/chart-summary'
 import { Cities } from '@/components/charts/cities-chart/cities'
 import { PieChart } from '@/components/charts/cities-chart/pie'
+import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
-
-import { DashboardCardChart } from '../cards/chart'
 
 type DashboardCitiesChartCardProps = HTMLAttributes<HTMLDivElement>
 
