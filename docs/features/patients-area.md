@@ -24,13 +24,55 @@ Pastas prefixadas com `_` são componentes auxiliares.
 
 - `/paciente` → Página inicial do paciente `(page.tsx)`.
   Exibe um botão de ação que direciona o usuário para a triagem.
-
 - `/paciente/triagem `→ Fluxo de triagem do paciente.
 
-### Subrotas de Triagem
+## Layout principal
+
+O layout da área de paciente está em:
+
+```
+src/
+  app/
+    paciente/
+      layout.tsx.
+```
+
+Ele garante que:
+
+- Apenas usuários autorizados tenham acesso.
+- A interface mantém um cabeçalho consistente `PatientHeader`.
+
+```tsx
+export default async function PatientLayout({ children }) {
+  const canAccess = await canUser('view', 'PatientDashboard')
+
+  if (!canAccess) redirect(ROUTES.dashboard.main)
+
+  return (
+    <>
+      <PatientHeader />
+      <Divider />
+      {children}
+    </>
+  )
+}
+```
+
+### Subrotas de Triagem e Layout
 
 O fluxo de triagem `/paciente/triagem` possui subrotas correspondentes a cada etapa do processo.
-Essas subrotas são renderizadas dentro do `ScreeningLayout` em `/triagem/layout.tsx`, garantindo que o componente `ScreeningProgress` continue visível e o usuário acompanhe o progresso.
+
+o **layout principal** da triagem está definido em:
+
+```
+src/
+  app/
+    paciente/
+      triagem/
+        layout.tsx
+```
+
+É responsável por estruturar a interface da triagem fazendo com que as subrotas são renderizadas dentro `{children}` e que os elementos persistentes, como `ScreeningProgress` localizado em `/triagem/progress.tsx` continue visível e o usuário acompanhe o progresso.
 
 ```tsx
 import { ScreeningProgress } from './progress'
