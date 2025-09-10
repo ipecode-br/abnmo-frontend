@@ -34,7 +34,7 @@ O layout da área de paciente está em:
 src/
   app/
     paciente/
-      layout.tsx.
+      layout.tsx
 ```
 
 Ele garante que:
@@ -109,4 +109,5 @@ O hook useScreening é responsável por manipular e armazenar informações da t
 
 - `saveFormAndGoToPage({ data, path })` → Salva os dados no **localStorage** e navega para a próxima etapa da triagem.
 - `finishScreening()` → Finaliza o fluxo de triagem:
+
   **Futuro:** Será responsável por enviar os dados para o backend e garantir que as informações do paciente sejam persistidas de forma definitiva.
