@@ -90,4 +90,4 @@ export const queryClient = getQueryClient()
 
 - **Zustand**: usado para estados locais e globais simples (ex.: UI, sidebar).
 - **TanStack Query**: usado para gerenciamento de dados assíncronos e cache de requisições do servidor.
-- Esta combinação permite separar o estado do cliente (UI) do estado do servidor (dados), garantindo melhor performance e experiência do usuário.
+- Esta combinação permite separar o estado do cliente (UI) do estado do servidor (dados), garantindo melhor performance e experiência do usuário
