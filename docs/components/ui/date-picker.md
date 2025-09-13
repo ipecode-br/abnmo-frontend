@@ -1,176 +1,114 @@
-# DatePicker Component (`date-picker.tsx`)
+# Documentação do Componente DatePicker (`date-picker.tsx`)
 
-Este arquivo implementa um componente de **DatePicker** reutilizável em React, combinando um campo de input com um calendário popover. Ele foi projetado para ser altamente personalizável, acessível e facilmente integrável em aplicações modernas que exigem seleção de datas.
-
----
-
-## Visão Geral
-
-O componente `DatePicker` encapsula um input de data com suporte a seleção via teclado e calendário visual, permitindo:
-
-- Entrada manual de datas (`allowTextInput`).
-- Bloqueio de datas futuras (`blockFutureDates`).
-- Customização de aparência via variantes (`variant`, `size`).
-- Navegação no calendário em modos `step` ou `dropdown`.
-
-Ele utiliza o Popover para exibir o calendário, garantindo que a UI permaneça limpa e intuitiva.
+O arquivo `date-picker.tsx` define um componente React reutilizável que combina input de data com um calendário interativo, permitindo seleção de datas e formatação consistente.
 
 ---
 
-## Objetivos do Componente
+## ☑️ Objetivo do Componente
 
-- Fornecer uma interface de seleção de datas acessível e intuitiva.
-- Permitir customização de input e popover.
-- Integrar facilmente com formulários.
-- Controlar o estado de datas, incluindo entrada manual e seleção via calendário.
-- Bloquear datas futuras quando necessário.
+- O componente **`DatePicker`** serve para selecionar datas via input de texto ou calendário.
+- Permite bloquear datas futuras e controlar o formato de exibição.
+- Pode ser usado em formulários e interfaces que necessitam de entrada de datas.
 
 ---
 
-## Importações e Dependências
+## 📦 Principais Importações
 
-| Biblioteca                                            | Função                                                 |
-| ----------------------------------------------------- | ------------------------------------------------------ |
-| `react`                                               | Estrutura do componente e gerenciamento de estado      |
-| `lucide-react`                                        | Ícone do calendário (`CalendarDays`)                   |
-| `class-variance-authority`                            | Permite variantes de estilos para inputs               |
-| `react-day-picker`                                    | Base para o calendário                                 |
-| `@/utils/class-name-merge`                            | Merge dinâmico de classes CSS                          |
-| `@/utils/formatters`                                  | Funções utilitárias para formatação e parsing de datas |
-| Componentes internos (`Input`, `Popover`, `Calendar`) | Construção do input e popover do calendário            |
+- `Input` e `inputVariants`: Componente de input estilizado.
+- `Popover`, `PopoverTrigger`, `PopoverContent`: Para exibir o calendário em um popover.
+- `Calendar`: Componente do calendário para seleção de datas.
+- `cn` de `@/utils/class-name-merge`: Função para unir classes CSS.
+- Funções utilitárias `formatDate`, `formatDateInput`, `parseDateInput`.
+- `CalendarDays` do **lucide-react**: Ícone de calendário.
 
-### Instalação dos Pacotes
+---
 
-```bash
-npm install react-day-picker lucide-react class-variance-authority
-# ou
-yarn add react-day-picker lucide-react class-variance-authority
+## 🧩 Propriedades do Componente DatePicker
+
+```ts
+export interface DatePickerProps extends VariantProps<typeof inputVariants> {
+  name: string
+  className?: string
+  navMode?: 'step' | 'dropdown'
+  onSelectDate?: (date: string) => void
+  value?: string
+  allowTextInput?: boolean
+  blockFutureDates?: boolean
+}
 ```
 
-## Propriedades do Componente
+- `name` (`string`): Identificador do input.
+- `className` (`string`): Adiciona classes extras ao input.
+- `variant` e `size`: Definem estilo do input via `inputVariants`.
+- `navMode` (`'step' | 'dropdown'`): Modo de navegação do calendário.
+- `onSelectDate` (`function`): Callback quando uma data é selecionada.
+- `value` (`string`): Data selecionada no formato ISO.
+- `allowTextInput` (`boolean`): Permite edição manual do input.
+- `blockFutureDates` (`boolean`): Bloqueia seleção de datas futuras.
 
-### Propriedade Tipo Padrão Descrição
+---
 
-- name string - Nome do input, utilizado para identificação em formulários
-  className string - Classe CSS customizada para estilização
+## ⚙️ Lógica do Componente
 
-- variant string - Variante de estilo do input (herdado de inputVariants)
+- Mantém estado `open` para controlar visibilidade do popover.
+- Mantém `inputValue` para edição manual do input.
+- `handleInputChange`:
+  - Formata a data digitada.
+  - Bloqueia datas futuras se `blockFutureDates` estiver ativo.
+  - Dispara `onSelectDate` quando a data é válida.
 
-- size string - Tamanho do input (herdado de inputVariants)
+- `handleCalendarSelect`:
+  - Atualiza a data selecionada pelo calendário.
+  - Fecha o popover e limpa o input temporário.
 
-- navMode 'step' | 'dropdown' - Modo de navegação do calendário
+- Combina valor do input manual com valor formatado para exibição.
 
-- onSelectDate (date: string) => void - Callback acionado ao selecionar uma data
+---
 
-- value string - Valor controlado do input
-  allowTextInput boolean true Permite digitação manual da data
-  blockFutureDates boolean false Impede seleção de datas futuras
+## ⚡ Renderização do Componente
 
-## Estrutura do Componente
+- `Input` para digitação de data, com ícone do calendário (`CalendarDays`).
+- `Popover` que contém o componente `Calendar`.
+- `PopoverTrigger` posicionado sobre o ícone para abrir o calendário.
+- `PopoverContent` com `Calendar` que aceita seleção de datas e bloqueio de datas futuras.
 
-O componente é funcional e controlado, utilizando hooks de estado (useState) para gerenciar:
+---
 
-A abertura do popover (open)
-
-O valor do input quando digitado manualmente (inputValue)
-
-Copiar código
+### 📝 Exemplo de Uso
 
 ```tsx
 <DatePicker
   name='birthDate'
-  value={dateValue}
-  onSelectDate={setDateValue}
-  size='md'
-  variant='outline'
-/>
-```
-
-## Fluxo de Interação
-
-Usuário clica no input ou ícone → Popover abre.
-
-Usuário digita manualmente → inputValue atualizado e parse de data é realizado.
-
-Usuário seleciona no calendário → onSelectDate é chamado e popover fecha.
-
-Datas futuras podem ser bloqueadas se blockFutureDates = true.
-
-## Diagrama de Fluxo do Componente
-
-mermaid
-Copiar código
-
-```
-flowchart TD
-  User([Usuário])
-  InputField([Input de Data])
-  PopoverComp([Popover com Calendar])
-  CalendarComp([Calendar])
-
-  User --> InputField
-  User --> PopoverComp
-  PopoverComp --> CalendarComp
-  InputField -->|onChange| CalendarComp
-  CalendarComp -->|onSelect| InputField
-```
-
-## Detalhes das Classes CSS e Comportamento
-
-Utiliza cn para mesclar classes CSS dinamicamente.
-
-inputVariants permite customização de tamanho e estilo.
-
-PopoverTrigger exibe o ícone do calendário de forma consistente.
-
-Feedback visual é aplicado via estados de foco e hover do input.
-
-## Exemplo de Uso
-
-### Básico
-
-Copiar código
-
-```tsx
-<DatePicker
-  name='appointment'
   value={selectedDate}
   onSelectDate={setSelectedDate}
-/>
-```
-
-### Com Bloqueio de Datas Futuras e Entrada Manual Desativada
-
-Copiar código
-
-```tsx
-<DatePicker
-  name='birthDate'
-  value={birthDate}
-  onSelectDate={setBirthDate}
-  allowTextInput={false}
+  allowTextInput={true}
   blockFutureDates={true}
+  variant='default'
+  size='default'
 />
 ```
 
-## Vantagens e Boas Práticas
+---
 
-✅ Acessível: Interação por teclado e suporte a leitores de tela.
+## 🔍 Pontos-Chave
 
-✅ Controlável: Pode ser usado como componente controlado ou não.
+- Permite seleção de datas via input ou calendário.
+- Formata datas automaticamente e suporta entrada manual.
+- Bloqueio de datas futuras opcional.
+- Integrável com formulários React e sistemas de validação.
+- Usa popover para exibir calendário de forma compacta.
 
-✅ Customizável: Variantes de input e popover permitem integração visual consistente.
+---
 
-✅ Flexível: Permite entrada manual e seleção via calendário.
+## 💡 Vantagens
 
-## Quando Usar Este Componente
+- Flexibilidade: permite digitar ou selecionar datas.
+- Controle de formato e restrição de datas.
+- UI consistente e acessível.
+- Reutilizável em múltiplos formulários e contextos.
 
-Formulários que exigem datas (nascimento, agendamento, eventos).
+---
 
-Interfaces que precisam de input de data com feedback visual.
+## 🛠️ Resumo
 
-Cenários que precisam bloquear datas futuras ou permitir apenas seleção de calendário.
-
-## Resumo
-
-O componente DatePicker é uma solução moderna e acessível para seleção de datas em React. Ele combina input controlado, popover e calendário, permitindo customização, validação de datas e integração fluida com formulários e design systems.
+O componente `DatePicker` fornece uma solução completa para entrada de datas em React, combinando input formatado, seleção via calendário, controle de datas futuras e integração com popovers de forma elegante e consistente.

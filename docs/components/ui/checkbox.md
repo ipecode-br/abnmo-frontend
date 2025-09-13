@@ -1,73 +1,42 @@
-# Checkbox Component (`checkbox.tsx`)
+# Documentação do Componente Checkbox (`checkbox.tsx`)
 
-Este arquivo implementa um componente de **Checkbox** reutilizável em React, utilizando a biblioteca Radix UI para acessibilidade e estilização avançada. Ele foi projetado para ser altamente personalizável e integrável em aplicações modernas, especialmente aquelas que utilizam design system ou precisam de consistência visual e comportamental.
-
----
-
-## Visão Geral
-
-O componente `Checkbox` encapsula um checkbox estilizado, com suporte a dois tamanhos (`sm` e `md`) e estados visuais claros. Ele utiliza o Radix UI como base para acessibilidade, além do ícone `Check` da biblioteca `lucide-react` para indicar seleção.
+O arquivo `checkbox.tsx` define um componente React reutilizável para criar checkboxes estilizados com suporte a diferentes tamanhos e integração com a biblioteca Radix.
 
 ---
 
-## Objetivos do Componente
+## ☑️ Objetivo do Componente
 
-- Prover uma caixa de seleção (checkbox) compatível com acessibilidade.
-- Permitir customização de tamanho (`sm`, `md`).
-- Integrar facilmente com formulários e interfaces customizadas.
-- Manter o visual consistente usando utilitários (`cn`) para merge de classes CSS.
-- Adicionar feedback visual para estados como selecionado, foco, desabilitado, entre outros.
+- O componente **`Checkbox`** serve para exibir caixas de seleção interativas.
+- Permite diferentes tamanhos (`sm` e `md`) e estilos consistentes.
+- Integra facilmente com formulários e gerencia estados de seleção.
 
 ---
 
-## Importações e Dependências
+## 📦 Principais Importações
 
-O componente depende das seguintes bibliotecas:
-
-| Biblioteca                 | Função                                            |
-| -------------------------- | ------------------------------------------------- |
-| `@radix-ui/react-checkbox` | Lida com a acessibilidade e lógica do checkbox    |
-| `lucide-react`             | Fornece o ícone do "check"                        |
-| `@/utils/class-name-merge` | Utilitário para mesclar classes CSS dinamicamente |
-
-### Instalação dos Pacotes
-
-```packagemanagers
-{
-    "commands": {
-        "npm": "npm install @radix-ui/react-checkbox lucide-react",
-        "yarn": "yarn add @radix-ui/react-checkbox lucide-react",
-        "pnpm": "pnpm add @radix-ui/react-checkbox lucide-react",
-        "bun": "bun add @radix-ui/react-checkbox lucide-react"
-    }
-}
-```
+- `CheckboxPrimitive` do **@radix-ui/react-checkbox**: Base para o componente checkbox.
+- `Check` do **lucide-react**: Ícone de marcação.
+- `cn` de `@/utils/class-name-merge`: Função utilitária para unir classes CSS dinamicamente.
 
 ---
 
-## Propriedades do Componente
+## 🧩 Propriedades do Componente Checkbox
 
-| Propriedade | Tipo                                                  | Padrão | Descrição                                                     |
-| ----------- | ----------------------------------------------------- | ------ | ------------------------------------------------------------- |
-| `size`      | `'sm' \| 'md'`                                        | `'sm'` | Define o tamanho do checkbox e do ícone                       |
-| `...props`  | Todos de `CheckboxPrimitive.Root` (herda do Radix UI) | -      | Props adicionais como `checked`, `onChange`, `disabled`, etc. |
-
----
-
-## Estrutura do Componente
-
-O componente é funcional, baseado em React, e utiliza o padrão props spreading para flexibilidade.
-
-```tsx
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Check } from 'lucide-react'
-import { cn } from '@/utils/class-name-merge'
-
+```ts
 export interface CheckboxProps
   extends React.ComponentProps<typeof CheckboxPrimitive.Root> {
   size?: 'sm' | 'md'
 }
+```
 
+- `size` (`'sm' | 'md'`): Define o tamanho do checkbox.
+- Todas as props do `CheckboxPrimitive.Root` também são aceitas.
+
+---
+
+## ⚙️ Lógica do Componente
+
+```tsx
 export function Checkbox({ size = 'sm', ...props }: Readonly<CheckboxProps>) {
   return (
     <CheckboxPrimitive.Root
@@ -91,92 +60,39 @@ export function Checkbox({ size = 'sm', ...props }: Readonly<CheckboxProps>) {
 }
 ```
 
----
-
-## Como Utilizar
-
-### Exemplo Básico
-
-```tsx
-<Checkbox checked={checked} onCheckedChange={setChecked} size='md' />
-```
-
-### Com Formulários
-
-```tsx
-<form>
-  <label>
-    <Checkbox
-      size='sm'
-      checked={termosAceitos}
-      onCheckedChange={setTermosAceitos}
-    />
-    Aceito os termos de uso
-  </label>
-</form>
-```
+- Renderiza o `CheckboxPrimitive.Root` com classes para estados padrão, selecionado, foco e desabilitado.
+- Ajusta o tamanho do checkbox e do ícone com base na prop `size`.
+- Repassa todas as props restantes para o elemento do Radix Checkbox.
 
 ---
 
-## Detalhes das Classes CSS Utilizadas
+### 📝 Exemplo de Uso
 
-O componente utiliza tailwind utility classes e data attributes para:
-
-- Alterar borda, cor de fundo e sombra quando selecionado (`data-[state=checked]:*`)
-- Exibir diferentes tamanhos do checkbox e do ícone (`size-4.5`, `size-5`, `size-3`, `size-4`)
-- Adicionar foco visível e sombra ao receber foco (`focus-visible:ring-*`)
-- Exibir estado desabilitado com opacidade e cursor (`disabled:*`)
-
-### Tabela de Estilos por Estado
-
-| Estado                 | Classe CSS Aplicada                                           |
-| ---------------------- | ------------------------------------------------------------- |
-| Selecionado            | `border-primary`<br>`bg-primary`<br>`text-primary-foreground` |
-| Foco                   | `focus-visible:ring-2`<br>`focus-visible:ring-ring`           |
-| Desabilitado           | `disabled:cursor-not-allowed`<br>`disabled:opacity-50`        |
-| Tamanho Pequeno (`sm`) | `size-4.5` (root), `size-3` (ícone)                           |
-| Tamanho Médio (`md`)   | `size-5` (root), `size-4` (ícone)                             |
+- `<Checkbox />` (tamanho `sm` padrão)
+- `<Checkbox size="md" />` (tamanho médio)
+- `<Checkbox checked />` (marcado)
+- `<Checkbox disabled />` (desabilitado)
 
 ---
 
-## Fluxo de Dados e Interação
+## 🔍 Pontos-Chave
 
-O fluxo de dados do componente é direto: as props controlam o estado, enquanto o Radix UI gerencia o foco, acessibilidade e eventos nativos do checkbox.
-
-### Diagrama de Fluxo do Componente
-
-```mermaid
-flowchart TD
-  props([Props do React])
-  CheckboxRoot([Radix Checkbox Root])
-  Indicator([Radix Checkbox Indicator])
-  CheckIcon([Ícone de Check])
-
-  props --> CheckboxRoot
-  CheckboxRoot --> Indicator
-  Indicator --> CheckIcon
-```
+- Reusabilidade: Pode ser usado em qualquer formulário ou interface.
+- Personalização: Suporta diferentes tamanhos e estilos visuais.
+- Acessibilidade: Usa Radix UI, garantindo suporte a teclado e foco.
+- Consistência visual: Mantém padrões de borda, sombra e cores.
 
 ---
 
-## Vantagens e Boas Práticas
+## 💡 Vantagens
 
-- ✅ **Acessibilidade**: Uso do Radix UI garante navegação por teclado e compatibilidade com leitores de tela.
-- ✅ **Customização**: Fácil alterar tamanho e classe CSS via props.
-- ✅ **Reutilizável**: Pode ser usado em múltiplos contextos, inclusive formulários complexos.
-- ✅ **Visual consistente**: Mantém padrão visual mesmo com diferentes estados e tamanhos.
-
----
-
-## Quando Usar Este Componente
-
-- Listas de seleção em formulários.
-- Preferências de usuário.
-- Seleção de múltiplos itens.
-- Qualquer interface que exija feedback visual claro de seleção.
+- Checkboxes estilizados e consistentes.
+- Fácil de integrar em formulários React.
+- Suporta estados de seleção, foco e desabilitado.
+- Simples, flexível e reutilizável.
 
 ---
 
-## Resumo
+## 🛠️ Resumo
 
-O componente `Checkbox` é uma solução moderna, acessível e estilizada para caixas de seleção em aplicações React. Ele utiliza o Radix UI para lógica e acessibilidade, além de oferecer customização visual para integração com design systems robustos.
+O componente `Checkbox` fornece uma solução elegante e consistente para caixas de seleção em React, garantindo flexibilidade, acessibilidade e fácil personalização de estilos.
