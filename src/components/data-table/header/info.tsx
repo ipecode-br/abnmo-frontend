@@ -2,11 +2,14 @@
 
 import { Slot } from '@radix-ui/react-slot'
 
+import { cn } from '@/utils/class-name-merge'
+
 interface DataTableHeaderInfoProps {
   icon: React.ReactNode
   total?: number
-  title: string
-  emptyTitle: string
+  title?: string
+  emptyTitle?: string
+  iconClassName?: string
 }
 
 export function DataTableHeaderInfo({
@@ -14,11 +17,14 @@ export function DataTableHeaderInfo({
   total,
   title,
   emptyTitle,
+  iconClassName,
 }: Readonly<DataTableHeaderInfoProps>) {
   return (
     <div className='flex items-center gap-4'>
       <div className='bg-border/50 flex size-10 items-center justify-center rounded-lg'>
-        <Slot className='text-primary size-5.5'>{icon}</Slot>
+        <Slot className={cn('text-primary size-5.5', iconClassName)}>
+          {icon}
+        </Slot>
       </div>
 
       {total && total > 0 ? (
@@ -27,7 +33,7 @@ export function DataTableHeaderInfo({
           <p className='text-foreground-soft'>{title}</p>
         </div>
       ) : (
-        <p className='text-foreground-soft'>{emptyTitle}</p>
+        <p className='text-foreground font-semibold'>{emptyTitle}</p>
       )}
     </div>
   )
