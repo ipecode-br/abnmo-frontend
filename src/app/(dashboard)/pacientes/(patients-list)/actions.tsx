@@ -12,11 +12,13 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { PatientInactivateModal } from '../(patients-list)/inactivate-patient'
 
 interface PatientsListTableActionsProps {
-  patientId: string
+  id: string
+  name: string
 }
 
 export function PatientsListTableActions({
-  patientId,
+  id,
+  name,
 }: PatientsListTableActionsProps) {
   const [openInactivate, setOpenInactivate] = useState(false)
 
@@ -56,9 +58,10 @@ export function PatientsListTableActions({
       </DropdownMenu>
 
       <PatientInactivateModal
+        id={id}
+        name={name}
         open={openInactivate}
         onClose={() => setOpenInactivate(false)}
-        patientId={patientId}
       />
     </>
   )
