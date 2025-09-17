@@ -1,5 +1,4 @@
 import { ChartPie } from 'lucide-react'
-import type { HTMLAttributes } from 'react'
 
 import { ChartSummary } from '@/components/charts/cities-chart/chart-summary'
 import { Cities } from '@/components/charts/cities-chart/cities'
@@ -10,10 +9,8 @@ import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
-type DashboardCitiesChartCardProps = HTMLAttributes<HTMLDivElement>
-
-export function DashboardCitiesChartCard(
-  props: Readonly<DashboardCitiesChartCardProps>,
+export function DashboardOverviewPatientsByCity(
+  props: Readonly<React.ComponentProps<'div'>>,
 ) {
   const citiesData = [
     { name: 'Recife', percentage: 35 },
@@ -42,10 +39,16 @@ export function DashboardCitiesChartCard(
     <DashboardCardChart
       title='Cidades'
       icon={ChartPie}
+      className='sm:col-span-3'
       chartClassName='h-full'
       menu={
         <DropdownMenu>
-          <DropdownMenuTrigger aria-label='Abrir menu' size='sm'>
+          <DropdownMenuTrigger
+            indicator
+            size='xs'
+            className='gap-1 pr-2'
+            aria-label='Abrir menu'
+          >
             No último ano
           </DropdownMenuTrigger>
 

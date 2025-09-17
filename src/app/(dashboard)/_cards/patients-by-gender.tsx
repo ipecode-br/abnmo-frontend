@@ -1,5 +1,5 @@
 import { ChartBarDecreasingIcon } from 'lucide-react'
-import type { HTMLAttributes } from 'react'
+import type React from 'react'
 
 import { BarChart } from '@/components/charts/bar'
 import { DashboardCardChart } from '@/components/dashboard/cards/chart'
@@ -8,10 +8,8 @@ import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 
-type DashboardGenderChartCardProps = HTMLAttributes<HTMLDivElement>
-
-export function DashboardGenderChartCard(
-  props: Readonly<DashboardGenderChartCardProps>,
+export function DashboardOverviewPatientsByGender(
+  props: Readonly<React.ComponentProps<'div'>>,
 ) {
   const data = [
     { name: 'Feminino', value: 10 },
@@ -23,10 +21,16 @@ export function DashboardGenderChartCard(
     <DashboardCardChart
       title='Gênero'
       icon={ChartBarDecreasingIcon}
+      className='sm:col-span-3'
       chartClassName='h-30'
       menu={
         <DropdownMenu>
-          <DropdownMenuTrigger aria-label='Abrir menu' size='sm'>
+          <DropdownMenuTrigger
+            indicator
+            size='xs'
+            className='gap-1 pr-2'
+            aria-label='Abrir menu'
+          >
             No último ano
           </DropdownMenuTrigger>
 

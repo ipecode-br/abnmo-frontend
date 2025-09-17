@@ -1,26 +1,25 @@
 import { Card } from '@/components/ui/card'
 
-interface DashboardOverviewPatientsCard {
+interface DashboardOverviewPatientsByStatusProps {
   title: string | React.ReactNode
   value: number
   icon: React.ReactNode
-  variant?: 'default' | 'active' | 'inactive'
 }
 
-export function DashboardOverviewPatientsCard({
+export function DashboardOverviewPatientsByStatus({
   title,
   value,
   icon,
-}: Readonly<DashboardOverviewPatientsCard>) {
+}: Readonly<DashboardOverviewPatientsByStatusProps>) {
   return (
-    <Card className='p-6'>
-      <div className='flex items-start justify-between space-y-3'>
+    <Card className='space-y-3 p-6 sm:col-span-2'>
+      <div className='flex items-center justify-between'>
         <span className='text-4xl font-semibold'>{value}</span>
         <div className='border-border rounded-full border p-2 [&_svg]:size-5'>
           {icon}
         </div>
       </div>
-      <p className='text-disabled mt-auto text-xs uppercase'>{title}</p>
+      <p className='text-foreground-soft text-xs uppercase'>{title}</p>
     </Card>
   )
 }

@@ -36,12 +36,12 @@ import { PatientConditionType } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { QUEUE_SERVICE_PATIENTS_MOCK } from '@/utils/mock/queue-service-patients'
 
-export default function ServiceQueueCard() {
+export default function DashboardOverviewAppointments() {
   const patients = QUEUE_SERVICE_PATIENTS_MOCK
   const router = useRouter()
 
   return (
-    <Card className='col-span-1 p-6 md:col-span-3'>
+    <Card className='p-6 sm:col-span-6'>
       <DataTableHeader className='mb-8'>
         <DataTableHeaderInfo
           icon={<Users2Icon />}

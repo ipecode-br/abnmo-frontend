@@ -23,7 +23,7 @@ export function DashboardCardChart({
 }: Readonly<DashboardCardChartProps>) {
   const Icon = icon
   return (
-    <Card className={cn('flex flex-col', className)} {...props}>
+    <Card className={cn('flex flex-col p-6', className)} {...props}>
       <header className='flex items-center gap-2'>
         <Icon className='size-5' />
         <h3 className='font-medium'>{title}</h3>
