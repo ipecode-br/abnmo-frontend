@@ -38,6 +38,7 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
   async function finishScreening() {
     const { screening } = PATIENT_STORAGE_KEYS
     await wait(1000)
+    console.log(screening.patientData)
 
     toast.success(
       'Obrigado por enviar suas informações. Estamos analisando seu cadastro e entraremos em contato em breve.',

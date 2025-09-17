@@ -7,3 +7,21 @@ export function DropdownMenu({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
   return <DropdownMenuPrimitive.Root data-slot='dropdown-menu' {...props} />
 }
+
+/* USAGE
+
+  <DropdownMenu>
+    <DropdownMenuTrigger>
+      Options
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>
+        Edit
+      </DropdownMenuItem>
+      <DropdownMenuItem variant="destructive">
+        Delete
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+
+*/
