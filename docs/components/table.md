@@ -134,6 +134,8 @@ const ORDER_OPTIONS = [
 
 ### Filtros
 
+O sistema de filtros é composto por um container principal e componentes de filtro específicos, localizados em `src/components/data-table/filters`.
+
 #### Container de filtros
 
 ```tsx
