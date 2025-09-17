@@ -29,16 +29,16 @@ export default function PatientHistoryTable() {
   }))
 
   const [patients, setPatients] = useState(initialPatients)
-  const [editingRowId, setEditingRowId] = useState<number | null>(null)
+  const [editingRowId, setEditingRowId] = useState<string | null>(null)
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
   const [editingNotes, setEditingNotes] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
+  const [selectedPatientId, setSelectedPatientId] = useState<string | null>(
     null,
   )
 
   const handleEditClick = (
-    patientId: number,
+    patientId: string,
     currentStatus: string,
     currentNotes: string,
   ) => {
@@ -53,7 +53,7 @@ export default function PatientHistoryTable() {
     setEditingNotes('')
   }
 
-  const handleSaveClick = (patientId: number) => {
+  const handleSaveClick = (patientId: string) => {
     if (!selectedStatus) return
 
     setPatients(
@@ -70,7 +70,7 @@ export default function PatientHistoryTable() {
     handleCancelClick()
   }
 
-  const handleDeleteClick = (patientId: number) => {
+  const handleDeleteClick = (patientId: string) => {
     setSelectedPatientId(patientId)
     setIsModalOpen(true)
   }

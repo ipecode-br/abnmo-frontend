@@ -3,6 +3,7 @@ export const ROUTES = {
     signIn: '/conta/entrar',
     signUp: '/conta/cadastrar',
     forgotPassword: '/conta/recuperar-senha',
+    signOut: '/api/sair',
   },
   patient: {
     main: '/paciente',

@@ -9,7 +9,6 @@ O arquivo `middleware.ts` define um middleware Next.js responsável por controla
 - Garantir que apenas usuários autenticados acessem rotas protegidas.
 - Redirecionar usuários não autenticados para a página de login.
 - Impedir que usuários autenticados acessem páginas de login ou registro.
-- Possui bypass temporário via variável de ambiente `BYPASS_AUTH` para desenvolvimento.
 
 ---
 
@@ -22,14 +21,11 @@ O arquivo `middleware.ts` define um middleware Next.js responsável por controla
 
 ## ⚙️ Lógica do Middleware
 
-1. **Bypass de autenticação**:
-   - Se `process.env.BYPASS_AUTH === 'true'`, todas as requisições seguem sem verificação.
-
-2. **Leitura de cookies e rota**:
+1. **Leitura de cookies e rota**:
    - Obtém o cookie `access_token` e o `pathname` da requisição.
    - Determina se a rota é de autenticação (`/conta`).
 
-3. **Redirecionamento**:
+2. **Redirecionamento**:
    - Se estiver em rota de autenticação e houver `access_token`, redireciona para dashboard.
    - Se estiver fora de rota de autenticação e não houver `access_token`, redireciona para login.
    - Caso contrário, permite o acesso à rota.
@@ -113,7 +109,6 @@ export async function canUser(action: Action, subject: Subject)
 ```
 
 - Verifica se o usuário autenticado tem permissão para uma ação em determinado recurso.
-- **Bypass**: Se `BYPASS_AUTH` estiver ativo, retorna `true`.
 - Retorna `true`, `false` ou `null` (usuário não autenticado).
 
 ---
