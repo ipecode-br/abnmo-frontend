@@ -90,11 +90,7 @@ export default function PatientHistoryTable() {
   return (
     <>
       <DataTableHeader>
-        <DataTableHeaderInfo
-          icon={<History />}
-          variant='ghost'
-          title='Histórico do paciente'
-        />
+        <DataTableHeaderInfo icon={<History />} title='Histórico do paciente' />
         <div className='ml-auto flex gap-2'>
           <Button variant='outline'>+ Inativar paciente</Button>
           <Button variant='default'>+ Encaminhar paciente</Button>

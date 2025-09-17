@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { AuthCard } from '@/components/auth/auth-card'
 import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 
 import { RecoverForm } from './recover-form'
 
@@ -13,8 +13,6 @@ export const metadata: Metadata = {
 }
 
 export default function RecoverPasswordPage() {
-  const routes = getRoutes()
-
   return (
     <AuthCard
       image={image}
@@ -28,7 +26,7 @@ export default function RecoverPasswordPage() {
       <p className='text-foreground-soft text-center text-sm'>
         Mudou de ideia?{' '}
         <NavLink
-          href={routes.auth.signIn}
+          href={ROUTES.auth.signIn}
           className='text-foreground font-medium whitespace-nowrap'
         >
           Acesse sua conta

@@ -1,4 +1,4 @@
-export const SCREENING_STORAGE_KEYS = {
+export const PATIENT_STORAGE_KEYS = {
   screening: {
     patientData: 'screening_patient_data',
     medicalReport: 'screening_medcial_report',

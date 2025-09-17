@@ -1,17 +1,22 @@
 import { getAllCookies } from '@/actions/cookies'
 import { env } from '@/config/env'
 
-type BaseResponse = { success: false; message: string }
-type ApiResponse<Data> = BaseResponse | (BaseResponse & { data?: Data })
+type ApiResponse<Data> = {
+  success: boolean
+  message: string
+  data?: Data
+  total?: number
+}
 
 interface ApiOptions extends RequestInit {
   includeCookies?: boolean
+  params?: Record<string, string | number | boolean | undefined | null>
 }
 
-export async function api<T>(
+export async function api<Data>(
   path: string,
   options?: ApiOptions,
-): Promise<ApiResponse<T>> {
+): Promise<ApiResponse<Data>> {
   try {
     let headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -25,13 +30,22 @@ export async function api<T>(
     }
 
     const url = new URL(path, env.NEXT_PUBLIC_API_URL)
+
+    if (options?.params) {
+      for (const [key, value] of Object.entries(options.params)) {
+        if (value !== undefined && value !== null) {
+          url.searchParams.append(key, String(value))
+        }
+      }
+    }
+
     const response = await fetch(url.toString(), {
       credentials: 'include',
       ...options,
       headers,
     })
 
-    const responseData: ApiResponse<T> = await response.json()
+    const responseData = await response.json()
 
     return responseData
   } catch (error) {
@@ -39,6 +53,6 @@ export async function api<T>(
     return {
       success: false,
       message: 'Não foi possível se conectar ao servidor.',
-    }
+    } as ApiResponse<Data>
   }
 }

@@ -1,9 +1,10 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Toaster } from 'sonner'
 
 import { inter } from '@/lib/fonts'
+
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: {
@@ -20,8 +21,7 @@ export default function RootLayout({
   return (
     <html lang='pt-BR'>
       <body className={`${inter.variable} antialiased`}>
-        {children}
-        <Toaster richColors position='top-right' closeButton />
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

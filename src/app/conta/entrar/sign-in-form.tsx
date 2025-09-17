@@ -2,8 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
 
+import { getDataFromToken } from '@/actions/token'
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
@@ -12,7 +14,7 @@ import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 
 import {
@@ -22,6 +24,7 @@ import {
 } from './sign-in-form-schema'
 
 export function SignInForm() {
+  const router = useRouter()
   const formMethods = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: signInFormDefaultValues,
@@ -30,20 +33,23 @@ export function SignInForm() {
   const isSubmitting = formMethods.formState.isSubmitting
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  const routes = getRoutes()
-
-  async function signIn(data: SignInFormSchema) {
-    // TODO: redirect to initial page according to user role
-    // TODO: implement keep me logged in option when API is updated with refresh token
-
+  async function signIn({ email, password, rememberMe }: SignInFormSchema) {
     const response = await api('/login', {
       method: 'POST',
-      body: JSON.stringify({ email: data.email, password: data.password }),
+      body: JSON.stringify({ email, password, rememberMe }),
     })
 
     if (!response.success) {
       formMethods.setError('root', { message: response.message })
+      return
     }
+
+    const data = await getDataFromToken()
+
+    const redirectPath =
+      data?.userRole === 'admin' ? ROUTES.dashboard.main : ROUTES.patient.main
+
+    router.push(redirectPath)
   }
 
   return (
@@ -64,10 +70,10 @@ export function SignInForm() {
         </FormField>
 
         <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
-          <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
+          <CheckboxInput name='rememberMe' label='Manter conectado' />
 
           <NavLink
-            href={routes.auth.forgotPassword}
+            href={ROUTES.auth.forgotPassword}
             className='whitespace-nowrap'
           >
             Esqueceu sua senha?

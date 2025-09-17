@@ -4,6 +4,12 @@ export const metadata: Metadata = {
   title: 'Encaminhados',
 }
 
-export default function forwardedPage() {
-  return <div>page content forwarded here</div>
+import { DashboardContainer } from '@/components/dashboard/container'
+
+export default function ForwardedPage() {
+  return (
+    <DashboardContainer className='flex flex-col gap-6'>
+      Encaminhados
+    </DashboardContainer>
+  )
 }

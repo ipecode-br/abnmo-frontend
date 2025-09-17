@@ -5,14 +5,15 @@ import type React from 'react'
 import { cn } from '@/utils/class-name-merge'
 
 interface AvatarProps extends React.ComponentProps<'div'> {
-  src?: ImageProps['src']
+  src?: ImageProps['src'] | null
 }
 
 export function Avatar({ src, className, ...props }: Readonly<AvatarProps>) {
   return (
     <div
       className={cn(
-        'border-border text-foreground-soft bg-background flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border [&_svg]:size-5',
+        'text-foreground-soft bg-background flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full [&_svg]:size-5',
+        !src && 'border-border border',
         className,
       )}
       {...props}

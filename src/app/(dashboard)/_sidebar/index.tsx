@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Bolt,
   Headset,
@@ -8,76 +6,38 @@ import {
   UserRoundCheck,
   Users2Icon,
 } from 'lucide-react'
-import { usePathname } from 'next/navigation'
 
+import { getProfile } from '@/actions/users'
 import { Divider } from '@/components/ui/divider'
-import { NavButton } from '@/components/ui/nav-button'
-import { getRoutes } from '@/constants/routes'
-import { useSidebar } from '@/store/sidebar'
-import { cn } from '@/utils/class-name-merge'
+import { ROUTES } from '@/constants/routes'
 
 import { SidebarAccount } from './account'
+import { DashboardSidebarContainer } from './container'
 import { SidebarHeader } from './header'
 import { SidebarHelpCard } from './help-card'
+import { DashboardSidebarMenuSection } from './menu-section'
 
-export function DashboardSidebar() {
-  const expanded = useSidebar((state) => state.expanded)
-  const pathName = usePathname()
+export async function DashboardSidebar() {
+  const user = await getProfile()
+
+  // TODO: uncomment after integrations is completed
+  // if (!user) return null
 
   return (
-    <aside
-      className={cn(
-        'border-border flex min-h-screen shrink-0 flex-col gap-8 border-r transition-all',
-        expanded ? 'w-68 p-6' : 'w-18 p-4',
-      )}
-    >
+    <DashboardSidebarContainer>
       <SidebarHeader />
 
       <Divider />
 
-      <section className='mb-auto space-y-8'>
-        {SIDEBAR_SECTIONS.map((section) => (
-          <section key={section.title} className='transition-all'>
-            {expanded && (
-              <p className='text-disabled mb-4 text-xs font-medium uppercase'>
-                {section.title}
-              </p>
-            )}
-            <nav className='flex flex-col gap-2'>
-              {section.links.map((link) => {
-                const isActive = link.path === pathName
-                return (
-                  <NavButton
-                    key={link.label}
-                    variant='ghost'
-                    href={link.path}
-                    size={expanded ? 'lg' : 'icon'}
-                    className={cn(
-                      '[&_svg]:text-disabled text-foreground-soft gap-3 transition-all',
-                      expanded && 'justify-start',
-                      isActive && 'bg-accent pointer-events-none',
-                    )}
-                  >
-                    {link.icon}
-                    {expanded && link.label}
-                  </NavButton>
-                )
-              })}
-            </nav>
-          </section>
-        ))}
-      </section>
+      <DashboardSidebarMenuSection sections={SIDEBAR_SECTIONS} />
 
       <SidebarHelpCard />
 
-      <Divider />
-
-      <SidebarAccount />
-    </aside>
+      <SidebarAccount user={user!} />
+    </DashboardSidebarContainer>
   )
 }
 
-const routes = getRoutes()
 const SIDEBAR_SECTIONS = [
   {
     title: 'Geral',
@@ -85,22 +45,22 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Visão Geral',
         icon: <LayoutDashboard />,
-        path: routes.dashboard.main,
+        path: ROUTES.dashboard.main,
       },
       {
         label: 'Pacientes',
         icon: <Users2Icon />,
-        path: routes.dashboard.patients.main,
+        path: ROUTES.dashboard.patients.main,
       },
       {
         label: 'Encaminhados',
         icon: <Share2 />,
-        path: routes.dashboard.forwarded.main,
+        path: ROUTES.dashboard.forwarded.main,
       },
       {
         label: 'Aprovações',
         icon: <UserRoundCheck />,
-        path: routes.dashboard.approvals.main,
+        path: ROUTES.dashboard.approvals.main,
       },
     ],
   },
@@ -110,12 +70,12 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Configurações',
         icon: <Bolt />,
-        path: routes.dashboard.settings.main,
+        path: ROUTES.dashboard.settings.main,
       },
       {
         label: 'Suporte',
         icon: <Headset />,
-        path: routes.dashboard.support.main,
+        path: ROUTES.dashboard.support.main,
       },
     ],
   },

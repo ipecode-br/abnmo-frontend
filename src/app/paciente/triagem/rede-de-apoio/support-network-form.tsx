@@ -11,7 +11,7 @@ import { ScreeningSupportNetworkCards } from '@/app/paciente/triagem/rede-de-apo
 import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { SCREENING_STORAGE_KEYS } from '@/constants/storage-keys'
+import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import { setStorageItem } from '@/helpers/local-storage'
 
 import { useScreening } from '../hooks'
@@ -30,7 +30,7 @@ export function ScreeningSupportNetworkForm() {
   const router = useRouter()
 
   const { getStoredFormData, finishScreening } = useScreening({
-    storageKey: SCREENING_STORAGE_KEYS.screening.supportNetwork,
+    storageKey: PATIENT_STORAGE_KEYS.screening.supportNetwork,
   })
 
   const formMethods = useForm<ScreeningSupportNetworkFormSchema>({
@@ -50,7 +50,7 @@ export function ScreeningSupportNetworkForm() {
     const updatedContacts = [...contacts, data]
     setContacts(updatedContacts)
     setStorageItem(
-      SCREENING_STORAGE_KEYS.screening.supportNetwork,
+      PATIENT_STORAGE_KEYS.screening.supportNetwork,
       updatedContacts,
     )
 
@@ -61,7 +61,7 @@ export function ScreeningSupportNetworkForm() {
     const updatedContacts = contacts.filter((contact) => contact.name !== name)
     setContacts(updatedContacts)
     setStorageItem(
-      SCREENING_STORAGE_KEYS.screening.supportNetwork,
+      PATIENT_STORAGE_KEYS.screening.supportNetwork,
       updatedContacts,
     )
   }

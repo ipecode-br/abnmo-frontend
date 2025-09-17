@@ -2,35 +2,33 @@
 
 import { usePathname } from 'next/navigation'
 
-import { getRoutes } from '@/constants/routes'
+import { ROUTES } from '@/constants/routes'
 import { cn } from '@/utils/class-name-merge'
 
 export function ScreeningProgress() {
   const currentPathname = usePathname()
-  const routes = getRoutes()
 
   const formSteps = [
     {
       label: 'Seus dados',
       info: 'Preencha os campos para prosseguir para a próxima etapa.',
-      path: routes.patient.screening.patientData,
+      path: ROUTES.patient.screening.patientData,
     },
     {
       label: 'Laudo Médico',
       info: 'Preencha os campos e anexe os documentos necessários.',
-      path: routes.patient.screening.medicalReport,
+      path: ROUTES.patient.screening.medicalReport,
     },
     {
       label: 'Rede de apoio',
       info: 'Informe os dados de contato necessários.',
-      path: routes.patient.screening.supportNetwork,
+      path: ROUTES.patient.screening.supportNetwork,
     },
   ]
 
   return (
     <aside className='max-w-72 space-y-8'>
       <h1 className='text-disabled text-xs'>TRIAGEM</h1>
-
       {formSteps.map((step, idx) => {
         const isActive = step.path === currentPathname
         return (

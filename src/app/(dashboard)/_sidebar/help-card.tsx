@@ -8,10 +8,11 @@ import { useSidebar } from '@/store/sidebar'
 export function SidebarHelpCard() {
   const expanded = useSidebar((state) => state.expanded)
 
-  if (!expanded) return null
-
   return (
-    <div className='bg-background-soft relative space-y-3 rounded-2xl p-4'>
+    <div
+      data-visible={expanded}
+      className='bg-background-soft relative w-56 space-y-3 rounded-2xl p-4 opacity-0 transition-opacity duration-300 data-[visible=true]:opacity-100 data-[visible=true]:delay-150'
+    >
       <div className='flex items-center gap-2.5'>
         <Headset className='size-5' />
         <p className='font-medium tracking-tight'>Precisa de ajuda?</p>
