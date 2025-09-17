@@ -6,6 +6,7 @@ import { DashboardContainer } from '@/components/dashboard/container'
 import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
 import { DashboardCitiesChartCard } from './_cards/cities-chart'
+import ServiceQueueCard from './_cards/service-queue'
 
 export default function DashboardOverview() {
   const totalPatients = PATIENTS_MOCKS.length
@@ -52,6 +53,7 @@ export default function DashboardOverview() {
 
         <DashboardGenderChartCard />
         <DashboardCitiesChartCard />
+        <ServiceQueueCard />
       </div>
     </DashboardContainer>
   )
