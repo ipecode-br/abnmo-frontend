@@ -7,6 +7,8 @@ import {
 
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
+import { PatientSupportType } from './patient-support'
+
 export const GENDERS = {
   male_cis: 'Homem (Cis)',
   female_cis: 'Mulher (Cis)',
@@ -46,6 +48,7 @@ export type PatientType = {
     email: string
     avatar_url: string | null
   }
+  supports?: PatientSupportType[]
 }
 
 const PATIENT_STATUS_ICONS_AND_COLOR = {
