@@ -1,7 +1,7 @@
 'use client'
 
-import logo from '@images/logo/logo-triagem.svg'
-import { PanelLeftCloseIcon, PanelLeftOpenIcon } from 'lucide-react'
+import icon from '@images/brand/icon.svg'
+import { ChevronRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -15,25 +15,25 @@ export function SidebarHeader() {
   const toogleSidebar = useSidebar((state) => state.toogleSidebar)
 
   return (
-    <header
-      className={cn(
-        'border-border text-foreground-soft flex items-center justify-between gap-4',
-        !expanded && 'flex-col',
-      )}
-    >
+    <header className='relative flex items-center'>
       <Link href={ROUTES.dashboard.main}>
-        <div className={cn('mr-auto flex items-center', !expanded && 'p-1')}>
-          <Image src={logo} alt='Símbolo do SVM' className='size-8 shrink-0' />
-          {expanded && <p className='ml-2 text-base font-bold'>SVM</p>}
+        <div className='flex items-center gap-3'>
+          <Image src={icon} alt='Símbolo do SVM' className='size-10 shrink-0' />
+          {expanded && <p className='text-lg font-bold'>SVM</p>}
         </div>
       </Link>
+
       <Button
         size='icon'
-        variant='ghost'
-        className='text-disabled hover:text-foreground-soft'
+        variant='outline'
+        data-expanded={expanded}
+        className={cn(
+          'text-disabled hover:text-foreground-soft absolute top-14 -right-8 size-8 rounded-full transition-all delay-75 duration-300 [&_svg]:size-5',
+          'data-[expanded=true]:top-0 data-[expanded=true]:-right-10 data-[expanded=true]:rotate-180',
+        )}
         onClick={toogleSidebar}
       >
-        {expanded ? <PanelLeftCloseIcon /> : <PanelLeftOpenIcon />}
+        <ChevronRightIcon />
       </Button>
     </header>
   )
