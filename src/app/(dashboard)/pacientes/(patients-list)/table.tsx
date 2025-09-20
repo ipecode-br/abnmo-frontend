@@ -41,7 +41,6 @@ import {
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
-import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
 import { PatientsListTableActions } from './actions'
 
@@ -71,7 +70,7 @@ export default function PatientsListTable() {
   })
 
   const total = response?.data?.total ?? 0
-  const patients = response?.data?.patients ?? PATIENTS_MOCKS
+  const patients = response?.data?.patients ?? []
 
   useEffect(() => {
     if (status || startDate || endDate) {
@@ -178,10 +177,7 @@ export default function PatientsListTable() {
                     {formatDate(patient.created_at)}
                   </TableCell>
                   <TableCell isLastRow={isLastRow} className='text-center'>
-                    <PatientsListTableActions
-                      id={patient.id}
-                      name={patient.user.name}
-                    />
+                    <PatientsListTableActions patient={patient} />
                   </TableCell>
                 </TableRow>
               )
