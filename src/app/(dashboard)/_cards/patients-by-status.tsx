@@ -19,7 +19,10 @@ export async function DashboardOverviewPatientsByStatus() {
     if (!data) return null
 
     return (
-      <Card key={statistic.label} className='space-y-3 p-6 sm:col-span-2'>
+      <Card
+        key={statistic.label}
+        className='flex min-h-32 flex-col justify-between gap-3 p-6 sm:col-span-2'
+      >
         <div className='flex items-center justify-between'>
           <span className='text-4xl font-semibold'>{statistic.value}</span>
           <div

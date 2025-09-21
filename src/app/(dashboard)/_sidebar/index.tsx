@@ -15,7 +15,6 @@ import { ROUTES } from '@/constants/routes'
 import { SidebarAccount } from './account'
 import { DashboardSidebarContainer } from './container'
 import { SidebarHeader } from './header'
-import { SidebarHelpCard } from './help-card'
 import { DashboardSidebarMenuSection } from './menu-section'
 
 export async function DashboardSidebar() {
@@ -29,7 +28,7 @@ export async function DashboardSidebar() {
 
       <DashboardSidebarMenuSection sections={SIDEBAR_SECTIONS} />
 
-      <SidebarHelpCard />
+      <Divider />
 
       <SidebarAccount user={user!} />
     </DashboardSidebarContainer>
