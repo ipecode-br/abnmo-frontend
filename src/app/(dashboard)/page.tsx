@@ -13,7 +13,9 @@ export default function DashboardOverview() {
     <DashboardContainer>
       <div className='grid grid-cols-1 gap-6 sm:grid-cols-6'>
         <Suspense
-          fallback={<Skeleton quantity={3} className='sm:col-span-2' />}
+          fallback={
+            <Skeleton quantity={3} className='h-32 rounded-2xl sm:col-span-2' />
+          }
         >
           <DashboardOverviewPatientsByStatus />
         </Suspense>
