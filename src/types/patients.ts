@@ -19,11 +19,11 @@ export const GENDERS = {
 }
 export type GenderType = keyof typeof GENDERS
 
-export const PATIENT_STATUS = {
+export const USER_STATUS = {
   active: 'Ativo',
   inactive: 'Inativo',
 }
-export type PatientStatusType = keyof typeof PATIENT_STATUS
+export type PatientStatusType = keyof typeof USER_STATUS
 
 export type PatientType = {
   id: string
@@ -55,12 +55,12 @@ const PATIENT_STATUS_ICONS_AND_COLOR = {
   active: { icon: CheckCircle2Icon, color: '[&_svg]:text-success' },
   inactive: { icon: CircleXIcon, color: '[&_svg]:text-error' },
 }
-export const PATIENT_STATUS_OPTIONS = convertObjectToOptions(
-  PATIENT_STATUS,
-).map((option) => ({
-  ...option,
-  ...PATIENT_STATUS_ICONS_AND_COLOR[option.value as PatientStatusType],
-}))
+export const PATIENT_STATUS_OPTIONS = convertObjectToOptions(USER_STATUS).map(
+  (option) => ({
+    ...option,
+    ...PATIENT_STATUS_ICONS_AND_COLOR[option.value as PatientStatusType],
+  }),
+)
 
 export const PATIENTS_ORDER = {
   name_asc: 'Nome (Crescente)',
