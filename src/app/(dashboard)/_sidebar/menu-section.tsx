@@ -47,7 +47,7 @@ export function DashboardSidebarMenuSection({
                   className={cn(
                     '[&_svg]:text-disabled text-foreground-soft size-10 justify-start gap-3 px-2.5 text-base transition-all duration-300',
                     'data-[visible=true]:w-full',
-                    'data-[active=true]:bg-accent data-[active=true]:pointer-events-none data-[active=true]:size-10',
+                    'data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary data-[active=true]:pointer-events-none data-[active=true]:size-10',
                   )}
                 >
                   {link.icon}
