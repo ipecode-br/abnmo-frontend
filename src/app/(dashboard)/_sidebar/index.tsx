@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   Share2,
   UserRoundCheck,
+  UserRoundCog,
   Users2Icon,
 } from 'lucide-react'
 
@@ -64,6 +65,11 @@ const SIDEBAR_SECTIONS = [
   {
     title: 'Outros',
     links: [
+      {
+        label: 'Membros',
+        icon: <UserRoundCog />,
+        path: ROUTES.dashboard.members.main,
+      },
       {
         label: 'Configurações',
         icon: <Bolt />,

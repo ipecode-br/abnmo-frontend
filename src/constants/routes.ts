@@ -28,6 +28,9 @@ export const ROUTES = {
     approvals: {
       main: '/aprovacoes',
     },
+    members: {
+      main: '/membros',
+    },
     settings: {
       main: '/configuracoes',
     },
