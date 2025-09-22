@@ -29,7 +29,6 @@ export function ScreeningProgress() {
   return (
     <aside className='max-w-72 space-y-8'>
       <h1 className='text-disabled text-xs'>TRIAGEM</h1>
-
       {formSteps.map((step, idx) => {
         const isActive = step.path === currentPathname
         return (

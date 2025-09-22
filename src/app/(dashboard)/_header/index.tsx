@@ -8,7 +8,7 @@ export function DashboardHeader() {
   return (
     <>
       <header className='flex items-center gap-4 px-8 py-4'>
-        <h1 className='text-xl font-medium'>Geral</h1>
+        <h1 className='text-xl font-medium'>Visão Geral</h1>
         <Divider orientation='vertical' height='h-5' />
         <Breadcrumbs />
 

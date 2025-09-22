@@ -11,15 +11,15 @@ export const SelectValue = SelectPrimitive.Value
 /* USAGE
 
   <Select
-    defaultValue?=''
-    onValueChange={() => {}}
+    defaultValue={value}
+    onValueChange={onChange}
   >
     <SelectTrigger>
-      <SelectValue placeholder='' />
+      <SelectValue placeholder={placeholder} />
     </SelectTrigger>
     <SelectContent>
-      <SelectItem value=''>Content here</SelectItem>
-      <SelectItem value=''>Content here</SelectItem>
+      <SelectItem value={value}>Content here</SelectItem>
+      <SelectItem value={value}>Content here</SelectItem>
     </SelectContent>
   </Select>
 

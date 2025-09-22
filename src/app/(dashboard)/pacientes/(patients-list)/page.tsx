@@ -23,7 +23,7 @@ export default function PatientsListPage() {
     <>
       <DashboardTabButtons buttons={tabButtons} />
       <DashboardContainer className='flex flex-col gap-6'>
-        <Suspense>
+        <Suspense fallback={<div>Carregando...</div>}>
           <PatientsListTable />
         </Suspense>
       </DashboardContainer>

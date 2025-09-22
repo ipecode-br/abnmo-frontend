@@ -1,14 +1,57 @@
-import { isServer, QueryClient } from '@tanstack/react-query'
+import {
+  isServer,
+  MutationCache,
+  QueryCache,
+  QueryClient,
+} from '@tanstack/react-query'
+
+import { ROUTES } from '@/constants/routes'
+
+type ErrorType = { status?: number }
 
 function makeQueryClient() {
-  return new QueryClient({
+  let hasRedirected = false
+
+  const client = new QueryClient({
     defaultOptions: {
       queries: {
         // Set default staleTime to avoid refetching immediately on the client
         staleTime: 60 * 1000,
+        retry: (_, error) => {
+          const errorObject = error as ErrorType
+          return errorObject?.status !== 401
+        },
+      },
+      mutations: {
+        retry: (_, error) => {
+          const errorObject = error as ErrorType
+          return errorObject?.status !== 401
+        },
       },
     },
+    queryCache: new QueryCache({
+      onError: (error) => {
+        const errorObject = error as ErrorType
+        console.log('QueryCache error:', errorObject)
+        if (errorObject?.status === 401 && !hasRedirected) {
+          hasRedirected = true
+          window.location.href = ROUTES.auth.signOut
+        }
+      },
+    }),
+    mutationCache: new MutationCache({
+      onError: (error) => {
+        const errorObject = error as ErrorType
+        console.log('MutationCache error:', errorObject)
+        if (errorObject?.status === 401 && !hasRedirected) {
+          hasRedirected = true
+          window.location.href = ROUTES.auth.signOut
+        }
+      },
+    }),
   })
+
+  return client
 }
 
 let browserQueryClient: QueryClient | undefined

@@ -51,6 +51,7 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
   async function finishScreening() {
     const { screening } = PATIENT_STORAGE_KEYS
     await wait(1000)
+    console.log(screening.patientData)
 
     const patientInfo = getStorageItem(screening.patientData)
     const medicalReportInfo = getStorageItem(screening.medicalReport)

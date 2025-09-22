@@ -1,64 +1,82 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-import { EllipsisVerticalIcon } from 'lucide-react'
+import { EllipsisVerticalIcon, LogOutIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { toast } from 'sonner'
 
-import { getProfile } from '@/actions/users'
+import { revalidateCache } from '@/actions/cache'
+import { getDataFromToken } from '@/actions/token'
 import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { QUERY_CACHE_KEYS } from '@/constants/cache'
-import { USER_ROLES } from '@/constants/users'
+import { DropdownMenu } from '@/components/ui/dropdown'
+import { DropdownMenuContent } from '@/components/ui/dropdown/content'
+import { DropdownMenuItem } from '@/components/ui/dropdown/item'
+import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { NEXT_CACHE_TAGS } from '@/constants/cache'
+import { ROUTES } from '@/constants/routes'
+import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
+import type { UserType } from '@/types/users'
 
-// TODO: add popover menu
-export function SidebarAccount() {
+interface SidebarAccountProps {
+  user: UserType
+}
+
+export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
+  const [isPending, startTransition] = useTransition()
+
   const expanded = useSidebar((state) => state.expanded)
+  const router = useRouter()
 
-  const { data: user, isLoading } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.profile],
-    queryFn: getProfile,
-  })
+  async function logout() {
+    startTransition(async () => {
+      const data = await getDataFromToken()
 
-  if (isLoading) {
-    return (
-      <div className='flex items-center gap-3'>
-        <Skeleton className='size-10 rounded-full' />
+      if (!data?.userId) return
 
-        <div className='flex-1 space-y-1 truncate'>
-          <Skeleton className='h-5 w-10/12' />
-          <Skeleton className='h-4 w-8/12' />
-        </div>
-      </div>
-    )
+      const response = await api('/logout', { method: 'POST' })
+
+      if (!response.success) {
+        toast.error(response.message)
+        return
+      }
+
+      revalidateCache(NEXT_CACHE_TAGS.user(data.userId))
+      toast.success(response.message)
+      router.push(ROUTES.auth.signIn)
+    })
   }
 
   return (
     <div className='relative flex items-center gap-3'>
       <Avatar src={user?.avatar_url} />
 
-      {user ? (
-        <div
-          data-visible={expanded}
-          className='space-y-1 truncate opacity-0 transition-opacity duration-750 data-[visible=true]:opacity-100'
-        >
-          <p className='truncate text-sm whitespace-nowrap'>{user.name}</p>
-          <p className='text-foreground-soft text-xs'>
-            {USER_ROLES[user.role]}
-          </p>
-        </div>
-      ) : (
-        <p className='text-xs'>Usuário não encontrado</p>
-      )}
-
-      <Button
-        size='icon'
-        variant='ghost'
+      <div
         data-visible={expanded}
-        className='absolute right-0 ml-auto opacity-0 transition-opacity duration-500 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
+        className='space-y-1 truncate pr-8 opacity-0 transition-opacity duration-750 data-[visible=true]:opacity-100'
       >
-        <EllipsisVerticalIcon className='text-foreground-soft' />
-      </Button>
+        <p className='truncate text-sm whitespace-nowrap'>{user.name}</p>
+        <p className='text-foreground-soft truncate text-xs'>{user.email}</p>
+      </div>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          size='icon'
+          variant='ghost'
+          data-visible={expanded}
+          aria-label='Abrir menu'
+          className='absolute right-0 ml-auto size-10 opacity-0 transition-opacity duration-500 data-[visible=true]:size-8 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
+        >
+          <EllipsisVerticalIcon className='text-foreground-soft' />
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align='start' sideOffset={8} className='min-w-32'>
+          <DropdownMenuItem onClick={logout} disabled={isPending}>
+            <LogOutIcon />
+            Sair
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   )
 }

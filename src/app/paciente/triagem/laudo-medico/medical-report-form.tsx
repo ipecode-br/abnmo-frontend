@@ -10,7 +10,7 @@ import { FormField } from '@/components/form/form-field'
 import { RadioInput } from '@/components/form/radio-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { yesOrNoEnum } from '@/constants/enums'
+import { YES_OR_NO } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
@@ -36,7 +36,7 @@ export function ScreeningMedicalReportForm() {
   const { setValue, watch } = formMethods
   const hasDisability = watch('hasDisability') === 'yes'
   const takeMedication = watch('takeMedication') === 'yes'
-  const yesOrNoOptions = convertObjectToOptions(yesOrNoEnum)
+  const yesOrNoOptions = convertObjectToOptions(YES_OR_NO)
 
   useEffect(() => {
     const savedFormData = getStoredFormData(screeningMedicalReportFormSchema)

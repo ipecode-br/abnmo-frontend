@@ -5,18 +5,20 @@ import { Loader2Icon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
+  'ring-offset-background focus-visible:ring-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
   {
     variants: {
       variant: {
         default:
           'bg-primary text-primary-foreground hover:bg-primary/80 shadow-xs',
+        destructive:
+          'bg-error text-primary-foreground hover:bg-error/80 shadow-xs',
         fancy:
           'bg-primary text-primary-foreground hover:bg-primary/80 inset-shadow-md shadow-xs',
         outline:
           'border-border hover:bg-accent text-accent-foreground bg-background border shadow-xs',
         muted: 'bg-background-soft text-accent-foreground hover:bg-accent',
-        ghost: 'text-accent-foreground hover:bg-accent/50 bg-transparent',
+        ghost: 'text-accent-foreground hover:bg-accent bg-transparent',
       },
       size: {
         default: 'h-10 min-h-10 px-4 [&_svg]:size-5',
