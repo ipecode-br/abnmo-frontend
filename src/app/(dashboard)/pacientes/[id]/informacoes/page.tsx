@@ -27,6 +27,10 @@ export default async function PatientInfoPage({
 
   const patient = await getPatient(patientId)
 
+  if (!patient) {
+    redirect(ROUTES.dashboard.patients.main)
+  }
+
   return (
     <>
       <header className='mb-3 flex justify-between'>
