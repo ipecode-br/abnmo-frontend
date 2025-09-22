@@ -1,27 +1,27 @@
 import { z } from 'zod'
 
-import { YesOrNoTuple } from '@/constants/enums'
+import { YES_OR_NO_TUPLE } from '@/constants/enums'
 
 export const screeningMedicalReportFormSchema = z
   .object({
-    hasDisability: z.enum(YesOrNoTuple, {
+    hasDisability: z.enum(YES_OR_NO_TUPLE, {
       message: 'Selecione uma opção acima',
     }),
     disabilityDescription: z
       .string()
       .optional()
       .transform((data) => data?.trim()),
-    needLegalAssistance: z.enum(YesOrNoTuple, {
+    needLegalAssistance: z.enum(YES_OR_NO_TUPLE, {
       message: 'Selecione uma opção acima',
     }),
-    takeMedication: z.enum(YesOrNoTuple, {
+    takeMedication: z.enum(YES_OR_NO_TUPLE, {
       message: 'Selecione uma opção acima',
     }),
     medicationDescription: z
       .string()
       .optional()
       .transform((data) => data?.trim()),
-    hasNmoDiagnosis: z.enum(YesOrNoTuple, {
+    hasNmoDiagnosis: z.enum(YES_OR_NO_TUPLE, {
       message: 'Selecione uma opção acima',
     }),
   })

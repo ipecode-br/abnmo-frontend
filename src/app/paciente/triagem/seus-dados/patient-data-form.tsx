@@ -10,10 +10,10 @@ import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { BRAZILIAN_STATES } from '@/constants/brazilian-states'
-import { GENDERS } from '@/constants/genders'
+import { BRAZILIAN_STATES_OPTIONS } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
+import { GENDERS_OPTIONS } from '@/types/patients'
 
 import { useScreening } from '../hooks'
 import {
@@ -84,7 +84,7 @@ export function ScreeningPatientDataForm() {
         <SelectInput
           name='gender'
           label='Gênero'
-          options={GENDERS}
+          options={GENDERS_OPTIONS}
           placeholder='Selecione seu gênero'
           isRequired
         />
@@ -99,7 +99,7 @@ export function ScreeningPatientDataForm() {
         <SelectInput
           name='state'
           label='Estado'
-          options={BRAZILIAN_STATES}
+          options={BRAZILIAN_STATES_OPTIONS}
           placeholder='Selecione seu estado'
           isRequired
         />

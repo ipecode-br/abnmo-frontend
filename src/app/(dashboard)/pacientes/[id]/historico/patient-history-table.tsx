@@ -13,7 +13,7 @@ import { Select, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
 import { SelectItem } from '@/components/ui/select/item'
 import { SelectTrigger } from '@/components/ui/select/trigger'
-import { PatientStatusEnum } from '@/constants/enums'
+import { PATIENT_STATUS } from '@/types/patients'
 import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
 export default function PatientHistoryTable() {
@@ -113,7 +113,7 @@ export default function PatientHistoryTable() {
                             <SelectValue placeholder='Selecione o status' />
                           </SelectTrigger>
                           <SelectContent>
-                            {Object.entries(PatientStatusEnum).map(
+                            {Object.entries(PATIENT_STATUS).map(
                               ([key, value]) => (
                                 <SelectItem key={key} value={key}>
                                   {value}
@@ -125,8 +125,8 @@ export default function PatientHistoryTable() {
                       ) : (
                         <p>
                           {
-                            PatientStatusEnum[
-                              patient.status as keyof typeof PatientStatusEnum
+                            PATIENT_STATUS[
+                              patient.status as keyof typeof PATIENT_STATUS
                             ]
                           }
                         </p>

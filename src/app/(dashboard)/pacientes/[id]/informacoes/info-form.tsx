@@ -10,11 +10,9 @@ import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
-import { BRAZILIAN_STATES } from '@/constants/brazilian-states'
-import { yesOrNoEnum } from '@/constants/enums'
-import { GENDERS } from '@/constants/genders'
+import { BRAZILIAN_STATES_OPTIONS, YES_OR_NO } from '@/constants/enums'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
-import { PatientType } from '@/types/patients'
+import { GENDERS_OPTIONS, PatientType } from '@/types/patients'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
@@ -66,9 +64,7 @@ export function PatientsInfoForm({
   const isViewMode = formState === 'view'
   const patientSupports = patient?.supports || []
 
-  const genderOptions = convertObjectToOptions(GENDERS)
-  const stateOptions = convertObjectToOptions(BRAZILIAN_STATES)
-  const yesOrNoOptions = convertObjectToOptions(yesOrNoEnum)
+  const yesOrNoOptions = convertObjectToOptions(YES_OR_NO)
 
   function submitForm(data: PatientsInfoFormSchema) {
     console.log(data)
@@ -114,7 +110,7 @@ export function PatientsInfoForm({
         <SelectInput
           name='gender'
           label='Gênero'
-          options={genderOptions}
+          options={GENDERS_OPTIONS}
           readOnly={isViewMode}
           wrapperClassName='sm:col-span-2'
           isRequired
@@ -122,7 +118,7 @@ export function PatientsInfoForm({
         <SelectInput
           name='state'
           label='Estado'
-          options={stateOptions}
+          options={BRAZILIAN_STATES_OPTIONS}
           readOnly={isViewMode}
           wrapperClassName='sm:col-span-2'
           isRequired
