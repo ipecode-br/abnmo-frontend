@@ -33,6 +33,7 @@ export function SelectInput({
   placeholder,
   message,
   wrapperClassName,
+  readOnly,
   ...props
 }: Readonly<SelectInputProps>) {
   const { control } = useFormContext()
@@ -50,7 +51,11 @@ export function SelectInput({
 
         return (
           <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-            <Label htmlFor={name}>
+            <Label
+              htmlFor={name}
+              data-readonly={readOnly}
+              className='data-[readonly=true]:pointer-events-none'
+            >
               {label}
               {isRequired && <RequiredInput />}
             </Label>
@@ -58,6 +63,7 @@ export function SelectInput({
               <SelectTrigger
                 id={name}
                 variant={fieldState.error && 'error'}
+                readOnly={readOnly}
                 {...props}
               >
                 <SelectValue placeholder={placeholder} />

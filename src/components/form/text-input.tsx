@@ -62,7 +62,6 @@ export function TextInput({
               {isRequired && <RequiredInput />}
             </Label>
             <Input
-              {...props}
               {...field}
               id={name}
               icon={icon}
@@ -71,6 +70,7 @@ export function TextInput({
                 const formattedValue = formatter(e.target.value)
                 field.onChange(formattedValue)
               }}
+              {...props}
             />
 
             <FormMessage error={!!fieldState.error?.message}>
