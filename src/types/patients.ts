@@ -9,22 +9,6 @@ import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 import { PatientSupportType } from './patient-support'
 
-export const GENDERS = {
-  male_cis: 'Homem (Cis)',
-  female_cis: 'Mulher (Cis)',
-  male_trans: 'Homem (Trans)',
-  female_trans: 'Mulher (Trans)',
-  non_binary: 'Não binário',
-  prefer_not_to_say: 'Prefiro não informar',
-}
-export type GenderType = keyof typeof GENDERS
-
-export const USER_STATUS = {
-  active: 'Ativo',
-  inactive: 'Inativo',
-}
-export type PatientStatusType = keyof typeof USER_STATUS
-
 export type PatientType = {
   id: string
   user_id: string
@@ -50,6 +34,24 @@ export type PatientType = {
   }
   supports?: PatientSupportType[]
 }
+
+export const GENDERS = {
+  male_cis: 'Homem (Cis)',
+  female_cis: 'Mulher (Cis)',
+  male_trans: 'Homem (Trans)',
+  female_trans: 'Mulher (Trans)',
+  non_binary: 'Não-binário',
+  prefer_not_to_say: 'Prefiro não informar',
+  other: 'Outro',
+}
+export type GenderType = keyof typeof GENDERS
+export const GENDERS_OPTIONS = convertObjectToOptions(GENDERS)
+
+export const USER_STATUS = {
+  active: 'Ativo',
+  inactive: 'Inativo',
+}
+export type PatientStatusType = keyof typeof USER_STATUS
 
 const PATIENT_STATUS_ICONS_AND_COLOR = {
   active: { icon: CheckCircle2Icon, color: '[&_svg]:text-success' },
