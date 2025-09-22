@@ -30,6 +30,9 @@ export const ROUTES = {
     },
     members: {
       main: '/membros',
+      details: {
+        positions: '/membros/cargos',
+      },
     },
     settings: {
       main: '/configuracoes',
