@@ -1,0 +1,40 @@
+import { Skeleton } from '@/components/ui/skeleton'
+import { TableBody, TableCell, TableRow } from '@/components/ui/table'
+
+export default function PatientsListTableBodySkeleton() {
+  const skeletons = Array.from({ length: 10 }).map((_, index) => index)
+
+  return (
+    <TableBody>
+      {skeletons.map((skeleton) => {
+        const isLastRow = skeleton === skeletons.length - 1
+
+        return (
+          <TableRow key={skeleton}>
+            <TableCell isLastRow={isLastRow} className='py-0'>
+              <div className='flex w-64 items-center gap-2'>
+                <Skeleton className='size-9 rounded-full' />
+                <Skeleton className='h-5 w-48 rounded-md' />
+              </div>
+            </TableCell>
+            <TableCell isLastRow={isLastRow}>
+              <Skeleton className='h-5 w-30 rounded-md' />
+            </TableCell>
+            <TableCell isLastRow={isLastRow}>
+              <Skeleton className='h-5 w-56 rounded-md' />
+            </TableCell>
+            <TableCell isLastRow={isLastRow}>
+              <Skeleton className='h-6 w-20 rounded-md' />
+            </TableCell>
+            <TableCell isLastRow={isLastRow}>
+              <Skeleton className='h-5 w-24 rounded-md' />
+            </TableCell>
+            <TableCell isLastRow={isLastRow} className='text-center'>
+              <Skeleton className='size-8 rounded-md' />
+            </TableCell>
+          </TableRow>
+        )
+      })}
+    </TableBody>
+  )
+}

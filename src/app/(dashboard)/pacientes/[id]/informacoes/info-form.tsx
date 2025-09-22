@@ -36,7 +36,7 @@ export function PatientsInfoForm({
   const [formState, setFormState] = useState<FormStateType>(mode)
 
   const defaultValues: PatientsInfoFormSchema = {
-    name: patient?.user.name ?? '',
+    name: patient?.name ?? '',
     gender: patient?.gender ?? '',
     date_of_birth: patient?.date_of_birth
       ? formatDate(patient.date_of_birth, { dateStyle: 'short' })
@@ -45,7 +45,7 @@ export function PatientsInfoForm({
     state: patient?.state ?? '',
     phone: patient?.phone ? formatPhoneNumber(patient.phone) : '',
     cpf: patient?.cpf ? formatCpfNumber(patient.cpf) : '',
-    email: patient?.user.email ?? '',
+    email: patient?.email ?? '',
     has_disability: patient?.has_disability ? 'yes' : 'no',
     disability_desc: patient?.disability_desc ?? '',
     need_legal_assistance: patient?.need_legal_assistance ? 'yes' : 'no',

@@ -75,7 +75,7 @@ export function PatientsListTableActions({
       {isPatientActive && (
         <PatientInactivateModal
           id={patient.id}
-          name={patient.user.name}
+          name={patient.name}
           dropdownTrigger={dropdownTriggerRef}
           open={isInactivateModalOpen}
           onOpenChange={setInactivateModalOpen}
