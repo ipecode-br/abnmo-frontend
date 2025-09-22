@@ -1,4 +1,4 @@
-export const MEMBERS_MOCK = [
+export const TEAMS_MOCK = [
   {
     id: '1',
     name: 'Carlos Ferreira',

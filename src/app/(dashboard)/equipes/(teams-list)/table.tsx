@@ -26,13 +26,13 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { STATUS_TAGS } from '@/constants/utils'
-import { MEMBERS_ORDER_OPTIONS } from '@/types/members'
 import { USER_STATUS } from '@/types/patients'
+import { TEAMS_ORDER_OPTIONS } from '@/types/teams'
 import { formatDate } from '@/utils/formatters/format-date'
-import { MEMBERS_MOCK } from '@/utils/mock/members'
+import { TEAMS_MOCK } from '@/utils/mock/teams'
 
-export default function DashboardMembersManagement() {
-  const members = MEMBERS_MOCK
+export default function DashboardTeamsManagement() {
+  const members = TEAMS_MOCK
 
   const [statusFilter, setStatusFilter] = useState<
     'all' | 'active' | 'inactive'
@@ -74,7 +74,7 @@ export default function DashboardMembersManagement() {
           <DataTableHeaderFilterButton />
 
           <DataTableHeaderOrderBy
-            options={MEMBERS_ORDER_OPTIONS}
+            options={TEAMS_ORDER_OPTIONS}
             className='min-w-48'
           />
 

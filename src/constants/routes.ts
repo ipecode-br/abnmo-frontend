@@ -28,11 +28,8 @@ export const ROUTES = {
     approvals: {
       main: '/aprovacoes',
     },
-    members: {
-      main: '/membros',
-      details: {
-        positions: '/membros/cargos',
-      },
+    teams: {
+      main: '/equipes',
     },
     settings: {
       main: '/configuracoes',

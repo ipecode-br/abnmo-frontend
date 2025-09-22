@@ -65,9 +65,9 @@ const SIDEBAR_SECTIONS = [
     title: 'Outros',
     links: [
       {
-        label: 'Membros',
+        label: 'Equipes',
         icon: <UserRoundCog />,
-        path: ROUTES.dashboard.members.main,
+        path: ROUTES.dashboard.teams.main,
       },
       {
         label: 'Configurações',

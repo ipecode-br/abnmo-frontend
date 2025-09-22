@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Membros',
+  title: 'Equipes',
 }
 
-import DashboardMembersManagement from '../_cards/members'
+import { DashboardContainer } from '@/components/dashboard/container'
 
-export default function MembersPage() {
-  return <DashboardMembersManagement />
+import DashboardTeamManagement from './table'
+
+export default function TeamsPage() {
+  return (
+    <DashboardContainer className='flex flex-col gap-6'>
+      <DashboardTeamManagement />
+    </DashboardContainer>
+  )
 }
