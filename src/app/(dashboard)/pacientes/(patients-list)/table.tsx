@@ -45,12 +45,10 @@ import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { PatientsListTableActions } from './actions'
 import PatientsListTableBodySkeleton from './skeleton'
 
-// TODO: create patient actions menu
 // TODO: redirect to register new patient page
-// TODO: add focus styles to cell button
-// TODO: add loading state to table
 export default function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
+  const [stableTotal, setStableTotal] = useState(0)
   const { getParam } = useParams()
   const router = useRouter()
 
@@ -72,6 +70,13 @@ export default function PatientsListTable() {
 
   const total = response?.data?.total ?? 0
   const patients = response?.data?.patients ?? []
+
+  // Update stable total only when we have actual data to prevent pagination flickering
+  useEffect(() => {
+    if (response?.data?.total !== undefined) {
+      setStableTotal(response.data.total)
+    }
+  }, [response?.data?.total])
 
   useEffect(() => {
     if (status || startDate || endDate) {
@@ -149,7 +154,7 @@ export default function PatientsListTable() {
                   <TableRow key={patient.id}>
                     <TableCell isLastRow={isLastRow} className='py-0'>
                       <button
-                        className='flex w-64 cursor-pointer items-center gap-2'
+                        className='focus-visible:ring-ring focus-visible:outline-background flex w-64 cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4'
                         onClick={() =>
                           router.push(
                             ROUTES.dashboard.patients.details.info(patient.id),
@@ -185,7 +190,7 @@ export default function PatientsListTable() {
         </Table>
       </Card>
 
-      <Pagination totalItems={total} />
+      <Pagination totalItems={stableTotal} />
     </>
   )
 }
