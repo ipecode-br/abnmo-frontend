@@ -8,6 +8,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import DashboardOverviewAppointments from './_cards/appointments'
 import { DashboardOverviewPatientsByCity } from './_cards/patients-by-city'
 
+export const dynamic = 'force-dynamic'
+
 export default function DashboardOverview() {
   return (
     <DashboardContainer>
