@@ -1,114 +1,118 @@
 'use client'
 
 import React, { useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+
+import { DateInput } from '@/components/form/date-input'
+import { FormContainer } from '@/components/form/form-container'
+import { FormField } from '@/components/form/form-field'
+import { SelectInput } from '@/components/form/select-input'
+import { TextareaInput } from '@/components/form/text-area'
+import { TextInput } from '@/components/form/text-input'
 
 import { Button } from '../../components/ui/button'
 import { Modal } from '../../components/ui/modal'
 
+interface NewServiceFormData {
+  patientName: string
+  responsible: string
+  specialty: string
+  date: string
+  status?: string
+  notes?: string
+}
+
 export default function NewServiceModal() {
   const [isOpen, setIsOpen] = useState(false)
-  const [patientName, setPatientName] = useState('')
-  const [responsible, setResponsible] = useState('')
-  const [specialty, setSpecialty] = useState('')
-  const [date, setDate] = useState('')
-  const [status, setStatus] = useState('')
-  const [notes, setNotes] = useState('')
+
+  const methods = useForm<NewServiceFormData>({
+    defaultValues: {
+      patientName: '',
+      responsible: '',
+      specialty: '',
+      date: '',
+      status: '',
+      notes: '',
+    },
+  })
 
   const openModal = () => setIsOpen(true)
   const closeModal = () => setIsOpen(false)
 
+  const handleSubmit = methods.handleSubmit((data) => {
+    console.log('Form Data:', data)
+    openModal()
+  })
+
   const handleConfirm = () => {
     closeModal()
+    methods.reset()
   }
 
   return (
-    <>
-      <form className='space-y-4'>
-        <div>
-          <label className='mb-1 block text-sm font-medium'>
-            Nome do paciente *
-          </label>
-          <input
-            type='text'
-            value={patientName}
-            onChange={(e) => setPatientName(e.target.value)}
-            className='w-full rounded-lg border p-2 text-sm'
-            required
+    <FormProvider {...methods}>
+      <FormContainer onSubmit={handleSubmit}>
+        <FormField>
+          <TextInput
+            name='patientName'
+            label='Nome do paciente'
+            isRequired
+            placeholder='Digite o nome do paciente'
           />
-        </div>
+        </FormField>
 
-        <div className='flex gap-4'>
-          <div className='flex-1'>
-            <label className='mb-1 block text-sm font-medium'>
-              Profissional responsável *
-            </label>
-            <input
-              type='text'
-              value={responsible}
-              onChange={(e) => setResponsible(e.target.value)}
-              className='w-full rounded-lg border p-2 text-sm'
-              required
-            />
-          </div>
-
-          <div className='flex-1'>
-            <label className='mb-1 block text-sm font-medium'>
-              Especialidade médica *
-            </label>
-            <input
-              type='text'
-              value={specialty}
-              onChange={(e) => setSpecialty(e.target.value)}
-              className='w-full rounded-lg border p-2 text-sm'
-              required
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className='mb-1 block text-sm font-medium'>
-            Data do atendimento *
-          </label>
-          <input
-            type='date'
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className='w-full rounded-lg border p-2 text-sm'
-            required
+        <FormField className='flex flex-row gap-4'>
+          <TextInput
+            name='responsible'
+            label='Profissional responsável'
+            isRequired
+            placeholder='Nome do profissional'
+            wrapperClassName='flex-1'
           />
-        </div>
+          <TextInput
+            name='specialty'
+            label='Especialidade médica'
+            isRequired
+            placeholder='Digite a especialidade'
+            wrapperClassName='flex-1'
+          />
+        </FormField>
 
-        <div>
-          <label className='mb-1 block text-sm font-medium'>Quadro geral</label>
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className='w-full rounded-lg border p-2 text-sm'
-          >
-            <option value=''>Selecionar</option>
-            <option value='leve'>Leve</option>
-            <option value='moderado'>Moderado</option>
-            <option value='grave'>Grave</option>
-          </select>
-        </div>
+        <FormField>
+          <DateInput
+            name='date'
+            label='Data do atendimento'
+            isRequired
+            blockFutureDates
+          />
+        </FormField>
 
-        <div>
-          <label className='mb-1 block text-sm font-medium'>Observações</label>
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            maxLength={200}
-            rows={4}
-            className='w-full rounded-lg border p-2 text-sm'
+        <FormField>
+          <SelectInput
+            name='status'
+            label='Quadro geral'
+            placeholder='Selecionar'
+            options={[
+              { label: 'Leve', value: 'leve' },
+              { label: 'Moderado', value: 'moderado' },
+              { label: 'Grave', value: 'grave' },
+            ]}
+          />
+        </FormField>
+
+        <FormField>
+          <TextareaInput
+            name='notes'
+            label='Observações'
             placeholder='Insira observações sobre o paciente'
+            maxLength={200}
           />
-          <p className='mt-1 text-xs text-gray-500'>{notes.length}/200</p>
-        </div>
+        </FormField>
 
-        <Button variant='default' onClick={openModal}>
+        <Button type='submit' variant='default'>
           Cadastrar
         </Button>
-      </form>
+      </FormContainer>
 
       <Modal
         isOpen={isOpen}
@@ -119,6 +123,6 @@ export default function NewServiceModal() {
         cancelText='Cancelar'
         confirmText='Confirmar'
       />
-    </>
+    </FormProvider>
   )
 }
