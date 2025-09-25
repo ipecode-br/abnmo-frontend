@@ -1,7 +1,9 @@
 import { useRouter } from 'next/navigation'
+import { useCallback } from 'react'
 import { toast } from 'sonner'
 import type { ZodSchema } from 'zod'
 
+import { getProfile } from '@/actions/users'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import {
@@ -10,19 +12,12 @@ import {
   setStorageItem,
 } from '@/helpers/local-storage'
 import { api } from '@/lib/api'
-import { GenderType, PatientType } from '@/types/patients'
 import { sanitizeCpf } from '@/utils/sanitize/sanitize-cpf-number'
 import { sanitizePhone } from '@/utils/sanitize/sanitize-phone-number'
-import { wait } from '@/utils/wait'
 
 import { screeningMedicalReportFormSchema } from './laudo-medico/medical-report-form-schema'
 import { screeningSupportNetworkContactsSchema } from './rede-de-apoio/support-network-form-schema'
 import { screeningPatientDataFormSchema } from './seus-dados/patient-data-form-schema'
-
-type CreatePatientPayload = Omit<
-  PatientType,
-  'id' | 'user_id' | 'status' | 'created_at' | 'updated_at' | 'user'
-> & {}
 
 interface UseScreeningProps {
   storageKey: string
@@ -36,12 +31,15 @@ interface SaveFormAndGoToPageProps<Schema> {
 export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
   const router = useRouter()
 
-  function getStoredFormData<T>(schema: ZodSchema<T>) {
-    const storedData = getStorageItem(storageKey)
-    const parsedValue = schema.safeParse(storedData)
+  const getStoredFormData = useCallback(
+    <T>(schema: ZodSchema<T>) => {
+      const storedData = getStorageItem(storageKey)
+      const parsedValue = schema.safeParse(storedData)
 
-    return parsedValue.success ? parsedValue.data : null
-  }
+      return parsedValue.success ? parsedValue.data : null
+    },
+    [storageKey],
+  )
 
   function saveFormAndGoToPage<T>({ data, path }: SaveFormAndGoToPageProps<T>) {
     setStorageItem(storageKey, data)
@@ -49,85 +47,94 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
   }
 
   async function finishScreening() {
+    const user = await getProfile()
+
     const { screening } = PATIENT_STORAGE_KEYS
-    await wait(1000)
-    console.log(screening.patientData)
 
-    const patientInfo = getStorageItem(screening.patientData)
-    const medicalReportInfo = getStorageItem(screening.medicalReport)
-    const supportNetworkInfo = getStorageItem(screening.supportNetwork)
+    try {
+      const patientInfo = getStorageItem(screening.patientData)
+      const medicalReportInfo = getStorageItem(screening.medicalReport)
+      const supportNetworkInfo = getStorageItem(screening.supportNetwork)
 
-    const parsedPacientInfo =
-      screeningPatientDataFormSchema.safeParse(patientInfo)
-    const parsedMedicalReportInfo =
-      screeningMedicalReportFormSchema.safeParse(medicalReportInfo)
-    const parsedSupportNetworkInfo =
-      screeningSupportNetworkContactsSchema.safeParse(supportNetworkInfo)
+      const parsedPacientInfo =
+        screeningPatientDataFormSchema.safeParse(patientInfo)
+      const parsedMedicalReportInfo =
+        screeningMedicalReportFormSchema.safeParse(medicalReportInfo)
+      const parsedSupportNetworkInfo =
+        screeningSupportNetworkContactsSchema.safeParse(supportNetworkInfo)
 
-    if (
-      !parsedPacientInfo.success ||
-      !parsedMedicalReportInfo.success ||
-      !parsedSupportNetworkInfo.success
-    ) {
-      toast.error(
-        'Verifique se todos os dados estão corretos e tente novamente!',
+      if (
+        !parsedPacientInfo.success ||
+        !parsedMedicalReportInfo.success ||
+        !parsedSupportNetworkInfo.success
+      ) {
+        toast.error(
+          'Verifique se todos os dados estão corretos e tente novamente!',
+        )
+        return
+      }
+
+      const payload = {
+        name: user?.name,
+        gender: parsedPacientInfo.data.gender,
+        date_of_birth: parsedPacientInfo.data.dateBirth,
+        phone: sanitizePhone(parsedPacientInfo.data.phone),
+        cpf: sanitizeCpf(parsedPacientInfo.data.cpf),
+        state: parsedPacientInfo.data.state,
+        city: parsedPacientInfo.data.city,
+        has_disability: parsedMedicalReportInfo.data.hasDisability === 'yes',
+        disability_desc:
+          parsedMedicalReportInfo.data.disabilityDescription ?? '',
+        need_legal_assistance:
+          parsedMedicalReportInfo.data.needLegalAssistance === 'yes',
+        take_medication: parsedMedicalReportInfo.data.takeMedication === 'yes',
+        medication_desc:
+          parsedMedicalReportInfo.data.medicationDescription ?? '',
+        has_nmo_diagnosis:
+          parsedMedicalReportInfo.data.hasNmoDiagnosis === 'yes',
+        status: 'active',
+        supports: (parsedSupportNetworkInfo.data || undefined).map(
+          (support) => ({
+            ...support,
+            phone: sanitizePhone(support.phone),
+          }),
+        ),
+      }
+
+      await api('/patients/screening', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      })
+
+      toast.success(
+        'Obrigado por enviar suas informações. Estamos analisando seu cadastro e entraremos em contato em breve.',
+        { duration: 7000 },
       )
-      return
+      removeStorageItem([
+        screening.patientData,
+        screening.medicalReport,
+        screening.supportNetwork,
+      ])
+      router.replace(ROUTES.patient.main)
+    } catch (error: unknown) {
+      const errorObject = error as {
+        status?: number
+        message?: string
+        success?: boolean
+      }
+      switch (errorObject.status) {
+        case 409:
+          toast.warning(`${errorObject.message}`, { duration: 7000 })
+          break
+        default:
+          toast.error(`${errorObject.message}`, { duration: 7000 })
+      }
     }
-
-    const [year, month, day] = parsedPacientInfo.data.dateBirth
-      .split('-')
-      .map(Number)
-
-    const patientInfoMapper = {
-      name: parsedPacientInfo.data.name,
-      cpf: sanitizeCpf(parsedPacientInfo.data.cpf),
-      phone: sanitizePhone(parsedPacientInfo.data.phone),
-      date_of_birth: new Date(year, month - 1, day),
-      gender: parsedPacientInfo.data.gender as GenderType,
-      state: parsedPacientInfo.data.state,
-      city: parsedPacientInfo.data.city,
-    }
-
-    const medicalReportInfoMapper = {
-      has_disability: parsedMedicalReportInfo.data.hasDisability === 'yes',
-      disability_desc:
-        parsedMedicalReportInfo.data.disabilityDescription ?? null,
-      has_nmo_diagnosis: parsedMedicalReportInfo.data.hasNmoDiagnosis === 'yes',
-      medication_desc:
-        parsedMedicalReportInfo.data.medicationDescription ?? null,
-      need_legal_assistance:
-        parsedMedicalReportInfo.data.needLegalAssistance === 'yes',
-      take_medication: parsedMedicalReportInfo.data.takeMedication === 'yes',
-    }
-
-    const payload: CreatePatientPayload = {
-      ...patientInfoMapper,
-      ...medicalReportInfoMapper,
-    }
-
-    const response = await api('/patients', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    })
-
-    if (!response.success) {
-      return toast.error(response.message)
-    }
-
-    toast.success(
-      'Obrigado por enviar suas informações. Estamos analisando seu cadastro e entraremos em contato em breve.',
-      { duration: 7000 },
-    )
-
-    removeStorageItem([
-      screening.patientData,
-      screening.medicalReport,
-      screening.supportNetwork,
-    ])
-
-    router.replace(ROUTES.patient.main)
   }
 
-  return { getStoredFormData, saveFormAndGoToPage, finishScreening }
+  return {
+    getStoredFormData,
+    saveFormAndGoToPage,
+    finishScreening,
+  }
 }

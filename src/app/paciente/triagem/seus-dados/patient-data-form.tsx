@@ -23,7 +23,7 @@ import {
 } from './patient-data-form-schema'
 
 export function ScreeningPatientDataForm() {
-  const { getStoredFormData, saveFormAndGoToPage } = useScreening({
+  const { saveFormAndGoToPage, getStoredFormData } = useScreening({
     storageKey: PATIENT_STORAGE_KEYS.screening.patientData,
   })
 
