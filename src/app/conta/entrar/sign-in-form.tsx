@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { getDataFromToken } from '@/actions/token'
@@ -24,32 +25,34 @@ import {
 } from './sign-in-form-schema'
 
 export function SignInForm() {
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const formMethods = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: signInFormDefaultValues,
     mode: 'onBlur',
   })
-  const isSubmitting = formMethods.formState.isSubmitting
   const formErrorMessage = formMethods.formState.errors.root?.message
 
   async function signIn({ email, password, rememberMe }: SignInFormSchema) {
-    const response = await api('/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password, rememberMe }),
+    startTransition(async () => {
+      const response = await api('/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password, rememberMe }),
+      })
+
+      if (!response.success) {
+        formMethods.setError('root', { message: response.message })
+        return
+      }
+
+      const data = await getDataFromToken()
+
+      const redirectPath =
+        data?.userRole === 'admin' ? ROUTES.dashboard.main : ROUTES.patient.main
+
+      router.push(redirectPath)
     })
-
-    if (!response.success) {
-      formMethods.setError('root', { message: response.message })
-      return
-    }
-
-    const data = await getDataFromToken()
-
-    const redirectPath =
-      data?.userRole === 'admin' ? ROUTES.dashboard.main : ROUTES.patient.main
-
-    router.push(redirectPath)
   }
 
   return (
@@ -80,7 +83,7 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button variant='fancy' type='submit' loading={isSubmitting}>
+        <Button variant='fancy' type='submit' loading={isPending}>
           Entrar
         </Button>
 
