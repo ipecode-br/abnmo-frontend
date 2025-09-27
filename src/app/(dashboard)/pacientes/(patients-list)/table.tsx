@@ -144,15 +144,14 @@ export default function PatientsListTable() {
             <PatientsListTableBodySkeleton />
           ) : (
             <TableBody>
-              {patients.map((patient, index) => {
-                const isLastRow = index === patients.length - 1
+              {patients.map((patient) => {
                 const statusTag =
                   STATUS_TAGS[patient.status as keyof typeof STATUS_TAGS]
                 const StatusIcon = statusTag.icon
 
                 return (
                   <TableRow key={patient.id}>
-                    <TableCell isLastRow={isLastRow} className='py-0'>
+                    <TableCell className='py-0'>
                       <button
                         className='focus-visible:ring-ring focus-visible:outline-background flex w-64 cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4'
                         onClick={() =>
@@ -166,20 +165,16 @@ export default function PatientsListTable() {
                       </button>
                     </TableCell>
 
-                    <TableCell isLastRow={isLastRow}>
-                      {formatPhoneNumber(patient.phone)}
-                    </TableCell>
-                    <TableCell isLastRow={isLastRow}>{patient.email}</TableCell>
-                    <TableCell isLastRow={isLastRow}>
+                    <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
+                    <TableCell>{patient.email}</TableCell>
+                    <TableCell>
                       <Tag className={statusTag.class}>
                         <StatusIcon />
                         {PATIENT_STATUS[patient.status]}
                       </Tag>
                     </TableCell>
-                    <TableCell isLastRow={isLastRow}>
-                      {formatDate(patient.created_at)}
-                    </TableCell>
-                    <TableCell isLastRow={isLastRow} className='text-center'>
+                    <TableCell>{formatDate(patient.created_at)}</TableCell>
+                    <TableCell className='text-center'>
                       <PatientsListTableActions patient={patient} />
                     </TableCell>
                   </TableRow>
