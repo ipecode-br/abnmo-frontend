@@ -1,8 +1,8 @@
 import { getAllCookies } from '@/actions/cookies'
 import { env } from '@/config/env'
+import { wait } from '@/utils/wait'
 
 type ApiResponse<Data> = {
-  status?: number
   success: boolean
   message: string
   data?: Data
@@ -46,30 +46,16 @@ export async function api<Data>(
       headers,
     })
 
-    const responseData = await response.json().catch(() => ({}))
+    const responseData = await response.json()
 
-    if (!response.ok) {
-      // Throws errors to be caught in the query/mutation error handlers
-      throw {
-        status: response.status,
-        success: false,
-        message: responseData?.message ?? 'Um erro inesperado aconteceu.',
-      }
-    }
+    wait(1500)
 
     return responseData
-  } catch (error: unknown) {
-    const errorObject = error as { status?: number; message?: string }
-
-    const normalizedError = {
-      status: errorObject?.status ?? 500,
+  } catch (error) {
+    console.error('API request error:', error)
+    return {
       success: false,
-      message:
-        errorObject?.message ?? 'Não foi possível se conectar ao servidor.',
-    }
-
-    console.error('API request error:', normalizedError)
-
-    throw normalizedError as ApiResponse<Data>
+      message: 'Não foi possível se conectar ao servidor.',
+    } as ApiResponse<Data>
   }
 }

@@ -35,16 +35,20 @@ export function DataTableFilterStatus({
 }: Readonly<DataTableFilterStatusProps>) {
   const { getParam, updateParams } = useParams()
 
+  const pageParam = QUERY_PARAMS.page
   const statusParam = QUERY_PARAMS.status
   const status = getParam(statusParam) || ''
 
   function handleSelect(value: string) {
     if (value === 'reset') {
-      updateParams({ remove: [statusParam] })
+      updateParams({ remove: [statusParam, pageParam] })
       return
     }
 
-    updateParams({ set: [{ key: statusParam, value: value }] })
+    updateParams({
+      set: [{ key: statusParam, value: value }],
+      remove: [pageParam],
+    })
   }
 
   return (

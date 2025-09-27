@@ -19,12 +19,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'active',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Lucas Pereira',
-      email: 'lucas.pereira1@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/1.jpg',
-    },
+    name: 'Lucas Pereira',
+    email: 'lucas.pereira1@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/1.jpg',
   },
   {
     id: '2',
@@ -44,12 +42,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'inactive',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Clara Almeida',
-      email: 'clara.almeida2@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/1.jpg',
-    },
+    name: 'Clara Almeida',
+    email: 'clara.almeida2@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/1.jpg',
   },
   {
     id: '3',
@@ -69,12 +65,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'active',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Marcos Silva',
-      email: 'marcos.silva3@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/2.jpg',
-    },
+    name: 'Marcos Silva',
+    email: 'marcos.silva3@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/2.jpg',
   },
   {
     id: '4',
@@ -94,12 +88,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'active',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Ana Costa',
-      email: 'ana.costa4@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/2.jpg',
-    },
+    name: 'Ana Costa',
+    email: 'ana.costa4@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/2.jpg',
   },
   {
     id: '5',
@@ -119,12 +111,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'inactive',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Felipe Rocha',
-      email: 'felipe.rocha5@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/3.jpg',
-    },
+    name: 'Felipe Rocha',
+    email: 'felipe.rocha5@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/3.jpg',
   },
   {
     id: '6',
@@ -144,12 +134,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'active',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Beatriz Santos',
-      email: 'beatriz.santos6@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/3.jpg',
-    },
+    name: 'Beatriz Santos',
+    email: 'beatriz.santos6@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/3.jpg',
   },
   {
     id: '7',
@@ -169,12 +157,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'active',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Rafael Lima',
-      email: 'rafael.lima7@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/4.jpg',
-    },
+    name: 'Rafael Lima',
+    email: 'rafael.lima7@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/4.jpg',
   },
   {
     id: '8',
@@ -194,12 +180,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'inactive',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Julia Alves',
-      email: 'julia.alves8@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/4.jpg',
-    },
+    name: 'Julia Alves',
+    email: 'julia.alves8@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/4.jpg',
   },
   {
     id: '9',
@@ -219,12 +203,10 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'active',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Pedro Souza',
-      email: 'pedro.souza9@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/5.jpg',
-    },
+    name: 'Pedro Souza',
+    email: 'pedro.souza9@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/5.jpg',
   },
   {
     id: '10',
@@ -244,11 +226,9 @@ export const PATIENTS_MOCKS: PatientType[] = [
     status: 'inactive',
     created_at: '2025-08-25 02:22:28.455104',
     updated_at: '2025-08-25 02:22:28.455104',
-    user: {
-      name: 'Fernanda Oliveira',
-      email: 'fernanda.oliveira10@example.com',
-      avatar_url:
-        'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/5.jpg',
-    },
+    name: 'Fernanda Oliveira',
+    email: 'fernanda.oliveira10@example.com',
+    avatar_url:
+      'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/5.jpg',
   },
 ]

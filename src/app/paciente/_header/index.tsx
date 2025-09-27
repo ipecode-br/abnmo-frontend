@@ -1,4 +1,4 @@
-import logo from '@images/logo/logo-triagem.svg'
+import logo from '@images/brand/icon.svg'
 import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
 
@@ -16,7 +16,7 @@ export async function PatientHeader() {
   return (
     <header className='container mx-auto flex items-center gap-8 px-8 py-4'>
       <div className='flex items-center gap-4'>
-        <Image src={logo} alt='Logo do sistema SMV' className='size-8' />
+        <Image src={logo} alt='Logo do SVM' className='size-8' />
         <h1 className='font-medium'>Formulário de Triagem</h1>
       </div>
 
