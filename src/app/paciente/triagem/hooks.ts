@@ -3,7 +3,6 @@ import { useCallback } from 'react'
 import { toast } from 'sonner'
 import type { ZodSchema } from 'zod'
 
-import { getProfile } from '@/actions/users'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import {
@@ -12,8 +11,7 @@ import {
   setStorageItem,
 } from '@/helpers/local-storage'
 import { api } from '@/lib/api'
-import { sanitizeCpf } from '@/utils/sanitize/sanitize-cpf-number'
-import { sanitizePhone } from '@/utils/sanitize/sanitize-phone-number'
+import { removeNonNumbers } from '@/utils/sanitizers'
 
 import { screeningMedicalReportFormSchema } from './laudo-medico/medical-report-form-schema'
 import { screeningSupportNetworkContactsSchema } from './rede-de-apoio/support-network-form-schema'
@@ -47,8 +45,6 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
   }
 
   async function finishScreening() {
-    const user = await getProfile()
-
     const { screening } = PATIENT_STORAGE_KEYS
 
     try {
@@ -75,31 +71,33 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
       }
 
       const payload = {
-        name: user?.name,
+        name: parsedPacientInfo.data.name,
         gender: parsedPacientInfo.data.gender,
         date_of_birth: parsedPacientInfo.data.dateBirth,
-        phone: sanitizePhone(parsedPacientInfo.data.phone),
-        cpf: sanitizeCpf(parsedPacientInfo.data.cpf),
+        phone: removeNonNumbers(parsedPacientInfo.data.phone),
+        cpf: removeNonNumbers(parsedPacientInfo.data.cpf),
         state: parsedPacientInfo.data.state,
         city: parsedPacientInfo.data.city,
         has_disability: parsedMedicalReportInfo.data.hasDisability === 'yes',
         disability_desc:
-          parsedMedicalReportInfo.data.disabilityDescription ?? '',
+          parsedMedicalReportInfo.data.disabilityDescription ?? null,
         need_legal_assistance:
           parsedMedicalReportInfo.data.needLegalAssistance === 'yes',
         take_medication: parsedMedicalReportInfo.data.takeMedication === 'yes',
         medication_desc:
-          parsedMedicalReportInfo.data.medicationDescription ?? '',
+          parsedMedicalReportInfo.data.medicationDescription ?? null,
         has_nmo_diagnosis:
           parsedMedicalReportInfo.data.hasNmoDiagnosis === 'yes',
         status: 'active',
         supports: (parsedSupportNetworkInfo.data || undefined).map(
           (support) => ({
             ...support,
-            phone: sanitizePhone(support.phone),
+            phone: removeNonNumbers(support.phone),
           }),
         ),
       }
+
+      console.log(payload)
 
       await api('/patients/screening', {
         method: 'POST',
