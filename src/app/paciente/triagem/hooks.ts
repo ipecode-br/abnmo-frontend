@@ -97,8 +97,6 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
         ),
       }
 
-      console.log(payload)
-
       await api('/patients/screening', {
         method: 'POST',
         body: JSON.stringify(payload),
