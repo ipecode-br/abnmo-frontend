@@ -26,8 +26,8 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { STATUS_TAGS } from '@/constants/utils'
-import { USER_STATUS } from '@/types/patients'
 import { TEAMS_ORDER_OPTIONS } from '@/types/teams'
+import { USER_STATUS } from '@/types/users'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
 

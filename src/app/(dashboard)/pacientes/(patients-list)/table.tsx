@@ -34,10 +34,10 @@ import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
 import {
+  PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
   type PatientType,
-  USER_STATUS,
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
@@ -170,7 +170,7 @@ export default function PatientsListTable() {
                   <TableCell isLastRow={isLastRow}>
                     <Tag className={statusTag.class}>
                       <StatusIcon />
-                      {USER_STATUS[patient.status]}
+                      {PATIENT_STATUS[patient.status]}
                     </Tag>
                   </TableCell>
                   <TableCell isLastRow={isLastRow}>
