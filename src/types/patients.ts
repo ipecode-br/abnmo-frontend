@@ -27,11 +27,9 @@ export type PatientType = {
   has_nmo_diagnosis: boolean
   created_at: string
   updated_at: string
-  user: {
-    name: string
-    email: string
-    avatar_url: string | null
-  }
+  name: string
+  email: string
+  avatar_url: string | null
   supports?: PatientSupportType[]
 }
 

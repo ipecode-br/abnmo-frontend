@@ -1,4 +1,4 @@
-import image from '@images/auth/recover.svg'
+import image from '@images/brand/icon.svg'
 import type { Metadata } from 'next'
 
 import { AuthCard } from '@/components/auth/auth-card'
