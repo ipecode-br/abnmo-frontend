@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { UF_LIST } from '@/constants/enums'
 import {
   CPF_REGEX,
   NAME_REGEX,
@@ -27,6 +28,12 @@ export const screeningPatientDataFormSchema = z.object({
       message: 'Informe uma data válida',
     },
   ),
+  state: z
+    .string()
+    .nonempty('Informe o seu estado')
+    .refine((value) => value in UF_LIST, {
+      message: 'Selecione um estado válido',
+    }),
   city: z
     .string()
     .nonempty('Informe a sua cidade')
@@ -35,7 +42,6 @@ export const screeningPatientDataFormSchema = z.object({
       'A cidade não pode conter números ou caracteres especiais',
     )
     .refine((input) => input.trim(), { message: 'Informe a sua cidade' }),
-  state: z.string().nonempty('Informe o seu estado'),
   phone: z
     .string()
     .nonempty('Informe o seu telefone')
