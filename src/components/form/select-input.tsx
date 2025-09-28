@@ -4,7 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { cn } from '@/utils/class-name-merge'
 
 import { Label } from '../ui/label'
-import { Select, SelectValue } from '../ui/select'
+import { Select, type SelectOptions, SelectValue } from '../ui/select'
 import { SelectContent } from '../ui/select/content'
 import { SelectItem } from '../ui/select/item'
 import { SelectTrigger, type SelectTriggerProps } from '../ui/select/trigger'
@@ -14,28 +14,30 @@ import { RequiredInput } from './required-input'
 interface RequiredSelectInputProps {
   name: string
   label: string | ReactNode
-  options: Array<{ label: string; value: string }>
+  options: SelectOptions
 }
 
-type SelectInputProps = RequiredSelectInputProps &
+type SelectInputProps<T> = RequiredSelectInputProps &
   SelectTriggerProps & {
     isRequired?: boolean
     placeholder?: string
     message?: string
     wrapperClassName?: SelectTriggerProps['className']
+    onValueChange?: (value: T) => void
   }
 
-export function SelectInput({
+export function SelectInput<T>({
   name,
   label,
   options,
+  message,
+  readOnly,
   isRequired,
   placeholder,
-  message,
   wrapperClassName,
-  readOnly,
+  onValueChange,
   ...props
-}: Readonly<SelectInputProps>) {
+}: Readonly<SelectInputProps<T>>) {
   const { control } = useFormContext()
 
   if (!control) {
@@ -49,6 +51,11 @@ export function SelectInput({
       render={({ field, fieldState }) => {
         const showMessage = fieldState.error?.message ?? message
 
+        function handleValueChange(value: string) {
+          field.onChange(value)
+          onValueChange?.(value as T)
+        }
+
         return (
           <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
             <Label
@@ -59,11 +66,11 @@ export function SelectInput({
               {label}
               {isRequired && <RequiredInput />}
             </Label>
-            <Select onValueChange={field.onChange} {...field}>
+            <Select onValueChange={handleValueChange} {...field}>
               <SelectTrigger
                 id={name}
-                variant={fieldState.error && 'error'}
                 readOnly={readOnly}
+                variant={fieldState.error && 'error'}
                 {...props}
               >
                 <SelectValue placeholder={placeholder} />
