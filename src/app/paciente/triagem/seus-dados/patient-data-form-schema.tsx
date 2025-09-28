@@ -18,7 +18,7 @@ export const screeningPatientDataFormSchema = z.object({
     )
     .regex(NAME_REGEX, 'Insira seu nome e sobrenome'),
   gender: z.string().nonempty('Informe seu gênero'),
-  dateBirth: z.string().refine(
+  dateOfBirth: z.string().refine(
     (input) => {
       const date = new Date(input)
       return date >= new Date('1900-01-01') && date <= new Date()
@@ -54,7 +54,7 @@ export const screeningPatientDataFormDefaultValues: ScreeningPatientDataFormSche
   {
     name: '',
     gender: '',
-    dateBirth: '',
+    dateOfBirth: '',
     city: '',
     state: '',
     phone: '',

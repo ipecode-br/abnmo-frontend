@@ -47,85 +47,70 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
   async function finishScreening() {
     const { screening } = PATIENT_STORAGE_KEYS
 
-    try {
-      const patientInfo = getStorageItem(screening.patientData)
-      const medicalReportInfo = getStorageItem(screening.medicalReport)
-      const supportNetworkInfo = getStorageItem(screening.supportNetwork)
+    const patientInfo = getStorageItem(screening.patientData)
+    const medicalReportInfo = getStorageItem(screening.medicalReport)
+    const supportNetworkInfo = getStorageItem(screening.supportNetwork)
 
-      const parsedPacientInfo =
-        screeningPatientDataFormSchema.safeParse(patientInfo)
-      const parsedMedicalReportInfo =
-        screeningMedicalReportFormSchema.safeParse(medicalReportInfo)
-      const parsedSupportNetworkInfo =
-        screeningSupportNetworkContactsSchema.safeParse(supportNetworkInfo)
+    const patient = screeningPatientDataFormSchema.safeParse(patientInfo)
+    const medicalReport =
+      screeningMedicalReportFormSchema.safeParse(medicalReportInfo)
+    const supportNetwork =
+      screeningSupportNetworkContactsSchema.safeParse(supportNetworkInfo)
 
-      if (
-        !parsedPacientInfo.success ||
-        !parsedMedicalReportInfo.success ||
-        !parsedSupportNetworkInfo.success
-      ) {
-        toast.error(
-          'Verifique se todos os dados estão corretos e tente novamente!',
-        )
-        return
-      }
-
-      const payload = {
-        name: parsedPacientInfo.data.name,
-        gender: parsedPacientInfo.data.gender,
-        date_of_birth: parsedPacientInfo.data.dateBirth,
-        phone: removeNonNumbers(parsedPacientInfo.data.phone),
-        cpf: removeNonNumbers(parsedPacientInfo.data.cpf),
-        state: parsedPacientInfo.data.state,
-        city: parsedPacientInfo.data.city,
-        has_disability: parsedMedicalReportInfo.data.hasDisability === 'yes',
-        disability_desc:
-          parsedMedicalReportInfo.data.disabilityDescription ?? null,
-        need_legal_assistance:
-          parsedMedicalReportInfo.data.needLegalAssistance === 'yes',
-        take_medication: parsedMedicalReportInfo.data.takeMedication === 'yes',
-        medication_desc:
-          parsedMedicalReportInfo.data.medicationDescription ?? null,
-        has_nmo_diagnosis:
-          parsedMedicalReportInfo.data.hasNmoDiagnosis === 'yes',
-        status: 'active',
-        supports: (parsedSupportNetworkInfo.data || undefined).map(
-          (support) => ({
-            ...support,
-            phone: removeNonNumbers(support.phone),
-          }),
-        ),
-      }
-
-      await api('/patients/screening', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      })
-
-      toast.success(
-        'Obrigado por enviar suas informações. Estamos analisando seu cadastro e entraremos em contato em breve.',
-        { duration: 7000 },
+    if (!patient.success || !medicalReport.success || !supportNetwork.success) {
+      toast.error(
+        'Verifique se todos os dados estão corretos e tente novamente!',
       )
-      removeStorageItem([
-        screening.patientData,
-        screening.medicalReport,
-        screening.supportNetwork,
-      ])
-      router.replace(ROUTES.patient.main)
-    } catch (error: unknown) {
-      const errorObject = error as {
-        status?: number
-        message?: string
-        success?: boolean
-      }
-      switch (errorObject.status) {
-        case 409:
-          toast.warning(`${errorObject.message}`, { duration: 7000 })
-          break
-        default:
-          toast.error(`${errorObject.message}`, { duration: 7000 })
-      }
+      return
     }
+
+    const supports =
+      supportNetwork.data && supportNetwork.data.length > 0
+        ? supportNetwork.data.map((contact) => ({
+            ...contact,
+            phone: removeNonNumbers(contact.phone),
+          }))
+        : undefined
+
+    const payload = {
+      name: patient.data.name,
+      gender: patient.data.gender,
+      date_of_birth: patient.data.dateOfBirth,
+      phone: removeNonNumbers(patient.data.phone),
+      cpf: removeNonNumbers(patient.data.cpf),
+      state: patient.data.state,
+      city: patient.data.city,
+      has_disability: medicalReport.data.hasDisability === 'yes',
+      disability_desc: medicalReport.data.disabilityDescription ?? null,
+      need_legal_assistance: medicalReport.data.needLegalAssistance === 'yes',
+      take_medication: medicalReport.data.takeMedication === 'yes',
+      medication_desc: medicalReport.data.medicationDescription ?? null,
+      has_nmo_diagnosis: medicalReport.data.hasNmoDiagnosis === 'yes',
+      supports,
+    }
+
+    const response = await api('/patients/screening', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.success) {
+      toast.error(response.message)
+      return
+    }
+
+    toast.success(
+      'Obrigado por enviar suas informações. Estamos analisando seu cadastro e entraremos em contato em breve.',
+      { duration: 7000 },
+    )
+
+    removeStorageItem([
+      screening.patientData,
+      screening.medicalReport,
+      screening.supportNetwork,
+    ])
+
+    router.replace(ROUTES.patient.main)
   }
 
   return {
