@@ -3,15 +3,21 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CircleCheckIcon, CircleXIcon, ClipboardEditIcon } from 'lucide-react'
 import { useState } from 'react'
+import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
+import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
-import { BRAZILIAN_STATES_OPTIONS, YES_OR_NO } from '@/constants/enums'
-import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
+import {
+  BRAZILIAN_STATES_OPTIONS,
+  type UFType,
+  YES_OR_NO_OPTIONS,
+} from '@/constants/enums'
+import { useCities } from '@/hooks/cities'
 import { GENDERS_OPTIONS, PatientType } from '@/types/patients'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -20,7 +26,7 @@ import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import {
   type PatientsInfoFormSchema,
   patientsInfoFormSchema,
-} from './info-form-schema'
+} from './form-schema'
 
 type FormStateType = 'view' | 'edit'
 
@@ -52,7 +58,6 @@ export function PatientsInfoForm({
     take_medication: patient?.take_medication ? 'yes' : 'no',
     medication_desc: patient?.medication_desc ?? '',
     has_nmo_diagnosis: patient?.has_nmo_diagnosis ? 'yes' : 'no',
-    supports: patient?.supports ?? [],
   }
 
   const formMethods = useForm<PatientsInfoFormSchema>({
@@ -60,11 +65,27 @@ export function PatientsInfoForm({
     defaultValues,
     mode: 'onBlur',
   })
+  const { clearErrors, setValue, watch } = formMethods
 
+  const patientSupports =
+    patient?.supports && patient.supports.length > 0
+      ? patient.supports.map((support) => ({
+          ...support,
+          phone: formatPhoneNumber(support.phone),
+        }))
+      : []
+
+  const selectedUF = watch('state') as UFType
+  const cities = useCities(selectedUF)
   const isViewMode = formState === 'view'
-  const patientSupports = patient?.supports || []
+  const showPatientSupports = patientSupports.length > 0
 
-  const yesOrNoOptions = convertObjectToOptions(YES_OR_NO)
+  function handleSelectState(value: UFType) {
+    setValue('state', value)
+    setValue('city', '')
+    clearErrors('state')
+    clearErrors('city')
+  }
 
   function submitForm(data: PatientsInfoFormSchema) {
     console.log(data)
@@ -85,16 +106,18 @@ export function PatientsInfoForm({
           name='name'
           label='Nome completo'
           maxLength={50}
-          wrapperClassName='sm:col-span-2'
           readOnly={isViewMode}
-          isRequired
+          isRequired={!isViewMode}
+          wrapperClassName='sm:col-span-2'
         />
-        <TextInput
+        <DateInput
           name='date_of_birth'
           label='Data de nascimento'
-          wrapperClassName='sm:col-span-2'
+          navMode='dropdown'
+          blockFutureDates
           readOnly={isViewMode}
-          isRequired
+          isRequired={!isViewMode}
+          wrapperClassName='sm:col-span-2'
         />
         <TextInput
           name='cpf'
@@ -102,9 +125,9 @@ export function PatientsInfoForm({
           mask='cpf'
           inputMode='numeric'
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-2'
           message={mode === 'view' ? '' : 'Insira somente números'}
-          isRequired
         />
 
         <SelectInput
@@ -112,24 +135,27 @@ export function PatientsInfoForm({
           label='Gênero'
           options={GENDERS_OPTIONS}
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-2'
-          isRequired
         />
         <SelectInput
           name='state'
           label='Estado'
           options={BRAZILIAN_STATES_OPTIONS}
+          onValueChange={handleSelectState}
           readOnly={isViewMode}
+          disabled={!selectedUF}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-2'
-          isRequired
         />
         <SelectInput
           name='city'
           label='Cidade'
-          options={[]}
+          options={cities}
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-2'
-          isRequired
+          placeholder='Selecione sua cidade'
         />
 
         <TextInput
@@ -138,17 +164,17 @@ export function PatientsInfoForm({
           mask='phone'
           inputMode='tel'
           readOnly={isViewMode}
-          message={mode === 'view' ? '' : 'Insira somente números'}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-3'
-          isRequired
+          message={mode === 'view' ? '' : 'Insira somente números'}
         />
         <TextInput
           name='email'
           label='E-mail'
           inputMode='email'
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-3'
-          isRequired
         />
 
         <Divider className='sm:col-span-6' />
@@ -156,10 +182,10 @@ export function PatientsInfoForm({
         <SelectInput
           name='has_disability'
           label='Possui alguma deficiência?'
-          options={yesOrNoOptions}
+          options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-2'
-          isRequired
         />
         <TextInput
           name='disability_desc'
@@ -172,10 +198,10 @@ export function PatientsInfoForm({
         <SelectInput
           name='take_medication'
           label='Usa medicamento regularmente?'
-          options={yesOrNoOptions}
+          options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-2'
-          isRequired
         />
         <TextInput
           name='medication_desc'
@@ -188,51 +214,58 @@ export function PatientsInfoForm({
         <SelectInput
           name='has_nmo_diagnosis'
           label='Possui diagnóstico de NMO?'
-          options={yesOrNoOptions}
+          options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-3'
-          isRequired
         />
         <SelectInput
           name='need_legal_assistance'
           label='Precisa de assistência legal?'
-          options={yesOrNoOptions}
+          options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
+          isRequired={!isViewMode}
           wrapperClassName='sm:col-span-3'
-          isRequired
         />
 
-        <Divider className='sm:col-span-6' />
-
-        <div className='space-y-6 sm:col-span-6'>
-          <h1 className='text-xl font-medium'>Rede de apoio</h1>
-          <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
-            {patientSupports.length >= 1 && (
-              <>
-                <TextInput
-                  name='support_name'
-                  label='Nome completo'
-                  maxLength={50}
-                  readOnly={isViewMode}
-                  wrapperClassName='sm:col-span-3'
-                />
-                <TextInput
-                  name='support_kinship'
-                  label='Parentesco'
-                  maxLength={50}
-                  readOnly={isViewMode}
-                  wrapperClassName='sm:col-span-1'
-                />
-                <TextInput
-                  name='support_phone'
-                  label='Telefone (WhatsApp)'
-                  readOnly={isViewMode}
-                  wrapperClassName='sm:col-span-2'
-                />
-              </>
-            )}
-          </div>
-        </div>
+        {showPatientSupports && (
+          <>
+            <Divider className='sm:col-span-6' />
+            <div className='space-y-6 sm:col-span-6'>
+              <h1 className='text-xl font-medium'>Rede de apoio</h1>
+              <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
+                {patientSupports.length >= 1 &&
+                  patientSupports.map((support) => (
+                    <React.Fragment key={support.id}>
+                      <TextInput
+                        name={`support_name_${support.id}`}
+                        label='Nome completo'
+                        value={support.name}
+                        maxLength={50}
+                        readOnly={isViewMode}
+                        wrapperClassName='sm:col-span-3'
+                      />
+                      <TextInput
+                        name={`support_kinship_${support.id}`}
+                        label='Parentesco'
+                        value={support.kinship}
+                        maxLength={50}
+                        readOnly={isViewMode}
+                        wrapperClassName='sm:col-span-1'
+                      />
+                      <TextInput
+                        name={`support_phone_${support.id}`}
+                        label='Telefone (WhatsApp)'
+                        value={support.phone}
+                        readOnly={isViewMode}
+                        wrapperClassName='sm:col-span-2'
+                      />
+                    </React.Fragment>
+                  ))}
+              </div>
+            </div>
+          </>
+        )}
 
         <div className='mt-3 flex justify-end gap-2 sm:col-span-6'>
           {formState === 'edit' ? (

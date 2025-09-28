@@ -5,6 +5,7 @@ export const YES_OR_NO = {
   no: 'Não',
 } as const
 export const YES_OR_NO_TUPLE = Object.keys(YES_OR_NO) as ['yes', 'no']
+export const YES_OR_NO_OPTIONS = convertObjectToOptions(YES_OR_NO)
 
 export const UF_LIST = {
   AC: 'Acre',

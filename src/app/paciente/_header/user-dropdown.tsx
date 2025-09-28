@@ -45,7 +45,7 @@ export function PatientHeaderUserDropdown({
 
       revalidateCache(NEXT_CACHE_TAGS.user(data.userId))
       toast.success(response.message)
-      router.push(ROUTES.auth.signIn)
+      router.replace(ROUTES.auth.signIn)
     })
   }
 

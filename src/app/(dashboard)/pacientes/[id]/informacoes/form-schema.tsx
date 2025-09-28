@@ -1,9 +1,28 @@
 import { z } from 'zod'
 
-import { yesOrNoSchema } from '@/schemas'
+import {
+  citySchema,
+  cpfSchema,
+  dateOfBirthSchema,
+  emailSchema,
+  genderSchema,
+  kinshipSchema,
+  nameSchema,
+  phoneSchema,
+  stateSchema,
+  yesOrNoSchema,
+} from '@/schemas'
 
-export const screeningMedicalReportFormSchema = z
+export const patientsInfoFormSchema = z
   .object({
+    name: nameSchema,
+    date_of_birth: dateOfBirthSchema,
+    cpf: cpfSchema,
+    gender: genderSchema,
+    state: stateSchema,
+    city: citySchema,
+    phone: phoneSchema,
+    email: emailSchema,
     has_disability: yesOrNoSchema,
     disability_desc: z
       .string()
@@ -16,6 +35,15 @@ export const screeningMedicalReportFormSchema = z
       .transform((data) => data?.trim())
       .nullable(),
     has_nmo_diagnosis: yesOrNoSchema,
+    supports: z
+      .array(
+        z.object({
+          name: nameSchema,
+          kinship: kinshipSchema,
+          phone: phoneSchema,
+        }),
+      )
+      .optional(),
   })
   .refine(
     (data) => {
@@ -48,14 +76,4 @@ export const screeningMedicalReportFormSchema = z
     },
   )
 
-export type ScreeningMedicalReportFormSchema = z.infer<
-  typeof screeningMedicalReportFormSchema
->
-
-export const screeningMedicalReportFormDefaultValues = {
-  has_disability: '',
-  disability_desc: '',
-  take_medication: '',
-  medication_desc: '',
-  has_nmo_diagnosis: '',
-} as unknown as ScreeningMedicalReportFormSchema
+export type PatientsInfoFormSchema = z.infer<typeof patientsInfoFormSchema>

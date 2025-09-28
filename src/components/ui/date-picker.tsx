@@ -24,6 +24,7 @@ export interface DatePickerProps extends VariantProps<typeof inputVariants> {
   navMode?: 'step' | 'dropdown'
   onSelectDate?: (date: string) => void
   value?: string
+  readOnly?: boolean
   allowTextInput?: boolean
   blockFutureDates?: boolean
 }
@@ -33,22 +34,16 @@ export function DatePicker({
   className,
   variant,
   size,
-  navMode,
-  onSelectDate,
   value,
+  onSelectDate,
+  navMode = 'step',
   allowTextInput = true,
   blockFutureDates = false,
 }: Readonly<DatePickerProps>) {
   const [open, setOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
 
-  const dateFormatted = value
-    ? formatDate(value, {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      })
-    : ''
+  const dateFormatted = value ? formatDate(value, { dateStyle: 'short' }) : ''
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!allowTextInput) return
@@ -87,12 +82,12 @@ export function DatePicker({
       <div className='relative flex w-full items-center'>
         <Input
           id={name}
-          value={displayValue}
-          onChange={handleInputChange}
           variant={variant}
-          className={cn(inputVariants({ variant, size, className }), 'pl-10')}
-          placeholder='DD/MM/YYYY'
+          value={displayValue}
+          placeholder='DD/MM/AAAA'
           readOnly={!allowTextInput}
+          onChange={handleInputChange}
+          className={cn(inputVariants({ variant, size, className }), 'pl-10')}
         />
 
         <PopoverTrigger
@@ -107,8 +102,8 @@ export function DatePicker({
       <PopoverContent sideOffset={8}>
         <Calendar
           navMode={navMode}
-          selected={value ? new Date(value) : undefined}
           onSelect={handleCalendarSelect}
+          selected={value ? new Date(value) : undefined}
           blockFutureDates={blockFutureDates}
         />
       </PopoverContent>

@@ -6,8 +6,8 @@ import { getPatient } from '@/actions/patients/get-patient'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 
+import { PatientsInfoForm } from './form'
 import { PatientInactivateButton } from './inactivate-button'
-import { PatientsInfoForm } from './info-form'
 
 export const metadata: Metadata = {
   title: 'Informações do paciente',

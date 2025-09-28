@@ -1,55 +1,23 @@
 import { z } from 'zod'
 
-import { UF_LIST } from '@/constants/enums'
 import {
-  CPF_REGEX,
-  NAME_REGEX,
-  NON_SPECIAL_CHAR_REGEX,
-  PHONE_REGEX,
-} from '@/constants/regex'
+  citySchema,
+  cpfSchema,
+  dateOfBirthSchema,
+  genderSchema,
+  nameSchema,
+  phoneSchema,
+  stateSchema,
+} from '@/schemas'
 
 export const screeningPatientDataFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'Insira seu nome completo')
-    .min(3, 'O nome deve conter mais de 3 caracteres')
-    .regex(
-      NON_SPECIAL_CHAR_REGEX,
-      'Números e caracteres especiais são inválidos',
-    )
-    .regex(NAME_REGEX, 'Insira seu nome e sobrenome'),
-  gender: z.string().nonempty('Informe seu gênero'),
-  dateOfBirth: z.string().refine(
-    (input) => {
-      const date = new Date(input)
-      return date >= new Date('1900-01-01') && date <= new Date()
-    },
-    {
-      message: 'Informe uma data válida',
-    },
-  ),
-  state: z
-    .string()
-    .nonempty('Informe o seu estado')
-    .refine((value) => value in UF_LIST, {
-      message: 'Selecione um estado válido',
-    }),
-  city: z
-    .string()
-    .nonempty('Informe a sua cidade')
-    .regex(
-      NON_SPECIAL_CHAR_REGEX,
-      'A cidade não pode conter números ou caracteres especiais',
-    )
-    .refine((input) => input.trim(), { message: 'Informe a sua cidade' }),
-  phone: z
-    .string()
-    .nonempty('Informe o seu telefone')
-    .regex(PHONE_REGEX, 'Insira um número de telefone válido'),
-  cpf: z
-    .string()
-    .nonempty('Informe o seu CPF')
-    .regex(CPF_REGEX, 'Informe um CPF válido'),
+  name: nameSchema,
+  gender: genderSchema,
+  date_of_birth: dateOfBirthSchema,
+  state: stateSchema,
+  city: citySchema,
+  phone: phoneSchema,
+  cpf: cpfSchema,
 })
 
 export type ScreeningPatientDataFormSchema = z.infer<
@@ -60,7 +28,7 @@ export const screeningPatientDataFormDefaultValues: ScreeningPatientDataFormSche
   {
     name: '',
     gender: '',
-    dateOfBirth: '',
+    date_of_birth: '',
     city: '',
     state: '',
     phone: '',

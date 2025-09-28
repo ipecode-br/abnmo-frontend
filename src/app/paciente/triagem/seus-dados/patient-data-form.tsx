@@ -80,7 +80,7 @@ export function ScreeningPatientDataForm() {
         />
 
         <DateInput
-          name='dateOfBirth'
+          name='date_of_birth'
           label='Data de nascimento'
           navMode='dropdown'
           blockFutureDates
