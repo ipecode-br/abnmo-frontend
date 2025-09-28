@@ -23,7 +23,7 @@ import {
 } from './patient-data-form-schema'
 
 export function ScreeningPatientDataForm() {
-  const { getStoredFormData, saveFormAndGoToPage } = useScreening({
+  const { saveFormAndGoToPage, getStoredFormData } = useScreening({
     storageKey: PATIENT_STORAGE_KEYS.screening.patientData,
   })
 
@@ -88,8 +88,9 @@ export function ScreeningPatientDataForm() {
           placeholder='Selecione seu gênero'
           isRequired
         />
+
         <DateInput
-          name='dateBirth'
+          name='dateOfBirth'
           label='Data de nascimento'
           navMode='dropdown'
           blockFutureDates
@@ -103,6 +104,7 @@ export function ScreeningPatientDataForm() {
           placeholder='Selecione seu estado'
           isRequired
         />
+
         <SelectInput
           name='city'
           label='Cidade'
@@ -114,7 +116,6 @@ export function ScreeningPatientDataForm() {
           }
           loading={!!UF && isLoadingCities}
           disabled={!UF}
-          isRequired
         />
 
         <TextInput
