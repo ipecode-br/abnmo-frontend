@@ -66,7 +66,11 @@ export function SelectInput<T>({
               {label}
               {isRequired && <RequiredInput />}
             </Label>
-            <Select onValueChange={handleValueChange} {...field}>
+            <Select
+              key={field.value || 'empty'}
+              defaultValue={field.value || ''}
+              onValueChange={handleValueChange}
+            >
               <SelectTrigger
                 id={name}
                 readOnly={readOnly}

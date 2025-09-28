@@ -6,7 +6,7 @@ export const YES_OR_NO = {
 } as const
 export const YES_OR_NO_TUPLE = Object.keys(YES_OR_NO) as ['yes', 'no']
 
-export const BRAZILIAN_STATES = {
+export const UF_LIST = {
   AC: 'Acre',
   AP: 'Amapá',
   AL: 'Alagoas',
@@ -35,4 +35,5 @@ export const BRAZILIAN_STATES = {
   SE: 'Sergipe',
   TO: 'Tocantins',
 }
-export const BRAZILIAN_STATES_OPTIONS = convertObjectToOptions(BRAZILIAN_STATES)
+export type UFType = keyof typeof UF_LIST
+export const BRAZILIAN_STATES_OPTIONS = convertObjectToOptions(UF_LIST)
