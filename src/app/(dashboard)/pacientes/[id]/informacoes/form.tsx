@@ -20,7 +20,6 @@ import {
 import { useCities } from '@/hooks/cities'
 import { GENDERS_OPTIONS, PatientType } from '@/types/patients'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
-import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 import {
@@ -44,9 +43,7 @@ export function PatientsInfoForm({
   const defaultValues: PatientsInfoFormSchema = {
     name: patient?.name ?? '',
     gender: patient?.gender ?? '',
-    date_of_birth: patient?.date_of_birth
-      ? formatDate(patient.date_of_birth, { dateStyle: 'short' })
-      : '',
+    date_of_birth: patient?.date_of_birth ?? '',
     city: patient?.city ?? '',
     state: patient?.state ?? '',
     phone: patient?.phone ? formatPhoneNumber(patient.phone) : '',
