@@ -15,7 +15,7 @@ import { PopoverTrigger, type PopoverTriggerProps } from './popover/trigger'
 
 export interface DatePickerProps
   extends Omit<PopoverTriggerProps, 'value'>,
-    Pick<CalendarProps, 'blockFutureDates' | 'navMode'> {
+    Pick<CalendarProps, 'allowFutureDates' | 'navMode'> {
   value?: string
   onSelectDate?: (date: string) => void
 }
@@ -24,7 +24,7 @@ export function DatePicker({
   value,
   navMode,
   className,
-  blockFutureDates,
+  allowFutureDates,
   onSelectDate,
   ...props
 }: Readonly<DatePickerProps>) {
@@ -73,7 +73,7 @@ export function DatePicker({
         <Calendar
           navMode={navMode}
           onSelect={handleCalendarSelect}
-          blockFutureDates={blockFutureDates}
+          allowFutureDates={allowFutureDates}
           selected={date ? new Date(date) : undefined}
         />
       </PopoverContent>

@@ -111,7 +111,6 @@ export function PatientsInfoForm({
           name='date_of_birth'
           label='Data de nascimento'
           navMode='dropdown'
-          blockFutureDates
           readOnly={isViewMode}
           isRequired={!isViewMode}
           wrapperClassName='sm:col-span-2'

@@ -40,7 +40,6 @@ export function DataTableFilterDate({
         <DatePicker
           size='sm'
           value={startDate}
-          blockFutureDates
           onSelectDate={handleSelectStartDate}
         />
       </DataTableFilterContainer>
@@ -48,7 +47,6 @@ export function DataTableFilterDate({
         <DatePicker
           size='sm'
           value={endDate}
-          blockFutureDates
           onSelectDate={handleSelectEndDate}
           disabled={!startDate}
         />

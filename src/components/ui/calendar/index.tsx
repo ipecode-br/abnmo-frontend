@@ -15,17 +15,17 @@ import { CalendarStepNav } from './step-nav'
 
 export interface CalendarProps extends Omit<PropsSingle, 'mode'> {
   navMode?: 'step' | 'dropdown'
-  blockFutureDates?: boolean
+  allowFutureDates?: boolean
 }
 
 export function Calendar({
   navMode = 'step',
-  blockFutureDates = false,
+  allowFutureDates,
   ...props
 }: Readonly<CalendarProps>) {
   const defaultClassNames = getDefaultClassNames()
 
-  const dateRestrictions = blockFutureDates
+  const dateRestrictions = !allowFutureDates
     ? {
         toDate: new Date(),
         toMonth: new Date(),
@@ -75,7 +75,7 @@ export function Calendar({
     selected={selectedDate}
     onSelect={setSelectedDate}
     navMode="dropdown" | "step" (default)
-    blockFutureDates={true | false (default)} - optional
+    allowFutureDates={true | false (default)} - optional
   />
 
 */
