@@ -39,7 +39,9 @@ export function DataTableHeaderOrderBy({
     <Select value={orderBy} onValueChange={handleSelect}>
       <SelectTrigger size='sm' className={cn('shrink-0', className)} {...props}>
         <ArrowDownWideNarrow />
-        <SelectValue placeholder='Ordenar por...' />
+        <div className='w-full overflow-hidden text-left text-ellipsis'>
+          <SelectValue placeholder='Ordenar por...' />
+        </div>
       </SelectTrigger>
       <SelectContent>
         {options.map((filter) => (

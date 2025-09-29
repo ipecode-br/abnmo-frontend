@@ -33,10 +33,12 @@ import { ROUTES } from '@/constants/routes'
 import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
+import type { OrderMappingType } from '@/types/order'
 import {
   PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
+  type PatientsOrderType,
   type PatientType,
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -60,15 +62,30 @@ export default function PatientsListTable() {
   const endDate = getParam(QUERY_PARAMS.endDate)
   const filterQueries = [page, search, orderBy, status, startDate, endDate]
 
+  const ORDER_MAPPING: OrderMappingType<PatientsOrderType> = {
+    date_asc: { orderBy: 'date', order: 'ASC' },
+    date_desc: { orderBy: 'date', order: 'DESC' },
+    email_asc: { orderBy: 'email', order: 'ASC' },
+    email_desc: { orderBy: 'email', order: 'DESC' },
+    name_asc: { orderBy: 'name', order: 'ASC' },
+    name_desc: { orderBy: 'name', order: 'DESC' },
+  }
+
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.patients, filterQueries],
     queryFn: () =>
       api<{ patients: PatientType[]; total: number }>('/patients', {
-        params: { page, search, orderBy, status, startDate, endDate },
+        params: {
+          page,
+          search,
+          status,
+          startDate,
+          endDate,
+          ...ORDER_MAPPING[orderBy as PatientsOrderType],
+        },
       }),
   })
 
-  const total = response?.data?.total ?? 0
   const patients = response?.data?.patients ?? []
 
   // Update stable total only when we have actual data to prevent pagination flickering
@@ -81,8 +98,6 @@ export default function PatientsListTable() {
   useEffect(() => {
     if (status || startDate || endDate) {
       setShowFilters(true)
-    } else {
-      setShowFilters(false)
     }
   }, [status, startDate, endDate])
 
@@ -91,7 +106,7 @@ export default function PatientsListTable() {
       <DataTableHeader>
         <DataTableHeaderInfo
           icon={<Users2Icon />}
-          total={total}
+          total={stableTotal}
           title='Pacientes cadastrados'
           emptyTitle='Nenhum paciente cadastrado'
         />
@@ -102,7 +117,7 @@ export default function PatientsListTable() {
           />
           <DataTableHeaderOrderBy
             options={PATIENTS_ORDER_OPTIONS}
-            className='min-w-48'
+            className='w-52'
           />
 
           <Button size='sm'>
