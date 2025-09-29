@@ -13,7 +13,7 @@ import {
   yesOrNoSchema,
 } from '@/schemas'
 
-export const patientsInfoFormSchema = z
+export const patientsFormSchema = z
   .object({
     name: nameSchema,
     date_of_birth: dateOfBirthSchema,
@@ -76,4 +76,4 @@ export const patientsInfoFormSchema = z
     },
   )
 
-export type PatientsInfoFormSchema = z.infer<typeof patientsInfoFormSchema>
+export type PatientsFormSchema = z.infer<typeof patientsFormSchema>

@@ -3,7 +3,7 @@
 import { UserRoundMinus } from 'lucide-react'
 import { useState } from 'react'
 
-import { PatientInactivateModal } from '@/components/patients/inactivate-modal'
+import { PatientsInactivateModal } from '@/components/patients/inactivate-modal'
 import { Dialog } from '@/components/ui/dialog'
 import { DialogTrigger } from '@/components/ui/dialog/trigger'
 import type { PatientType } from '@/types/patients'
@@ -25,7 +25,7 @@ export function PatientInactivateButton({
       </DialogTrigger>
 
       {isInactivateModalOpen && (
-        <PatientInactivateModal
+        <PatientsInactivateModal
           id={patient.id}
           name={patient.name}
           onOpenChange={setInactivateModalOpen}

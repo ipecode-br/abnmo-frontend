@@ -1,8 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CircleCheckIcon, CircleXIcon, ClipboardEditIcon } from 'lucide-react'
-import { useState } from 'react'
+import {
+  CircleCheckIcon,
+  CircleXIcon,
+  ClipboardEditIcon,
+  UserPlus2Icon,
+} from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState, useTransition } from 'react'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -17,30 +23,28 @@ import {
   type UFType,
   YES_OR_NO_OPTIONS,
 } from '@/constants/enums'
+import { ROUTES } from '@/constants/routes'
 import { useCities } from '@/hooks/cities'
 import { GENDERS_OPTIONS, PatientType } from '@/types/patients'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
-import {
-  type PatientsInfoFormSchema,
-  patientsInfoFormSchema,
-} from './form-schema'
+import { type PatientsFormSchema, patientsFormSchema } from './form-schema'
 
-type FormStateType = 'view' | 'edit'
+type PatientsFormModeType = 'view' | 'edit' | 'create'
 
-interface PatientsInfoFormProps {
+interface PatientsFormProps {
   patient?: PatientType | null
-  mode?: FormStateType
+  mode?: PatientsFormModeType
 }
 
-export function PatientsInfoForm({
-  patient,
-  mode = 'view',
-}: PatientsInfoFormProps) {
-  const [formState, setFormState] = useState<FormStateType>(mode)
+export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
+  const [formState, setFormState] = useState<PatientsFormModeType>(mode)
+  const [isPending, startTransition] = useTransition()
 
-  const defaultValues: PatientsInfoFormSchema = {
+  const router = useRouter()
+
+  const defaultValues: PatientsFormSchema = {
     name: patient?.name ?? '',
     gender: patient?.gender ?? '',
     date_of_birth: patient?.date_of_birth ?? '',
@@ -57,8 +61,8 @@ export function PatientsInfoForm({
     has_nmo_diagnosis: patient?.has_nmo_diagnosis ? 'yes' : 'no',
   }
 
-  const formMethods = useForm<PatientsInfoFormSchema>({
-    resolver: zodResolver(patientsInfoFormSchema),
+  const formMethods = useForm<PatientsFormSchema>({
+    resolver: zodResolver(patientsFormSchema),
     defaultValues,
     mode: 'onBlur',
   })
@@ -74,6 +78,7 @@ export function PatientsInfoForm({
 
   const selectedUF = watch('state') as UFType
   const cities = useCities(selectedUF)
+
   const isViewMode = formState === 'view'
   const showPatientSupports = patientSupports.length > 0
 
@@ -84,13 +89,26 @@ export function PatientsInfoForm({
     clearErrors('city')
   }
 
-  function submitForm(data: PatientsInfoFormSchema) {
-    console.log(data)
+  function handleCancel() {
+    formMethods.reset()
+    setFormState('view')
+
+    if (formState === 'create') {
+      router.push(ROUTES.patient.main)
+    }
   }
 
-  function handleCancel() {
-    formMethods.reset(defaultValues)
-    setFormState('view')
+  function submitForm(data: PatientsFormSchema) {
+    startTransition(async () => {
+      if (formState === 'edit') {
+        // TODO: Implement update patient request
+        console.log(data)
+        return
+      }
+
+      // TODO: Implement create patient request
+      console.log(data)
+    })
   }
 
   return (
@@ -264,25 +282,7 @@ export function PatientsInfoForm({
         )}
 
         <div className='mt-3 flex justify-end gap-2 sm:col-span-6'>
-          {formState === 'edit' ? (
-            <>
-              <Button
-                type='button'
-                variant='outline'
-                className='w-fit'
-                onClick={handleCancel}
-              >
-                <CircleXIcon /> Cancelar
-              </Button>
-              <Button
-                type='submit'
-                className='w-fit'
-                onClick={() => setFormState('edit')}
-              >
-                <CircleCheckIcon /> Salvar
-              </Button>
-            </>
-          ) : (
+          {isViewMode && (
             <Button
               type='button'
               variant='outline'
@@ -291,6 +291,40 @@ export function PatientsInfoForm({
             >
               <ClipboardEditIcon /> Editar
             </Button>
+          )}
+
+          {formState === 'edit' && (
+            <>
+              <Button
+                type='button'
+                variant='outline'
+                className='w-fit'
+                disabled={isPending}
+                onClick={handleCancel}
+              >
+                <CircleXIcon /> Cancelar
+              </Button>
+              <Button type='submit' className='w-fit' loading={isPending}>
+                <CircleCheckIcon /> Salvar
+              </Button>
+            </>
+          )}
+
+          {formState === 'create' && (
+            <>
+              <Button
+                type='button'
+                variant='outline'
+                className='w-fit'
+                disabled={isPending}
+                onClick={handleCancel}
+              >
+                <CircleXIcon /> Cancelar
+              </Button>
+              <Button type='submit' className='w-fit' loading={isPending}>
+                <UserPlus2Icon /> Adicionar
+              </Button>
+            </>
           )}
         </div>
       </FormContainer>
