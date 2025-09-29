@@ -78,7 +78,6 @@ export function ScreeningPatientDataForm() {
           placeholder='Selecione seu gênero'
           isRequired
         />
-
         <DateInput
           name='date_of_birth'
           label='Data de nascimento'
@@ -95,13 +94,13 @@ export function ScreeningPatientDataForm() {
           onValueChange={handleSelectState}
           isRequired
         />
-
         <SelectInput
           name='city'
           label='Cidade'
           options={cities}
           placeholder='Selecione sua cidade'
           disabled={!UF}
+          isRequired
         />
 
         <TextInput
@@ -113,7 +112,6 @@ export function ScreeningPatientDataForm() {
           inputMode='tel'
           isRequired
         />
-
         <TextInput
           name='cpf'
           label='CPF'

@@ -24,13 +24,16 @@ export const phoneSchema = z
 
 export const genderSchema = z.string().nonempty('Informe o gênero')
 
-export const dateOfBirthSchema = z.string().refine(
-  (input) => {
-    const date = new Date(input)
-    return date >= new Date('1900-01-01') && date <= new Date()
-  },
-  { message: 'Informe uma data válida' },
-)
+export const dateOfBirthSchema = z
+  .string()
+  .datetime('Informe uma data válida')
+  .refine(
+    (value) => {
+      const date = new Date(value)
+      return date >= new Date('1900-01-01') && date <= new Date()
+    },
+    { message: 'Informe uma data válida' },
+  )
 
 export const stateSchema = z
   .string()

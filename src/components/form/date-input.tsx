@@ -42,13 +42,10 @@ export function DateInput({
       control={control}
       render={({ field, fieldState }) => {
         const showMessage = fieldState.error?.message ?? message
+
         return (
           <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-            <Label
-              htmlFor={name}
-              data-readonly={readOnly}
-              className='data-[readonly=true]:pointer-events-none'
-            >
+            <Label htmlFor={name} readOnly={readOnly}>
               {label}
               {isRequired && <RequiredInput />}
             </Label>

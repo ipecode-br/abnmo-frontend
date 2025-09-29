@@ -9,7 +9,7 @@ export const inputVariants = cva(
     variants: {
       variant: {
         default: 'border-border text-foreground placeholder:text-disabled',
-        error: 'border-error text-error focus-visible:ring-error',
+        error: 'border-error focus-visible:ring-error',
       },
       size: {
         default: 'h-10',
@@ -49,8 +49,8 @@ export function Input({
     return (
       <div
         className={cn(
-          'relative flex w-full items-center [&>svg]:size-4.5',
-          props.disabled && '[&>svg]:opacity-50',
+          'relative flex w-full items-center [&_svg]:size-4.5',
+          props.disabled && '[&_svg]:opacity-50',
         )}
       >
         <input

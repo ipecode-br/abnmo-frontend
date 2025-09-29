@@ -115,8 +115,8 @@ export function ScreeningSupportNetworkForm() {
             disabled={isPending}
             className='col-span-full [&_svg]:size-4'
           >
-            Adicionar
             <PlusIcon />
+            Adicionar contato
           </Button>
         </FormContainer>
       </FormProvider>

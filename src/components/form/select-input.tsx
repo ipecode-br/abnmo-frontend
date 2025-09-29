@@ -58,11 +58,7 @@ export function SelectInput<T>({
 
         return (
           <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-            <Label
-              htmlFor={name}
-              data-readonly={readOnly}
-              className='data-[readonly=true]:pointer-events-none'
-            >
+            <Label htmlFor={name} readOnly={readOnly}>
               {label}
               {isRequired && <RequiredInput />}
             </Label>
