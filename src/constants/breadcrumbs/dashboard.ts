@@ -1,4 +1,4 @@
-import { HistoryIcon, User2Icon, Users2Icon } from 'lucide-react'
+import { HistoryIcon, User2Icon, UserCog2Icon, Users2Icon } from 'lucide-react'
 
 import { ROUTES } from '../routes'
 import type { Breadcrumbs } from '.'
@@ -18,5 +18,10 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
     icon: HistoryIcon,
     name: 'Histórico do paciente',
     path: ROUTES.dashboard.patients.main,
+  },
+  equipes: {
+    icon: UserCog2Icon,
+    name: 'Equipes',
+    path: ROUTES.dashboard.teams.main,
   },
 }

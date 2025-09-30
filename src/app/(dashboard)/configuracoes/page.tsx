@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 
 import { DashboardContainer } from '@/components/dashboard/container'
 
-export default function SettingsPage() {
+export default function Page() {
   return (
     <DashboardContainer className='flex flex-col gap-6'>
       Configurações

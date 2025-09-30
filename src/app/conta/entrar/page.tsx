@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'Acessar conta',
 }
 
-export default function SignInPage() {
+export default function Page() {
   return (
     <AuthCard
       image={image}

@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   title: 'Rede de apoio',
 }
 
-export default function ScreeningSupportNetworkPage() {
+export default function Page() {
   return <ScreeningSupportNetworkForm />
 }

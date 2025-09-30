@@ -10,7 +10,7 @@ import { DashboardOverviewPatientsByCity } from './_cards/patients-by-city'
 
 export const dynamic = 'force-dynamic'
 
-export default function DashboardOverview() {
+export default function Page() {
   return (
     <DashboardContainer>
       <div className='grid grid-cols-1 gap-6 sm:grid-cols-6'>

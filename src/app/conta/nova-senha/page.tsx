@@ -12,15 +12,13 @@ export const metadata: Metadata = {
   title: 'Redefinir senha',
 }
 
-interface NewPasswordPageProps {
+interface PageProps {
   searchParams: Promise<{
     token?: string
   }>
 }
 
-export default async function NewPasswordPage({
-  searchParams,
-}: Readonly<NewPasswordPageProps>) {
+export default async function Page({ searchParams }: Readonly<PageProps>) {
   const { token } = await searchParams
 
   if (!token) {

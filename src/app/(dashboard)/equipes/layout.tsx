@@ -2,25 +2,17 @@ import { DashboardContainer } from '@/components/dashboard/container'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { ROUTES } from '@/constants/routes'
 
-interface LayoutProps {
-  params: Promise<{ id: string }>
-  children: React.ReactNode
-}
-
-export default async function Layout({
-  params,
+export default function Layout({
   children,
-}: Readonly<LayoutProps>) {
-  const patientId = (await params).id
-
+}: Readonly<{ children: React.ReactNode }>) {
   const tabButtons = [
     {
-      title: 'Informações do paciente',
-      path: ROUTES.dashboard.patients.details.info(patientId),
+      title: 'Todos',
+      path: ROUTES.dashboard.teams.main,
     },
     {
-      title: 'Histórico do paciente',
-      path: ROUTES.dashboard.patients.details.history(patientId),
+      title: 'Especialistas',
+      path: ROUTES.dashboard.teams.specialists,
     },
   ]
 

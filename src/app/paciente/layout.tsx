@@ -5,7 +5,7 @@ import { PatientHeader } from '@/app/paciente/_header'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
 
-export default async function PatientLayout({
+export default async function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const canAccess = await canUser('view', 'PatientDashboard')

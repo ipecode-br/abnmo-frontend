@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   title: 'Seus dados',
 }
 
-export default function ScreeningPatientDataPage() {
+export default function Page() {
   return <ScreeningPatientDataForm />
 }
