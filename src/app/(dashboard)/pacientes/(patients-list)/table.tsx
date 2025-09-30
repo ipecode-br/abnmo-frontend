@@ -87,6 +87,7 @@ export default function PatientsListTable() {
   })
 
   const patients = response?.data?.patients ?? []
+  const isPatientsEmpty = patients.length === 0
 
   // Update stable total only when we have actual data to prevent pagination flickering
   useEffect(() => {
@@ -155,13 +156,24 @@ export default function PatientsListTable() {
             </TableRow>
           </TableHeader>
 
-          {isLoading ? (
-            <PatientsListTableBodySkeleton />
-          ) : (
+          {isLoading && <PatientsListTableBodySkeleton />}
+
+          {!isLoading && isPatientsEmpty && (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan={6}>
+                  <div className='p-2 text-center'>
+                    Nenhum paciente encontrado
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+
+          {!isLoading && !isPatientsEmpty && (
             <TableBody>
               {patients.map((patient) => {
-                const statusTag =
-                  STATUS_TAGS[patient.status as keyof typeof STATUS_TAGS]
+                const statusTag = STATUS_TAGS[patient.status]
                 const StatusIcon = statusTag.icon
 
                 return (
