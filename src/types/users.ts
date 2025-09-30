@@ -27,15 +27,15 @@ export const USER_STATUS = {
   active: 'Ativo',
   inactive: 'Inativo',
 }
-export type PatientStatusType = keyof typeof USER_STATUS
+export type UserStatusType = keyof typeof USER_STATUS
 
 const PATIENT_STATUS_ICONS_AND_COLOR = {
   active: { icon: CheckCircle2Icon, color: '[&_svg]:text-success' },
   inactive: { icon: CircleXIcon, color: '[&_svg]:text-error' },
 }
-export const PATIENT_STATUS_OPTIONS = convertObjectToOptions(USER_STATUS).map(
+export const USER_STATUS_OPTIONS = convertObjectToOptions(USER_STATUS).map(
   (option) => ({
     ...option,
-    ...PATIENT_STATUS_ICONS_AND_COLOR[option.value as PatientStatusType],
+    ...PATIENT_STATUS_ICONS_AND_COLOR[option.value as UserStatusType],
   }),
 )
