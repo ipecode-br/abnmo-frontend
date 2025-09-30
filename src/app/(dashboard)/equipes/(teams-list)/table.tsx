@@ -8,6 +8,7 @@ import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderFilterButton } from '@/components/data-table/header/filter-button'
 import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
 import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
@@ -100,14 +101,14 @@ export default function DashboardTeamsManagement() {
           </TableHeader>
 
           <TableBody>
-            {filteredMembers.map((member, index) => {
-              const isLastRow = index === filteredMembers.length - 1
+            {filteredMembers.map((member) => {
               const statusTag =
                 STATUS_TAGS[member.status as keyof typeof STATUS_TAGS]
               const StatusIcon = statusTag.icon
+
               return (
                 <TableRow key={member.id}>
-                  <TableCell isLastRow={isLastRow}>
+                  <TableCell>
                     <button className='cursor-pointer'>
                       <div className='flex min-w-0 items-center gap-2'>
                         <span className='truncate'>{member.name}</span>
@@ -115,33 +116,28 @@ export default function DashboardTeamsManagement() {
                     </button>
                   </TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
-                    {formatDate(member.entryDate)}
-                  </TableCell>
+                  <TableCell>{formatDate(member.entryDate)}</TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
+                  <TableCell>
                     <Tag>{member.role}</Tag>
                   </TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
+                  <TableCell>
                     {member.specialty ? <Tag>{member.specialty}</Tag> : '-'}
                   </TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
-                    {member.registration}
-                  </TableCell>
+                  <TableCell>{member.registration}</TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
+                  <TableCell>
                     <Tag className={statusTag.class}>
                       <StatusIcon />
                       {USER_STATUS[member.status as keyof typeof USER_STATUS]}
                     </Tag>
                   </TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger
-                        indicator={false}
                         size='icon'
                         variant='ghost'
                         className='size-8'
@@ -162,7 +158,7 @@ export default function DashboardTeamsManagement() {
                           className='text-center'
                         >
                           <XCircle />
-                          Cancelar
+                          Desativar
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -173,6 +169,8 @@ export default function DashboardTeamsManagement() {
           </TableBody>
         </Table>
       </Card>
+
+      <Pagination totalItems={filteredMembers.length} />
     </>
   )
 }
