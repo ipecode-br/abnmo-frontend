@@ -18,6 +18,7 @@ import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { StatusTag } from '@/components/ui/status-tag'
 import {
   Table,
   TableBody,
@@ -26,16 +27,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAMS } from '@/constants/params'
 import { ROUTES } from '@/constants/routes'
-import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
 import type { OrderMappingType } from '@/types/order'
 import {
-  PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
   type PatientsOrderType,
@@ -172,41 +170,33 @@ export function PatientsListTable() {
 
           {!isLoading && !isPatientsEmpty && (
             <TableBody>
-              {patients.map((patient) => {
-                const statusTag = STATUS_TAGS[patient.status]
-                const StatusIcon = statusTag.icon
+              {patients.map((patient) => (
+                <TableRow key={patient.id}>
+                  <TableCell className='py-0'>
+                    <button
+                      className='focus-visible:ring-ring focus-visible:outline-background flex w-64 cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4'
+                      onClick={() =>
+                        router.push(
+                          ROUTES.dashboard.patients.details.info(patient.id),
+                        )
+                      }
+                    >
+                      <Avatar className='size-9' src={patient.avatar_url} />
+                      <span className='truncate'>{patient.name}</span>
+                    </button>
+                  </TableCell>
 
-                return (
-                  <TableRow key={patient.id}>
-                    <TableCell className='py-0'>
-                      <button
-                        className='focus-visible:ring-ring focus-visible:outline-background flex w-64 cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4'
-                        onClick={() =>
-                          router.push(
-                            ROUTES.dashboard.patients.details.info(patient.id),
-                          )
-                        }
-                      >
-                        <Avatar className='size-9' src={patient.avatar_url} />
-                        <span className='truncate'>{patient.name}</span>
-                      </button>
-                    </TableCell>
-
-                    <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
-                    <TableCell>{patient.email}</TableCell>
-                    <TableCell>
-                      <Tag className={statusTag.class}>
-                        <StatusIcon />
-                        {PATIENT_STATUS[patient.status]}
-                      </Tag>
-                    </TableCell>
-                    <TableCell>{formatDate(patient.created_at)}</TableCell>
-                    <TableCell className='text-center'>
-                      <PatientsListTableActions patient={patient} />
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
+                  <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
+                  <TableCell>{patient.email}</TableCell>
+                  <TableCell>
+                    <StatusTag status={patient.status} />
+                  </TableCell>
+                  <TableCell>{formatDate(patient.created_at)}</TableCell>
+                  <TableCell className='text-center'>
+                    <PatientsListTableActions patient={patient} />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           )}
         </Table>

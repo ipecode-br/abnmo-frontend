@@ -16,6 +16,7 @@ import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { StatusTag } from '@/components/ui/status-tag'
 import { TabButtons } from '@/components/ui/tab-buttons'
 import {
   Table,
@@ -26,9 +27,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
-import { STATUS_TAGS } from '@/constants/utils'
 import { TEAMS_ORDER_OPTIONS } from '@/types/teams'
-import { USER_STATUS } from '@/types/users'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
 
@@ -102,10 +101,6 @@ export function MembersListTable() {
 
           <TableBody>
             {filteredMembers.map((member) => {
-              const statusTag =
-                STATUS_TAGS[member.status as keyof typeof STATUS_TAGS]
-              const StatusIcon = statusTag.icon
-
               return (
                 <TableRow key={member.id}>
                   <TableCell>
@@ -129,10 +124,7 @@ export function MembersListTable() {
                   <TableCell>{member.registration}</TableCell>
 
                   <TableCell>
-                    <Tag className={statusTag.class}>
-                      <StatusIcon />
-                      {USER_STATUS[member.status]}
-                    </Tag>
+                    <StatusTag status={member.status} />
                   </TableCell>
 
                   <TableCell>
