@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'Recuperar senha',
 }
 
-export default function RecoverPasswordPage() {
+export default function Page() {
   return (
     <AuthCard
       image={image}

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'Cadastrar conta',
 }
 
-export default function SignUpPage() {
+export default function Page() {
   return (
     <AuthCard
       image={image}
