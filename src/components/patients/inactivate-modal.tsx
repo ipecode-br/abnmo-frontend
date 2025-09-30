@@ -20,19 +20,19 @@ import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
 
-interface PatientInactivateModalProps {
+interface PatientsInactivateModalProps {
   id: string
   name: string
   dropdownTrigger?: React.RefObject<HTMLButtonElement | null>
   onOpenChange: (open: boolean) => void
 }
 
-export function PatientInactivateModal({
+export function PatientsInactivateModal({
   id,
   name,
   dropdownTrigger,
   onOpenChange,
-}: PatientInactivateModalProps) {
+}: PatientsInactivateModalProps) {
   const inactivatePatientFormSchema = z.object({
     name: z.string().refine((val) => val === name, {
       message: `Insira o nome do paciente corretamente: ${name}`,

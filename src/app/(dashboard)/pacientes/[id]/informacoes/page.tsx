@@ -3,11 +3,11 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getPatient } from '@/actions/patients/get-patient'
+import { PatientsForm } from '@/components/patients/form'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 
 import { PatientInactivateButton } from './inactivate-button'
-import { PatientsInfoForm } from './info-form'
 
 export const metadata: Metadata = {
   title: 'Informações do paciente',
@@ -53,7 +53,7 @@ export default async function PatientInfoPage({
         </div>
       </header>
 
-      <PatientsInfoForm patient={patient} mode='view' />
+      <PatientsForm patient={patient} mode='view' />
     </>
   )
 }

@@ -34,8 +34,8 @@ export function ScreeningMedicalReportForm() {
     mode: 'onBlur',
   })
   const { setValue, watch } = formMethods
-  const hasDisability = watch('hasDisability') === 'yes'
-  const takeMedication = watch('takeMedication') === 'yes'
+  const hasDisability = watch('has_disability') === 'yes'
+  const takeMedication = watch('take_medication') === 'yes'
   const yesOrNoOptions = convertObjectToOptions(YES_OR_NO)
 
   useEffect(() => {
@@ -62,21 +62,21 @@ export function ScreeningMedicalReportForm() {
       >
         <FormField>
           <RadioInput
-            name='hasDisability'
+            name='has_disability'
             label='Você possui alguma deficiência?'
             isRequired
             options={yesOrNoOptions}
           />
           {hasDisability && (
             <TextInput
-              name='disabilityDescription'
+              name='disability_desc'
               label='Descreva sua deficiência'
             />
           )}
         </FormField>
 
         <RadioInput
-          name='needLegalAssistance'
+          name='need_legal_assistance'
           label='Precisa de assistência legal?'
           isRequired
           options={yesOrNoOptions}
@@ -84,21 +84,18 @@ export function ScreeningMedicalReportForm() {
 
         <FormField>
           <RadioInput
-            name='takeMedication'
+            name='take_medication'
             label='Faz uso de medicamentos?'
             isRequired
             options={yesOrNoOptions}
           />
           {takeMedication && (
-            <TextInput
-              name='medicationDescription'
-              label='Quais medicamentos?'
-            />
+            <TextInput name='medication_desc' label='Quais medicamentos?' />
           )}
         </FormField>
 
         <RadioInput
-          name='hasNmoDiagnosis'
+          name='has_nmo_diagnosis'
           label='Você possui um Diagnóstico de NMO?'
           isRequired
           options={yesOrNoOptions}

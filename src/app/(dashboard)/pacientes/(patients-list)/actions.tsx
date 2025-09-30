@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import { useRef, useState } from 'react'
 
-import { PatientInactivateModal } from '@/components/patients/inactivate-modal'
+import { PatientsInactivateModal } from '@/components/patients/inactivate-modal'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
@@ -78,7 +78,7 @@ export function PatientsListTableActions({
           onOpenChange={setInactivateModalOpen}
         >
           {isInactivateModalOpen && (
-            <PatientInactivateModal
+            <PatientsInactivateModal
               id={patient.id}
               name={patient.name}
               dropdownTrigger={dropdownTriggerRef}

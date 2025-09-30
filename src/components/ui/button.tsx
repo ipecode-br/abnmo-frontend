@@ -5,7 +5,7 @@ import { Loader2Icon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
+  'ring-offset-background focus-visible:ring-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 aria-readonly:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
   {
     variants: {
       variant: {
@@ -19,6 +19,7 @@ const buttonVariants = cva(
           'border-border hover:bg-accent text-accent-foreground bg-background border shadow-xs',
         muted: 'bg-background-soft text-accent-foreground hover:bg-accent',
         ghost: 'text-accent-foreground hover:bg-accent bg-transparent',
+        error: 'border-error focus-visible:ring-error hover:bg-accent border',
       },
       size: {
         default: 'h-10 min-h-10 px-4 [&_svg]:size-5',
@@ -38,6 +39,7 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  readOnly?: boolean
   loading?: boolean
   asChild?: boolean
 }
@@ -48,13 +50,16 @@ function Button({
   size,
   loading,
   disabled,
+  readOnly,
   asChild = false,
   children,
   ...props
 }: Readonly<ButtonProps>) {
   const Comp = asChild ? Slot : 'button'
+
   return (
     <Comp
+      aria-readonly={readOnly}
       disabled={disabled || loading}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}

@@ -31,7 +31,7 @@ export function TableHead({
   return (
     <th
       className={cn(
-        'text-foreground-soft border-border bg-background-soft/50 border-y px-4 py-3 font-normal whitespace-nowrap first-of-type:rounded-l-lg first-of-type:border-l last-of-type:rounded-r-lg last-of-type:border-r',
+        'text-foreground-soft border-border bg-background-soft/50 border-y border-b-0 px-4 py-3 font-normal whitespace-nowrap first-of-type:rounded-tl-lg first-of-type:border-l last-of-type:rounded-tr-lg last-of-type:border-r',
         className,
       )}
       {...props}
@@ -52,14 +52,12 @@ export function TableRow({
 
 export function TableCell({
   className,
-  isLastRow,
   ...props
-}: Readonly<React.ComponentProps<'td'> & { isLastRow?: boolean }>) {
+}: Readonly<React.ComponentProps<'td'>>) {
   return (
     <td
       className={cn(
-        'border-border border-b px-4 py-3 whitespace-nowrap',
-        isLastRow && 'border-none',
+        'border-border border-t px-4 py-3 whitespace-nowrap',
         className,
       )}
       {...props}

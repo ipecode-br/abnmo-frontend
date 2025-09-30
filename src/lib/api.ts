@@ -1,12 +1,10 @@
 import { getAllCookies } from '@/actions/cookies'
 import { env } from '@/config/env'
-import { wait } from '@/utils/wait'
 
 type ApiResponse<Data> = {
   success: boolean
   message: string
   data?: Data
-  total?: number
 }
 
 interface ApiOptions extends RequestInit {
@@ -47,8 +45,6 @@ export async function api<Data>(
     })
 
     const responseData = await response.json()
-
-    wait(1500)
 
     return responseData
   } catch (error) {

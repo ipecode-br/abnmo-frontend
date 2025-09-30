@@ -33,10 +33,12 @@ import { ROUTES } from '@/constants/routes'
 import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
+import type { OrderMappingType } from '@/types/order'
 import {
   PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
+  type PatientsOrderType,
   type PatientType,
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -60,16 +62,32 @@ export default function PatientsListTable() {
   const endDate = getParam(QUERY_PARAMS.endDate)
   const filterQueries = [page, search, orderBy, status, startDate, endDate]
 
+  const ORDER_MAPPING: OrderMappingType<PatientsOrderType> = {
+    date_asc: { orderBy: 'date', order: 'ASC' },
+    date_desc: { orderBy: 'date', order: 'DESC' },
+    email_asc: { orderBy: 'email', order: 'ASC' },
+    email_desc: { orderBy: 'email', order: 'DESC' },
+    name_asc: { orderBy: 'name', order: 'ASC' },
+    name_desc: { orderBy: 'name', order: 'DESC' },
+  }
+
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.patients, filterQueries],
     queryFn: () =>
       api<{ patients: PatientType[]; total: number }>('/patients', {
-        params: { page, search, orderBy, status, startDate, endDate },
+        params: {
+          page,
+          search,
+          status,
+          startDate,
+          endDate,
+          ...ORDER_MAPPING[orderBy as PatientsOrderType],
+        },
       }),
   })
 
-  const total = response?.data?.total ?? 0
   const patients = response?.data?.patients ?? []
+  const isPatientsEmpty = patients.length === 0
 
   // Update stable total only when we have actual data to prevent pagination flickering
   useEffect(() => {
@@ -81,8 +99,6 @@ export default function PatientsListTable() {
   useEffect(() => {
     if (status || startDate || endDate) {
       setShowFilters(true)
-    } else {
-      setShowFilters(false)
     }
   }, [status, startDate, endDate])
 
@@ -91,7 +107,7 @@ export default function PatientsListTable() {
       <DataTableHeader>
         <DataTableHeaderInfo
           icon={<Users2Icon />}
-          total={total}
+          total={stableTotal}
           title='Pacientes cadastrados'
           emptyTitle='Nenhum paciente cadastrado'
         />
@@ -102,7 +118,7 @@ export default function PatientsListTable() {
           />
           <DataTableHeaderOrderBy
             options={PATIENTS_ORDER_OPTIONS}
-            className='min-w-48'
+            className='w-52'
           />
 
           <Button size='sm'>
@@ -133,26 +149,36 @@ export default function PatientsListTable() {
               <TableHead className='w-36'>Telefone</TableHead>
               <TableHead>E-mail</TableHead>
               <TableHead className='w-24'>Status</TableHead>
-              <TableHead className='w-40 whitespace-nowrap'>
+              <TableHead className='w-36 whitespace-nowrap'>
                 Data de cadastro
               </TableHead>
               <TableHead className='w-20 text-center'>Ações</TableHead>
             </TableRow>
           </TableHeader>
 
-          {isLoading ? (
-            <PatientsListTableBodySkeleton />
-          ) : (
+          {isLoading && <PatientsListTableBodySkeleton />}
+
+          {!isLoading && isPatientsEmpty && (
             <TableBody>
-              {patients.map((patient, index) => {
-                const isLastRow = index === patients.length - 1
-                const statusTag =
-                  STATUS_TAGS[patient.status as keyof typeof STATUS_TAGS]
+              <TableRow>
+                <TableCell colSpan={6}>
+                  <div className='p-2 text-center'>
+                    Nenhum paciente encontrado
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+
+          {!isLoading && !isPatientsEmpty && (
+            <TableBody>
+              {patients.map((patient) => {
+                const statusTag = STATUS_TAGS[patient.status]
                 const StatusIcon = statusTag.icon
 
                 return (
                   <TableRow key={patient.id}>
-                    <TableCell isLastRow={isLastRow} className='py-0'>
+                    <TableCell className='py-0'>
                       <button
                         className='focus-visible:ring-ring focus-visible:outline-background flex w-64 cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4'
                         onClick={() =>
@@ -166,20 +192,16 @@ export default function PatientsListTable() {
                       </button>
                     </TableCell>
 
-                    <TableCell isLastRow={isLastRow}>
-                      {formatPhoneNumber(patient.phone)}
-                    </TableCell>
-                    <TableCell isLastRow={isLastRow}>{patient.email}</TableCell>
-                    <TableCell isLastRow={isLastRow}>
+                    <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
+                    <TableCell>{patient.email}</TableCell>
+                    <TableCell>
                       <Tag className={statusTag.class}>
                         <StatusIcon />
                         {PATIENT_STATUS[patient.status]}
                       </Tag>
                     </TableCell>
-                    <TableCell isLastRow={isLastRow}>
-                      {formatDate(patient.created_at)}
-                    </TableCell>
-                    <TableCell isLastRow={isLastRow} className='text-center'>
+                    <TableCell>{formatDate(patient.created_at)}</TableCell>
+                    <TableCell className='text-center'>
                       <PatientsListTableActions patient={patient} />
                     </TableCell>
                   </TableRow>
