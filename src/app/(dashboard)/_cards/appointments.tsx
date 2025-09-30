@@ -26,6 +26,7 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import {
   Table,
   TableBody,
+  TableButton,
   TableCell,
   TableHead,
   TableHeader,
@@ -64,7 +65,7 @@ export default function DashboardOverviewAppointments() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Paciente</TableHead>
+            <TableHead className='w-64'>Paciente</TableHead>
             <TableHead>Data de atendimento</TableHead>
             <TableHead>Profissional</TableHead>
             <TableHead>Especialidade</TableHead>
@@ -78,8 +79,8 @@ export default function DashboardOverviewAppointments() {
             return (
               <TableRow key={patient.id}>
                 <TableCell>
-                  <button
-                    className='cursor-pointer'
+                  <TableButton
+                    className='w-64'
                     onClick={() =>
                       router.push(
                         ROUTES.dashboard.patients.details.info(
@@ -88,11 +89,9 @@ export default function DashboardOverviewAppointments() {
                       )
                     }
                   >
-                    <div className='flex min-w-0 items-center gap-2'>
-                      <Avatar className='size-8' />
-                      <span className='truncate'>{patient.name}</span>
-                    </div>
-                  </button>
+                    <Avatar className='size-9' />
+                    <span className='truncate'>{patient.name}</span>
+                  </TableButton>
                 </TableCell>
 
                 <TableCell>{formatDate(patient.appointmentDate)}</TableCell>

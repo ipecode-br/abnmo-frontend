@@ -9,6 +9,7 @@ import { DataTableHeaderFilterButton } from '@/components/data-table/header/filt
 import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
 import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
+import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
@@ -21,6 +22,7 @@ import { TabButtons } from '@/components/ui/tab-buttons'
 import {
   Table,
   TableBody,
+  TableButton,
   TableCell,
   TableHead,
   TableHeader,
@@ -89,7 +91,7 @@ export function MembersListTable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Colaborador</TableHead>
+              <TableHead className='w-64'>Colaborador</TableHead>
               <TableHead>Data de entrada</TableHead>
               <TableHead>Função</TableHead>
               <TableHead>Especialidade</TableHead>
@@ -104,11 +106,10 @@ export function MembersListTable() {
               return (
                 <TableRow key={member.id}>
                   <TableCell>
-                    <button className='cursor-pointer'>
-                      <div className='flex min-w-0 items-center gap-2'>
-                        <span className='truncate'>{member.name}</span>
-                      </div>
-                    </button>
+                    <TableButton className='w-64'>
+                      <Avatar className='size-9' />
+                      <span className='truncate'>{member.name}</span>
+                    </TableButton>
                   </TableCell>
 
                   <TableCell>{formatDate(member.entryDate)}</TableCell>

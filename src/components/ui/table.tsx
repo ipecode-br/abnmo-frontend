@@ -64,3 +64,18 @@ export function TableCell({
     />
   )
 }
+
+export function TableButton({
+  className,
+  ...props
+}: Readonly<React.ComponentProps<'button'>>) {
+  return (
+    <button
+      className={cn(
+        'focus-visible:ring-ring focus-visible:outline-background flex cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4',
+        className,
+      )}
+      {...props}
+    />
+  )
+}

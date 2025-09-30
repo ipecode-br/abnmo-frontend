@@ -22,6 +22,7 @@ import { StatusTag } from '@/components/ui/status-tag'
 import {
   Table,
   TableBody,
+  TableButton,
   TableCell,
   TableHead,
   TableHeader,
@@ -173,8 +174,8 @@ export function PatientsListTable() {
               {patients.map((patient) => (
                 <TableRow key={patient.id}>
                   <TableCell className='py-0'>
-                    <button
-                      className='focus-visible:ring-ring focus-visible:outline-background flex w-64 cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4'
+                    <TableButton
+                      className='w-64'
                       onClick={() =>
                         router.push(
                           ROUTES.dashboard.patients.details.info(patient.id),
@@ -183,7 +184,7 @@ export function PatientsListTable() {
                     >
                       <Avatar className='size-9' src={patient.avatar_url} />
                       <span className='truncate'>{patient.name}</span>
-                    </button>
+                    </TableButton>
                   </TableCell>
 
                   <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
