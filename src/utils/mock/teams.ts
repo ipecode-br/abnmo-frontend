@@ -89,4 +89,4 @@ export const TEAMS_MOCK = [
     registration: 'CRM-SP-112233',
     status: 'active',
   },
-]
+] as const

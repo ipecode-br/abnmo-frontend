@@ -1,21 +1,23 @@
-import type { Metadata } from 'next'
-import { Suspense } from 'react'
-
 import { DashboardContainer } from '@/components/dashboard/container'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { ROUTES } from '@/constants/routes'
 
-import { PatientsListTable } from './table'
-
-export const metadata: Metadata = {
-  title: 'Pacientes',
+interface PatientDetailsLayoutProps {
+  params: Promise<{ id: string }>
+  children: React.ReactNode
 }
 
-export default function Page() {
+export default function Layout({
+  children,
+}: Readonly<PatientDetailsLayoutProps>) {
   const tabButtons = [
     {
-      title: 'Listagem de pacientes',
-      path: ROUTES.dashboard.patients.main,
+      title: 'Todos',
+      path: ROUTES.dashboard.teams.main,
+    },
+    {
+      title: 'Especialistas',
+      path: ROUTES.dashboard.teams.specialists,
     },
   ]
 
@@ -23,9 +25,7 @@ export default function Page() {
     <>
       <DashboardTabButtons buttons={tabButtons} />
       <DashboardContainer className='flex flex-col gap-6'>
-        <Suspense fallback={<div>Carregando...</div>}>
-          <PatientsListTable />
-        </Suspense>
+        {children}
       </DashboardContainer>
     </>
   )

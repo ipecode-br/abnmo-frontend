@@ -48,7 +48,7 @@ import { PatientsListTableActions } from './actions'
 import PatientsListTableBodySkeleton from './skeleton'
 
 // TODO: redirect to register new patient page
-export default function PatientsListTable() {
+export function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
   const [stableTotal, setStableTotal] = useState(0)
   const { getParam } = useParams()

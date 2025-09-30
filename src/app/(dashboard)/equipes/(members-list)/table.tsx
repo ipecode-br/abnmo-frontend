@@ -32,7 +32,7 @@ import { USER_STATUS } from '@/types/users'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
 
-export default function DashboardTeamsManagement() {
+export function MembersListTable() {
   const members = TEAMS_MOCK
 
   const [statusFilter, setStatusFilter] = useState<
@@ -131,7 +131,7 @@ export default function DashboardTeamsManagement() {
                   <TableCell>
                     <Tag className={statusTag.class}>
                       <StatusIcon />
-                      {USER_STATUS[member.status as keyof typeof USER_STATUS]}
+                      {USER_STATUS[member.status]}
                     </Tag>
                   </TableCell>
 
