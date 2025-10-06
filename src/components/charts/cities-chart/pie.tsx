@@ -8,8 +8,8 @@ import {
 } from 'recharts'
 
 interface ChartDataItem {
-  name: string
-  percentage: number
+  label: string
+  value: number
   color: string
 }
 
@@ -30,10 +30,10 @@ export function PieChart({ data }: Readonly<PieChartProps>) {
           innerRadius={60}
           outerRadius={80}
           paddingAngle={1}
-          dataKey={'percentage'}
+          dataKey='value'
         >
           {data.map((entry) => (
-            <Cell key={`cell-${entry.name}`} fill={entry.color} />
+            <Cell key={`cell-${entry.label}`} fill={entry.color} />
           ))}
         </Pie>
       </RechartPieChart>
