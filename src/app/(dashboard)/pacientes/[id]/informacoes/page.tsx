@@ -1,3 +1,4 @@
+import { Slot } from '@radix-ui/react-slot'
 import { Forward, UserRoundIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -17,7 +18,7 @@ interface PatientHistoryPageParams {
   params: Promise<{ id: string }>
 }
 
-export default async function PatientInfoPage({
+export default async function Page({
   params,
 }: Readonly<PatientHistoryPageParams>) {
   const patientId = (await params).id
@@ -38,8 +39,10 @@ export default async function PatientInfoPage({
     <>
       <header className='mb-3 flex justify-between'>
         <div className='flex items-center gap-4'>
-          <span className='bg-accent rounded-lg p-2'>
-            <UserRoundIcon />
+          <span className='bg-border/50 rounded-lg p-2'>
+            <Slot className='text-primary size-5.5'>
+              <UserRoundIcon />
+            </Slot>
           </span>
           <h1 className='text-xl font-medium'>Informações do paciente</h1>
         </div>

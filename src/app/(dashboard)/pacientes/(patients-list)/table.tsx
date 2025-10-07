@@ -120,7 +120,12 @@ export function PatientsListTable() {
             className='w-52'
           />
 
-          <Button size='sm'>
+          <Button
+            size='sm'
+            onClick={() => {
+              router.replace(ROUTES.dashboard.patients.cadastrar)
+            }}
+          >
             <PlusIcon />
             Novo paciente
           </Button>
