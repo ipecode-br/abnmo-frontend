@@ -19,6 +19,7 @@ export const ROUTES = {
       main: '/pacientes',
       details: {
         info: (id: string) => `/pacientes/${id}/informacoes`,
+        documents: (id: string) => `/pacientes/${id}/documentos`,
         history: (id: string) => `/pacientes/${id}/historico`,
       },
     },
