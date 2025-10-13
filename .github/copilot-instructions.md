@@ -52,8 +52,7 @@ Remember: Clear writing is clear thinking. If you can't write it simply, you don
 ## Commit message guidelines
 
 - Always write commits in English.
-- Use Conventional Commits for your commit messages
-- Follow the conventional commit standard for all commits
+- Follow the conventional commit standard for all commits: eg: `feat(scope): message`
 - Always specify the commit type and write the corresponding commit message
 - Detect the appropriate commit type and write the corresponding commit message
 - Try to summarize the commit message in a single line

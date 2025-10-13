@@ -1,11 +1,10 @@
 'use client'
+
 import { useQuery } from '@tanstack/react-query'
 import { ChartPie } from 'lucide-react'
 import { useState } from 'react'
 
-import { ChartSummary } from '@/components/charts/cities-chart/chart-summary'
-import { Cities } from '@/components/charts/cities-chart/cities'
-import { PieChart } from '@/components/charts/cities-chart/pie'
+import { PieChart } from '@/components/charts/pie'
 import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -34,6 +33,7 @@ export function DashboardOverviewPatientsByCity(
   })
 
   const cities = response?.data?.cities ?? []
+  const isEmpty = cities.length === 0 && !isLoading
 
   const PIE_COLORS = [
     '#E255F2',
@@ -50,29 +50,56 @@ export function DashboardOverviewPatientsByCity(
     color: PIE_COLORS[index],
   }))
 
-  if (isLoading) {
-    return <Skeleton className='bg-border/75 rounded-2xl sm:col-span-3' />
-  }
-
   return (
     <DashboardCardChart
       icon={ChartPie}
       title='Cidades'
-      className='sm:col-span-3'
-      chartClassName='h-full'
       menu={
-        <SelectPeriod period={period} onSelect={(value) => setPeriod(value)} />
+        <SelectPeriod
+          period={period}
+          disabled={isLoading}
+          onSelect={(value) => setPeriod(value)}
+        />
       }
       {...props}
     >
-      <div className='flex w-full items-end gap-4'>
-        <div className='relative h-30 w-40'>
-          <PieChart data={data} />
-          <ChartSummary label='cidades' value={response?.data?.total ?? 0} />
-        </div>
-        <div className='flex-1'>
-          <Cities data={data} />
-        </div>
+      <div className='flex h-full min-h-44 items-center justify-center'>
+        {isLoading && <Skeleton className='bg-border/75 size-full' />}
+
+        {!isLoading && !isEmpty && (
+          <div className='flex size-full items-center gap-6 2xl:gap-10'>
+            <PieChart
+              data={data}
+              label='cidades'
+              total={response?.data?.total}
+              className='size-40'
+            />
+
+            <div className='divide-border min-w-0 flex-1 divide-y'>
+              {data.map((city) => {
+                return (
+                  <div
+                    key={city.label}
+                    className='text-foreground-soft flex items-center gap-2 py-1 text-sm'
+                  >
+                    <div
+                      className='size-2.5 shrink-0 rounded-full'
+                      style={{ backgroundColor: city.color }}
+                    />
+                    <span className='flex-1 truncate'>{city.label}</span>
+                    <span className='font-semibold'>{city.value}%</span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {isEmpty && (
+          <p className='text-foreground-soft text-sm'>
+            Nenhuma cidade registrada neste período.
+          </p>
+        )}
       </div>
     </DashboardCardChart>
   )

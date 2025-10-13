@@ -21,7 +21,7 @@ export async function DashboardOverviewPatientsByStatus() {
     return (
       <Card
         key={statistic.label}
-        className='flex min-h-32 flex-col justify-between gap-3 p-6 sm:col-span-2'
+        className='flex min-h-28 flex-col justify-between gap-3 p-6 sm:col-span-2'
       >
         <div className='flex items-center justify-between'>
           <span className='text-4xl font-semibold'>{statistic.value}</span>
