@@ -50,7 +50,7 @@ const STATISTICS_MAPPING = {
   active: {
     title: (
       <>
-        Total de pacientes <strong>inativos</strong>
+        Total de pacientes <strong>ativos</strong>
       </>
     ),
     icon: CheckCircle2Icon,
@@ -59,7 +59,7 @@ const STATISTICS_MAPPING = {
   inactive: {
     title: (
       <>
-        Total de pacientes <strong>ativos</strong>
+        Total de pacientes <strong>inativos</strong>
       </>
     ),
     icon: CircleXIcon,
