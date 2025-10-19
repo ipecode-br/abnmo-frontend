@@ -1,4 +1,5 @@
 'use client'
+
 import { useQuery } from '@tanstack/react-query'
 import { ChartBarDecreasingIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -29,30 +30,40 @@ export function DashboardOverviewPatientsByGender(
   })
 
   const genders = response?.data?.genders ?? []
+  const isEmpty = genders.length === 0 && !isLoading
 
   const data = genders.map((item) => ({
     label: GENDERS[item.gender],
     value: Number(item.total),
   }))
 
-  if (isLoading) {
-    return (
-      <Skeleton className='bg-border/75 min-h-52 rounded-2xl sm:col-span-3' />
-    )
-  }
-
   return (
     <DashboardCardChart
-      title='Gênero'
       icon={ChartBarDecreasingIcon}
-      className='sm:col-span-3'
+      title='Gêneros'
       menu={
-        <SelectPeriod period={period} onSelect={(value) => setPeriod(value)} />
+        <SelectPeriod
+          period={period}
+          disabled={isLoading}
+          onSelect={(value) => setPeriod(value)}
+        />
       }
       {...props}
     >
-      <div className='h-48 w-full'>
-        <BarChart data={data} />
+      <div className='flex h-full min-h-44 items-center justify-center'>
+        {isLoading && <Skeleton className='bg-border/75 size-full' />}
+
+        {!isLoading && !isEmpty && (
+          <div className='size-full min-h-40'>
+            <BarChart data={data} />
+          </div>
+        )}
+
+        {isEmpty && (
+          <p className='text-foreground-soft text-sm'>
+            Nenhum gênero registrado neste período.
+          </p>
+        )}
       </div>
     </DashboardCardChart>
   )

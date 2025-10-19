@@ -30,11 +30,11 @@ export function BarChart({
   const yAxisWidth = Math.max(80, Math.min(maxLabelLength * 6.5, 180))
 
   return (
-    <ResponsiveContainer width='100%' height='100%'>
+    <ResponsiveContainer className='[&_svg]:outline-none'>
       <RechartBarChart
         data={data}
         layout='vertical'
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ top: 0, right: 0, bottom: -6, left: 0 }}
       >
         <CartesianGrid
           horizontal={false}
@@ -48,10 +48,7 @@ export function BarChart({
           tickMargin={8}
           axisLine={false}
           tickLine={false}
-          tick={{
-            fontSize: '0.75rem',
-            fill: 'var(--color-disabled)',
-          }}
+          tick={{ fontSize: '0.75rem', fill: 'var(--color-disabled)' }}
         />
 
         <YAxis
