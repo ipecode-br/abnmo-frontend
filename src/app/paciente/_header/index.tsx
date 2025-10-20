@@ -1,12 +1,13 @@
 import logo from '@images/brand/icon.svg'
 import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { getProfile } from '@/actions/users'
 import { PatientHeaderAccessibilityDropdown } from '@/app/paciente/_header/accessibility-dropdown'
 import { PatientHeaderUserDropdown } from '@/app/paciente/_header/user-dropdown'
-import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
+import { ROUTES } from '@/constants/routes'
 
 export async function PatientHeader() {
   const user = await getProfile()
@@ -14,13 +15,11 @@ export async function PatientHeader() {
   if (!user) return null
 
   return (
-    <header className='container mx-auto flex items-center gap-8 px-8 py-4'>
-      <div className='flex items-center gap-4'>
+    <header className='flex items-center px-8 py-4'>
+      <div className='flex items-center gap-3 font-medium'>
         <Image src={logo} alt='Logo do SVM' className='size-8' />
-        <h1 className='font-medium'>Formulário de Triagem</h1>
+        <Link href={ROUTES.patient.main}>Início</Link>
       </div>
-
-      <Breadcrumbs />
 
       <section className='ml-auto flex items-center gap-2'>
         <PatientHeaderAccessibilityDropdown />
