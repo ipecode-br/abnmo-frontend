@@ -13,7 +13,7 @@ import {
 import { CustomTooltip } from './custom-tooltip'
 
 interface ChartDataItem {
-  name: string
+  label: string
   value: number
 }
 
@@ -26,9 +26,16 @@ export function BarChart({
   data,
   barColor = 'var(--color-primary)',
 }: Readonly<BarChartProps>) {
+  const maxLabelLength = Math.max(...data.map((item) => item.label.length))
+  const yAxisWidth = Math.max(80, Math.min(maxLabelLength * 6.5, 180))
+
   return (
-    <ResponsiveContainer width='100%' height='100%'>
-      <RechartBarChart data={data} layout='vertical'>
+    <ResponsiveContainer className='[&_svg]:outline-none'>
+      <RechartBarChart
+        data={data}
+        layout='vertical'
+        margin={{ top: 0, right: 0, bottom: -6, left: 0 }}
+      >
         <CartesianGrid
           horizontal={false}
           strokeDasharray='4 2'
@@ -38,25 +45,41 @@ export function BarChart({
         <XAxis
           type='number'
           dataKey='value'
+          tickMargin={8}
           axisLine={false}
           tickLine={false}
-          tick={{ fontSize: 12, fill: 'var(--color-disabled)' }}
-          tickMargin={8}
+          tick={{ fontSize: '0.75rem', fill: 'var(--color-disabled)' }}
         />
 
         <YAxis
-          dataKey='name'
+          dataKey='label'
           type='category'
-          width='auto'
-          tick={{ fontSize: 12, fill: 'var(--color-foreground-soft)' }}
-          tickMargin={8}
+          interval={0}
           tickLine={false}
+          width={yAxisWidth}
           axisLine={{ stroke: 'var(--color-border)', strokeWidth: 1 }}
+          tick={(props) => {
+            const { x = 0, y = 0, payload } = props
+
+            return (
+              <g transform={`translate(${x},${y})`}>
+                <text
+                  dy={4}
+                  textAnchor='end'
+                  fontSize='0.75rem'
+                  style={{ whiteSpace: 'nowrap' }}
+                  fill='var(--color-foreground-soft)'
+                >
+                  {payload?.value}
+                </text>
+              </g>
+            )
+          }}
         />
 
-        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
+        <Tooltip content={<CustomTooltip />} cursor={false} shared={false} />
 
-        <Bar dataKey='value' fill={barColor} barSize={20} />
+        <Bar dataKey='value' fill={barColor} />
       </RechartBarChart>
     </ResponsiveContainer>
   )

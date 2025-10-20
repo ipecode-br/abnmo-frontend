@@ -2,15 +2,18 @@
 
 import { EllipsisVerticalIcon, LogOutIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { revalidateCache } from '@/actions/cache'
+import { getDataFromToken } from '@/actions/token'
 import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Divider } from '@/components/ui/divider'
+import { DropdownMenu } from '@/components/ui/dropdown'
+import { DropdownMenuContent } from '@/components/ui/dropdown/content'
+import { DropdownMenuItem } from '@/components/ui/dropdown/item'
+import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
-import { USER_ROLES } from '@/constants/users'
 import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
 import type { UserType } from '@/types/users'
@@ -19,59 +22,61 @@ interface SidebarAccountProps {
   user: UserType
 }
 
-// TODO: add popover menu
 export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
+  const [isPending, startTransition] = useTransition()
+
   const expanded = useSidebar((state) => state.expanded)
   const router = useRouter()
 
   async function logout() {
-    const response = await api('/logout', { method: 'POST' })
+    startTransition(async () => {
+      const data = await getDataFromToken()
 
-    if (!response.success) {
-      toast.error(response.message)
-      return
-    }
+      if (!data?.userId) return
 
-    revalidateCache(NEXT_CACHE_TAGS.user(user.id))
-    toast.success(response.message)
-    router.push(ROUTES.auth.signIn)
+      const response = await api('/logout', { method: 'POST' })
+
+      if (!response.success) {
+        toast.error(response.message)
+        return
+      }
+
+      revalidateCache(NEXT_CACHE_TAGS.user(data.userId))
+      toast.success(response.message)
+      router.push(ROUTES.auth.signIn)
+    })
   }
 
   return (
-    <>
-      <Button variant='ghost' className='justify-start' onClick={logout}>
-        <LogOutIcon />
-        Sair
-      </Button>
+    <div className='relative flex items-center gap-3'>
+      <Avatar src={user?.avatar_url} />
 
-      <Divider />
+      <div
+        data-visible={expanded}
+        className='space-y-1 truncate pr-8 opacity-0 transition-opacity duration-750 data-[visible=true]:opacity-100'
+      >
+        <p className='truncate text-sm whitespace-nowrap'>{user.name}</p>
+        <p className='text-foreground-soft truncate text-xs'>{user.email}</p>
+      </div>
 
-      <div className='relative flex items-center gap-3'>
-        <Avatar src={user?.avatar_url} />
-
-        {user ? (
-          <div
-            data-visible={expanded}
-            className='space-y-1 truncate opacity-0 transition-opacity duration-750 data-[visible=true]:opacity-100'
-          >
-            <p className='truncate text-sm whitespace-nowrap'>{user.name}</p>
-            <p className='text-foreground-soft text-xs'>
-              {USER_ROLES[user.role]}
-            </p>
-          </div>
-        ) : (
-          <p className='text-xs'>Usuário não encontrado</p>
-        )}
-
-        <Button
+      <DropdownMenu>
+        <DropdownMenuTrigger
           size='icon'
           variant='ghost'
           data-visible={expanded}
-          className='absolute right-0 ml-auto opacity-0 transition-opacity duration-500 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
+          aria-label='Abrir menu'
+          className='absolute right-0 ml-auto size-10 opacity-0 transition-opacity duration-500 data-[visible=true]:size-8 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
         >
           <EllipsisVerticalIcon className='text-foreground-soft' />
-        </Button>
-      </div>
-    </>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align='start' sideOffset={8} className='min-w-32'>
+          <DropdownMenuItem onClick={logout} disabled={isPending}>
+            <LogOutIcon />
+            Sair
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   )
 }

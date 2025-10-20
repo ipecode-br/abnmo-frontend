@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   title: 'Laudo médico',
 }
 
-export default function ScreeningMedicalReportPage() {
+export default function Page() {
   return <ScreeningMedicalReportForm />
 }

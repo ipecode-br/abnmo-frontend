@@ -9,18 +9,18 @@ import { cn } from '@/utils/class-name-merge'
 export interface SelectTriggerProps
   extends React.ComponentProps<typeof SelectPrimitive.Trigger>,
     VariantProps<typeof triggerVariants> {
+  readOnly?: boolean
   icon?: LucideIcon
   loading?: boolean
 }
 
 const triggerVariants = cva(
-  'ring-offset-background focus-visible:ring-ring bg-background flex h-10 cursor-pointer items-center gap-2 rounded-lg border text-sm whitespace-nowrap shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:size-4.5 [&_svg]:shrink-0',
+  'ring-offset-background focus-visible:ring-ring bg-background disabled:bg-background hover:bg-accent data-[placeholder]:text-disabled [&_svg]:text-disabled flex h-10 cursor-pointer items-center gap-2 rounded-lg border text-sm whitespace-nowrap shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[readonly=true]:pointer-events-none [&_svg]:size-4.5 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default:
-          'border-border text-foreground hover:bg-accent data-[placeholder]:text-disabled [&_svg]:text-disabled',
-        error: 'border-error text-error focus-visible:ring-error',
+        default: 'border-border text-foreground',
+        error: 'border-error focus-visible:ring-error',
       },
       size: {
         default: 'h-10 pr-2 pl-3 [&_svg]:size-4.5',
@@ -36,6 +36,7 @@ const triggerVariants = cva(
 )
 
 export function SelectTrigger({
+  readOnly,
   variant,
   icon: Icon,
   className,
@@ -55,6 +56,7 @@ export function SelectTrigger({
 
   return (
     <SelectPrimitive.Trigger
+      data-readonly={readOnly}
       className={cn(triggerVariants({ variant, size, className }))}
       disabled={disabledTrigger}
       {...props}

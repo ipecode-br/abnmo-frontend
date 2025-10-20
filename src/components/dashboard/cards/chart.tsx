@@ -9,31 +9,27 @@ interface DashboardCardChartProps extends CardProps {
   title: string
   icon: LucideIcon
   menu?: ReactNode
-  chartClassName?: string
 }
 
 export function DashboardCardChart({
   icon,
   title,
+  menu,
   className,
   children,
-  chartClassName,
-  menu,
   ...props
 }: Readonly<DashboardCardChartProps>) {
   const Icon = icon
   return (
-    <Card className={cn('flex flex-col p-6', className)} {...props}>
+    <Card className={cn('flex flex-col gap-3 p-6', className)} {...props}>
       <header className='flex items-center gap-2'>
         <Icon className='size-5' />
         <h3 className='font-medium'>{title}</h3>
 
         {menu && <div className='ml-auto'>{menu}</div>}
       </header>
-      <Divider className='my-3' />
-      <div className={cn('flex flex-1 items-end', chartClassName)}>
-        {children}
-      </div>
+      <Divider />
+      {children}
     </Card>
   )
 }

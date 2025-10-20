@@ -31,6 +31,7 @@ export function TextInput({
   isRequired,
   mask,
   message,
+  readOnly,
   wrapperClassName,
   icon,
   ...props
@@ -57,20 +58,21 @@ export function TextInput({
 
         return (
           <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-            <Label htmlFor={name}>
+            <Label htmlFor={name} readOnly={readOnly}>
               {label}
               {isRequired && <RequiredInput />}
             </Label>
             <Input
-              {...props}
               {...field}
               id={name}
               icon={icon}
+              readOnly={readOnly}
               variant={fieldState.error && 'error'}
               onChange={(e) => {
                 const formattedValue = formatter(e.target.value)
                 field.onChange(formattedValue)
               }}
+              {...props}
             />
 
             <FormMessage error={!!fieldState.error?.message}>

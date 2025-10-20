@@ -1,6 +1,9 @@
 'use server'
 
+import { redirect } from 'next/navigation'
+
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
+import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import type { UserType } from '@/types/users'
 
@@ -21,6 +24,10 @@ export async function getProfile() {
       tags: [NEXT_CACHE_TAGS.user(data.userId)],
     },
   })
+
+  if (!response.success) {
+    redirect(ROUTES.auth.signOut)
+  }
 
   return response.data
 }

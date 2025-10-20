@@ -5,7 +5,6 @@ type ApiResponse<Data> = {
   success: boolean
   message: string
   data?: Data
-  total?: number
 }
 
 interface ApiOptions extends RequestInit {

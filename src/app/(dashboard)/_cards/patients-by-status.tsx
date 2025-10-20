@@ -19,7 +19,10 @@ export async function DashboardOverviewPatientsByStatus() {
     if (!data) return null
 
     return (
-      <Card key={statistic.label} className='space-y-3 p-6 sm:col-span-2'>
+      <Card
+        key={statistic.label}
+        className='flex min-h-28 flex-col justify-between gap-3 p-6 sm:col-span-2'
+      >
         <div className='flex items-center justify-between'>
           <span className='text-4xl font-semibold'>{statistic.value}</span>
           <div
@@ -47,7 +50,7 @@ const STATISTICS_MAPPING = {
   active: {
     title: (
       <>
-        Total de pacientes <strong>inativos</strong>
+        Total de pacientes <strong>ativos</strong>
       </>
     ),
     icon: CheckCircle2Icon,
@@ -56,7 +59,7 @@ const STATISTICS_MAPPING = {
   inactive: {
     title: (
       <>
-        Total de pacientes <strong>ativos</strong>
+        Total de pacientes <strong>inativos</strong>
       </>
     ),
     icon: CircleXIcon,

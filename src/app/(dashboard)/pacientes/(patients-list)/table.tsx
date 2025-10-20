@@ -18,39 +18,38 @@ import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { StatusTag } from '@/components/ui/status-tag'
 import {
   Table,
   TableBody,
+  TableButton,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAMS } from '@/constants/params'
 import { ROUTES } from '@/constants/routes'
-import { STATUS_TAGS } from '@/constants/utils'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
+import type { OrderMappingType } from '@/types/order'
 import {
-  PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
+  type PatientsOrderType,
   type PatientType,
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
-import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
 import { PatientsListTableActions } from './actions'
+import PatientsListTableBodySkeleton from './skeleton'
 
-// TODO: create patient actions menu
 // TODO: redirect to register new patient page
-// TODO: add focus styles to cell button
-// TODO: add loading state to table
-export default function PatientsListTable() {
+export function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
+  const [stableTotal, setStableTotal] = useState(0)
   const { getParam } = useParams()
   const router = useRouter()
 
@@ -62,22 +61,43 @@ export default function PatientsListTable() {
   const endDate = getParam(QUERY_PARAMS.endDate)
   const filterQueries = [page, search, orderBy, status, startDate, endDate]
 
-  const { data: response } = useQuery({
+  const ORDER_MAPPING: OrderMappingType<PatientsOrderType> = {
+    date_asc: { orderBy: 'date', order: 'ASC' },
+    date_desc: { orderBy: 'date', order: 'DESC' },
+    email_asc: { orderBy: 'email', order: 'ASC' },
+    email_desc: { orderBy: 'email', order: 'DESC' },
+    name_asc: { orderBy: 'name', order: 'ASC' },
+    name_desc: { orderBy: 'name', order: 'DESC' },
+  }
+
+  const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.patients, filterQueries],
     queryFn: () =>
       api<{ patients: PatientType[]; total: number }>('/patients', {
-        params: { page, search, orderBy, status, startDate, endDate },
+        params: {
+          page,
+          search,
+          status,
+          startDate,
+          endDate,
+          ...ORDER_MAPPING[orderBy as PatientsOrderType],
+        },
       }),
   })
 
-  const total = response?.data?.total ?? 0
-  const patients = response?.data?.patients ?? PATIENTS_MOCKS
+  const patients = response?.data?.patients ?? []
+  const isPatientsEmpty = patients.length === 0
+
+  // Update stable total only when we have actual data to prevent pagination flickering
+  useEffect(() => {
+    if (response?.data?.total !== undefined) {
+      setStableTotal(response.data.total)
+    }
+  }, [response?.data?.total])
 
   useEffect(() => {
     if (status || startDate || endDate) {
       setShowFilters(true)
-    } else {
-      setShowFilters(false)
     }
   }, [status, startDate, endDate])
 
@@ -86,7 +106,7 @@ export default function PatientsListTable() {
       <DataTableHeader>
         <DataTableHeaderInfo
           icon={<Users2Icon />}
-          total={total}
+          total={stableTotal}
           title='Pacientes cadastrados'
           emptyTitle='Nenhum paciente cadastrado'
         />
@@ -97,7 +117,7 @@ export default function PatientsListTable() {
           />
           <DataTableHeaderOrderBy
             options={PATIENTS_ORDER_OPTIONS}
-            className='min-w-48'
+            className='w-52'
           />
 
           <Button size='sm'>
@@ -128,69 +148,62 @@ export default function PatientsListTable() {
               <TableHead className='w-36'>Telefone</TableHead>
               <TableHead>E-mail</TableHead>
               <TableHead className='w-24'>Status</TableHead>
-              <TableHead className='w-40 whitespace-nowrap'>
+              <TableHead className='w-36 whitespace-nowrap'>
                 Data de cadastro
               </TableHead>
               <TableHead className='w-20 text-center'>Ações</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {patients.map((patient, index) => {
-              const isLastRow = index === patients.length - 1
-              const statusTag =
-                STATUS_TAGS[patient.status as keyof typeof STATUS_TAGS]
-              const StatusIcon = statusTag.icon
 
-              return (
+          {isLoading && <PatientsListTableBodySkeleton />}
+
+          {!isLoading && isPatientsEmpty && (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan={6}>
+                  <div className='p-2 text-center'>
+                    Nenhum paciente encontrado
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+
+          {!isLoading && !isPatientsEmpty && (
+            <TableBody>
+              {patients.map((patient) => (
                 <TableRow key={patient.id}>
-                  <TableCell isLastRow={isLastRow} className='p-0'>
-                    <button
-                      className='w-64 cursor-pointer px-4'
+                  <TableCell className='py-0'>
+                    <TableButton
+                      className='w-64'
                       onClick={() =>
                         router.push(
                           ROUTES.dashboard.patients.details.info(patient.id),
                         )
                       }
                     >
-                      <div className='flex items-center gap-2'>
-                        <Avatar
-                          className='size-9'
-                          src={patient.user.avatar_url}
-                        />
-                        <span className='truncate'>{patient.user.name}</span>
-                      </div>
-                    </button>
+                      <Avatar className='size-9' src={patient.avatar_url} />
+                      <span className='truncate'>{patient.name}</span>
+                    </TableButton>
                   </TableCell>
 
-                  <TableCell isLastRow={isLastRow}>
-                    {formatPhoneNumber(patient.phone)}
+                  <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
+                  <TableCell>{patient.email}</TableCell>
+                  <TableCell>
+                    <StatusTag status={patient.status} />
                   </TableCell>
-                  <TableCell isLastRow={isLastRow}>
-                    {patient.user.email}
-                  </TableCell>
-                  <TableCell isLastRow={isLastRow}>
-                    <Tag className={statusTag.class}>
-                      <StatusIcon />
-                      {PATIENT_STATUS[patient.status]}
-                    </Tag>
-                  </TableCell>
-                  <TableCell isLastRow={isLastRow}>
-                    {formatDate(patient.created_at)}
-                  </TableCell>
-                  <TableCell isLastRow={isLastRow} className='text-center'>
-                    <PatientsListTableActions
-                      id={patient.id}
-                      name={patient.user.name}
-                    />
+                  <TableCell>{formatDate(patient.created_at)}</TableCell>
+                  <TableCell className='text-center'>
+                    <PatientsListTableActions patient={patient} />
                   </TableCell>
                 </TableRow>
-              )
-            })}
-          </TableBody>
+              ))}
+            </TableBody>
+          )}
         </Table>
       </Card>
 
-      <Pagination totalItems={total} />
+      <Pagination totalItems={stableTotal} />
     </>
   )
 }

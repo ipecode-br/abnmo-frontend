@@ -20,7 +20,7 @@ export function AuthCard({
   return (
     <div className='bg-background flex w-full max-w-md flex-col items-center gap-6 rounded-3xl p-8 shadow-xl/5'>
       <header className='flex flex-col items-center gap-1 text-center'>
-        {image && <Image src={image} alt='' className='size-20' />}
+        {image && <Image src={image} alt='' className='mb-4 size-16' />}
         <h1 className='text-2xl font-medium'>{title}</h1>
         {description && <p className='text-foreground-soft'>{description}</p>}
       </header>

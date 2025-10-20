@@ -6,7 +6,7 @@ import { ROUTES } from '@/constants/routes'
 
 import { DashboardHeader } from './_header'
 
-export default async function DashboardLayout({
+export default async function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const canAccess = await canUser('view', 'Dashboard')

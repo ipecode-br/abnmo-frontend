@@ -1,40 +1,28 @@
 'use client'
 
-import logo from '@images/logo/logo-triagem.svg'
-import { PanelLeftCloseIcon, PanelLeftOpenIcon } from 'lucide-react'
+import icon from '@images/brand/icon.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 import { useSidebar } from '@/store/sidebar'
-import { cn } from '@/utils/class-name-merge'
 
 export function SidebarHeader() {
   const expanded = useSidebar((state) => state.expanded)
-  const toogleSidebar = useSidebar((state) => state.toogleSidebar)
 
   return (
-    <header
-      className={cn(
-        'border-border text-foreground-soft flex items-center justify-between gap-4',
-        !expanded && 'flex-col',
-      )}
-    >
+    <header className='relative flex items-center'>
       <Link href={ROUTES.dashboard.main}>
-        <div className={cn('mr-auto flex items-center', !expanded && 'p-1')}>
-          <Image src={logo} alt='Símbolo do SVM' className='size-8 shrink-0' />
-          {expanded && <p className='ml-2 text-base font-bold'>SVM</p>}
+        <div className='flex items-center gap-3'>
+          <Image src={icon} alt='Símbolo do SVM' className='size-10 shrink-0' />
+          <span
+            data-visible={expanded}
+            className='text-lg font-bold opacity-0 transition-opacity duration-200 data-[visible=true]:opacity-100 data-[visible=true]:delay-150'
+          >
+            SVM
+          </span>
         </div>
       </Link>
-      <Button
-        size='icon'
-        variant='ghost'
-        className='text-disabled hover:text-foreground-soft'
-        onClick={toogleSidebar}
-      >
-        {expanded ? <PanelLeftCloseIcon /> : <PanelLeftOpenIcon />}
-      </Button>
     </header>
   )
 }
