@@ -18,7 +18,7 @@ import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { StatusTag } from '@/components/ui/status-tag'
-import { TabButtons } from '@/components/ui/tab-buttons'
+import { TabSelect } from '@/components/ui/tab-select'
 import {
   Table,
   TableBody,
@@ -68,7 +68,7 @@ export function MembersListTable() {
   return (
     <>
       <DataTableHeader>
-        <TabButtons buttons={filterOptions} />
+        <TabSelect buttons={filterOptions} />
 
         <DataTableHeaderActions>
           <DataTableHeaderSearch placeholder='Pesquisar' />

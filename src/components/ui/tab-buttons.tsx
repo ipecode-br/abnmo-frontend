@@ -1,16 +1,11 @@
-import type React from 'react'
+'use client'
+
+import { usePathname, useRouter } from 'next/navigation'
 
 import { cn } from '@/utils/class-name-merge'
 
-import { Button, type ButtonProps } from './button'
-
-export type TabButton = ButtonProps & {
-  label: string
-  isActive?: boolean
-}
-
-interface TabButtonsProps extends React.ComponentProps<'div'> {
-  buttons: TabButton[]
+interface TabButtonsProps extends React.ComponentProps<'section'> {
+  buttons: Array<{ title: string; path: string }>
 }
 
 export function TabButtons({
@@ -18,26 +13,25 @@ export function TabButtons({
   className,
   ...props
 }: Readonly<TabButtonsProps>) {
+  const currentPathname = usePathname()
+  const router = useRouter()
+
   return (
-    <div
-      className={cn('bg-accent flex h-9 w-fit gap-1 rounded-lg p-1', className)}
-      {...props}
-    >
-      {buttons.map(({ label, isActive, className, ...buttonProps }) => (
-        <Button
-          key={label}
-          variant='ghost'
-          data-active={isActive}
-          className={cn(
-            'text-disabled hover:bg-background hover:text-foreground h-auto min-h-auto rounded-md text-sm hover:shadow',
-            'data-[active=true]:bg-background data-[active=true]:text-foreground data-[active=true]:pointer-events-none data-[active=true]:shadow',
-            className,
-          )}
-          {...buttonProps}
-        >
-          {label}
-        </Button>
-      ))}
-    </div>
+    <section className={cn('relative top-px flex gap-6', className)} {...props}>
+      {buttons.map((button) => {
+        const isActive = button.path === currentPathname
+        return (
+          <button
+            key={button.path}
+            disabled={isActive}
+            data-active={isActive}
+            onClick={() => router.push(button.path)}
+            className='text-disabled hover:text-foreground focus-visible:ring-ring focus-visible:outline-ring data-[active=true]:border-primary data-[active=true]:text-foreground cursor-pointer border-b-2 border-transparent pt-4 pb-3 text-sm font-medium transition-all data-[active=true]:pointer-events-none'
+          >
+            {button.title}
+          </button>
+        )
+      })}
+    </section>
   )
 }
