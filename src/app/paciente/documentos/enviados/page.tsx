@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { FormSentTable } from './table'
+import { SentTable } from './table'
 
 export const metadata: Metadata = {
   title: 'Documentos',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className='px-8 pt-8'>
-      <FormSentTable />
+      <SentTable />
     </div>
   )
 }

@@ -99,7 +99,7 @@ export const DOCUMENT_STATUS_MAP: Record<string, StatusTagType> = {
   'aguardando aprovação': 'waiting',
 }
 
-export function FormSentTable() {
+export function SentTable() {
   const [stableTotal] = useState(20)
   const isDocumentsEmpty = sentsDocumentsMock.length === 0
 
