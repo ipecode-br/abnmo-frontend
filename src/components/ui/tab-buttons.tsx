@@ -4,18 +4,20 @@ import { usePathname, useRouter } from 'next/navigation'
 
 import { cn } from '@/utils/class-name-merge'
 
-interface DashboardTabButtonsProps {
+interface TabButtonsProps extends React.ComponentProps<'section'> {
   buttons: Array<{ title: string; path: string }>
 }
 
-export function DashboardTabButtons({
+export function TabButtons({
   buttons,
-}: Readonly<DashboardTabButtonsProps>) {
+  className,
+  ...props
+}: Readonly<TabButtonsProps>) {
   const currentPathname = usePathname()
   const router = useRouter()
 
   return (
-    <section className='border-border flex gap-6 border-b px-8'>
+    <section className={cn('relative top-px flex gap-6', className)} {...props}>
       {buttons.map((button) => {
         const isActive = button.path === currentPathname
         return (
@@ -24,10 +26,7 @@ export function DashboardTabButtons({
             disabled={isActive}
             data-active={isActive}
             onClick={() => router.push(button.path)}
-            className={cn(
-              'text-disabled hover:text-foreground focus-visible:ring-ring focus-visible:outline-ring relative top-px cursor-pointer border-b-2 border-transparent pt-4 pb-3 text-sm font-medium transition-all',
-              'data-[active=true]:border-primary data-[active=true]:text-foreground data-[active=true]:pointer-events-none',
-            )}
+            className='text-disabled hover:text-foreground focus-visible:ring-ring focus-visible:outline-ring data-[active=true]:border-primary data-[active=true]:text-foreground cursor-pointer border-b-2 border-transparent pt-4 pb-3 text-sm font-medium transition-all data-[active=true]:pointer-events-none'
           >
             {button.title}
           </button>
