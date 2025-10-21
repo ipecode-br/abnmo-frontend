@@ -4,20 +4,20 @@ import { cn } from '@/utils/class-name-merge'
 
 import { Button, type ButtonProps } from './button'
 
-export type TabButton = ButtonProps & {
+export type TabSelectButton = ButtonProps & {
   label: string
   isActive?: boolean
 }
 
-interface TabButtonsProps extends React.ComponentProps<'div'> {
-  buttons: TabButton[]
+interface TabSelectProps extends React.ComponentProps<'div'> {
+  buttons: TabSelectButton[]
 }
 
-export function TabButtons({
+export function TabSelect({
   buttons,
   className,
   ...props
-}: Readonly<TabButtonsProps>) {
+}: Readonly<TabSelectProps>) {
   return (
     <div
       className={cn('bg-accent flex h-9 w-fit gap-1 rounded-lg p-1', className)}
