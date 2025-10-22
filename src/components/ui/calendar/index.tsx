@@ -13,19 +13,19 @@ import { cn } from '@/utils/class-name-merge'
 import { CalendarDropdownNav } from './dropdown-nav'
 import { CalendarStepNav } from './step-nav'
 
-interface CalendarProps extends Omit<PropsSingle, 'mode'> {
+export interface CalendarProps extends Omit<PropsSingle, 'mode'> {
   navMode?: 'step' | 'dropdown'
-  blockFutureDates?: boolean
+  allowFutureDates?: boolean
 }
 
 export function Calendar({
   navMode = 'step',
-  blockFutureDates = false,
+  allowFutureDates,
   ...props
 }: Readonly<CalendarProps>) {
   const defaultClassNames = getDefaultClassNames()
 
-  const dateRestrictions = blockFutureDates
+  const dateRestrictions = !allowFutureDates
     ? {
         toDate: new Date(),
         toMonth: new Date(),
@@ -46,7 +46,7 @@ export function Calendar({
       classNames={{
         months: 'p-0 space-y-2',
         month_caption: 'hidden',
-        outside: 'text-disabled/75',
+        outside: 'text-disabled/50',
         weekday: cn(defaultClassNames.weekday, 'text-xs text-disabled'),
         day: 'rounded-md overflow-hidden',
         day_button:
@@ -75,7 +75,7 @@ export function Calendar({
     selected={selectedDate}
     onSelect={setSelectedDate}
     navMode="dropdown" | "step" (default)
-    blockFutureDates={true | false (default)} - optional
+    allowFutureDates={true | false (default)} - optional
   />
 
 */

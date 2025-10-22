@@ -1,15 +1,22 @@
 import { cn } from '@/utils/class-name-merge'
 
+interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  readOnly?: boolean
+}
+
 export function Label({
-  htmlFor,
+  readOnly,
   className,
   children,
   ...props
-}: Readonly<React.LabelHTMLAttributes<HTMLLabelElement>>) {
+}: Readonly<LabelProps>) {
   return (
     <label
-      htmlFor={htmlFor}
-      className={cn('text-sm font-medium peer-disabled:opacity-50', className)}
+      aria-readonly={readOnly}
+      className={cn(
+        'text-sm font-medium peer-disabled:opacity-50 aria-readonly:pointer-events-none',
+        className,
+      )}
       {...props}
     >
       {children}

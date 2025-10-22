@@ -26,6 +26,7 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import {
   Table,
   TableBody,
+  TableButton,
   TableCell,
   TableHead,
   TableHeader,
@@ -64,7 +65,7 @@ export default function DashboardOverviewAppointments() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Paciente</TableHead>
+            <TableHead className='w-64'>Paciente</TableHead>
             <TableHead>Data de atendimento</TableHead>
             <TableHead>Profissional</TableHead>
             <TableHead>Especialidade</TableHead>
@@ -74,13 +75,12 @@ export default function DashboardOverviewAppointments() {
         </TableHeader>
 
         <TableBody>
-          {patients.map((patient, index) => {
-            const isLastRow = index === patients.length - 1
+          {patients.map((patient) => {
             return (
               <TableRow key={patient.id}>
-                <TableCell isLastRow={isLastRow}>
-                  <button
-                    className='cursor-pointer'
+                <TableCell>
+                  <TableButton
+                    className='w-64'
                     onClick={() =>
                       router.push(
                         ROUTES.dashboard.patients.details.info(
@@ -89,30 +89,24 @@ export default function DashboardOverviewAppointments() {
                       )
                     }
                   >
-                    <div className='flex min-w-0 items-center gap-2'>
-                      <Avatar className='size-8' />
-                      <span className='truncate'>{patient.name}</span>
-                    </div>
-                  </button>
+                    <Avatar className='size-9' />
+                    <span className='truncate'>{patient.name}</span>
+                  </TableButton>
                 </TableCell>
 
-                <TableCell isLastRow={isLastRow}>
-                  {formatDate(patient.appointmentDate)}
-                </TableCell>
+                <TableCell>{formatDate(patient.appointmentDate)}</TableCell>
 
-                <TableCell isLastRow={isLastRow}>
-                  {patient.professional}
-                </TableCell>
+                <TableCell>{patient.professional}</TableCell>
 
-                <TableCell isLastRow={isLastRow}>{patient.specialty}</TableCell>
+                <TableCell>{patient.specialty}</TableCell>
 
-                <TableCell isLastRow={isLastRow}>
+                <TableCell>
                   <AppointmentConditionTag
                     label={patient.general_condition as PatientConditionType}
                   />
                 </TableCell>
 
-                <TableCell isLastRow={isLastRow} className='text-center'>
+                <TableCell className='text-center'>
                   <DropdownMenu>
                     <DropdownMenuTrigger
                       indicator={false}

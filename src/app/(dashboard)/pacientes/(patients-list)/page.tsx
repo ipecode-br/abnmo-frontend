@@ -5,13 +5,13 @@ import { DashboardContainer } from '@/components/dashboard/container'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { ROUTES } from '@/constants/routes'
 
-import PatientsListTable from './table'
+import { PatientsListTable } from './table'
 
 export const metadata: Metadata = {
   title: 'Pacientes',
 }
 
-export default function PatientsListPage() {
+export default function Page() {
   const tabButtons = [
     {
       title: 'Listagem de pacientes',

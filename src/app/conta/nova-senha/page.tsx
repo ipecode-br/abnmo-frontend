@@ -1,4 +1,4 @@
-import image from '@images/auth/recover.svg'
+import image from '@images/brand/icon.svg'
 import type { Metadata } from 'next'
 
 import { AuthCard } from '@/components/auth/auth-card'
@@ -12,15 +12,13 @@ export const metadata: Metadata = {
   title: 'Redefinir senha',
 }
 
-interface NewPasswordPageProps {
+interface PageProps {
   searchParams: Promise<{
     token?: string
   }>
 }
 
-export default async function NewPasswordPage({
-  searchParams,
-}: Readonly<NewPasswordPageProps>) {
+export default async function Page({ searchParams }: Readonly<PageProps>) {
   const { token } = await searchParams
 
   if (!token) {

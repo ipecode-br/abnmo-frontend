@@ -4,12 +4,12 @@ import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 export const inputVariants = cva(
-  'ring-offset-background focus-visible:ring-ring bg-background h-10 w-full shrink-0 rounded-lg border px-3 text-sm shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'ring-offset-background focus-visible:ring-ring bg-background h-10 w-full shrink-0 rounded-lg border px-3 text-sm shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none read-only:focus-visible:ring-0 read-only:focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default: 'border-border text-foreground placeholder:text-disabled',
-        error: 'border-error text-error focus-visible:ring-error',
+        error: 'border-error focus-visible:ring-error',
       },
       size: {
         default: 'h-10',
@@ -49,8 +49,8 @@ export function Input({
     return (
       <div
         className={cn(
-          'relative flex w-full items-center [&>svg]:size-4.5',
-          props.disabled && '[&>svg]:opacity-50',
+          'relative flex w-full items-center [&_svg]:size-4.5',
+          props.disabled && '[&_svg]:opacity-50',
         )}
       >
         <input

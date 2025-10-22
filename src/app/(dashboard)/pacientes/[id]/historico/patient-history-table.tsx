@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle, Check, History, Pencil, Trash2, X } from 'lucide-react'
+import { Check, History, Pencil, Trash2, X } from 'lucide-react'
 import React, { useState } from 'react'
 
 import { DataTableHeader } from '@/components/data-table/header'
@@ -9,12 +9,11 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
 import { ExpandableText } from '@/components/ui/expandable-text'
-import { Modal } from '@/components/ui/modal'
 import { Select, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
 import { SelectItem } from '@/components/ui/select/item'
 import { SelectTrigger } from '@/components/ui/select/trigger'
-import { PatientStatusEnum } from '@/constants/enums'
+import { PATIENT_STATUS } from '@/types/patients'
 import { PATIENTS_MOCKS } from '@/utils/mock/patients'
 
 export default function PatientHistoryTable() {
@@ -32,10 +31,6 @@ export default function PatientHistoryTable() {
   const [editingRowId, setEditingRowId] = useState<string | null>(null)
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
   const [editingNotes, setEditingNotes] = useState<string>('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedPatientId, setSelectedPatientId] = useState<string | null>(
-    null,
-  )
 
   const handleEditClick = (
     patientId: string,
@@ -68,23 +63,6 @@ export default function PatientHistoryTable() {
       ),
     )
     handleCancelClick()
-  }
-
-  const handleDeleteClick = (patientId: string) => {
-    setSelectedPatientId(patientId)
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedPatientId(null)
-  }
-
-  const handleConfirmDelete = () => {
-    if (selectedPatientId) {
-      setPatients(patients.filter((p) => p.id !== selectedPatientId))
-      handleCloseModal()
-    }
   }
 
   return (
@@ -135,7 +113,7 @@ export default function PatientHistoryTable() {
                             <SelectValue placeholder='Selecione o status' />
                           </SelectTrigger>
                           <SelectContent>
-                            {Object.entries(PatientStatusEnum).map(
+                            {Object.entries(PATIENT_STATUS).map(
                               ([key, value]) => (
                                 <SelectItem key={key} value={key}>
                                   {value}
@@ -147,8 +125,8 @@ export default function PatientHistoryTable() {
                       ) : (
                         <p>
                           {
-                            PatientStatusEnum[
-                              patient.status as keyof typeof PatientStatusEnum
+                            PATIENT_STATUS[
+                              patient.status as keyof typeof PATIENT_STATUS
                             ]
                           }
                         </p>
@@ -205,11 +183,7 @@ export default function PatientHistoryTable() {
                             >
                               <Pencil className='text-foreground-soft h-4 w-4' />
                             </Button>
-                            <Button
-                              variant='ghost'
-                              size='icon'
-                              onClick={() => handleDeleteClick(patient.id)}
-                            >
+                            <Button variant='ghost' size='icon'>
                               <Trash2 className='text-foreground-soft h-4 w-4' />
                             </Button>
                           </>
@@ -224,21 +198,6 @@ export default function PatientHistoryTable() {
           )}
         </div>
       </Card>
-
-      <Modal
-        isOpen={isModalOpen}
-        onCloseAction={handleCloseModal}
-        onConfirmAction={handleConfirmDelete}
-        title='Deletar esse histórico?'
-        description='Esta ação é irreversível e excluirá esse histórico permanentemente.'
-        confirmText='Deletar'
-        cancelText='Cancelar'
-        icon={
-          <div className='bg-error/10 flex-shrink-0 rounded-md p-2'>
-            <AlertTriangle className='text-error h-6 w-6' />
-          </div>
-        }
-      />
     </>
   )
 }

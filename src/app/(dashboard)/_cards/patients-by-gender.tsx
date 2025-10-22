@@ -1,49 +1,69 @@
+'use client'
+
+import { useQuery } from '@tanstack/react-query'
 import { ChartBarDecreasingIcon } from 'lucide-react'
-import type React from 'react'
+import { useState } from 'react'
 
 import { BarChart } from '@/components/charts/bar'
 import { DashboardCardChart } from '@/components/dashboard/cards/chart'
-import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuContent } from '@/components/ui/dropdown/content'
-import { DropdownMenuItem } from '@/components/ui/dropdown/item'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { SelectPeriod } from '@/components/select-period'
+import { Skeleton } from '@/components/ui/skeleton'
+import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { api } from '@/lib/api'
+import { GENDERS, type GenderType } from '@/types/patients'
+import { type QueryPeriodType } from '@/types/queries'
 
 export function DashboardOverviewPatientsByGender(
   props: Readonly<React.ComponentProps<'div'>>,
 ) {
-  const data = [
-    { name: 'Feminino', value: 10 },
-    { name: 'Masculino', value: 7 },
-    { name: 'Outros', value: 5 },
-  ]
+  const [period, setPeriod] = useState<QueryPeriodType>('last-year')
+
+  const { data: response, isLoading } = useQuery({
+    queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByGender, period],
+    queryFn: () =>
+      api<{
+        genders: { gender: GenderType; total: string }[]
+        total: number
+      }>('/statistics/patients-by-gender', {
+        params: { period },
+      }),
+  })
+
+  const genders = response?.data?.genders ?? []
+  const isEmpty = genders.length === 0 && !isLoading
+
+  const data = genders.map((item) => ({
+    label: GENDERS[item.gender],
+    value: Number(item.total),
+  }))
 
   return (
     <DashboardCardChart
-      title='Gênero'
       icon={ChartBarDecreasingIcon}
-      className='sm:col-span-3'
-      chartClassName='h-30'
+      title='Gêneros'
       menu={
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            indicator
-            size='xs'
-            className='gap-1 pr-2'
-            aria-label='Abrir menu'
-          >
-            No último ano
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align='end'>
-            <DropdownMenuItem>No último mês</DropdownMenuItem>
-            <DropdownMenuItem>Na última semana</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <SelectPeriod
+          period={period}
+          disabled={isLoading}
+          onSelect={(value) => setPeriod(value)}
+        />
       }
       {...props}
     >
-      <div className='h-30 w-full'>
-        <BarChart data={data} />
+      <div className='flex h-full min-h-44 items-center justify-center'>
+        {isLoading && <Skeleton className='bg-border/75 size-full' />}
+
+        {!isLoading && !isEmpty && (
+          <div className='size-full min-h-40'>
+            <BarChart data={data} />
+          </div>
+        )}
+
+        {isEmpty && (
+          <p className='text-foreground-soft text-sm'>
+            Nenhum gênero registrado neste período.
+          </p>
+        )}
       </div>
     </DashboardCardChart>
   )

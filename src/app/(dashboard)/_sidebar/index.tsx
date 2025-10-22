@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   Share2,
   UserRoundCheck,
+  UserRoundCog,
   Users2Icon,
 } from 'lucide-react'
 
@@ -14,14 +15,10 @@ import { ROUTES } from '@/constants/routes'
 import { SidebarAccount } from './account'
 import { DashboardSidebarContainer } from './container'
 import { SidebarHeader } from './header'
-import { SidebarHelpCard } from './help-card'
 import { DashboardSidebarMenuSection } from './menu-section'
 
 export async function DashboardSidebar() {
   const user = await getProfile()
-
-  // TODO: uncomment after integrations is completed
-  // if (!user) return null
 
   return (
     <DashboardSidebarContainer>
@@ -31,7 +28,7 @@ export async function DashboardSidebar() {
 
       <DashboardSidebarMenuSection sections={SIDEBAR_SECTIONS} />
 
-      <SidebarHelpCard />
+      <Divider />
 
       <SidebarAccount user={user!} />
     </DashboardSidebarContainer>
@@ -67,6 +64,11 @@ const SIDEBAR_SECTIONS = [
   {
     title: 'Outros',
     links: [
+      {
+        label: 'Equipes',
+        icon: <UserRoundCog />,
+        path: ROUTES.dashboard.teams.main,
+      },
       {
         label: 'Configurações',
         icon: <Bolt />,

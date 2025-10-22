@@ -15,6 +15,8 @@ export function DataTableHeaderSearch({
   ...props
 }: Readonly<InputProps>) {
   const queryParam = QUERY_PARAMS.search
+  const pageParam = QUERY_PARAMS.page
+
   const { getParam, updateParams } = useParams()
   const searchQuery = getParam(queryParam) || ''
 
@@ -24,7 +26,7 @@ export function DataTableHeaderSearch({
   useEffect(() => {
     updateParams({
       set: [{ key: queryParam, value: debouncedQuery }],
-      remove: !debouncedQuery ? [queryParam] : undefined,
+      remove: !debouncedQuery ? [queryParam, pageParam] : [pageParam],
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery])

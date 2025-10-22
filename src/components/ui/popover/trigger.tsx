@@ -1,30 +1,21 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover'
-import { VariantProps } from 'class-variance-authority'
 
-import { cn } from '@/utils/class-name-merge'
+import { Button, type ButtonProps } from '../button'
 
-import { buttonVariants } from '../button'
-
-interface PopoverTriggerProps
+export interface PopoverTriggerProps
   extends Omit<
       React.ComponentProps<typeof PopoverPrimitive.Trigger>,
       'asChild'
     >,
-    VariantProps<typeof buttonVariants> {}
+    ButtonProps {}
 
 export function PopoverTrigger({
-  variant,
-  size,
-  className,
-  children,
+  variant = 'outline',
   ...props
 }: Readonly<PopoverTriggerProps>) {
   return (
-    <PopoverPrimitive.Trigger
-      className={cn(buttonVariants({ variant, size }), className)}
-      {...props}
-    >
-      {children}
+    <PopoverPrimitive.Trigger asChild>
+      <Button variant={variant} {...props} />
     </PopoverPrimitive.Trigger>
   )
 }

@@ -27,11 +27,13 @@ export function DashboardSidebarMenuSection({
     <section className='mb-auto space-y-8'>
       {sections.map((section) => (
         <section key={section.title} className='transition-all'>
-          {expanded && (
-            <p className='text-disabled mb-4 text-xs font-medium uppercase'>
-              {section.title}
-            </p>
-          )}
+          <p
+            data-visible={expanded}
+            className='text-disabled mb-4 text-xs font-medium uppercase opacity-0 transition-opacity delay-75 data-[visible=true]:opacity-100'
+          >
+            {section.title}
+          </p>
+
           <nav className='flex flex-col gap-2'>
             {section.links.map((link) => {
               const isActive = link.path === pathname
@@ -43,9 +45,9 @@ export function DashboardSidebarMenuSection({
                   data-visible={expanded}
                   data-active={isActive}
                   className={cn(
-                    '[&_svg]:text-disabled text-foreground-soft size-10 justify-start gap-3 px-2.5 text-base transition-all duration-200',
+                    '[&_svg]:text-disabled text-foreground-soft size-10 justify-start gap-3 px-2.5 text-base transition-all duration-300',
                     'data-[visible=true]:w-full',
-                    'data-[active=true]:bg-accent data-[active=true]:pointer-events-none data-[active=true]:size-10',
+                    'data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary data-[active=true]:pointer-events-none data-[active=true]:size-10',
                   )}
                 >
                   {link.icon}

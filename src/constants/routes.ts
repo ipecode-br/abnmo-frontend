@@ -12,6 +12,10 @@ export const ROUTES = {
       medicalReport: '/paciente/triagem/laudo-medico',
       supportNetwork: '/paciente/triagem/rede-de-apoio',
     },
+    documents: {
+      pending: '/paciente/documentos/pendentes',
+      sent: '/paciente/documentos/enviados',
+    },
   },
   dashboard: {
     main: '/',
@@ -27,6 +31,10 @@ export const ROUTES = {
     },
     approvals: {
       main: '/aprovacoes',
+    },
+    teams: {
+      main: '/equipes',
+      specialists: '/equipes/especialistas',
     },
     settings: {
       main: '/configuracoes',

@@ -1,57 +1,49 @@
 import { z } from 'zod'
 
-import { YesOrNoTuple } from '@/constants/enums'
+import { yesOrNoSchema } from '@/schemas'
 
 export const screeningMedicalReportFormSchema = z
   .object({
-    hasDisability: z.enum(YesOrNoTuple, {
-      message: 'Selecione uma opção acima',
-    }),
-    disabilityDescription: z
+    has_disability: yesOrNoSchema,
+    disability_desc: z
       .string()
-      .optional()
-      .transform((data) => data?.trim()),
-    needLegalAssistance: z.enum(YesOrNoTuple, {
-      message: 'Selecione uma opção acima',
-    }),
-    takeMedication: z.enum(YesOrNoTuple, {
-      message: 'Selecione uma opção acima',
-    }),
-    medicationDescription: z
+      .transform((data) => data?.trim())
+      .nullable(),
+    need_legal_assistance: yesOrNoSchema,
+    take_medication: yesOrNoSchema,
+    medication_desc: z
       .string()
-      .optional()
-      .transform((data) => data?.trim()),
-    hasNmoDiagnosis: z.enum(YesOrNoTuple, {
-      message: 'Selecione uma opção acima',
-    }),
+      .transform((data) => data?.trim())
+      .nullable(),
+    has_nmo_diagnosis: yesOrNoSchema,
   })
   .refine(
     (data) => {
-      if (data.hasDisability === 'yes' && !data.disabilityDescription) {
+      if (data.has_disability === 'yes' && !data.disability_desc) {
         return false
       }
-      if (data.hasDisability === 'no') {
-        data.disabilityDescription = undefined
+      if (data.has_disability === 'no') {
+        data.disability_desc = null
       }
       return true
     },
     {
-      path: ['disabilityDescription'],
+      path: ['disability_desc'],
       message: 'Descrição da deficiência é obrigatória',
     },
   )
   .refine(
     (data) => {
-      if (data.takeMedication === 'yes' && !data.medicationDescription) {
+      if (data.take_medication === 'yes' && !data.medication_desc) {
         return false
       }
-      if (data.takeMedication === 'no') {
-        data.medicationDescription = undefined
+      if (data.take_medication === 'no') {
+        data.medication_desc = null
       }
       return true
     },
     {
-      path: ['medicationDescription'],
+      path: ['medication_desc'],
       message: 'Descrição do medicamento é obrigatória',
     },
   )
@@ -61,9 +53,9 @@ export type ScreeningMedicalReportFormSchema = z.infer<
 >
 
 export const screeningMedicalReportFormDefaultValues = {
-  hasDisability: '',
-  disabilityDescription: '',
-  takeMedication: '',
-  medicationDescription: '',
-  hasNmoDiagnosis: '',
+  has_disability: '',
+  disability_desc: '',
+  take_medication: '',
+  medication_desc: '',
+  has_nmo_diagnosis: '',
 } as unknown as ScreeningMedicalReportFormSchema

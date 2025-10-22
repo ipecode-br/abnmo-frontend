@@ -2,15 +2,15 @@ import { DashboardContainer } from '@/components/dashboard/container'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { ROUTES } from '@/constants/routes'
 
-interface PatientDetailsLayoutProps {
+interface LayoutProps {
   params: Promise<{ id: string }>
   children: React.ReactNode
 }
 
-export default async function PatientDetailsLayout({
+export default async function Layout({
   params,
   children,
-}: Readonly<PatientDetailsLayoutProps>) {
+}: Readonly<LayoutProps>) {
   const patientId = (await params).id
 
   const tabButtons = [
