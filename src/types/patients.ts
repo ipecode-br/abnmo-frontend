@@ -3,8 +3,7 @@ import {
   CheckCircle2Icon,
   CircleXIcon,
   Flag,
-} from 'lucide-react'
-
+} from '@/components/ui/icons'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 import { PatientSupportType } from './patient-support'

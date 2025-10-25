@@ -7,7 +7,7 @@ import {
   FilesIcon,
   HomeIcon,
   UsersRoundIcon,
-} from 'lucide-react'
+} from '@/components/ui/icons'
 
 import { ROUTES } from '../routes'
 import type { Breadcrumbs } from '.'

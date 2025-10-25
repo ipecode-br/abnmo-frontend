@@ -1,8 +1,8 @@
 'use client'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { ChevronDown, ChevronUp } from 'lucide-react'
 
+import { ChevronDownIcon, ChevronUpIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 interface SelectScrollButtonProps
@@ -19,7 +19,7 @@ export function SelectScrollButton({
     direction === 'up'
       ? SelectPrimitive.ScrollUpButton
       : SelectPrimitive.ScrollDownButton
-  const Icon = direction === 'up' ? ChevronUp : ChevronDown
+  const Icon = direction === 'up' ? ChevronUpIcon : ChevronDownIcon
 
   return (
     <Component

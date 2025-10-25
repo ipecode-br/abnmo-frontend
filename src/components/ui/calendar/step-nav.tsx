@@ -1,7 +1,8 @@
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { NavProps, useDayPicker } from 'react-day-picker'
+
+import { ChevronLeftIcon, ChevronRightIcon } from '@/components/ui/icons'
 
 import { Button } from '../button'
 
@@ -21,7 +22,7 @@ export function CalendarStepNav(props: Readonly<NavProps>) {
         onClick={onPreviousClick}
         disabled={!previousMonth}
       >
-        <ChevronLeft />
+        <ChevronLeftIcon />
       </Button>
 
       <span className='text-sm font-medium capitalize'>{label}</span>
@@ -33,7 +34,7 @@ export function CalendarStepNav(props: Readonly<NavProps>) {
         onClick={onNextClick}
         disabled={!nextMonth}
       >
-        <ChevronRight />
+        <ChevronRightIcon />
       </Button>
     </div>
   )

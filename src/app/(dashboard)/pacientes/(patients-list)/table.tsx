@@ -1,7 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -17,6 +16,7 @@ import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
+import { PlusIcon, Users2Icon } from '@/components/ui/icons'
 import { NavButton } from '@/components/ui/nav-button'
 import { StatusTag } from '@/components/ui/status-tag'
 import {

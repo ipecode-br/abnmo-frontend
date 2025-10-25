@@ -1,5 +1,4 @@
-import { CheckCircle2Icon, CircleXIcon } from 'lucide-react'
-
+import { CheckCircle2Icon, CircleXIcon } from '@/components/ui/icons'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 import type { PatientType } from './patients'

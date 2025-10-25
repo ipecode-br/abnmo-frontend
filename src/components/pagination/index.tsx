@@ -1,7 +1,6 @@
 'use client'
 
-import { ChevronFirstIcon, ChevronLastIcon } from 'lucide-react'
-
+import { ChevronFirstIcon, ChevronLastIcon } from '@/components/ui/icons'
 import { useParams } from '@/hooks/params'
 
 import { PaginationButton } from './button'

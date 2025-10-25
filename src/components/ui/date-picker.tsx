@@ -2,9 +2,9 @@
 
 import 'react-day-picker/style.css'
 
-import { CalendarDays } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
+import { CalendarDaysIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
 
@@ -63,7 +63,7 @@ export function DatePicker({
         )}
         {...props}
       >
-        <CalendarDays />
+        <CalendarDaysIcon />
         {date ? (
           formatDate(date, { dateStyle: 'short' })
         ) : (

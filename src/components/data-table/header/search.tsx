@@ -1,9 +1,9 @@
 'use client'
 
-import { SearchIcon, XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { SearchIcon, XIcon } from '@/components/ui/icons'
 import { Input, type InputProps } from '@/components/ui/input'
 import { QUERY_PARAMS } from '@/constants/params'
 import { useDebounce } from '@/hooks/debounce'

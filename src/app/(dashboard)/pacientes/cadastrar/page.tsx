@@ -1,8 +1,8 @@
-import { UserRoundPlusIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 
 import { DashboardContainer } from '@/components/dashboard/container'
 import { PatientsForm } from '@/components/patients/form'
+import { UserRoundPlusIcon } from '@/components/ui/icons'
 
 export const metadata: Metadata = {
   title: 'Cadastrar novo paciente',

@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2 } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -11,6 +10,7 @@ import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { Loader2Icon } from '@/components/ui/icons'
 import { ROUTES } from '@/constants/routes'
 import { wait } from '@/utils/wait'
 
@@ -63,7 +63,7 @@ export function NewPasswordForm() {
 
         <Button variant='fancy' type='submit' disabled={isSubmitting}>
           {isSubmitting ? (
-            <Loader2 className='animate-spin' />
+            <Loader2Icon className='animate-spin' />
           ) : (
             'Redefinir senha'
           )}

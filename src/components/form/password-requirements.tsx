@@ -1,5 +1,4 @@
-import { CheckIcon, DotIcon } from 'lucide-react'
-
+import { CheckIcon, DotIcon } from '@/components/ui/icons'
 import { getPasswordRequirements } from '@/helpers/auth/get-password-requirement'
 import { cn } from '@/utils/class-name-merge'
 

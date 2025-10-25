@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, MailIcon } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -9,6 +8,7 @@ import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { Loader2Icon } from '@/components/ui/icons'
 import { wait } from '@/utils/wait'
 
 import {
@@ -63,7 +63,7 @@ export function RecoverForm() {
         />
 
         <Button variant='fancy' type='submit' disabled={isSubmitting}>
-          {isSubmitting ? <Loader2 className='animate-spin' /> : 'Enviar'}
+          {isSubmitting ? <Loader2Icon className='animate-spin' /> : 'Enviar'}
         </Button>
 
         {successMessage && (

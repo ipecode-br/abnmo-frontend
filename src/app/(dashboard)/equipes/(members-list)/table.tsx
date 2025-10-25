@@ -1,6 +1,5 @@
 'use client'
 
-import { ClipboardPen, EllipsisIcon, PlusIcon, XCircle } from 'lucide-react'
 import { useState } from 'react'
 
 import { DataTableHeader } from '@/components/data-table/header'
@@ -17,6 +16,12 @@ import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import {
+  ClipboardPenIcon,
+  EllipsisIcon,
+  PlusIcon,
+  XCircleIcon,
+} from '@/components/ui/icons'
 import { StatusTag } from '@/components/ui/status-tag'
 import { TabSelect } from '@/components/ui/tab-select'
 import {
@@ -140,7 +145,7 @@ export function MembersListTable() {
 
                       <DropdownMenuContent align='end'>
                         <DropdownMenuItem>
-                          <ClipboardPen />
+                          <ClipboardPenIcon />
                           Editar
                         </DropdownMenuItem>
 
@@ -150,7 +155,7 @@ export function MembersListTable() {
                           variant='destructive'
                           className='text-center'
                         >
-                          <XCircle />
+                          <XCircleIcon />
                           Desativar
                         </DropdownMenuItem>
                       </DropdownMenuContent>

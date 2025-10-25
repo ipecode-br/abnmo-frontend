@@ -1,14 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  CircleCheckIcon,
-  CircleXIcon,
-  ClipboardEditIcon,
-  Plus,
-  Trash2,
-  UserPlus2Icon,
-} from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import React from 'react'
@@ -21,6 +13,14 @@ import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
+import {
+  CircleCheckIcon,
+  CircleXIcon,
+  ClipboardEditIcon,
+  PlusIcon,
+  Trash2Icon,
+  UserPlus2Icon,
+} from '@/components/ui/icons'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   BRAZILIAN_STATES_OPTIONS,
@@ -344,7 +344,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
                       onClick={() => remove(index)}
                       disabled={isViewMode}
                     >
-                      <Trash2 />
+                      <Trash2Icon />
                     </Button>
                   </div>
                 </React.Fragment>
@@ -357,7 +357,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
               onClick={() => append({ name: '', kinship: '', phone: '' })}
               disabled={isViewMode}
             >
-              <Plus /> Adicionar novo contato
+              <PlusIcon /> Adicionar novo contato
             </Button>
           </div>
         )}
@@ -400,7 +400,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
                       disabled={index === 0}
                       onClick={() => (index > 0 ? remove(index) : null)}
                     >
-                      <Trash2 />
+                      <Trash2Icon />
                     </Button>
                   </div>
                 </React.Fragment>
@@ -412,7 +412,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
               onClick={() => append({ name: '', kinship: '', phone: '' })}
               disabled={isViewMode}
             >
-              <Plus /> Adicionar novo contato
+              <PlusIcon /> Adicionar novo contato
             </Button>
           </div>
         )}

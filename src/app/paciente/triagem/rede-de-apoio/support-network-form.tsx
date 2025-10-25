@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState, useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -11,6 +10,7 @@ import { ScreeningSupportNetworkCards } from '@/app/paciente/triagem/rede-de-apo
 import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
+import { PlusIcon } from '@/components/ui/icons'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import { setStorageItem } from '@/helpers/local-storage'
 

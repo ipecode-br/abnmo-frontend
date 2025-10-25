@@ -1,4 +1,4 @@
-import { XIcon } from 'lucide-react'
+import { XIcon } from '@/components/ui/icons'
 
 import { Divider } from '../divider'
 import { SelectItem } from './item'

@@ -1,8 +1,8 @@
 'use client'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { CheckIcon } from 'lucide-react'
 
+import { CheckIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 export function SelectItem({

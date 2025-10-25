@@ -1,6 +1,5 @@
 'use client'
 
-import { Check, History, Pencil, Trash2, X } from 'lucide-react'
 import React, { useState } from 'react'
 
 import { DataTableHeader } from '@/components/data-table/header'
@@ -9,6 +8,13 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
 import { ExpandableText } from '@/components/ui/expandable-text'
+import {
+  CheckIcon,
+  HistoryIcon,
+  PencilIcon,
+  Trash2Icon,
+  XIcon,
+} from '@/components/ui/icons'
 import { Select, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
 import { SelectItem } from '@/components/ui/select/item'
@@ -68,7 +74,10 @@ export default function PatientHistoryTable() {
   return (
     <>
       <DataTableHeader>
-        <DataTableHeaderInfo icon={<History />} title='Histórico do paciente' />
+        <DataTableHeaderInfo
+          icon={<HistoryIcon />}
+          title='Histórico do paciente'
+        />
         <div className='ml-auto flex gap-2'>
           <Button variant='outline'>+ Inativar paciente</Button>
           <Button variant='default'>+ Encaminhar paciente</Button>
@@ -158,14 +167,14 @@ export default function PatientHistoryTable() {
                               size='icon'
                               onClick={() => handleSaveClick(patient.id)}
                             >
-                              <Check className='text-foreground-soft h-4 w-4' />
+                              <CheckIcon className='text-foreground-soft h-4 w-4' />
                             </Button>
                             <Button
                               variant='ghost'
                               size='icon'
                               onClick={handleCancelClick}
                             >
-                              <X className='text-foreground-soft h-4 w-4' />
+                              <XIcon className='text-foreground-soft h-4 w-4' />
                             </Button>
                           </>
                         ) : (
@@ -181,10 +190,10 @@ export default function PatientHistoryTable() {
                                 )
                               }
                             >
-                              <Pencil className='text-foreground-soft h-4 w-4' />
+                              <PencilIcon className='text-foreground-soft h-4 w-4' />
                             </Button>
                             <Button variant='ghost' size='icon'>
-                              <Trash2 className='text-foreground-soft h-4 w-4' />
+                              <Trash2Icon className='text-foreground-soft h-4 w-4' />
                             </Button>
                           </>
                         )}

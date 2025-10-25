@@ -1,15 +1,14 @@
-import {
-  Bolt,
-  Headset,
-  LayoutDashboard,
-  Share2,
-  UserRoundCheck,
-  UserRoundCog,
-  Users2Icon,
-} from 'lucide-react'
-
 import { getProfile } from '@/actions/users'
 import { Divider } from '@/components/ui/divider'
+import {
+  BoltIcon,
+  HeadsetIcon,
+  LayoutDashboardIcon,
+  Share2Icon,
+  UserRoundCheckIcon,
+  UserRoundCogIcon,
+  Users2Icon,
+} from '@/components/ui/icons'
 import { ROUTES } from '@/constants/routes'
 
 import { SidebarAccount } from './account'
@@ -41,7 +40,7 @@ const SIDEBAR_SECTIONS = [
     links: [
       {
         label: 'Visão Geral',
-        icon: <LayoutDashboard />,
+        icon: <LayoutDashboardIcon />,
         path: ROUTES.dashboard.main,
       },
       {
@@ -51,12 +50,12 @@ const SIDEBAR_SECTIONS = [
       },
       {
         label: 'Encaminhados',
-        icon: <Share2 />,
+        icon: <Share2Icon />,
         path: ROUTES.dashboard.forwarded.main,
       },
       {
         label: 'Aprovações',
-        icon: <UserRoundCheck />,
+        icon: <UserRoundCheckIcon />,
         path: ROUTES.dashboard.approvals.main,
       },
     ],
@@ -66,17 +65,17 @@ const SIDEBAR_SECTIONS = [
     links: [
       {
         label: 'Equipes',
-        icon: <UserRoundCog />,
+        icon: <UserRoundCogIcon />,
         path: ROUTES.dashboard.teams.main,
       },
       {
         label: 'Configurações',
-        icon: <Bolt />,
+        icon: <BoltIcon />,
         path: ROUTES.dashboard.settings.main,
       },
       {
         label: 'Suporte',
-        icon: <Headset />,
+        icon: <HeadsetIcon />,
         path: ROUTES.dashboard.support.main,
       },
     ],

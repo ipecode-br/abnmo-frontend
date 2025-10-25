@@ -1,8 +1,8 @@
-import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { Card, type CardProps } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
+import type { LucideIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 interface DashboardCardChartProps extends CardProps {

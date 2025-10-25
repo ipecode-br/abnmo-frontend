@@ -1,10 +1,10 @@
 'use client'
 
-import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Dialog } from '@/components/ui/dialog'
 import { DialogTrigger } from '@/components/ui/dialog/trigger'
+import { PlusIcon } from '@/components/ui/icons'
 
 import type { ButtonProps } from '../ui/button'
 import { AppointmentModal } from './modal'

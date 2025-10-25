@@ -1,4 +1,4 @@
-import { HomeIcon, type LucideIcon } from 'lucide-react'
+import { HomeIcon, type LucideIcon } from '@/components/ui/icons'
 
 import { ROUTES } from '../routes'
 import { DASHBOARD_BREADCRUMBS } from './dashboard'

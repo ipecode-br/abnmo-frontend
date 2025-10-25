@@ -2,8 +2,12 @@
 
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { ChevronsUpDownIcon, Loader2Icon, type LucideIcon } from 'lucide-react'
 
+import {
+  ChevronsUpDownIcon,
+  Loader2Icon,
+  type LucideIcon,
+} from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 export interface SelectTriggerProps

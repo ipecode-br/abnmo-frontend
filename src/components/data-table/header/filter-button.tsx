@@ -1,8 +1,7 @@
 'use client'
 
-import { ListFilterIcon } from 'lucide-react'
-
 import { Button, type ButtonProps } from '@/components/ui/button'
+import { ListFilterIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 export function DataTableHeaderFilterButton({

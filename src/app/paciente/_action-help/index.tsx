@@ -1,7 +1,13 @@
 'use client'
-import { CircleQuestionMark, Headset, Link, Mail, Phone } from 'lucide-react'
 import { useState } from 'react'
 
+import {
+  CircleQuestionMarkIcon,
+  HeadsetIcon,
+  LinkIcon,
+  MailIcon,
+  PhoneIcon,
+} from '@/components/ui/icons'
 import { Popover } from '@/components/ui/popover'
 import { PopoverContent } from '@/components/ui/popover/content'
 import { PopoverTrigger } from '@/components/ui/popover/trigger'
@@ -15,12 +21,12 @@ export function ActionHelp() {
           variant='default'
           className='bg-foreground-soft hover:bg-accent-foreground/60 rounded-full p-2.5'
         >
-          <CircleQuestionMark />
+          <CircleQuestionMarkIcon />
         </PopoverTrigger>
 
         <PopoverContent side='left' className='mb-5 gap-3 p-6'>
           <div className='flex items-center gap-2.5 text-2xl'>
-            <Headset />
+            <HeadsetIcon />
             <h1>Precisa de ajuda?</h1>
           </div>
 
@@ -31,15 +37,15 @@ export function ActionHelp() {
 
           <ul className='text-accent-foreground flex flex-col items-center gap-2 font-medium'>
             <li className='flex items-center gap-x-2'>
-              <Mail />
+              <MailIcon />
               <span>contato@abnmo.org</span>
             </li>
             <li className='flex items-center gap-x-2'>
-              <Phone />
+              <PhoneIcon />
               <span>+55 (75) 9980-1515</span>
             </li>
             <li className='flex items-center gap-x-2'>
-              <Link />
+              <LinkIcon />
               <span>www.abnmo.org</span>
             </li>
           </ul>
