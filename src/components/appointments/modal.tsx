@@ -18,6 +18,7 @@ import { api } from '@/lib/api'
 
 import { DateInput } from '../form/date-input'
 import { FormContainer } from '../form/form-container'
+import { TextareaInput } from '../form/textarea-input'
 
 interface AppointmentModalProps {
   onOpenChange: (open: boolean) => void
@@ -25,11 +26,18 @@ interface AppointmentModalProps {
 
 const appointmentFormSchema = z.object({
   patient_name: z.string().min(1, 'O nome do paciente é obrigatório'),
-  appointment_date: z.string().datetime(),
-  specialist_id: z.string().uuid(),
+  appointment_date: z.string().datetime('A data do atendimento é obrigatória'),
+  specialist_id: z.string().uuid('O especialista é obrigatório'),
   specialist_specialty: z.string(),
-  condition: z.string().nullable(),
-  annotation: z.string().max(200).nullable(),
+  condition: z
+    .string()
+    .nullable()
+    .transform((value) => (!value ? null : value)),
+  annotation: z
+    .string()
+    .max(500)
+    .nullable()
+    .transform((value) => (!value ? null : value)),
 })
 type AppointmentFormSchema = z.infer<typeof appointmentFormSchema>
 
@@ -48,6 +56,8 @@ export function AppointmentModal({ onOpenChange }: AppointmentModalProps) {
   })
 
   async function submitForm(data: AppointmentFormSchema) {
+    console.log(data)
+
     const response = await api('/appointments', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -101,14 +111,15 @@ export function AppointmentModal({ onOpenChange }: AppointmentModalProps) {
               name='specialist_specialty'
               label='Especialidade médica'
               wrapperClassName='sm:col-span-2'
-              isRequired
             />
             <TextInput
               name='condition'
               label='Quadro geral'
               wrapperClassName='sm:col-span-5'
             />
-            <TextInput
+            <TextareaInput
+              rows={8}
+              maxLength={500}
               name='annotation'
               label='Observações'
               placeholder='Insira observações sobre o paciente'
