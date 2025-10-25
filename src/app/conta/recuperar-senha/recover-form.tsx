@@ -8,7 +8,7 @@ import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { Loader2Icon } from '@/components/ui/icons'
+import { Loader2Icon, MailIcon } from '@/components/ui/icons'
 import { wait } from '@/utils/wait'
 
 import {

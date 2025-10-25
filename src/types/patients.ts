@@ -2,7 +2,7 @@ import {
   AlertTriangleIcon,
   CheckCircle2Icon,
   CircleXIcon,
-  Flag,
+  FlagIcon,
 } from '@/components/ui/icons'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
@@ -85,7 +85,7 @@ export const PATIENT_CONDITION_ICONS_AND_COLOR = {
     iconClassName: 'fill-warning text-white',
   },
   stable: {
-    icon: Flag,
+    icon: FlagIcon,
     tagClassName: 'bg-foreground-soft/5 border-none',
     iconClassName: 'fill-foreground-soft',
   },
