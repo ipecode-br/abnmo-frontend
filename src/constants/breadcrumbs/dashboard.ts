@@ -2,7 +2,7 @@ import {
   HistoryIcon,
   User2Icon,
   UserCog2Icon,
-  UserRoundPlus,
+  UserRoundPlusIcon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -26,9 +26,9 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
     path: ROUTES.dashboard.patients.main,
   },
   cadastrar: {
-    icon: UserRoundPlus,
-    name: 'Cadastro de novo paciente',
-    path: ROUTES.dashboard.patients.cadastrar,
+    icon: UserRoundPlusIcon,
+    name: 'Cadastrar novo paciente',
+    path: ROUTES.dashboard.patients.new,
   },
   equipes: {
     icon: UserCog2Icon,

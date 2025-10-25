@@ -21,11 +21,11 @@ export const ROUTES = {
     main: '/',
     patients: {
       main: '/pacientes',
+      new: '/pacientes/cadastrar',
       details: {
         info: (id: string) => `/pacientes/${id}/informacoes`,
         history: (id: string) => `/pacientes/${id}/historico`,
       },
-      cadastrar: '/pacientes/cadastrar',
     },
     forwarded: {
       main: '/encaminhados',

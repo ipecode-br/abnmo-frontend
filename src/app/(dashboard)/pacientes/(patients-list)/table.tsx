@@ -16,8 +16,8 @@ import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
 import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { NavButton } from '@/components/ui/nav-button'
 import { StatusTag } from '@/components/ui/status-tag'
 import {
   Table,
@@ -120,15 +120,10 @@ export function PatientsListTable() {
             className='w-52'
           />
 
-          <Button
-            size='sm'
-            onClick={() => {
-              router.replace(ROUTES.dashboard.patients.cadastrar)
-            }}
-          >
+          <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
             <PlusIcon />
             Novo paciente
-          </Button>
+          </NavButton>
         </DataTableHeaderActions>
       </DataTableHeader>
 

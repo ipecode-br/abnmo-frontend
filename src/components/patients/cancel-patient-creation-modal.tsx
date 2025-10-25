@@ -9,15 +9,19 @@ import { DialogHeader } from '../ui/dialog/header'
 import { DialogTitle } from '../ui/dialog/title'
 
 interface CancelPatientCreationModalProps {
-  onCancelPatientCreation: () => void
+  onConfirm: () => void
 }
 
 export default function CancelPatientCreationModal({
-  onCancelPatientCreation,
+  onConfirm,
 }: CancelPatientCreationModalProps) {
   return (
     <DialogContainer>
-      <DialogHeader icon={CircleAlert} iconClassName='bg-error/10 text-error'>
+      <DialogHeader
+        icon={CircleAlert}
+        iconClassName='bg-error/10 text-error'
+        className='border-none'
+      >
         <DialogTitle>Cancelar o cadastro do paciente?</DialogTitle>
         <DialogDescription>
           Esta ação é irreversível e todo o progresso será perdido.
@@ -27,9 +31,9 @@ export default function CancelPatientCreationModal({
         <Button
           type='button'
           className='bg-error hover:bg-error/80 flex-1'
-          onClick={onCancelPatientCreation}
+          onClick={onConfirm}
         >
-          Cancelar Cadastro
+          Cancelar cadastro
         </Button>
         <DialogClose className='flex-1'>Voltar</DialogClose>
       </DialogFooter>

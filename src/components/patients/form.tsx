@@ -48,7 +48,7 @@ interface PatientsFormProps {
 }
 
 export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
-  const [isCancelPatientCreationModalOpen, setCancelPatientCreationOpen] =
+  const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
     useState(false)
   const [formState, setFormState] = useState<PatientsFormModeType>(mode)
   const [isPending, startTransition] = useTransition()
@@ -108,16 +108,12 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
   }
 
   function handleCancel() {
-    setFormState('view')
     if (formState === 'create') {
-      setCancelPatientCreationOpen(true)
-      setFormState('create')
+      setIsCancelConfirmModalOpen(true)
+      return
     }
-  }
-
-  function handleCancelPatientCreation() {
+    setFormState('view')
     formMethods.reset()
-    router.push(ROUTES.dashboard.main)
   }
 
   function submitForm(data: PatientsFormSchema) {
@@ -169,12 +165,10 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
       }
 
       queryClient.invalidateQueries({ queryKey: [QUERY_CACHE_KEYS.patients] })
-
-      toast.success('Paciente cadastrado com sucesso.', { duration: 7000 })
-
+      toast.success(response.message)
       formMethods.reset()
 
-      router.replace(ROUTES.dashboard.patients.main)
+      router.push(ROUTES.dashboard.patients.main)
     })
   }
 
@@ -190,6 +184,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           maxLength={50}
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='Insira o nome completo'
           wrapperClassName='sm:col-span-2'
         />
         <DateInput
@@ -207,8 +202,8 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           inputMode='numeric'
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='000.000.000-00'
           wrapperClassName='sm:col-span-2'
-          message={mode === 'view' ? '' : 'Insira somente números'}
         />
 
         <SelectInput
@@ -217,6 +212,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           options={GENDERS_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='Selecione o gênero'
           wrapperClassName='sm:col-span-2'
         />
         <SelectInput
@@ -226,6 +222,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           onValueChange={handleSelectState}
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='Selecione o estado'
           wrapperClassName='sm:col-span-2'
         />
         <SelectInput
@@ -235,8 +232,8 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           readOnly={isViewMode}
           isRequired={!isViewMode}
           disabled={!selectedUF}
+          placeholder='Selecione a cidade'
           wrapperClassName='sm:col-span-2'
-          placeholder='Selecione sua cidade'
         />
 
         <TextInput
@@ -246,8 +243,8 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           inputMode='tel'
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='(00) 00000-0000'
           wrapperClassName='sm:col-span-3'
-          message={mode === 'view' ? '' : 'Insira somente números'}
         />
         <TextInput
           name='email'
@@ -255,6 +252,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           inputMode='email'
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='Insira o e-mail'
           wrapperClassName='sm:col-span-3'
         />
 
@@ -309,7 +307,9 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           wrapperClassName='sm:col-span-3'
         />
 
-        <Divider className='sm:col-span-6' />
+        {(formState === 'create' || patientSupports.length >= 1) && (
+          <Divider className='sm:col-span-6' />
+        )}
 
         {patientSupports.length >= 1 && (
           <div className='space-y-6 sm:col-span-6'>
@@ -361,58 +361,60 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
             </Button>
           </div>
         )}
+
         {formState === 'create' && (
-          <>
-            <Divider className='sm:col-span-6' />
-            <div className='space-y-6 sm:col-span-6'>
-              <h1 className='text-xl font-medium'>Rede de apoio</h1>
-              <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
-                {fields.map((support, index) => (
-                  <React.Fragment key={support.id}>
+          <div className='space-y-6 sm:col-span-6'>
+            <h1 className='text-xl font-medium'>Rede de apoio</h1>
+            <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
+              {fields.map((support, index) => (
+                <React.Fragment key={support.id}>
+                  <TextInput
+                    name={`supports.${index}.name`}
+                    label='Nome completo'
+                    maxLength={50}
+                    isRequired
+                    placeholder='Insira o nome completo'
+                    wrapperClassName='sm:col-span-3'
+                  />
+                  <TextInput
+                    name={`supports.${index}.kinship`}
+                    label='Parentesco'
+                    maxLength={50}
+                    isRequired
+                    placeholder='Selecione o parentesco'
+                    wrapperClassName='sm:col-span-1'
+                  />
+                  <div className='flex items-end gap-1 sm:col-span-2'>
                     <TextInput
-                      name={`supports.${index}.name`}
-                      label='Nome completo'
-                      maxLength={50}
+                      name={`supports.${index}.phone`}
+                      label='Telefone (WhatsApp)'
                       readOnly={isViewMode}
-                      wrapperClassName='sm:col-span-3'
+                      mask='phone'
+                      isRequired
                     />
-                    <TextInput
-                      name={`supports.${index}.kinship`}
-                      label='Parentesco'
-                      maxLength={50}
-                      readOnly={isViewMode}
-                      wrapperClassName='sm:col-span-1'
-                    />
-                    <div className='flex gap-1 sm:col-span-2'>
-                      <TextInput
-                        name={`supports.${index}.phone`}
-                        label='Telefone (WhatsApp)'
-                        readOnly={isViewMode}
-                        mask='phone'
-                      />
-                      <Button
-                        variant='ghost'
-                        className='text-foreground-soft mt-6'
-                        onClick={() => remove(index)}
-                        disabled={isViewMode}
-                      >
-                        <Trash2 />
-                      </Button>
-                    </div>
-                  </React.Fragment>
-                ))}
-              </div>
-              <Button
-                variant='outline'
-                className='text-primary'
-                type='button'
-                onClick={() => append({ name: '', kinship: '', phone: '' })}
-                disabled={isViewMode}
-              >
-                <Plus /> Adicionar novo contato
-              </Button>
+                    <Button
+                      size='icon'
+                      type='button'
+                      variant='ghost'
+                      className='text-foreground-soft'
+                      disabled={index === 0}
+                      onClick={() => (index > 0 ? remove(index) : null)}
+                    >
+                      <Trash2 />
+                    </Button>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
-          </>
+            <Button
+              type='button'
+              variant='outline'
+              onClick={() => append({ name: '', kinship: '', phone: '' })}
+              disabled={isViewMode}
+            >
+              <Plus /> Adicionar novo contato
+            </Button>
+          </div>
         )}
 
         <div className='mt-3 flex justify-end gap-2 sm:col-span-6'>
@@ -420,55 +422,44 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
             <Button
               type='button'
               variant='outline'
-              className='w-fit'
               onClick={() => setFormState('edit')}
             >
               <ClipboardEditIcon /> Editar
             </Button>
           )}
 
-          {formState === 'edit' && (
+          {!isViewMode && (
             <>
               <Button
                 type='button'
                 variant='outline'
-                className='w-fit'
                 disabled={isPending}
                 onClick={handleCancel}
               >
                 <CircleXIcon /> Cancelar
               </Button>
-              <Button type='submit' className='w-fit' loading={isPending}>
-                <CircleCheckIcon /> Salvar
-              </Button>
-            </>
-          )}
-
-          {formState === 'create' && (
-            <>
-              <Button
-                type='button'
-                variant='outline'
-                className='w-fit'
-                disabled={isPending}
-                onClick={handleCancel}
-              >
-                <CircleXIcon /> Cancelar
-              </Button>
-              <Button type='submit' className='w-fit' loading={isPending}>
-                <UserPlus2Icon /> Adicionar
+              <Button type='submit' loading={isPending}>
+                {formState === 'create' ? (
+                  <>
+                    <UserPlus2Icon /> Cadastrar
+                  </>
+                ) : (
+                  <>
+                    <CircleCheckIcon /> Salvar
+                  </>
+                )}
               </Button>
             </>
           )}
         </div>
 
         <Dialog
-          open={isCancelPatientCreationModalOpen}
-          onOpenChange={setCancelPatientCreationOpen}
+          open={isCancelConfirmModalOpen}
+          onOpenChange={setIsCancelConfirmModalOpen}
         >
-          {isCancelPatientCreationModalOpen && (
+          {isCancelConfirmModalOpen && (
             <CancelPatientCreationModal
-              onCancelPatientCreation={handleCancelPatientCreation}
+              onConfirm={() => router.push(ROUTES.dashboard.main)}
             />
           )}
         </Dialog>
