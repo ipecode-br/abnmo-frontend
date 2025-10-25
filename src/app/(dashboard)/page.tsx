@@ -16,14 +16,14 @@ export default function Page() {
       <div className='grid grid-cols-1 gap-6 sm:grid-cols-6'>
         <Suspense
           fallback={
-            <Skeleton quantity={3} className='h-32 rounded-2xl sm:col-span-2' />
+            <Skeleton quantity={3} className='h-28 rounded-2xl sm:col-span-2' />
           }
         >
           <DashboardOverviewPatientsByStatus />
         </Suspense>
 
-        <DashboardOverviewPatientsByGender />
-        <DashboardOverviewPatientsByCity />
+        <DashboardOverviewPatientsByGender className='sm:col-span-3' />
+        <DashboardOverviewPatientsByCity className='sm:col-span-3' />
 
         <DashboardOverviewAppointments />
       </div>

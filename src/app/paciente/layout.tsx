@@ -5,6 +5,8 @@ import { PatientHeader } from '@/app/paciente/_header'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
 
+import { ActionHelp } from './_action-help'
+
 export default async function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -18,6 +20,7 @@ export default async function Layout({
     <>
       <PatientHeader />
       <Divider />
+      <ActionHelp />
       {children}
     </>
   )

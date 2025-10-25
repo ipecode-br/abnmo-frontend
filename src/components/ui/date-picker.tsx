@@ -18,6 +18,7 @@ export interface DatePickerProps
     Pick<CalendarProps, 'allowFutureDates' | 'navMode'> {
   value?: string
   onSelectDate?: (date: string) => void
+  modal?: boolean
 }
 
 export function DatePicker({
@@ -26,6 +27,7 @@ export function DatePicker({
   className,
   allowFutureDates,
   onSelectDate,
+  modal,
   ...props
 }: Readonly<DatePickerProps>) {
   const [open, setOpen] = useState(false)
@@ -52,7 +54,7 @@ export function DatePicker({
   }, [value])
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={modal}>
       <PopoverTrigger
         variant='outline'
         className={cn(

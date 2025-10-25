@@ -1,7 +1,10 @@
 import {
+  CircleAlertIcon,
+  CircleCheckIcon,
   ClipboardListIcon,
   ClipboardTypeIcon,
   ContactRoundIcon,
+  FilesIcon,
   HomeIcon,
   UsersRoundIcon,
 } from 'lucide-react'
@@ -14,6 +17,21 @@ export const PATIENT_BREADCRUMBS: Breadcrumbs = {
     icon: HomeIcon,
     name: 'Início',
     path: ROUTES.patient.main,
+  },
+  documentos: {
+    icon: FilesIcon,
+    name: 'Documentos',
+    path: ROUTES.patient.documents.pending,
+  },
+  pendentes: {
+    icon: CircleAlertIcon,
+    name: 'Pendentes',
+    path: ROUTES.patient.documents.pending,
+  },
+  enviados: {
+    icon: CircleCheckIcon,
+    name: 'Enviados',
+    path: ROUTES.patient.documents.pending,
   },
   triagem: {
     icon: ClipboardTypeIcon,
