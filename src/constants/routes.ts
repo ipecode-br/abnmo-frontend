@@ -12,11 +12,16 @@ export const ROUTES = {
       medicalReport: '/paciente/triagem/laudo-medico',
       supportNetwork: '/paciente/triagem/rede-de-apoio',
     },
+    documents: {
+      pending: '/paciente/documentos/pendentes',
+      sent: '/paciente/documentos/enviados',
+    },
   },
   dashboard: {
     main: '/',
     patients: {
       main: '/pacientes',
+      new: '/pacientes/cadastrar',
       details: {
         info: (id: string) => `/pacientes/${id}/informacoes`,
         documents: (id: string) => `/pacientes/${id}/documentos`,

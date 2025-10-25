@@ -5,12 +5,12 @@ import {
   ClipboardList,
   ClipboardPen,
   EllipsisIcon,
-  PlusIcon,
   Users2Icon,
   XCircle,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
+import { NewAppointmentButton } from '@/components/appointments/new-button'
 import { DataTableHeader } from '@/components/data-table/header'
 import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
@@ -55,10 +55,7 @@ export default function DashboardOverviewAppointments() {
             Ver todos
           </Button>
 
-          <Button size='sm'>
-            <PlusIcon />
-            Novo atendimento
-          </Button>
+          <NewAppointmentButton size='sm' />
         </DataTableHeaderActions>
       </DataTableHeader>
 

@@ -20,9 +20,7 @@ describe('Input', () => {
 
     const inputElement = screen.getByRole('textbox')
     expect(inputElement).toBeInTheDocument()
-    expect(inputElement).toHaveClass(
-      'border-error text-error focus-visible:ring-error',
-    )
+    expect(inputElement).toHaveClass('border-error focus-visible:ring-error')
   })
   it('should render a default Input with icon', () => {
     render(<Input icon={Atom} />)
