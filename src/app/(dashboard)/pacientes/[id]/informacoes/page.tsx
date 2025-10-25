@@ -17,7 +17,7 @@ interface PatientHistoryPageParams {
   params: Promise<{ id: string }>
 }
 
-export default async function PatientInfoPage({
+export default async function Page({
   params,
 }: Readonly<PatientHistoryPageParams>) {
   const patientId = (await params).id
@@ -38,8 +38,8 @@ export default async function PatientInfoPage({
     <>
       <header className='mb-3 flex justify-between'>
         <div className='flex items-center gap-4'>
-          <span className='bg-accent rounded-lg p-2'>
-            <UserRoundIcon />
+          <span className='bg-border/50 rounded-lg p-2'>
+            <UserRoundIcon className='text-primary size-5.5' />
           </span>
           <h1 className='text-xl font-medium'>Informações do paciente</h1>
         </div>
