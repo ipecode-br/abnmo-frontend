@@ -1,4 +1,4 @@
-import { Forward, UserRoundIcon } from 'lucide-react'
+import { ForwardIcon, UserRoundIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -47,7 +47,7 @@ export default async function Page({
         <div className='flex gap-2'>
           {isPatientActive && <PatientInactivateButton patient={patient} />}
           <Button>
-            <Forward />
+            <ForwardIcon />
             Encaminhar paciente
           </Button>
         </div>

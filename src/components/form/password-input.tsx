@@ -1,4 +1,4 @@
-import { Eye, EyeOff, LockKeyholeIcon } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, LockKeyholeIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -68,7 +68,7 @@ export function PasswordInput({
                 onClick={() => setShowPassword(!showPassword)}
                 className='text-foreground-soft hover:text-primary focus-visible:outline-ring absolute top-0 right-1 flex size-10 cursor-pointer items-center justify-center rounded-lg transition-colors [&_svg]:size-5'
               >
-                {showPassword ? <Eye /> : <EyeOff />}
+                {showPassword ? <EyeIcon /> : <EyeOffIcon />}
               </button>
             </div>
 

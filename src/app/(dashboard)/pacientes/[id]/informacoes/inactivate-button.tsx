@@ -1,6 +1,6 @@
 'use client'
 
-import { UserRoundMinus } from 'lucide-react'
+import { UserRoundMinusIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { PatientsInactivateModal } from '@/components/patients/inactivate-modal'
@@ -20,7 +20,7 @@ export function PatientInactivateButton({
   return (
     <Dialog open={isInactivateModalOpen} onOpenChange={setInactivateModalOpen}>
       <DialogTrigger variant='outline'>
-        <UserRoundMinus />
+        <UserRoundMinusIcon />
         Inativar paciente
       </DialogTrigger>
 

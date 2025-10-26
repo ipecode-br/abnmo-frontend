@@ -14,7 +14,7 @@ Este documento estabelece as regras de nomenclatura para arquivos, componentes, 
 
 Todos os arquivos devem seguir o padrão **kebab-case**:
 
-```
+```text
 ✅ Correto
 password-requirements.tsx
 auth-card.tsx
@@ -34,7 +34,7 @@ BrazilianStates.ts
 
 Pastas fora de `app/` devem ser em inglês e em **kebab-case**:
 
-```
+```text
 src/
   components/
   constants/
@@ -48,7 +48,7 @@ src/
 
 **Rotas (português)**: Pastas que definem rotas da aplicação devem ser em português usando **kebab-case**:
 
-```
+```text
 app/
   conta/
   pacientes/
@@ -65,7 +65,7 @@ app/
 
 **Agrupamento (inglês com parênteses)**: Pastas de agrupamento seguem o padrão do Next.js:
 
-```
+```text
 app/
   (dashboard)/     ← Agrupamento de rotas do dashboard
   (auth)/         ← Agrupamento de rotas de autenticação
@@ -73,7 +73,7 @@ app/
 
 **Pastas internas (prefixo \_)**: Pastas que não são rotas devem começar com `_`:
 
-```
+```text
 app/
   pacientes/
     _components/    ← Componentes específicos desta rota
@@ -113,20 +113,23 @@ export function Page() {}
 
 ### Padrões de contexto
 
-#### Páginas
+#### Arquivos de layout e páginas do Next.js
+
+Arquivos padrão do Next.js para rotas devem usar nomes específicos:
 
 ```tsx
-// Páginas específicas de entidade
-PatientsListPage
-PatientsDetailsPage
-AccountProfilePage
-DashboardMainPage
+// layout.tsx - Sempre usar "Layout"
+export default function Layout({ children }) {
+  return <div>{children}</div>
+}
 
-// Páginas de autenticação
-SignInPage
-SignUpPage
-RecoverPasswordPage
+// page.tsx - Sempre usar "Page"
+export default function Page() {
+  return <div>Conteúdo da página</div>
+}
 ```
+
+**Importante**: Os arquivos `layout.tsx` e `page.tsx` devem sempre exportar componentes com os nomes `Layout` e `Page` respectivamente, independente da rota onde estão localizados.
 
 #### Componentes UI
 
@@ -163,7 +166,7 @@ PatientHeader
 
 ### Schemas
 
-```
+```text
 patient-data-form-schema.ts
 new-password-form-schema.ts
 support-network-form-schema.ts
@@ -171,7 +174,7 @@ support-network-form-schema.ts
 
 ### Constants
 
-```
+```text
 brazilian-states.ts
 storage-keys.ts
 password-requirements.ts
@@ -179,14 +182,14 @@ password-requirements.ts
 
 ### Types
 
-```
+```text
 patients.ts
 users.ts
 ```
 
 ### Utils e helpers
 
-```
+```text
 class-name-merge.ts
 format-cpf-number.ts
 get-password-requirement.ts
@@ -196,7 +199,7 @@ get-password-requirement.ts
 
 ### Estrutura de componentes
 
-```
+```text
 components/
   ui/                    ← Componentes base reutilizáveis
     button.tsx
@@ -220,7 +223,7 @@ components/
 
 ### Agrupamento por domínio
 
-```
+```text
 app/
   (dashboard)/           ← Grupo dashboard
     _cards/             ← Componentes dos cards
@@ -245,7 +248,7 @@ export function PatientsListTable() {
 
 ### Estrutura de pasta de feature
 
-```
+```text
 app/
   pacientes/
     _components/
@@ -289,6 +292,8 @@ Antes de criar novos arquivos ou componentes, verifique:
 
 - Nome do arquivo está em kebab-case?
 - Nome do componente está em PascalCase com contexto?
+- Arquivos `layout.tsx` exportam componente `Layout`?
+- Arquivos `page.tsx` exportam componente `Page`?
 - Pasta está na estrutura correta?
 - Rota em português está correta?
 - Pasta de agrupamento usa parênteses?

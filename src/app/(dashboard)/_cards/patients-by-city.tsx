@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { ChartPie } from 'lucide-react'
+import { ChartPieIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { PieChart } from '@/components/charts/pie'
@@ -52,7 +52,7 @@ export function DashboardOverviewPatientsByCity(
 
   return (
     <DashboardCardChart
-      icon={ChartPie}
+      icon={ChartPieIcon}
       title='Cidades'
       menu={
         <SelectPeriod
