@@ -103,21 +103,49 @@ Escreva menos CSS. Use componentes e variantes quando possível.
 
 ### 5. Use espaçamento com `gap` em flexbox
 
-Prefira `gap` sobre `margin` para espaçar itens em flex containers.
+Prefira `gap` sobre `margin` ou `space-*` para espaçar itens em flex containers.
 
 ```tsx
-// ❌ Menos legível:
+// ❌ Menos legível (margin individual):
 <div className='flex'>
   <button className='mr-2'>Botão 1</button>
   <button className='mr-2'>Botão 2</button>
   <button>Botão 3</button>
 </div>
 
-// ✅ Mais limpo:
+// ❌ Errado (space-* com flex):
+<div className='flex space-x-2'>
+  <button>Botão 1</button>
+  <button>Botão 2</button>
+  <button>Botão 3</button>
+</div>
+
+// ✅ Correto (gap com flex):
 <div className='flex gap-2'>
   <button>Botão 1</button>
   <button>Botão 2</button>
   <button>Botão 3</button>
+</div>
+```
+
+**Regra importante**:
+
+- Com `flex` ou `grid`: **use `gap-*` obrigatoriamente**
+- Sem `flex`/`grid` (div simples): use `space-*` se necessário
+
+```tsx
+// ✅ Correto (gap com grid):
+<div className='grid grid-cols-3 gap-4'>
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</div>
+
+// ✅ Correto (space-* sem flex/grid):
+<div className='space-y-4'>
+  <p>Parágrafo 1</p>
+  <p>Parágrafo 2</p>
+  <p>Parágrafo 3</p>
 </div>
 ```
 

@@ -2,7 +2,6 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   devIndicators: false,
-  swcMinify: true,
   // Optimize HMR performance in development
   onDemandEntries: {
     maxInactiveAge: 60 * 1000,

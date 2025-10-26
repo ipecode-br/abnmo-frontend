@@ -1,5 +1,6 @@
 import {
   HistoryIcon,
+  PaperclipIcon,
   User2Icon,
   UserCog2Icon,
   UserRoundPlusIcon,
@@ -18,6 +19,11 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   informacoes: {
     icon: User2Icon,
     name: 'Informações do paciente',
+    path: ROUTES.dashboard.patients.main,
+  },
+  documentos: {
+    icon: PaperclipIcon,
+    name: 'Documentos',
     path: ROUTES.dashboard.patients.main,
   },
   historico: {

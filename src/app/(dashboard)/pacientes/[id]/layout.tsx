@@ -22,6 +22,10 @@ export default async function Layout({
       title: 'Histórico do paciente',
       path: ROUTES.dashboard.patients.details.history(patientId),
     },
+    {
+      title: 'Documentos',
+      path: ROUTES.dashboard.patients.details.documents(patientId),
+    },
   ]
 
   return (
