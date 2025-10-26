@@ -1,7 +1,7 @@
+import { EyeIcon, EyeOffIcon, LockKeyholeIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { EyeIcon, EyeOffIcon, LockKeyholeIcon } from '@/components/ui/icons'
 import { Input, type InputProps } from '@/components/ui/input'
 import { cn } from '@/utils/class-name-merge'
 

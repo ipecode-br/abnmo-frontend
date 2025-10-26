@@ -1,6 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { XIcon } from 'lucide-react'
 
-import { XIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 import { buttonVariants } from '../button'

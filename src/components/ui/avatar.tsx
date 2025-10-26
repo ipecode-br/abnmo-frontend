@@ -1,7 +1,7 @@
+import { User2Icon } from 'lucide-react'
 import Image, { type ImageProps } from 'next/image'
 import type React from 'react'
 
-import { User2Icon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 interface AvatarProps extends React.ComponentProps<'div'> {

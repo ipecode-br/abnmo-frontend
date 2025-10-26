@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import { AlertCircleIcon } from 'lucide-react'
 
-import { AlertCircleIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 const formMessageVariants = cva('mt-1 flex items-center gap-1 text-xs', {

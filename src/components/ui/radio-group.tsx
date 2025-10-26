@@ -1,8 +1,8 @@
 'use client'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
+import { CheckIcon } from 'lucide-react'
 import { useId } from 'react'
 
-import { CheckIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 import { Label } from './label'

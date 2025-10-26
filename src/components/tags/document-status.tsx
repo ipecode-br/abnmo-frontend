@@ -1,8 +1,5 @@
-import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleXIcon,
-} from '@/components/ui/icons'
+import { CircleAlertIcon, CircleCheckIcon, CircleXIcon } from 'lucide-react'
+
 import { Tag } from '@/components/ui/tag'
 import { cn } from '@/utils/class-name-merge'
 

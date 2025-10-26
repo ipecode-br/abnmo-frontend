@@ -1,4 +1,5 @@
-import type { LucideIcon } from '@/components/ui/icons'
+import type { LucideIcon } from 'lucide-react'
+
 import { cn } from '@/utils/class-name-merge'
 
 interface DialogHeaderProps extends React.ComponentProps<'header'> {

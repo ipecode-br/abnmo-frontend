@@ -1,8 +1,8 @@
 'use client'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
-import { ChevronDownIcon, ChevronUpIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 interface SelectScrollButtonProps

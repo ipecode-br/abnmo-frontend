@@ -1,10 +1,7 @@
+import { CheckCircle2Icon, CircleXIcon, Users2Icon } from 'lucide-react'
+
 import { getTotalPatientsByStatus } from '@/actions/patients/statistics/get-total-patients-by-status'
 import { Card } from '@/components/ui/card'
-import {
-  CheckCircle2Icon,
-  CircleXIcon,
-  Users2Icon,
-} from '@/components/ui/icons'
 
 export async function DashboardOverviewPatientsByStatus() {
   const statistics = await getTotalPatientsByStatus()

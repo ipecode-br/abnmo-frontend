@@ -1,7 +1,8 @@
+import { BellIcon, CircleHelpIcon } from 'lucide-react'
+
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
-import { BellIcon, CircleHelpIcon } from '@/components/ui/icons'
 
 export function DashboardHeader() {
   return (

@@ -4,7 +4,7 @@ import {
   UserCog2Icon,
   UserRoundPlusIcon,
   Users2Icon,
-} from '@/components/ui/icons'
+} from 'lucide-react'
 
 import { ROUTES } from '../routes'
 import type { Breadcrumbs } from '.'

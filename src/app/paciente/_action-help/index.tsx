@@ -1,13 +1,13 @@
 'use client'
-import { useState } from 'react'
-
 import {
   CircleQuestionMarkIcon,
   HeadsetIcon,
   LinkIcon,
   MailIcon,
   PhoneIcon,
-} from '@/components/ui/icons'
+} from 'lucide-react'
+import { useState } from 'react'
+
 import { Popover } from '@/components/ui/popover'
 import { PopoverContent } from '@/components/ui/popover/content'
 import { PopoverTrigger } from '@/components/ui/popover/trigger'

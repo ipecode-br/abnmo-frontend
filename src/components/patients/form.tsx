@@ -1,6 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  CircleCheckIcon,
+  CircleXIcon,
+  ClipboardEditIcon,
+  PlusIcon,
+  Trash2Icon,
+  UserPlus2Icon,
+} from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import React from 'react'
@@ -13,14 +21,6 @@ import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
-import {
-  CircleCheckIcon,
-  CircleXIcon,
-  ClipboardEditIcon,
-  PlusIcon,
-  Trash2Icon,
-  UserPlus2Icon,
-} from '@/components/ui/icons'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   BRAZILIAN_STATES_OPTIONS,
@@ -441,11 +441,13 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
               <Button type='submit' loading={isPending}>
                 {formState === 'create' ? (
                   <>
-                    <UserPlus2Icon /> Cadastrar
+                    <UserPlus2Icon />
+                    <span>Cadastrar</span>
                   </>
                 ) : (
                   <>
-                    <CircleCheckIcon /> Salvar
+                    <CircleCheckIcon />
+                    <span>Salvar</span>
                   </>
                 )}
               </Button>

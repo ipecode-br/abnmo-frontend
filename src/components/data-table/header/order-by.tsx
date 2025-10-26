@@ -1,8 +1,8 @@
 'use client'
 
 import type { SelectTriggerProps } from '@radix-ui/react-select'
+import { ArrowDownWideNarrowIcon } from 'lucide-react'
 
-import { ArrowDownWideNarrowIcon } from '@/components/ui/icons'
 import { Select, type SelectOptions, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
 import { SelectItem } from '@/components/ui/select/item'

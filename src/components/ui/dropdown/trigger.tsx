@@ -2,8 +2,8 @@
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import type { VariantProps } from 'class-variance-authority'
+import { ChevronsUpDownIcon } from 'lucide-react'
 
-import { ChevronsUpDownIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 import { buttonVariants } from '../button'

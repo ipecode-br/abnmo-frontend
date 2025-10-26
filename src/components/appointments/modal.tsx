@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { SmilePlusIcon } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -13,7 +14,6 @@ import { DialogContent } from '@/components/ui/dialog/content'
 import { DialogFooter } from '@/components/ui/dialog/footer'
 import { DialogHeader } from '@/components/ui/dialog/header'
 import { DialogTitle } from '@/components/ui/dialog/title'
-import { SmilePlusIcon } from '@/components/ui/icons'
 import { api } from '@/lib/api'
 
 import { DateInput } from '../form/date-input'

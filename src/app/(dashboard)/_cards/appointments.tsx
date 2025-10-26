@@ -1,5 +1,13 @@
 'use client'
 
+import {
+  ClipboardCheckIcon,
+  ClipboardListIcon,
+  ClipboardPenIcon,
+  EllipsisIcon,
+  Users2Icon,
+  XCircleIcon,
+} from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { NewAppointmentButton } from '@/components/appointments/new-button'
@@ -15,14 +23,6 @@ import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
-import {
-  ClipboardCheckIcon,
-  ClipboardListIcon,
-  ClipboardPenIcon,
-  EllipsisIcon,
-  Users2Icon,
-  XCircleIcon,
-} from '@/components/ui/icons'
 import {
   Table,
   TableBody,

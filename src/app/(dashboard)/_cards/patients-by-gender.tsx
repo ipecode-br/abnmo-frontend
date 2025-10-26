@@ -1,12 +1,12 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { ChartBarDecreasingIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { BarChart } from '@/components/charts/bar'
 import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
-import { ChartBarDecreasingIcon } from '@/components/ui/icons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { api } from '@/lib/api'

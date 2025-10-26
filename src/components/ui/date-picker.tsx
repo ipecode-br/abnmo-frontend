@@ -2,9 +2,9 @@
 
 import 'react-day-picker/style.css'
 
+import { CalendarDaysIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { CalendarDaysIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
 

@@ -1,9 +1,9 @@
 'use client'
 
+import { FileIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Pagination } from '@/components/pagination'
-import { FileIcon } from '@/components/ui/icons'
 import {
   Table,
   TableBody,

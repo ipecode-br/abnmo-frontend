@@ -1,10 +1,10 @@
 'use client'
 
+import { ChevronRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
-import { ChevronRightIcon } from '@/components/ui/icons'
 import { BREADCRUMBS, type BreadcrumbType } from '@/constants/breadcrumbs'
 import { cn } from '@/utils/class-name-merge'
 

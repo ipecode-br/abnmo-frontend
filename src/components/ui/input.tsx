@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import type { LucideIcon } from 'lucide-react'
 
-import type { LucideIcon } from '@/components/ui/icons'
 import { cn } from '@/utils/class-name-merge'
 
 export const inputVariants = cva(

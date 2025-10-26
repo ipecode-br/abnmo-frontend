@@ -1,14 +1,11 @@
 'use client'
 
+import { AccessibilityIcon, ALargeSmallIcon, ContrastIcon } from 'lucide-react'
+
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
-import {
-  AccessibilityIcon,
-  ALargeSmallIcon,
-  ContrastIcon,
-} from '@/components/ui/icons'
 
 export function PatientHeaderAccessibilityDropdown() {
   return (

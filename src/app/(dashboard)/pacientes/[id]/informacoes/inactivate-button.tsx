@@ -1,11 +1,11 @@
 'use client'
 
+import { UserRoundMinusIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { PatientsInactivateModal } from '@/components/patients/inactivate-modal'
 import { Dialog } from '@/components/ui/dialog'
 import { DialogTrigger } from '@/components/ui/dialog/trigger'
-import { UserRoundMinusIcon } from '@/components/ui/icons'
 import type { PatientType } from '@/types/patients'
 
 interface PatientInactivateButtonProps {

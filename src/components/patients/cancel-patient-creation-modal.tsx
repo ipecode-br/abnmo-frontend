@@ -1,4 +1,4 @@
-import { CircleAlertIcon } from '@/components/ui/icons'
+import { CircleAlertIcon } from 'lucide-react'
 
 import { Button } from '../ui/button'
 import { DialogClose } from '../ui/dialog/close'

@@ -1,6 +1,7 @@
 'use client'
 
-import { type LucideIcon } from '@/components/ui/icons'
+import { type LucideIcon } from 'lucide-react'
+
 import { Select, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
 import { SelectItem } from '@/components/ui/select/item'

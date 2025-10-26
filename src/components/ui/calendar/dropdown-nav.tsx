@@ -1,7 +1,6 @@
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavProps, useDayPicker } from 'react-day-picker'
-
-import { ChevronLeftIcon, ChevronRightIcon } from '@/components/ui/icons'
 
 import { Button } from '../button'
 import { Select, SelectValue } from '../select'

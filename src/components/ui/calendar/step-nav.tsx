@@ -1,8 +1,7 @@
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { NavProps, useDayPicker } from 'react-day-picker'
-
-import { ChevronLeftIcon, ChevronRightIcon } from '@/components/ui/icons'
 
 import { Button } from '../button'
 

@@ -1,5 +1,11 @@
 'use client'
 
+import {
+  CircleXIcon,
+  ClipboardEditIcon,
+  EllipsisIcon,
+  SendIcon,
+} from 'lucide-react'
 import { useRef, useState } from 'react'
 
 import { PatientsInactivateModal } from '@/components/patients/inactivate-modal'
@@ -9,12 +15,6 @@ import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
-import {
-  CircleXIcon,
-  ClipboardEditIcon,
-  EllipsisIcon,
-  SendIcon,
-} from '@/components/ui/icons'
 import type { PatientType } from '@/types/patients'
 
 interface PatientsListTableActionsProps {

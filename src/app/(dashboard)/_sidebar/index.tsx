@@ -1,5 +1,3 @@
-import { getProfile } from '@/actions/users'
-import { Divider } from '@/components/ui/divider'
 import {
   BoltIcon,
   HeadsetIcon,
@@ -8,7 +6,10 @@ import {
   UserRoundCheckIcon,
   UserRoundCogIcon,
   Users2Icon,
-} from '@/components/ui/icons'
+} from 'lucide-react'
+
+import { getProfile } from '@/actions/users'
+import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
 
 import { SidebarAccount } from './account'

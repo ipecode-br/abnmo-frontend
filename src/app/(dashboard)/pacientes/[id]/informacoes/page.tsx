@@ -1,10 +1,10 @@
+import { ForwardIcon, UserRoundIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getPatient } from '@/actions/patients/get-patient'
 import { PatientsForm } from '@/components/patients/form'
 import { Button } from '@/components/ui/button'
-import { ForwardIcon, UserRoundIcon } from '@/components/ui/icons'
 import { ROUTES } from '@/constants/routes'
 
 import { PatientInactivateButton } from './inactivate-button'

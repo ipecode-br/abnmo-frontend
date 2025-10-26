@@ -1,8 +1,9 @@
+import { Trash2Icon } from 'lucide-react'
+
 import type { ScreeningSupportNetworkFormSchema } from '@/app/paciente/triagem/rede-de-apoio/support-network-form-schema'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Trash2Icon } from '@/components/ui/icons'
 
 interface ScreeningSupportNetworkCardsProps {
   contacts: ScreeningSupportNetworkFormSchema[]

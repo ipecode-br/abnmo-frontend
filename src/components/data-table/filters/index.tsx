@@ -1,7 +1,8 @@
 'use client'
 
+import { XIcon } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
-import { XIcon } from '@/components/ui/icons'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 

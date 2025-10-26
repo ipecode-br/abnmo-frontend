@@ -6,11 +6,11 @@ Este documento explica como utilizar ícones no projeto de forma padronizada e o
 
 ## Objetivo
 
-O projeto utiliza a biblioteca **Lucide React** para ícones, centralizando as importações em um único arquivo (`icons.ts`) para:
+O projeto utiliza a biblioteca **Lucide React** para ícones. Importamos diretamente do `lucide-react` para:
 
-- **Reduzir o tamanho do bundle**: Importar apenas os ícones necessários
+- **Otimizar tree-shaking**: Webpack pode eliminar ícones não utilizados em cada arquivo
+- **Reduzir HMR modules**: Menos dependências durante desenvolvimento
 - **Manter consistência**: Garantir que todos usem os mesmos ícones
-- **Facilitar manutenção**: Gerenciar ícones em um único local
 - **Padronizar nomenclatura**: Todos os ícones possuem sufixo `Icon`
 
 ---
@@ -19,26 +19,23 @@ O projeto utiliza a biblioteca **Lucide React** para ícones, centralizando as i
 
 ### Importação básica
 
-Sempre importe os ícones através do arquivo centralizado:
+Importe os ícones diretamente do `lucide-react`:
 
 ```tsx
-import { UserIcon, MailIcon, SearchIcon } from '@/components/ui/icons'
+import { UserIcon, MailIcon, SearchIcon } from 'lucide-react'
 ```
 
-### Nunca faça
+### Estrutura de nomenclatura
 
-❌ **Não importe diretamente do lucide-react**:
-
-```tsx
-// ERRADO - Não fazer isso
-import { User, Mail, Search } from 'lucide-react'
-```
-
-❌ **Não use nomes sem o sufixo Icon**:
+Os ícones do Lucide possuem o sufixo `Icon` automaticamente:
 
 ```tsx
-// ERRADO - Não fazer isso
-import { User } from '@/components/ui/icons' // Não existe
+✅ UserIcon
+✅ SearchIcon
+✅ AlertCircleIcon
+
+❌ User (nome sem sufixo)
+❌ Search (nome sem sufixo)
 ```
 
 ### Exemplos de uso
@@ -46,7 +43,7 @@ import { User } from '@/components/ui/icons' // Não existe
 #### Uso simples em componentes
 
 ```tsx
-import { SearchIcon, XIcon } from '@/components/ui/icons'
+import { SearchIcon, XIcon } from 'lucide-react'
 
 export function SearchBar() {
   return (
@@ -64,7 +61,7 @@ export function SearchBar() {
 #### Uso como prop de componente
 
 ```tsx
-import { AlertCircleIcon } from '@/components/ui/icons'
+import { AlertCircleIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export function ErrorButton() {
@@ -80,7 +77,7 @@ export function ErrorButton() {
 #### Uso com tipagem (componentes que recebem ícones)
 
 ```tsx
-import type { LucideIcon } from '@/components/ui/icons'
+import type { LucideIcon } from 'lucide-react'
 
 interface CardProps {
   icon: LucideIcon
@@ -100,7 +97,7 @@ export function Card({ icon: Icon, title }: CardProps) {
 Uso do componente acima:
 
 ```tsx
-import { UserIcon, SettingsIcon } from '@/components/ui/icons'
+import { UserIcon, SettingsIcon } from 'lucide-react'
 import { Card } from './card'
 
 export function Dashboard() {
@@ -117,21 +114,17 @@ export function Dashboard() {
 
 ## Adicionando novos ícones
 
-Se você precisar de um ícone que não está disponível no arquivo `icons.ts`:
+Você pode usar qualquer ícone diretamente do Lucide:
 
 1. Acesse a [documentação do Lucide](https://lucide.dev/icons/) e encontre o ícone desejado
-2. Abra o arquivo `src/components/ui/icons.ts`
-3. Adicione o ícone na lista de exports, mantendo a ordem alfabética:
+2. Importe direto em seu arquivo:
 
-```ts
-export {
-  // ... outros ícones
-  MailIcon,
-  MenuIcon,
-  NovoIconeIcon, // Novo ícone adicionado
-  PencilIcon,
-  // ... outros ícones
-} from 'lucide-react'
+```tsx
+import { NovoIconeIcon } from 'lucide-react'
+
+export function MyComponent() {
+  return <NovoIconeIcon className='size-5' />
+}
 ```
 
 ---
@@ -140,7 +133,7 @@ export {
 
 ### Padrão obrigatório
 
-Todos os ícones **devem** ter o sufixo `Icon`:
+Todos os ícones **possuem** o sufixo `Icon`:
 
 ```tsx
 ✅ UserIcon
@@ -159,7 +152,7 @@ O sufixo evita conflitos de nomenclatura com outros componentes ou tipos do proj
 ```tsx
 // Sem conflito entre o tipo User e o ícone UserIcon
 import { type User } from '@/types/users'
-import { UserIcon } from '@/components/ui/icons'
+import { UserIcon } from 'lucide-react'
 
 interface Props {
   user: User // Tipo do usuário
@@ -184,7 +177,7 @@ function UserCard({ user }: Props) {
 Os ícones do Lucide aceitam classes CSS normalmente:
 
 ```tsx
-import { CheckIcon } from '@/components/ui/icons'
+import { CheckIcon } from 'lucide-react'
 
 // Tamanho
 <CheckIcon className="size-4" />  // 16x16px
@@ -212,7 +205,7 @@ import { CheckIcon } from '@/components/ui/icons'
 Alguns ícones podem ter animações, como o ícone de loading:
 
 ```tsx
-import { Loader2Icon } from '@/components/ui/icons'
+import { Loader2Icon } from 'lucide-react'
 ;<Loader2Icon className='size-5 animate-spin' />
 ```
 
@@ -220,17 +213,17 @@ import { Loader2Icon } from '@/components/ui/icons'
 
 ## Ícones disponíveis
 
-Para ver todos os ícones disponíveis, consulte o arquivo `src/components/ui/icons.ts` ou a [documentação do Lucide](https://lucide.dev/icons/).
+Consulte a [documentação do Lucide](https://lucide.dev/icons/) para ver todos os ícones disponíveis.
 
 ---
 
 ## Boas práticas
 
-### 1. Sempre use o arquivo centralizado
+### 1. Importe apenas o que usa
 
 ```tsx
-✅ import { UserIcon } from '@/components/ui/icons'
-❌ import { User as UserIcon } from 'lucide-react'
+✅ import { UserIcon } from 'lucide-react'
+❌ import { UserIcon, OtherIcon, AnotherIcon } from 'lucide-react' // Importar apenas se usar
 ```
 
 ### 2. Mantenha consistência de tamanhos
@@ -252,7 +245,7 @@ Use os tamanhos definidos no design system:
 ### 4. Componentes com ícones devem usar a tipagem
 
 ```tsx
-import type { LucideIcon } from '@/components/ui/icons'
+import type { LucideIcon } from 'lucide-react'
 
 interface Props {
   icon: LucideIcon // Tipo correto
@@ -260,35 +253,30 @@ interface Props {
 }
 ```
 
-### 5. Não adicione ícones não utilizados
-
-Só adicione ícones ao `icons.ts` quando forem realmente necessários no projeto.
-
 ---
 
 ## Performance
 
-### Por que centralizar?
-
-Ao importar ícones diretamente do `lucide-react`, o bundler pode incluir ícones não utilizados. O arquivo centralizado garante que apenas os ícones explicitamente exportados sejam incluídos no bundle final.
-
-### Exemplo de impacto
-
-```tsx
-// Sem centralização - pode incluir todos os ícones do lucide
-import { User, Mail, Search } from 'lucide-react'
-
-// Com centralização - inclui apenas os ícones exportados
-import { UserIcon, MailIcon, SearchIcon } from '@/components/ui/icons'
-```
-
 ### Tree shaking
 
-O arquivo `icons.ts` utiliza named exports que permitem tree shaking efetivo:
+Ao importar diretamente do `lucide-react`, webpack pode fazer tree-shaking efetivo em cada arquivo:
 
-```ts
-export { UserIcon, MailIcon, SearchIcon } from 'lucide-react'
+```tsx
+// Webpack removará CheckIcon, AlertIcon se não forem usados neste arquivo
+import { UserIcon, CheckIcon, AlertIcon } from 'lucide-react'
+
+export function MyComponent() {
+  return <UserIcon /> // Apenas UserIcon será incluído
+}
 ```
+
+### Redução de HMR modules
+
+Importar diretamente reduz o número de módulos na dependency chain durante desenvolvimento, melhorando significativamente:
+
+- **Tempo de compilação**: HMR compila apenas o necessário
+- **Memória**: Menos módulos carregados na memória
+- **Developer experience**: Recarregamento mais rápido
 
 ---
 
@@ -298,16 +286,26 @@ export { UserIcon, MailIcon, SearchIcon } from 'lucide-react'
 
 Se você receber um erro dizendo que o ícone não existe:
 
-1. Verifique se está usando o sufixo `Icon`
-2. Verifique se o ícone está exportado em `icons.ts`
-3. Se não estiver, adicione-o seguindo as instruções na seção "Adicionando novos ícones"
+1. Verifique se está usando o nome correto no Lucide
+2. Consulte a [documentação do Lucide](https://lucide.dev/icons/)
+3. Certifique-se de que o ícone tem o sufixo `Icon`
+
+Exemplo:
+
+```tsx
+// ✅ Correto
+import { UserIcon } from 'lucide-react'
+
+// ❌ Errado - não existe (falta Icon)
+import { User } from 'lucide-react'
+```
 
 ### Erro de tipo ao passar ícone como prop
 
 Certifique-se de usar o tipo `LucideIcon`:
 
 ```tsx
-import type { LucideIcon } from '@/components/ui/icons'
+import type { LucideIcon } from 'lucide-react'
 
 // Correto
 interface Props {

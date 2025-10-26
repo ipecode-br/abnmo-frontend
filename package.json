@@ -46,7 +46,6 @@
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
     "@eslint/eslintrc": "^3",
-    "@next/bundle-analyzer": "15.5.4",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.6.3",

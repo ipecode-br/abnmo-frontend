@@ -1,9 +1,9 @@
 'use client'
 
+import { ChevronRightIcon } from 'lucide-react'
 import type React from 'react'
 
 import { Button } from '@/components/ui/button'
-import { ChevronRightIcon } from '@/components/ui/icons'
 import { useSidebar } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
