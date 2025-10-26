@@ -1,6 +1,6 @@
 'use client'
 
-import { CircleXIcon, Paperclip, Plus, Trash2 } from 'lucide-react'
+import { CircleXIcon, PaperclipIcon, PlusIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,8 @@ import { DialogFooter } from '@/components/ui/dialog/footer'
 import { DialogHeader } from '@/components/ui/dialog/header'
 import { DialogTitle } from '@/components/ui/dialog/title'
 import { DialogTrigger } from '@/components/ui/dialog/trigger'
+import { NavLink } from '@/components/ui/nav-link'
+import { formatDate } from '@/utils/formatters/format-date'
 
 type Document = {
   id: string
@@ -40,97 +42,87 @@ export function PatientsDocuments({
   }
 
   return (
-    <section className='space-y-10'>
-      {sections ? (
-        sections.map((section) => (
-          <section key={section.title}>
-            <div className='mb-4 flex items-center justify-between'>
-              <h2 className='text-xl font-semibold text-gray-800'>
-                {section.title}
-              </h2>
-              <Button size='icon' className='size-8'>
-                <Plus />
-              </Button>
-            </div>
+    <>
+      {sections.map((section) => (
+        <section key={section.title}>
+          <div className='mb-4 flex items-center justify-between'>
+            <h2 className='text-xl font-semibold'>{section.title}</h2>
+            <Button size='icon' className='size-8'>
+              <PlusIcon />
+            </Button>
+          </div>
 
-            <div className='flex flex-col space-y-6'>
-              {section.documents.map((doc) => (
-                <div
-                  key={doc.name}
-                  className='flex items-center justify-between border-b border-gray-200 pb-2'
+          <div className='divide-border divide-y'>
+            {section.documents.map((doc) => (
+              <div
+                key={doc.name}
+                className='text-foreground-soft flex min-h-14 items-center gap-2 py-2'
+              >
+                <PaperclipIcon size={16} />
+                <NavLink
+                  href=''
+                  download
+                  className='text-primary'
+                  title={`Baixar ${doc.name}`}
                 >
-                  <div className='flex items-center space-x-1'>
-                    <Paperclip size={16} className='text-gray-500' />
-                    <a
-                      download
-                      className='text-primary underline'
-                      title={`Baixar ${doc.name}`}
+                  {doc.name}
+                </NavLink>
+
+                <span className='ml-auto text-sm'>
+                  {formatDate(doc.created_at)}
+                </span>
+
+                <span className='min-w-24 text-right text-sm'>{doc.size}</span>
+
+                {isEditing && (
+                  <Dialog>
+                    <DialogTrigger
+                      size='icon'
+                      variant='ghost'
+                      className='text-foreground-soft ml-2 size-8'
                     >
-                      {doc.name}
-                    </a>
-                  </div>
+                      <Trash2Icon />
+                    </DialogTrigger>
 
-                  <div className='flex items-center space-x-3'>
-                    <span className='text-sm text-gray-500'>
-                      {new Date(doc.created_at).toLocaleDateString('pt-BR')}
-                    </span>
+                    <DialogContainer>
+                      <DialogHeader
+                        icon={CircleXIcon}
+                        className='border-none'
+                        iconClassName='text-error bg-error/10'
+                      >
+                        <DialogTitle>Excluir documento?</DialogTitle>
+                        <DialogDescription>
+                          Confirme a exclusão do documento{' '}
+                          <strong>{doc.name}</strong>
+                        </DialogDescription>
+                      </DialogHeader>
 
-                    <span className='text-sm text-gray-500'>{doc.size}</span>
-
-                    {isEditing && (
-                      <Dialog>
-                        <DialogTrigger
-                          size='icon'
-                          variant='ghost'
-                          className='size-8'
+                      <DialogFooter>
+                        <Button
+                          className='flex-1'
+                          variant='destructive'
+                          onClick={() => handleConfirmDelete(doc.id)}
                         >
-                          <Trash2 />
-                        </DialogTrigger>
+                          Excluir documento
+                        </Button>
+                        <DialogClose className='flex-1'>Cancelar</DialogClose>
+                      </DialogFooter>
+                    </DialogContainer>
+                  </Dialog>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
 
-                        <DialogContainer>
-                          <DialogHeader
-                            icon={CircleXIcon}
-                            iconClassName='text-error bg-error/10'
-                          >
-                            <DialogTitle>Excluir documento?</DialogTitle>
-                            <DialogDescription>
-                              Confirme a exclusão do documento{' '}
-                              <strong>{doc.name}</strong>
-                            </DialogDescription>
-                          </DialogHeader>
-
-                          <DialogFooter className='flex'>
-                            <Button
-                              className='flex-1'
-                              type='button'
-                              variant='destructive'
-                              onClick={() => handleConfirmDelete(doc.id)}
-                            >
-                              Excluir documento
-                            </Button>
-
-                            <DialogClose className='flex-1'>
-                              Cancelar
-                            </DialogClose>
-                          </DialogFooter>
-                        </DialogContainer>
-                      </Dialog>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        ))
-      ) : (
-        <p className='text-gray-500'>Nenhum documento encontrado.</p>
-      )}
-
-      <div className='mt-4 flex justify-end'>
-        <Button variant='outline' onClick={() => setIsEditing((prev) => !prev)}>
-          {isEditing ? 'Concluir edição' : 'Editar'}
-        </Button>
-      </div>
-    </section>
+      <Button
+        variant='outline'
+        className='self-end'
+        onClick={() => setIsEditing(!isEditing)}
+      >
+        {isEditing ? 'Concluir edição' : 'Editar'}
+      </Button>
+    </>
   )
 }

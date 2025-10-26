@@ -42,5 +42,9 @@ const PATIENT_SECTIONS = [
 ]
 
 export default function Page() {
+  if (PATIENT_SECTIONS.length === 0) {
+    return <p className='text-foreground-soft'>Nenhum documento encontrado.</p>
+  }
+
   return <PatientsDocuments sections={PATIENT_SECTIONS} />
 }

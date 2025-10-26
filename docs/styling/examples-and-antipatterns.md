@@ -176,11 +176,53 @@ className = 'bg-primary'
 </div>
 ```
 
-**Por quê**: `gap` é mais limpo, mais fácil de manter e funciona com flexbox.
+**Por quê**: `gap` é mais limpo, mais fácil de manter e funciona melhor com flexbox.
 
 ---
 
-### Anti-padrão 5: Classes redundantes em componentes
+### Anti-padrão 5: Usar `space-*` com `flex` ou `grid`
+
+```tsx
+// ❌ Errado (space-* com flex):
+<div className='flex space-x-2'>
+  <Button>Botão 1</Button>
+  <Button>Botão 2</Button>
+  <Button>Botão 3</Button>
+</div>
+
+// ❌ Errado (space-* com grid):
+<div className='grid grid-cols-3 space-y-4'>
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</div>
+
+// ✅ Correto (gap com flex):
+<div className='flex gap-2'>
+  <Button>Botão 1</Button>
+  <Button>Botão 2</Button>
+  <Button>Botão 3</Button>
+</div>
+
+// ✅ Correto (gap com grid):
+<div className='grid grid-cols-3 gap-4'>
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</div>
+
+// ✅ OK (space-* sem flex/grid):
+<div className='space-y-4'>
+  <p>Parágrafo 1</p>
+  <p>Parágrafo 2</p>
+</div>
+```
+
+**Regra**: Com `flex` ou `grid`, use **sempre** `gap-*`. Use `space-*` apenas sem flex/grid.
+
+---
+
+### Anti-padrão 6: Classes redundantes em componentes
 
 **Padrão encontrado**: Passar classes que já estão no componente.
 
@@ -203,7 +245,8 @@ Antes de commitar, verifique:
 - [ ] Sem valores arbitrários como `w-[480px]`, `text-[14px]`, `rounded-[8px]`
 - [ ] Elementos quadrados usam `size-*` em vez de `w-* h-*`
 - [ ] Nenhuma classe é repetida que já exista no componente base
-- [ ] Classes de espaçamento usam `gap` quando apropriado (flex)
+- [ ] Com `flex`: usa `gap-*` (nunca `space-*`)
+- [ ] Sem `flex`: usa `space-*` se necessário para espaçamento
 - [ ] Nunca usa template literals para classes (ex: `` `gap-${spacing}` ``)
 - [ ] Dinâmica usa `cn()` ou CVA, não template literals
 - [ ] `[&_svg]` usado apenas em componentes com múltiplos SVGs, não em ícones isolados
