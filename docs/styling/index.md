@@ -1,6 +1,6 @@
 # Guias de estilização
 
-Bem-vindo ao guia de estilização do projeto! Este diretório contém documentação sobre como usar Tailwind CSS v4 no projeto.
+Bem-vindo ao guia de estilização do projeto! Este diretório contém documentação sobre como usar Tailwind CSS v4.
 
 ## Documentos
 
@@ -15,9 +15,7 @@ Guia completo sobre estilização com Tailwind CSS v4. Inclui:
 - ✅ Breakpoints e responsividade
 - ✅ Dicas de performance
 
-**Comece aqui** se estiver em dúvida sobre como estilizar algo.
-
-### [Examples and Anti-patterns](./examples-and-antipatterns.md)
+### [Exemplos e Anti-patterns](./examples-and-antipatterns.md)
 
 Exemplos práticos do projeto mostrando:
 
@@ -26,8 +24,6 @@ Exemplos práticos do projeto mostrando:
 - ✅ Padrões de espaçamento utilizados
 - ✅ Checklist de estilização
 - ✅ Estrutura recomendada para novos arquivos
-
-**Consulte aqui** para ver exemplos reais e entender o que NÃO fazer.
 
 ---
 
@@ -49,7 +45,7 @@ Exemplos práticos do projeto mostrando:
 2. **Veja exemplos similares** em `src/components/ui/`
 3. **Use CVA para variantes** (se houver múltiplas versões)
 4. **Minimize as classes** - comece com o mínimo necessário
-5. **Revise o checklist** em Examples and Anti-patterns
+5. **Revise o checklist** em Exemplos e Anti-patterns
 
 ### Quando adicionar um novo token
 

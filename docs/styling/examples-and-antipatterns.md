@@ -1,24 +1,10 @@
 # Exemplos práticos e anti-padrões
 
-Este documento mostra exemplos reais do projeto, boas práticas e problemas a evitar.
+Este documento mostra exemplos, boas práticas e problemas a evitar.
 
-## Exemplo### Anti-padrão 3: Cores arbitrárias do Tailwind
+## Exemplos de boas práticas
 
-```tsx
-// ❌ Não faça:
-className = 'border-gray-300'
-className = 'text-red-500'
-className = 'bg-blue-600'
-
-// ✅ Faça:
-className = 'border-border'
-className = 'text-error'
-className = 'bg-primary'
-```
-
-### Anti-padrão 4: Margin quando gap seria melhorcas
-
-### 1. Uso de `size-*` em ícones
+### 1. Uso de `size-*`
 
 Vários componentes do projeto usam corretamente `size-*`:
 
@@ -144,7 +130,7 @@ className = 'h-[var(--popover-height)] w-full'
 
 ---
 
-### Anti-padrão 3: `min-size-` sem `size-`
+### Anti-padrão 3: Cores fora do design system
 
 ```tsx
 // ❌ Não faça:
@@ -158,7 +144,7 @@ className = 'text-error'
 className = 'bg-primary'
 ```
 
-### Anti-padrão 4: Margin quando gap seria melhor
+### Anti-padrão 4: `Margin` quando `gap` seria melhor
 
 ```tsx
 // ⚠️ Menos ideal (margin em cada item):

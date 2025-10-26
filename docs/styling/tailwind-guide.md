@@ -2,9 +2,7 @@
 
 ## Visão geral
 
-Este projeto utiliza **Tailwind CSS v4** com um design system consolidado. Os tokens de cor, tipografia e espaçamento estão centralizados em `src/app/globals.css`.
-
-O objetivo deste guia é garantir consistência, reduzir o tamanho do bundle e manter o código limpo e legível.
+Este projeto utiliza **Tailwind CSS v4** com um design system consolidado. O objetivo deste guia é garantir consistência, reduzir o tamanho do bundle e manter o código limpo e legível.
 
 ---
 
