@@ -1,7 +1,7 @@
 'use client'
 
 import type { SelectTriggerProps } from '@radix-ui/react-select'
-import { ArrowDownWideNarrow } from 'lucide-react'
+import { ArrowDownWideNarrowIcon } from 'lucide-react'
 
 import { Select, type SelectOptions, SelectValue } from '@/components/ui/select'
 import { SelectContent } from '@/components/ui/select/content'
@@ -38,7 +38,7 @@ export function DataTableHeaderOrderBy({
   return (
     <Select value={orderBy} onValueChange={handleSelect}>
       <SelectTrigger size='sm' className={cn('shrink-0', className)} {...props}>
-        <ArrowDownWideNarrow />
+        <ArrowDownWideNarrowIcon />
         <div className='w-full overflow-hidden text-left text-ellipsis'>
           <SelectValue placeholder='Ordenar por...' />
         </div>

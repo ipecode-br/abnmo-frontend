@@ -1,6 +1,6 @@
 'use client'
 
-import { File } from 'lucide-react'
+import { FileIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Pagination } from '@/components/pagination'
@@ -130,7 +130,7 @@ export function SentTable() {
             <TableRow key={sent.id}>
               <TableCell className='flex items-center gap-1.5 py-2'>
                 <span className='text-disabled/50'>
-                  <File size={32} strokeWidth={0.5} />
+                  <FileIcon size={32} strokeWidth={0.5} />
                 </span>
                 <span>{sent.formName}</span>
               </TableCell>

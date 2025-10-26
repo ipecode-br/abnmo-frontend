@@ -1,4 +1,4 @@
-import { CircleAlert } from 'lucide-react'
+import { CircleAlertIcon } from 'lucide-react'
 
 import { Button } from '../ui/button'
 import { DialogClose } from '../ui/dialog/close'
@@ -18,7 +18,7 @@ export default function CancelPatientCreationModal({
   return (
     <DialogContainer>
       <DialogHeader
-        icon={CircleAlert}
+        icon={CircleAlertIcon}
         iconClassName='bg-error/10 text-error'
         className='border-none'
       >

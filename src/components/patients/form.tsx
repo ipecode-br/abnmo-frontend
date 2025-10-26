@@ -5,8 +5,8 @@ import {
   CircleCheckIcon,
   CircleXIcon,
   ClipboardEditIcon,
-  Plus,
-  Trash2,
+  PlusIcon,
+  Trash2Icon,
   UserPlus2Icon,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -344,7 +344,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
                       onClick={() => remove(index)}
                       disabled={isViewMode}
                     >
-                      <Trash2 />
+                      <Trash2Icon />
                     </Button>
                   </div>
                 </React.Fragment>
@@ -357,7 +357,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
               onClick={() => append({ name: '', kinship: '', phone: '' })}
               disabled={isViewMode}
             >
-              <Plus /> Adicionar novo contato
+              <PlusIcon /> Adicionar novo contato
             </Button>
           </div>
         )}
@@ -400,7 +400,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
                       disabled={index === 0}
                       onClick={() => (index > 0 ? remove(index) : null)}
                     >
-                      <Trash2 />
+                      <Trash2Icon />
                     </Button>
                   </div>
                 </React.Fragment>
@@ -412,7 +412,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
               onClick={() => append({ name: '', kinship: '', phone: '' })}
               disabled={isViewMode}
             >
-              <Plus /> Adicionar novo contato
+              <PlusIcon /> Adicionar novo contato
             </Button>
           </div>
         )}
@@ -441,11 +441,13 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
               <Button type='submit' loading={isPending}>
                 {formState === 'create' ? (
                   <>
-                    <UserPlus2Icon /> Cadastrar
+                    <UserPlus2Icon />
+                    <span>Cadastrar</span>
                   </>
                 ) : (
                   <>
-                    <CircleCheckIcon /> Salvar
+                    <CircleCheckIcon />
+                    <span>Salvar</span>
                   </>
                 )}
               </Button>

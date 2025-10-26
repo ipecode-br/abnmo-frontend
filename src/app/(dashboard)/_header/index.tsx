@@ -1,4 +1,4 @@
-import { Bell, CircleHelp } from 'lucide-react'
+import { BellIcon, CircleHelpIcon } from 'lucide-react'
 
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
@@ -19,7 +19,7 @@ export function DashboardHeader() {
             className='rounded-full'
             aria-label='Ajuda'
           >
-            <CircleHelp className='text-foreground-soft' />
+            <CircleHelpIcon className='text-foreground-soft' />
           </Button>
 
           <Button
@@ -28,7 +28,7 @@ export function DashboardHeader() {
             className='rounded-full'
             aria-label='Notificações'
           >
-            <Bell className='text-foreground-soft' />
+            <BellIcon className='text-foreground-soft' />
           </Button>
         </section>
       </header>

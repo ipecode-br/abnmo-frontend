@@ -1,12 +1,12 @@
 'use client'
 
 import {
-  ClipboardClock,
-  ClipboardList,
-  ClipboardPen,
+  ClipboardCheckIcon,
+  ClipboardListIcon,
+  ClipboardPenIcon,
   EllipsisIcon,
   Users2Icon,
-  XCircle,
+  XCircleIcon,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -116,15 +116,15 @@ export default function DashboardOverviewAppointments() {
 
                     <DropdownMenuContent align='end'>
                       <DropdownMenuItem>
-                        <ClipboardPen />
+                        <ClipboardPenIcon />
                         Editar
                       </DropdownMenuItem>
                       <DropdownMenuItem>
-                        <ClipboardList />
+                        <ClipboardListIcon />
                         Informações do paciente
                       </DropdownMenuItem>
                       <DropdownMenuItem>
-                        <ClipboardClock />
+                        <ClipboardCheckIcon />
                         Histórico do paciente
                       </DropdownMenuItem>
 
@@ -134,7 +134,7 @@ export default function DashboardOverviewAppointments() {
                         variant='destructive'
                         className='text-center'
                       >
-                        <XCircle />
+                        <XCircleIcon />
                         Cancelar
                       </DropdownMenuItem>
                     </DropdownMenuContent>
