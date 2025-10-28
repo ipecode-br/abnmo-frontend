@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavProps, useDayPicker } from 'react-day-picker'
 
@@ -75,7 +75,7 @@ export function CalendarDropdownNav({
         onClick={onPreviousClick}
         disabled={!previousMonth}
       >
-        <ChevronLeft />
+        <ChevronLeftIcon />
       </Button>
 
       <Select
@@ -124,7 +124,7 @@ export function CalendarDropdownNav({
         onClick={onNextClick}
         disabled={!nextMonth}
       >
-        <ChevronRight />
+        <ChevronRightIcon />
       </Button>
     </div>
   )

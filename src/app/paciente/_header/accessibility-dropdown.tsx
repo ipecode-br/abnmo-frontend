@@ -1,6 +1,6 @@
 'use client'
 
-import { Accessibility, ALargeSmall, Contrast } from 'lucide-react'
+import { AccessibilityIcon, ALargeSmallIcon, ContrastIcon } from 'lucide-react'
 
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
@@ -16,20 +16,20 @@ export function PatientHeaderAccessibilityDropdown() {
         className='rounded-full [&_svg]:size-5'
         indicator={false}
       >
-        <Accessibility />
+        <AccessibilityIcon />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align='end'>
         <DropdownMenuItem>
-          <ALargeSmall /> Aumentar texto
+          <ALargeSmallIcon /> Aumentar texto
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <ALargeSmall /> Diminuir texto
+          <ALargeSmallIcon /> Diminuir texto
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Contrast /> Alto Contraste
+          <ContrastIcon /> Alto Contraste
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
