@@ -1,17 +1,20 @@
-'use client'
-
+import { Metadata } from 'next'
 import React from 'react'
 
 import { PatientRequirementCard } from '@/components/PatientRequirementCard/PatientRequirementCard'
 
+export const metadata: Metadata = {
+  title: 'Pendentes',
+}
+
 export default function Page() {
   return (
-    <div className='min-h-screen bg-[var(--color-background)] p-8'>
+    <div className='bg-background min-h-screen p-8'>
       <div className='mb-8'>
-        <h1 className='text-2xl font-bold text-[var(--color-foreground)]'>
+        <h1 className='text-foreground text-2xl font-bold'>
           Documentos Pendentes
         </h1>
-        <p className='mt-2 text-[var(--color-foreground-soft)]'>
+        <p className='text-foreground-soft mt-2'>
           Aqui você acompanha seus formulários pendentes e pode preenchê-los
           diretamente no portal.
         </p>

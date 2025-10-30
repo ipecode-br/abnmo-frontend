@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import React from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -11,41 +12,41 @@ type PatientRequirementCardProps = {
   imageUrl: string
 }
 
-export const PatientRequirementCard: React.FC<PatientRequirementCardProps> = ({
+export function PatientRequirementCard({
   title,
   createdAt,
   status,
   imageUrl,
-}) => {
+}: PatientRequirementCardProps) {
   const statusColors: Record<string, { bg: string; text: string }> = {
     Pendente: {
-      bg: 'bg-[var(--color-warning)]/10',
-      text: 'text-[var(--color-warning)]',
+      bg: 'bg-warning/10',
+      text: 'text-warning',
     },
     Aprovado: {
-      bg: 'bg-[var(--color-success)]/10',
-      text: 'text-[var(--color-success)]',
+      bg: 'bg-success/10',
+      text: 'text-success',
     },
     'Em análise': {
-      bg: 'bg-[var(--color-primary)]/10',
-      text: 'text-[var(--color-primary)]',
+      bg: 'bg-primary/10',
+      text: 'text-primary',
     },
   }
 
   const color = statusColors[status] || statusColors['Pendente']
 
   return (
-    <div className='rounded-2xl bg-[var(--color-card)] p-4 shadow transition-all hover:shadow-md'>
-      <img
+    <div className='bg-card rounded-2xl p-4 shadow transition-all hover:shadow-md'>
+      <Image
         src={imageUrl}
         alt={title}
+        width={400}
+        height={160}
         className='mb-4 h-40 w-full rounded-xl object-cover'
       />
 
-      <h3 className='text-lg font-semibold text-[var(--color-foreground)]'>
-        {title}
-      </h3>
-      <p className='mt-1 text-sm text-[var(--color-foreground-soft)]'>
+      <h3 className='text-foreground text-lg font-semibold'>{title}</h3>
+      <p className='text-foreground-soft mt-1 text-sm'>
         Criado em: {createdAt}
       </p>
 
@@ -59,7 +60,7 @@ export const PatientRequirementCard: React.FC<PatientRequirementCardProps> = ({
         <Button
           variant='default'
           size='sm'
-          className='bg-[var(--color-primary)] text-[var(--color-primary-foreground)] transition-colors hover:bg-[var(--color-primary-soft)]'
+          className='bg-primary text-primary-foreground hover:bg-primary-soft transition-colors'
         >
           Preencher Agora
         </Button>
