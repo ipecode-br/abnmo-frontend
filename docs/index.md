@@ -15,6 +15,8 @@ Este é um projeto Next.js construído com TypeScript, utilizando as melhores pr
 
 ### Componentes
 
+- **[Ícones](./components/icons.md)** - Como utilizar ícones do Lucide de forma otimizada
+- **[Modais](./components/modal.md)** - Como criar modais e dialogs no projeto
 - **[Formulários](./components/form.md)** - Como criar formulários com React Hook Form e Zod
 - **[Tabelas](./components/table.md)** - Como criar tabelas de dados com filtros e paginação
 
