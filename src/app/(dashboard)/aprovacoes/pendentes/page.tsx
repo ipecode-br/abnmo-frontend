@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Envio Pendente',
+  title: 'Envios pendentes',
 }
 
 export default function Page() {
-  return <p>Envio Pendente</p>
+  return <p>Envios pendentes</p>
 }

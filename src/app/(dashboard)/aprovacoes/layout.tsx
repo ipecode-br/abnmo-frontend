@@ -7,12 +7,12 @@ export default function Layout({
 }: Readonly<{ children: React.ReactNode }>) {
   const tabButtons = [
     {
-      title: 'Aprovação Pendente',
+      title: 'Aprovações pendentes',
       path: ROUTES.dashboard.approvals.main,
     },
     {
-      title: 'Envio pendente',
-      path: ROUTES.dashboard.approvals.pendingSubmission,
+      title: 'Envios pendentes',
+      path: ROUTES.dashboard.approvals.pending,
     },
     {
       title: 'Aprovados',
