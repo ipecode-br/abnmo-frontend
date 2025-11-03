@@ -13,13 +13,15 @@ export function SidebarHeader() {
   return (
     <header className='relative flex items-center'>
       <Link href={ROUTES.dashboard.main}>
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center'>
           <Image src={icon} alt='Símbolo do SVM' className='size-10 shrink-0' />
           <span
             data-visible={expanded}
-            className='text-lg font-bold opacity-0 transition-opacity duration-200 data-[visible=true]:opacity-100 data-[visible=true]:delay-150'
+            className='text-primary absolute left-13 text-lg leading-none font-bold whitespace-nowrap opacity-0 transition-opacity duration-200 data-[visible=true]:opacity-100 data-[visible=true]:delay-150'
           >
-            SVM
+            Sistema
+            <br />
+            Viver Melhor
           </span>
         </div>
       </Link>

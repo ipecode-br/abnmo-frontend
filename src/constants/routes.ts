@@ -33,6 +33,8 @@ export const ROUTES = {
     },
     approvals: {
       main: '/aprovacoes',
+      pending: '/aprovacoes/pendentes',
+      approved: '/aprovacoes/aprovados',
     },
     teams: {
       main: '/equipes',

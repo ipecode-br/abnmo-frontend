@@ -1,10 +1,9 @@
 import {
   BoltIcon,
-  HeadsetIcon,
+  HeartHandshakeIcon,
   LayoutDashboardIcon,
   Share2Icon,
   UserRoundCheckIcon,
-  UserRoundCogIcon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -37,7 +36,7 @@ export async function DashboardSidebar() {
 
 const SIDEBAR_SECTIONS = [
   {
-    title: 'Geral',
+    id: 'common',
     links: [
       {
         label: 'Visão Geral',
@@ -59,26 +58,26 @@ const SIDEBAR_SECTIONS = [
         icon: <UserRoundCheckIcon />,
         path: ROUTES.dashboard.approvals.main,
       },
+      {
+        label: 'Equipe',
+        icon: <HeartHandshakeIcon />,
+        path: ROUTES.dashboard.teams.main,
+      },
     ],
   },
   {
-    title: 'Outros',
+    id: 'others',
     links: [
-      {
-        label: 'Equipes',
-        icon: <UserRoundCogIcon />,
-        path: ROUTES.dashboard.teams.main,
-      },
       {
         label: 'Configurações',
         icon: <BoltIcon />,
         path: ROUTES.dashboard.settings.main,
       },
-      {
-        label: 'Suporte',
-        icon: <HeadsetIcon />,
-        path: ROUTES.dashboard.support.main,
-      },
+      // {
+      //   label: 'Suporte',
+      //   icon: <HeadsetIcon />,
+      //   path: ROUTES.dashboard.support.main,
+      // },
     ],
   },
 ]
