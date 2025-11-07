@@ -1,5 +1,5 @@
 import { ApprovalsListTable } from './approvals-list-table'
 
-export default function ApprovedPage() {
+export default function Page() {
   return <ApprovalsListTable />
 }
