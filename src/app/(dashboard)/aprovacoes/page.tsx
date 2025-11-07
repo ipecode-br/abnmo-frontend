@@ -131,7 +131,7 @@ export default function Page() {
         </Button>
       </section>
 
-      <Card className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
+      <Card className='grid grid-cols-1 gap-4 md:grid-cols-3'>
         {approvalsPending.map((person) => (
           <Card key={person.id} className='flex flex-col gap-2.5'>
             <div className='flex flex-col gap-1'>
@@ -142,11 +142,11 @@ export default function Page() {
               </div>
             </div>
 
-            <div className='flex flex-wrap items-center gap-2'>
+            <div className='flex flex-wrap gap-2'>
               <span className='font-medium -tracking-tight'>
                 Tipo de solicitação:
               </span>
-              <span className='bg-primary-soft/30 text-primary ml-2 rounded-lg px-2 py-0.5 text-sm capitalize'>
+              <span className='bg-primary-soft/30 text-primary rounded-lg px-2 py-0.5 text-sm capitalize'>
                 {person.type}
               </span>
             </div>
