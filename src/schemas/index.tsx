@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { DOCUMENTS_TUPLE } from '@/constants/documents'
 import { UF_LIST, YES_OR_NO_TUPLE } from '@/constants/enums'
 import {
   CPF_REGEX,
@@ -60,4 +61,8 @@ export const kinshipSchema = z
 
 export const yesOrNoSchema = z.enum(YES_OR_NO_TUPLE, {
   message: 'Selecione "Sim" ou "Não"',
+})
+
+export const documentTypeSchema = z.enum(DOCUMENTS_TUPLE, {
+  message: 'Selecione um tipo de documento válido',
 })
