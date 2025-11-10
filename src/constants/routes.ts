@@ -30,6 +30,7 @@ export const ROUTES = {
     },
     forwarded: {
       main: '/encaminhados',
+      referrals: '/encaminhados/encaminhamentos',
     },
     approvals: {
       main: '/aprovacoes',
