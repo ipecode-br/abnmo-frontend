@@ -28,9 +28,9 @@ export const ROUTES = {
         history: (id: string) => `/pacientes/${id}/historico`,
       },
     },
-    forwarded: {
+    referrals: {
       main: '/encaminhados',
-      referrals: '/encaminhados/encaminhamentos',
+      list: '/encaminhados/encaminhamentos',
     },
     approvals: {
       main: '/aprovacoes',
