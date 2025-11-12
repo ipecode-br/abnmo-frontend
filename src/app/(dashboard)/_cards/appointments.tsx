@@ -1,16 +1,16 @@
 'use client'
 
 import {
-  ClipboardClock,
-  ClipboardList,
-  ClipboardPen,
+  ClipboardCheckIcon,
+  ClipboardListIcon,
+  ClipboardPenIcon,
   EllipsisIcon,
-  PlusIcon,
   Users2Icon,
-  XCircle,
+  XCircleIcon,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
+import { NewAppointmentButton } from '@/components/appointments/new-button'
 import { DataTableHeader } from '@/components/data-table/header'
 import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
@@ -55,10 +55,7 @@ export default function DashboardOverviewAppointments() {
             Ver todos
           </Button>
 
-          <Button size='sm'>
-            <PlusIcon />
-            Novo atendimento
-          </Button>
+          <NewAppointmentButton size='sm' />
         </DataTableHeaderActions>
       </DataTableHeader>
 
@@ -119,15 +116,15 @@ export default function DashboardOverviewAppointments() {
 
                     <DropdownMenuContent align='end'>
                       <DropdownMenuItem>
-                        <ClipboardPen />
+                        <ClipboardPenIcon />
                         Editar
                       </DropdownMenuItem>
                       <DropdownMenuItem>
-                        <ClipboardList />
+                        <ClipboardListIcon />
                         Informações do paciente
                       </DropdownMenuItem>
                       <DropdownMenuItem>
-                        <ClipboardClock />
+                        <ClipboardCheckIcon />
                         Histórico do paciente
                       </DropdownMenuItem>
 
@@ -137,7 +134,7 @@ export default function DashboardOverviewAppointments() {
                         variant='destructive'
                         className='text-center'
                       >
-                        <XCircle />
+                        <XCircleIcon />
                         Cancelar
                       </DropdownMenuItem>
                     </DropdownMenuContent>

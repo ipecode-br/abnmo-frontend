@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Check } from 'lucide-react'
+import { CheckIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
 
@@ -21,7 +21,7 @@ export function Checkbox({ size = 'sm', ...props }: Readonly<CheckboxProps>) {
       <CheckboxPrimitive.Indicator
         className={cn('flex items-center justify-center')}
       >
-        <Check
+        <CheckIcon
           className={cn(size === 'sm' && 'size-3', size === 'md' && 'size-4')}
           strokeWidth={3}
         />
