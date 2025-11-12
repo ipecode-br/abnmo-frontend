@@ -91,3 +91,22 @@ export const PATIENT_CONDITION_ICONS_AND_COLOR = {
     iconClassName: 'fill-foreground-soft',
   },
 }
+
+export const PATIENT_REQUIREMENT_STATUS = {
+  pending: 'Pendente',
+  under_review: 'Em análise',
+  approved: 'Aprovado',
+  declined: 'Recusado',
+} as const
+export type PatientRequirementStatusType =
+  keyof typeof PATIENT_REQUIREMENT_STATUS
+
+export type PatientRequirementType = {
+  id: string
+  type: string
+  title: string
+  status: PatientRequirementStatusType
+  submitted_at: string | null
+  approved_at: string | null
+  created_at: string
+}
