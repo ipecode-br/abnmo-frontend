@@ -1,45 +1,48 @@
 import { Metadata } from 'next'
 import React from 'react'
 
-import { PatientRequirementCard } from '@/components/PatientRequirementCard/PatientRequirementCard'
+import { getProfile } from '@/actions/users'
+import { PatientRequirementCard } from '@/modules/patients/cards/patient-requirement-card'
+import type { PatientRequirementType } from '@/types/patients'
 
 export const metadata: Metadata = {
   title: 'Pendentes',
 }
 
-export default function Page() {
-  return (
-    <div className='bg-background min-h-screen p-8'>
-      <div className='mb-8'>
-        <h1 className='text-foreground text-2xl font-bold'>
-          Documentos Pendentes
-        </h1>
-        <p className='text-foreground-soft mt-2'>
-          Aqui você acompanha seus formulários pendentes e pode preenchê-los
-          diretamente no portal.
-        </p>
-      </div>
+export default async function Page() {
+  const patient = await getProfile()
 
-      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-        <PatientRequirementCard
-          title='Formulário de Triagem'
-          createdAt='23/10/2024'
-          status='Pendente'
-          imageUrl='/images/formulario-triagem.jpg'
-        />
-        <PatientRequirementCard
-          title='Autorização de Tratamento'
-          createdAt='18/10/2024'
-          status='Em análise'
-          imageUrl='/images/autorizacao-tratamento.jpg'
-        />
-        <PatientRequirementCard
-          title='Consentimento Médico'
-          createdAt='15/10/2024'
-          status='Aprovado'
-          imageUrl='/images/consentimento-medico.jpg'
-        />
+  const patientName = patient ? `, ${patient.name}` : ''
+
+  // TODO: remove this mock data when integrating with API
+  const requirement: PatientRequirementType = {
+    id: '1',
+    type: 'form',
+    title: 'Formulário de Anamnese',
+    created_at: '2024-10-20',
+    status: 'pending',
+    submitted_at: null,
+    approved_at: null,
+  }
+
+  return (
+    <>
+      <h1 className='mt-4 text-2xl font-medium'>
+        Bem-vindo(a) ao Portal do Paciente{patientName}!
+      </h1>
+      <p className='text-foreground-soft mt-2'>
+        Aqui você acompanha seus formulários pendentes, enviados e suas
+        informações principais na ABNMO.
+      </p>
+
+      <div className='bg-background-soft mt-12 grid gap-4 rounded-3xl p-8 sm:grid-cols-2 lg:grid-cols-3'>
+        <h2 className='text-xl font-medium sm:col-span-2 lg:col-span-3'>
+          Você possui solicitações pendentes
+        </h2>
+        <PatientRequirementCard requirement={requirement} />
+        <PatientRequirementCard requirement={requirement} />
+        <PatientRequirementCard requirement={requirement} />
       </div>
-    </div>
+    </>
   )
 }
