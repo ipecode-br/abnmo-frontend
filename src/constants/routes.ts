@@ -28,11 +28,14 @@ export const ROUTES = {
         history: (id: string) => `/pacientes/${id}/historico`,
       },
     },
-    forwarded: {
+    referrals: {
       main: '/encaminhados',
+      list: '/encaminhados/encaminhamentos',
     },
     approvals: {
       main: '/aprovacoes',
+      pending: '/aprovacoes/pendentes',
+      approved: '/aprovacoes/aprovados',
     },
     teams: {
       main: '/equipes',

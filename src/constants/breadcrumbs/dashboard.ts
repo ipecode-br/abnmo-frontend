@@ -3,6 +3,7 @@ import {
   PaperclipIcon,
   User2Icon,
   UserCog2Icon,
+  UserRoundCheckIcon,
   UserRoundPlusIcon,
   Users2Icon,
 } from 'lucide-react'
@@ -40,5 +41,10 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
     icon: UserCog2Icon,
     name: 'Equipes',
     path: ROUTES.dashboard.teams.main,
+  },
+  aprovacoes: {
+    icon: UserRoundCheckIcon,
+    name: 'Aprovações',
+    path: ROUTES.dashboard.approvals.main,
   },
 }
