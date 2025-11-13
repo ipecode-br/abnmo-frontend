@@ -7,12 +7,12 @@ export default function Layout({
 }: Readonly<{ children: React.ReactNode }>) {
   const tabButtons = [
     {
-      title: 'Dados Gerais',
-      path: ROUTES.dashboard.forwarded.main,
+      title: 'Dados gerais',
+      path: ROUTES.dashboard.referrals.main,
     },
     {
       title: 'Encaminhamentos',
-      path: ROUTES.dashboard.forwarded.referrals,
+      path: ROUTES.dashboard.referrals.list,
     },
   ]
 

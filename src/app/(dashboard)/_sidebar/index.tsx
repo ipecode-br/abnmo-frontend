@@ -51,7 +51,7 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Encaminhados',
         icon: <Share2Icon />,
-        path: ROUTES.dashboard.forwarded.main,
+        path: ROUTES.dashboard.referrals.main,
       },
       {
         label: 'Aprovações',
