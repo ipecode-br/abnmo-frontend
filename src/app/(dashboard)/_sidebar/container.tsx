@@ -31,7 +31,7 @@ export function DashboardSidebarContainer({
         data-expanded={expanded}
         className={cn(
           'text-disabled hover:text-foreground-soft absolute top-20 -right-4 size-8 rounded-full transition-all delay-75 duration-300 [&_svg]:size-5',
-          'data-[expanded=true]:rotate-180',
+          'data-[expanded=true]:top-6 data-[expanded=true]:-right-4 data-[expanded=true]:rotate-180',
         )}
         onClick={toogleSidebar}
       >

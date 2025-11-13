@@ -41,6 +41,10 @@ export const ROUTES = {
       main: '/equipes',
       specialists: '/equipes/especialistas',
     },
+    teams: {
+      main: '/equipes',
+      specialists: '/equipes/especialistas',
+    },
     settings: {
       main: '/configuracoes',
     },

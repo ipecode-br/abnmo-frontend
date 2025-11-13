@@ -1,11 +1,6 @@
 'use client'
 
-import {
-  ClipboardPenIcon,
-  EllipsisIcon,
-  PlusIcon,
-  XCircleIcon,
-} from 'lucide-react'
+import { ClipboardPen, EllipsisIcon, PlusIcon, XCircle } from 'lucide-react'
 import { useState } from 'react'
 
 import { DataTableHeader } from '@/components/data-table/header'
@@ -145,7 +140,7 @@ export function MembersListTable() {
 
                       <DropdownMenuContent align='end'>
                         <DropdownMenuItem>
-                          <ClipboardPenIcon />
+                          <ClipboardPen />
                           Editar
                         </DropdownMenuItem>
 
@@ -155,7 +150,7 @@ export function MembersListTable() {
                           variant='destructive'
                           className='text-center'
                         >
-                          <XCircleIcon />
+                          <XCircle />
                           Desativar
                         </DropdownMenuItem>
                       </DropdownMenuContent>
