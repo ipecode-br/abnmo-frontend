@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
-import { ApprovalsListTable } from './approvals-list-table'
+import { ApprovedPatientRequirementsListTable } from '@/modules/patient-requirements/approved-list-table'
 
 export const metadata: Metadata = {
   title: 'Aprovados',
 }
 
 export default function Page() {
-  return <ApprovalsListTable />
+  return <ApprovedPatientRequirementsListTable />
 }
