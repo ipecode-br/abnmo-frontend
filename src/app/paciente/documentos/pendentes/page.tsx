@@ -3,7 +3,7 @@ import React from 'react'
 
 import { getProfile } from '@/actions/users'
 import { PatientRequirementCard } from '@/modules/patients/cards/patient-requirement-card'
-import type { PatientRequirementType } from '@/types/patients'
+import type { PatientRequirement } from '@/types/patient-requirements'
 
 export const metadata: Metadata = {
   title: 'Pendentes',
@@ -15,14 +15,15 @@ export default async function Page() {
   const patientName = patient ? `, ${patient.name}` : ''
 
   // TODO: remove this mock data when integrating with API
-  const requirement: PatientRequirementType = {
+  const requirement: PatientRequirement = {
     id: '1',
-    type: 'form',
-    title: 'Formulário de Anamnese',
-    created_at: '2024-10-20',
+    type: 'screening',
     status: 'pending',
+    description: null,
+    created_at: '2024-10-20',
     submitted_at: null,
     approved_at: null,
+    patient: { id: '2', name: 'Paciente Exemplo', avatar_url: null },
   }
 
   return (

@@ -132,7 +132,9 @@ export function ApprovedPatientRequirementsListTable() {
                     />
                     <span className='truncate'>{requirement.patient.name}</span>
                   </TableCell>
-                  <TableCell>{formatDate(requirement.approved_at)}</TableCell>
+                  <TableCell>
+                    {formatDate(requirement.approved_at ?? '-')}
+                  </TableCell>
                   <TableCell>
                     <Tag>{PATIENT_REQUIREMENT_TYPES[requirement.type]}</Tag>
                   </TableCell>

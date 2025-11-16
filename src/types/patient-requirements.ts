@@ -32,8 +32,8 @@ export type PatientRequirement = {
   type: PatientRequirementsType
   status: PatientRequirementStatus
   description: string | null
-  submitted_at: string
-  approved_at: string
+  submitted_at: string | null
+  approved_at: string | null
   created_at: string
   patient: {
     id: string
