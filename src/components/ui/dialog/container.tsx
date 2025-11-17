@@ -31,7 +31,7 @@ export function DialogContainer({
           <DialogPrimitive.Close
             className={cn(
               buttonVariants({ variant: 'ghost', size: 'icon' }),
-              'hover:text-foreground text-foreground-soft absolute top-3 right-3 size-8 [&_svg]:size-4',
+              'hover:text-foreground text-foreground-soft absolute top-3 right-3 size-8',
             )}
           >
             <XIcon />

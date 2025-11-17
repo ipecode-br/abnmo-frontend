@@ -115,7 +115,7 @@ export function ApprovedPatientRequirementsListTable() {
                 <TableCell colSpan={4} className='py-4 text-center'>
                   {hasActiveFilters
                     ? 'Nenhuma aprovação encontrada para os filtros aplicados.'
-                    : 'Nenhuma aprovação encontrada'}
+                    : 'Nenhuma aprovação encontrada.'}
                 </TableCell>
               </TableRow>
             </TableBody>

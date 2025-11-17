@@ -8,7 +8,7 @@ export function DialogDescription({
 }: Readonly<React.ComponentProps<typeof DialogPrimitive.Description>>) {
   return (
     <DialogPrimitive.Description
-      className={cn('text-foreground-soft text-sm', className)}
+      className={cn('text-foreground-soft', className)}
       {...props}
     />
   )

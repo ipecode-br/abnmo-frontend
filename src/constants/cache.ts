@@ -10,6 +10,7 @@ export const QUERY_CACHE_KEYS = {
   profile: 'profile',
   patients: 'patients',
   approvals: {
+    pending: 'approvals-pending',
     approved: 'approvals-approved',
   },
   dashboard: {
