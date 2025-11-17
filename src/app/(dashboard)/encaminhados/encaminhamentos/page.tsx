@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Encaminhados',
+  title: 'Encaminhamentos',
 }
-
 export default function Page() {
-  return <p>Dados Gerais</p>
+  return <p>Encaminhamentos</p>
 }
