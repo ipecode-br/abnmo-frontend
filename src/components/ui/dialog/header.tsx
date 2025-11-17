@@ -30,7 +30,7 @@ export function DialogHeader({
         </div>
       )}
 
-      <div>{props.children}</div>
+      <div className='flex flex-col gap-1'>{props.children}</div>
     </header>
   )
 }

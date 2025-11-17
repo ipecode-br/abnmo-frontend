@@ -8,7 +8,7 @@ export function DialogTitle({
 }: Readonly<React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>>) {
   return (
     <DialogPrimitive.Title
-      className={cn('text-lg font-medium', className)}
+      className={cn('text-xl font-medium', className)}
       {...props}
     />
   )
