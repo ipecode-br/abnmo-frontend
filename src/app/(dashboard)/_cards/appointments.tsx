@@ -47,7 +47,7 @@ export default function DashboardOverviewAppointments() {
         <DataTableHeaderInfo
           icon={<Users2Icon />}
           iconClassName='text-foreground-soft'
-          emptyTitle='Fila de atendimento'
+          title='Fila de atendimento'
         />
 
         <DataTableHeaderActions>

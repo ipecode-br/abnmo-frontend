@@ -108,7 +108,6 @@ export function PatientsListTable() {
           icon={<Users2Icon />}
           total={stableTotal}
           title='Pacientes cadastrados'
-          emptyTitle='Nenhum paciente cadastrado'
         />
         <DataTableHeaderActions>
           <DataTableHeaderSearch placeholder='Pesquisar nome...' />
