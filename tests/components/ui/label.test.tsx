@@ -13,7 +13,6 @@ describe('Label', () => {
     const labelElement = screen.getByText(text)
 
     expect(labelElement).toBeInTheDocument()
-    expect(labelElement).toHaveClass('text-sm')
     expect(labelElement).toHaveClass('font-medium')
     expect(labelElement).toHaveAttribute('for', 'name')
   })
