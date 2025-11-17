@@ -25,11 +25,14 @@ export const PATIENT_REQUIREMENT_TYPES = {
   screening: 'Triagem',
   medical_report: 'Laudo',
 }
-export type PatientRequirementsType = keyof typeof PATIENT_REQUIREMENT_TYPES
+export type PatientRequirementType = keyof typeof PATIENT_REQUIREMENT_TYPES
+export const PATIENT_REQUIREMENT_TYPE_OPTIONS = convertObjectToOptions(
+  PATIENT_REQUIREMENT_TYPES,
+)
 
 export type PatientRequirement = {
   id: string
-  type: PatientRequirementsType
+  type: PatientRequirementType
   status: PatientRequirementStatus
   description: string | null
   submitted_at: string | null

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
-import { PatientPendingRequirements } from './patient-pending-requirements'
+import { PendingPatientRequirements } from '@/modules/patient-requirements/pending-requirements'
 
 export const metadata: Metadata = {
   title: 'Envios pendentes',
 }
 
 export default function Page() {
-  return <PatientPendingRequirements />
+  return <PendingPatientRequirements />
 }

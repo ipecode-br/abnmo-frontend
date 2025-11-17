@@ -3,8 +3,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
+import { TextareaInput } from '@/components/form/textarea-input'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog/close'
 import { DialogContainer } from '@/components/ui/dialog/container'
@@ -13,42 +15,38 @@ import { DialogDescription } from '@/components/ui/dialog/description'
 import { DialogFooter } from '@/components/ui/dialog/footer'
 import { DialogHeader } from '@/components/ui/dialog/header'
 import { DialogTitle } from '@/components/ui/dialog/title'
-import { DOCUMENT_OPTIONS } from '@/constants/documents'
-import { documentTypeSchema } from '@/schemas'
+import { PATIENT_REQUIREMENT_TYPE_OPTIONS } from '@/types/patient-requirements'
 
-import { FormContainer } from '../../../../components/form/form-container'
-import { TextareaInput } from '../../../../components/form/textarea-input'
+const patientRequirementFormSchema = z.object({
+  name: z.string().min(1, 'O nome do paciente é obrigatório'),
+  type: z.enum(['medical_report', 'screening']),
+  description: z
+    .string()
+    .max(500)
+    .transform((value) => (!value ? null : value))
+    .nullable(),
+})
+type PatientRequirementFormSchema = z.infer<typeof patientRequirementFormSchema>
 
-interface PendingModalProps {
+interface PatientRequirementModalProps {
   onOpenChange: (open: boolean) => void
 }
 
-const pendingRequirementsFormSchema = z.object({
-  patient_name: z.string().min(1, 'O nome do paciente é obrigatório'),
-  document_type: documentTypeSchema,
-  annotation: z
-    .string()
-    .max(500)
-    .nullable()
-    .transform((value) => (!value ? null : value)),
-})
-type PendingRequirementsFormSchema = z.infer<
-  typeof pendingRequirementsFormSchema
->
-
-export function PendingRequirementsModal({ onOpenChange }: PendingModalProps) {
-  const formMethods = useForm<PendingRequirementsFormSchema>({
-    resolver: zodResolver(pendingRequirementsFormSchema),
+export function PatientRequirementModal({
+  onOpenChange,
+}: Readonly<PatientRequirementModalProps>) {
+  const formMethods = useForm<PatientRequirementFormSchema>({
+    resolver: zodResolver(patientRequirementFormSchema),
     defaultValues: {
       patient_name: '',
-      document_type: 'laudo',
-      annotation: '',
-    },
+      document_type: '',
+      description: '',
+    } as unknown as PatientRequirementFormSchema,
     mode: 'onBlur',
   })
 
-  async function submitForm(data: PendingRequirementsFormSchema) {
-    // TODO: Submit form data to API
+  async function submitForm(data: PatientRequirementFormSchema) {
+    // TODO: submit form data to API
     console.log(data)
     onOpenChange(false)
   }
@@ -56,9 +54,9 @@ export function PendingRequirementsModal({ onOpenChange }: PendingModalProps) {
   return (
     <DialogContainer>
       <DialogHeader>
-        <DialogTitle>Adicionar nova pendência</DialogTitle>
+        <DialogTitle>Adicionar solicitação</DialogTitle>
         <DialogDescription>
-          Crie uma nova solicitação de pendência para este paciente e mantenha o
+          Crie uma nova solicitação para este paciente e mantenha o
           acompanhamento atualizado.
         </DialogDescription>
       </DialogHeader>
@@ -69,33 +67,33 @@ export function PendingRequirementsModal({ onOpenChange }: PendingModalProps) {
           className='flex flex-1 flex-col justify-between'
         >
           <DialogContent className='space-y-6'>
-            <TextInput name='patient_name' isRequired label='Paciente' />
+            <TextInput name='name' label='Paciente' isRequired />
 
             <SelectInput
-              name='document_type'
-              label='Pendência'
-              options={DOCUMENT_OPTIONS}
+              name='type'
+              label='Tipo da solicitação'
+              options={PATIENT_REQUIREMENT_TYPE_OPTIONS}
               isRequired
             />
 
             <TextareaInput
-              rows={8}
-              maxLength={200}
-              name='annotation'
-              label='Comentário (Opcional)'
+              rows={6}
+              maxLength={500}
+              name='description'
+              label='Descrição (opcional)'
               placeholder='Adicione detalhes sobre a solicitação...'
             />
           </DialogContent>
 
           <DialogFooter>
             <Button
-              className='flex-1'
               type='submit'
+              className='flex-1'
               loading={formMethods.formState.isSubmitting}
             >
               Confirmar
             </Button>
-            <DialogClose className='flex-1'>Cancelar pendência</DialogClose>
+            <DialogClose className='flex-1'>Cancelar</DialogClose>
           </DialogFooter>
         </FormContainer>
       </FormProvider>
