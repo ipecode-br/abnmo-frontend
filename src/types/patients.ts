@@ -70,8 +70,24 @@ export const PATIENTS_ORDER = {
   email_asc: 'E-mail (Crescente)',
   email_desc: 'E-mail (Decrescente)',
 }
+
 export type PatientsOrderType = keyof typeof PATIENTS_ORDER
 export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDER)
+
+export const PATIENT_REFERRALS_ORDER = {
+  name_asc: 'Nome (Crescente)',
+  name_desc: 'Nome (Decrescente)',
+  date_asc: 'Data (Crescente)',
+  date_desc: 'Data (Decrescente)',
+  general_overview_asc: 'Em surto (Crescente)',
+  general_overview_desc: 'Estável (Decrescente)',
+}
+
+export type PatientsReferralsOrderType = keyof typeof PATIENT_REFERRALS_ORDER
+
+export const PATIENTS_REFERRALS_ORDER_OPTIONS = convertObjectToOptions(
+  PATIENT_REFERRALS_ORDER,
+)
 
 export const PATIENT_CONDITIONS = {
   outbreak: 'Em surto',
