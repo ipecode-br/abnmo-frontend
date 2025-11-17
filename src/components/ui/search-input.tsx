@@ -10,7 +10,7 @@ import { useDebounce } from '@/hooks/debounce'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 
-export function InputSearch({ className, ...props }: Readonly<InputProps>) {
+export function SearchInput({ className, ...props }: Readonly<InputProps>) {
   const queryParam = QUERY_PARAMS.search
   const pageParam = QUERY_PARAMS.page
 
@@ -48,7 +48,7 @@ export function InputSearch({ className, ...props }: Readonly<InputProps>) {
         <Button
           size='icon'
           variant='ghost'
-          title='Limpar pesquisa'
+          title='Limpar busca'
           className='absolute top-0 right-0 size-9 [&_svg]:size-4'
           onClick={() => setQuery('')}
         >

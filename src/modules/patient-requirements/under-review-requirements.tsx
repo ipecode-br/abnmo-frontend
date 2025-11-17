@@ -1,8 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { differenceInDays } from 'date-fns'
-import { Calendar, CircleAlert } from 'lucide-react'
+import { CircleAlertIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { DataTableHeader } from '@/components/data-table/header'
@@ -25,13 +24,11 @@ import {
   PATIENT_REQUIREMENTS_ORDER_OPTIONS,
   type PatientRequirementsOrder,
 } from '@/types/patient-requirements'
-import { cn } from '@/utils/class-name-merge'
-import { formatDate } from '@/utils/formatters/format-date'
 
 import { AddPatientRequirementButton } from './add-patient-requirement-button'
 
-// TODO: add dropdown menu
-export function PendingPatientRequirements() {
+// TODO: add dropdown actions menu
+export function UnderReviewPatientRequirements() {
   const [stableTotal, setStableTotal] = useState(0)
   const { getParam } = useParams()
 
@@ -43,14 +40,14 @@ export function PendingPatientRequirements() {
   const ORDER_MAPPING: OrderMappingType<PatientRequirementsOrder> = {
     name_asc: { orderBy: 'name', order: 'ASC' },
     name_desc: { orderBy: 'name', order: 'DESC' },
-    date_asc: { orderBy: 'date', order: 'ASC' },
-    date_desc: { orderBy: 'date', order: 'DESC' },
+    date_asc: { orderBy: 'submitted_at', order: 'ASC' },
+    date_desc: { orderBy: 'submitted_at', order: 'DESC' },
     type_asc: { orderBy: 'type', order: 'ASC' },
     type_desc: { orderBy: 'type', order: 'DESC' },
   }
 
   const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
-    orderBy: 'date',
+    orderBy: 'submitted_at',
     order: 'DESC',
   }
 
@@ -64,7 +61,7 @@ export function PendingPatientRequirements() {
             page,
             perPage,
             search,
-            status: 'pending',
+            status: 'under_review',
             ...orderByQuery,
           },
         },
@@ -101,61 +98,35 @@ export function PendingPatientRequirements() {
           <div className='text-foreground-soft col-span-full py-8 text-center'>
             {hasActiveFilters
               ? 'Nenhuma aprovação encontrada para os filtros aplicados.'
-              : 'Nenhuma aprovação pendente encontrada.'}
+              : 'Nenhuma aprovação em análise encontrada.'}
           </div>
         )}
 
         {!isEmpty &&
-          requirements.map((requirement) => {
-            const pendingDays = differenceInDays(
-              new Date(),
-              new Date(requirement.created_at),
-            )
+          requirements.map((requirement) => (
+            <Card
+              key={requirement.id}
+              className='flex flex-col gap-1 rounded-xl'
+            >
+              <h3 className='text-lg font-medium'>
+                {requirement.patient.name}
+              </h3>
+              <div className='text-foreground-soft flex items-center gap-1'>
+                <CircleAlertIcon className='text-success size-4.5' />
+                <span>
+                  Recebido{' '}
+                  {getTimeDistanceToNow(requirement.submitted_at ?? '')}
+                </span>
+              </div>
 
-            const severityVariant = () => {
-              if (pendingDays <= 3) return 'info'
-              if (pendingDays <= 7) return 'warning'
-              return 'error'
-            }
-
-            return (
-              <Card
-                key={requirement.id}
-                variant={severityVariant()}
-                className='flex flex-col gap-1 rounded-xl shadow-none'
-              >
-                <h3 className='text-lg font-medium'>
-                  {requirement.patient.name}
-                </h3>
-
-                <div className='text-foreground-soft flex items-center gap-2'>
-                  <span>Pendência:</span>
-                  <Tag size='sm' variant={severityVariant()}>
-                    {PATIENT_REQUIREMENT_TYPES[requirement.type]}
-                  </Tag>
-                </div>
-
-                <div className='text-foreground-soft flex items-center gap-1'>
-                  <Calendar className='text-disabled size-4.5' />
-                  <span>
-                    Solicitado em {formatDate(requirement.created_at)}
-                  </span>
-                </div>
-
-                <div
-                  data-severity={severityVariant()}
-                  className={cn(
-                    'mt-3 flex items-center gap-1.5',
-                    'data-[severity="warning"]:text-warning',
-                    'data-[severity="error"]:text-error',
-                  )}
-                >
-                  <CircleAlert className='size-4.5' />
-                  <p>Pendente {getTimeDistanceToNow(requirement.created_at)}</p>
-                </div>
-              </Card>
-            )
-          })}
+              <div className='mt-3 flex items-center gap-1.5'>
+                <span>Tipo de solicitação:</span>
+                <Tag variant='success' size='sm'>
+                  {PATIENT_REQUIREMENT_TYPES[requirement.type]}
+                </Tag>
+              </div>
+            </Card>
+          ))}
       </Card>
 
       <Pagination perPage={perPage} totalItems={stableTotal} />
