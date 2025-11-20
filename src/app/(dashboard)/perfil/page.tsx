@@ -5,10 +5,13 @@ import { useEffect, useState } from 'react'
 
 import { getProfile } from '@/actions/users'
 import { Avatar } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { DatePicker } from '@/components/ui/date-picker'
 import { Input } from '@/components/ui/input'
 import type { UserType } from '@/types/users'
+
+import PasswordModal from './password-modal'
 
 interface UserProfile extends UserType {
   category?: string
@@ -19,6 +22,7 @@ interface UserProfile extends UserType {
 export default function ProfilePage() {
   const [user, setUser] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
 
   useEffect(() => {
     async function fetchUser() {
@@ -30,7 +34,6 @@ export default function ProfilePage() {
           return
         }
 
-        // 🔹 Normaliza os dados e formata a data
         const formattedUser: UserProfile = {
           ...data,
           entryDate: data.created_at
@@ -82,13 +85,11 @@ export default function ProfilePage() {
         </div>
 
         <div className='grid gap-4'>
-          {/* Nome */}
           <div>
             <label className='text-muted-foreground text-sm'>Nome</label>
             <Input value={user.name ?? ''} readOnly />
           </div>
 
-          {/* Data de entrada */}
           <div>
             <label className='text-muted-foreground text-sm'>
               Data de entrada
@@ -103,7 +104,6 @@ export default function ProfilePage() {
             />
           </div>
 
-          {/* Profissional */}
           <div>
             <label className='text-muted-foreground text-sm'>
               Profissional
@@ -111,7 +111,6 @@ export default function ProfilePage() {
             <Input value={user.role ?? ''} readOnly />
           </div>
 
-          {/* Categoria e Registro — só para Especialistas */}
           {isEspecialista && (
             <>
               <div>
@@ -137,8 +136,22 @@ export default function ProfilePage() {
               </div>
             </>
           )}
+
+          <div className='pt-4'>
+            <Button
+              variant='outline'
+              onClick={() => setShowPasswordModal(true)}
+            >
+              Alterar senha
+            </Button>
+          </div>
         </div>
       </Card>
+
+      <PasswordModal
+        open={showPasswordModal}
+        onClose={() => setShowPasswordModal(false)}
+      />
     </div>
   )
 }
