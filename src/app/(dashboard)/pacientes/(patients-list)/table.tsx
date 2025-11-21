@@ -144,10 +144,10 @@ export function PatientsListTable() {
           <TableHeader>
             <TableRow>
               <TableHead className='w-64'>Nome do paciente</TableHead>
-              <TableHead className='w-36'>Telefone</TableHead>
+              <TableHead className='w-44'>Telefone</TableHead>
               <TableHead>E-mail</TableHead>
-              <TableHead className='w-24'>Status</TableHead>
-              <TableHead className='w-36 whitespace-nowrap'>
+              <TableHead className='w-28'>Status</TableHead>
+              <TableHead className='w-40 whitespace-nowrap'>
                 Data de cadastro
               </TableHead>
               <TableHead className='w-20 text-center'>Ações</TableHead>
