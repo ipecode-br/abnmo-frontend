@@ -28,29 +28,28 @@ export function ScreeningProgress() {
 
   return (
     <aside className='max-w-72 space-y-8'>
-      <h1 className='text-disabled text-xs'>TRIAGEM</h1>
+      <h1 className='text-disabled'>TRIAGEM</h1>
       {formSteps.map((step, idx) => {
         const isActive = step.path === currentPathname
         return (
           <div key={step.label} className='flex gap-4'>
             <div
+              data-active={isActive}
               className={cn(
-                'bg-background text-foreground-soft flex size-6 shrink-0 items-center justify-center rounded-full border border-neutral-200 text-xs',
-                isActive && 'bg-primary border-primary-soft text-white',
+                'bg-background text-foreground-soft flex size-7 shrink-0 items-center justify-center rounded-full border border-neutral-200 text-sm font-medium transition-colors',
+                'data-[active=true]:bg-primary data-[active=true]:border-primary-soft data-[active=true]:text-white',
               )}
             >
               {idx + 1}
             </div>
             <div className='space-y-2'>
               <h2
-                className={cn(
-                  'text-foreground-soft font-semibold',
-                  isActive && 'text-foreground',
-                )}
+                data-active={isActive}
+                className='text-foreground-soft data-[active=true]:text-foreground text-lg font-semibold'
               >
                 {step.label}
               </h2>
-              <p className='text-foreground-soft text-sm'>{step.info}</p>
+              <p className='text-foreground-soft'>{step.info}</p>
             </div>
           </div>
         )
