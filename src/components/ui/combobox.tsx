@@ -1,9 +1,27 @@
 'use client'
 
 import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
+
+export const comboboxInputVariants = cva(
+  'border-border bg-background h-10 w-full truncate overflow-hidden rounded-lg border pr-12 pl-3 shadow-xs outline-offset-2 outline-transparent transition-colors disabled:opacity-50 aria-[readonly]:focus-visible:outline-none',
+  {
+    variants: {
+      variant: {
+        default:
+          'border-border text-foreground placeholder:text-disabled focus-visible:outline-ring',
+        error:
+          'border-error focus-visible:ring-error focus-visible:outline-error',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
+)
 
 export type ComboboxOption = {
   label: string
@@ -11,7 +29,8 @@ export type ComboboxOption = {
   description?: number
 }
 
-export interface ComboboxProps {
+export interface ComboboxProps
+  extends VariantProps<typeof comboboxInputVariants> {
   name: string
   value: string
   options: ComboboxOption[]
@@ -25,6 +44,7 @@ export function Combobox({
   name,
   value,
   options,
+  variant,
   disabled,
   readOnly,
   placeholder = 'Selecione uma opção',
@@ -46,10 +66,7 @@ export function Combobox({
           id={name}
           name={name}
           placeholder={placeholder}
-          className={cn(
-            'border-border bg-background focus-visible:outline-ring h-10 w-full truncate overflow-hidden rounded-lg border pr-12 pl-3 shadow-xs outline-offset-4 outline-transparent transition-colors',
-            'disabled:opacity-50 aria-[readonly]:focus-visible:outline-none',
-          )}
+          className={cn(comboboxInputVariants({ variant }))}
         />
         <div className='text-disabled absolute right-1.5 flex items-center'>
           <BaseCombobox.Clear
@@ -79,7 +96,7 @@ export function Combobox({
         <BaseCombobox.Positioner align='start' sideOffset={6}>
           <BaseCombobox.Popup
             className={cn(
-              'border-border bg-popover overflow-hidden rounded-xl border p-2 shadow-lg',
+              'border-border bg-popover rounded-lg border p-2 shadow-lg',
               'max-h-[min(var(--available-height),30rem)] max-w-[var(--available-width)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] scroll-pt-2 scroll-pb-2 overflow-y-auto overscroll-contain transition-[transform,translate,opacity]',
               'data-[ending-style]:-translate-y-2 data-[ending-style]:opacity-0 data-[starting-style]:-translate-y-2 data-[starting-style]:opacity-0',
             )}
