@@ -24,8 +24,7 @@ const triggerVariants = cva(
       },
       size: {
         default: 'h-10 pr-2 pl-3 [&_svg]:size-4.5',
-        xs: 'h-8 rounded-md pr-1.5 pl-2 text-xs [&_svg]:size-3.5',
-        sm: 'h-9 pr-2 pl-3 [&_svg]:size-4',
+        sm: 'h-9 pr-2 pl-3 text-sm [&_svg]:size-4',
       },
     },
     defaultVariants: {
