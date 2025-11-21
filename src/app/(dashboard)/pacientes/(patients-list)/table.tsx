@@ -18,7 +18,6 @@ import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
 import { NavButton } from '@/components/ui/nav-button'
-import { StatusTag } from '@/components/ui/status-tag'
 import {
   Table,
   TableBody,
@@ -28,6 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAMS } from '@/constants/params'
 import { ROUTES } from '@/constants/routes'
@@ -35,6 +35,7 @@ import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
 import type { OrderMappingType } from '@/types/order'
 import {
+  PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
   type PatientsOrderType,
@@ -46,7 +47,6 @@ import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { PatientsListTableActions } from './actions'
 import PatientsListTableBodySkeleton from './skeleton'
 
-// TODO: redirect to register new patient page
 export function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
   const [stableTotal, setStableTotal] = useState(0)
@@ -107,16 +107,16 @@ export function PatientsListTable() {
         <DataTableHeaderInfo
           icon={<Users2Icon />}
           total={stableTotal}
-          title='Pacientes cadastrados'
+          title='Pacientes'
         />
         <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar nome...' />
-          <DataTableHeaderFilterButton
-            onClick={() => setShowFilters(!showFilters)}
-          />
+          <DataTableHeaderSearch placeholder='Pesquisar nome' />
           <DataTableHeaderOrderBy
             options={PATIENTS_ORDER_OPTIONS}
             className='w-52'
+          />
+          <DataTableHeaderFilterButton
+            onClick={() => setShowFilters(!showFilters)}
           />
 
           <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
@@ -170,33 +170,38 @@ export function PatientsListTable() {
 
           {!isLoading && !isPatientsEmpty && (
             <TableBody>
-              {patients.map((patient) => (
-                <TableRow key={patient.id}>
-                  <TableCell className='py-0'>
-                    <TableButton
-                      className='w-64'
-                      onClick={() =>
-                        router.push(
-                          ROUTES.dashboard.patients.details.info(patient.id),
-                        )
-                      }
-                    >
-                      <Avatar className='size-9' src={patient.avatar_url} />
-                      <span className='truncate'>{patient.name}</span>
-                    </TableButton>
-                  </TableCell>
+              {patients.map((patient) => {
+                const status = PATIENT_STATUS[patient.status]
+                return (
+                  <TableRow key={patient.id}>
+                    <TableCell className='py-0'>
+                      <TableButton
+                        className='w-64'
+                        onClick={() =>
+                          router.push(
+                            ROUTES.dashboard.patients.details.info(patient.id),
+                          )
+                        }
+                      >
+                        <Avatar className='size-9' src={patient.avatar_url} />
+                        <span className='truncate'>{patient.name}</span>
+                      </TableButton>
+                    </TableCell>
 
-                  <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
-                  <TableCell>{patient.email}</TableCell>
-                  <TableCell>
-                    <StatusTag status={patient.status} />
-                  </TableCell>
-                  <TableCell>{formatDate(patient.created_at)}</TableCell>
-                  <TableCell className='text-center'>
-                    <PatientsListTableActions patient={patient} />
-                  </TableCell>
-                </TableRow>
-              ))}
+                    <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
+                    <TableCell>{patient.email}</TableCell>
+                    <TableCell>
+                      <Tag variant={status.variant} size='sm'>
+                        {status.label}
+                      </Tag>
+                    </TableCell>
+                    <TableCell>{formatDate(patient.created_at)}</TableCell>
+                    <TableCell className='text-center'>
+                      <PatientsListTableActions patient={patient} />
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           )}
         </Table>

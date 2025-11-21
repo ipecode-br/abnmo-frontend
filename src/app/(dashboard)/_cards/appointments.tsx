@@ -14,7 +14,6 @@ import { NewAppointmentButton } from '@/components/appointments/new-button'
 import { DataTableHeader } from '@/components/data-table/header'
 import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
-import { AppointmentConditionTag } from '@/components/tags/appointment-condition'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -32,8 +31,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tag } from '@/components/ui/tag'
 import { ROUTES } from '@/constants/routes'
-import { PatientConditionType } from '@/types/patients'
+import { PATIENT_CONDITIONS } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { QUEUE_SERVICE_PATIENTS_MOCK } from '@/utils/mock/queue-service-patients'
 
@@ -73,6 +73,8 @@ export default function DashboardOverviewAppointments() {
 
         <TableBody>
           {patients.map((patient) => {
+            const condition = PATIENT_CONDITIONS[patient.general_condition]
+            const ConditionIcon = condition.icon
             return (
               <TableRow key={patient.id}>
                 <TableCell>
@@ -90,17 +92,14 @@ export default function DashboardOverviewAppointments() {
                     <span className='truncate'>{patient.name}</span>
                   </TableButton>
                 </TableCell>
-
                 <TableCell>{formatDate(patient.appointmentDate)}</TableCell>
-
                 <TableCell>{patient.professional}</TableCell>
-
                 <TableCell>{patient.specialty}</TableCell>
-
                 <TableCell>
-                  <AppointmentConditionTag
-                    label={patient.general_condition as PatientConditionType}
-                  />
+                  <Tag variant={condition.variant} size='sm'>
+                    <ConditionIcon />
+                    {condition.label}
+                  </Tag>
                 </TableCell>
 
                 <TableCell className='text-center'>

@@ -10,7 +10,7 @@ import {
   UserPlus2Icon,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import React from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -36,6 +36,7 @@ import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { removeNonNumbers } from '@/utils/sanitizers'
 
+import { ComboboxInput } from '../form/combobox-input'
 import { Dialog } from '../ui/dialog'
 import CancelPatientCreationModal from './cancel-patient-creation-modal'
 import { type PatientsFormSchema, patientsFormSchema } from './form-schema'
@@ -51,7 +52,6 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
   const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
     useState(false)
   const [formState, setFormState] = useState<PatientsFormModeType>(mode)
-  const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
 
@@ -100,7 +100,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
 
   const isViewMode = formState === 'view'
 
-  function handleSelectState(value: UFType) {
+  function handleSelectState(value: string) {
     setValue('state', value)
     setValue('city', '')
     clearErrors('state')
@@ -116,60 +116,58 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
     formMethods.reset()
   }
 
-  function submitForm(data: PatientsFormSchema) {
-    startTransition(async () => {
-      if (formState === 'edit') {
-        // TODO: Implement update patient request
-        console.log(data)
-        return
-      }
+  async function submitForm(data: PatientsFormSchema) {
+    if (formState === 'edit') {
+      // TODO: Implement update patient request
+      console.log(data)
+      return
+    }
 
-      const patient = patientsFormSchema.safeParse(data)
+    const patient = patientsFormSchema.safeParse(data)
 
-      if (!patient.success) {
-        toast.error(
-          'Verifique se todos os dados estão corretos e tente novamente!',
-        )
-        return
-      }
+    if (!patient.success) {
+      toast.error(
+        'Verifique se todos os dados estão corretos e tente novamente!',
+      )
+      return
+    }
 
-      const supports =
-        data.supports && data.supports.length > 0
-          ? data.supports.map((contact) => ({
-              ...contact,
-              phone: removeNonNumbers(contact.phone),
-            }))
-          : undefined
+    const supports =
+      data.supports && data.supports.length > 0
+        ? data.supports.map((contact) => ({
+            ...contact,
+            phone: removeNonNumbers(contact.phone),
+          }))
+        : undefined
 
-      const payload = {
-        ...patient.data,
-        phone: removeNonNumbers(patient.data.phone),
-        cpf: removeNonNumbers(patient.data.cpf),
-        has_disability: patient.data.has_disability === 'yes',
-        disability_desc: patient.data.disability_desc ?? null,
-        need_legal_assistance: patient.data.need_legal_assistance === 'yes',
-        take_medication: patient.data.take_medication === 'yes',
-        medication_desc: patient.data.medication_desc ?? null,
-        has_nmo_diagnosis: patient.data.has_nmo_diagnosis === 'yes',
-        supports,
-      }
+    const payload = {
+      ...patient.data,
+      phone: removeNonNumbers(patient.data.phone),
+      cpf: removeNonNumbers(patient.data.cpf),
+      has_disability: patient.data.has_disability === 'yes',
+      disability_desc: patient.data.disability_desc ?? null,
+      need_legal_assistance: patient.data.need_legal_assistance === 'yes',
+      take_medication: patient.data.take_medication === 'yes',
+      medication_desc: patient.data.medication_desc ?? null,
+      has_nmo_diagnosis: patient.data.has_nmo_diagnosis === 'yes',
+      supports,
+    }
 
-      const response = await api('/patients', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      })
-
-      if (!response.success) {
-        toast.error(response.message)
-        return
-      }
-
-      queryClient.invalidateQueries({ queryKey: [QUERY_CACHE_KEYS.patients] })
-      toast.success(response.message)
-      formMethods.reset()
-
-      router.push(ROUTES.dashboard.patients.main)
+    const response = await api('/patients', {
+      method: 'POST',
+      body: JSON.stringify(payload),
     })
+
+    if (!response.success) {
+      toast.error(response.message)
+      return
+    }
+
+    queryClient.invalidateQueries({ queryKey: [QUERY_CACHE_KEYS.patients] })
+    toast.success(response.message)
+    formMethods.reset()
+
+    router.push(ROUTES.dashboard.patients.main)
   }
 
   return (
@@ -215,17 +213,18 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           placeholder='Selecione o gênero'
           wrapperClassName='sm:col-span-2'
         />
-        <SelectInput
+
+        <ComboboxInput
           name='state'
           label='Estado'
           options={BRAZILIAN_STATES_OPTIONS}
-          onValueChange={handleSelectState}
-          readOnly={isViewMode}
-          isRequired={!isViewMode}
           placeholder='Selecione o estado'
-          wrapperClassName='sm:col-span-2'
+          className='sm:col-span-2'
+          isRequired={!isViewMode}
+          onValueChange={handleSelectState}
         />
-        <SelectInput
+
+        <ComboboxInput
           name='city'
           label='Cidade'
           options={cities}
@@ -233,7 +232,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           isRequired={!isViewMode}
           disabled={!selectedUF}
           placeholder='Selecione a cidade'
-          wrapperClassName='sm:col-span-2'
+          className='sm:col-span-2'
         />
 
         <TextInput
@@ -433,12 +432,15 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
               <Button
                 type='button'
                 variant='outline'
-                disabled={isPending}
+                disabled={formMethods.formState.isSubmitting}
                 onClick={handleCancel}
               >
                 <CircleXIcon /> Cancelar
               </Button>
-              <Button type='submit' loading={isPending}>
+              <Button
+                type='submit'
+                loading={formMethods.formState.isSubmitting}
+              >
                 {formState === 'create' ? (
                   <>
                     <UserPlus2Icon />
@@ -460,9 +462,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           onOpenChange={setIsCancelConfirmModalOpen}
         >
           {isCancelConfirmModalOpen && (
-            <CancelPatientCreationModal
-              onConfirm={() => router.push(ROUTES.dashboard.main)}
-            />
+            <CancelPatientCreationModal onConfirm={() => router.back()} />
           )}
         </Dialog>
       </FormContainer>

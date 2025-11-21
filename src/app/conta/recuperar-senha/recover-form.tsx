@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2Icon, MailIcon } from 'lucide-react'
+import { MailIcon } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -62,8 +62,8 @@ export function RecoverForm() {
           placeholder='Digite seu e-mail'
         />
 
-        <Button variant='fancy' type='submit' disabled={isSubmitting}>
-          {isSubmitting ? <Loader2Icon className='animate-spin' /> : 'Enviar'}
+        <Button type='submit' loading={isSubmitting}>
+          Enviar
         </Button>
 
         {successMessage && (
