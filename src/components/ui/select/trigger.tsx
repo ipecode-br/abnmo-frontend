@@ -15,7 +15,7 @@ export interface SelectTriggerProps
 }
 
 const triggerVariants = cva(
-  'ring-offset-background focus-visible:ring-ring bg-background disabled:bg-background hover:bg-accent data-[placeholder]:text-disabled [&_svg]:text-disabled flex h-10 cursor-pointer items-center gap-2 rounded-lg border text-sm whitespace-nowrap shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[readonly=true]:pointer-events-none [&_svg]:size-4.5 [&_svg]:shrink-0',
+  'ring-offset-background focus-visible:ring-ring bg-background disabled:bg-background hover:bg-accent data-[placeholder]:text-disabled [&_svg]:text-disabled flex h-10 cursor-pointer items-center gap-2 rounded-lg border whitespace-nowrap shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[readonly=true]:pointer-events-none [&_svg]:size-4.5 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
