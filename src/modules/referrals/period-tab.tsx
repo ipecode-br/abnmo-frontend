@@ -1,13 +1,10 @@
 'use client'
 
 import { TabSelect } from '@/components/ui/tab-select'
-import {
-  type Period,
-  useReferralsFilterStore,
-} from '@/store/referrals-filter-store'
+import { usePeriodStore } from '@/store/period'
 
-export function ReferralsTabButtons() {
-  const { period, setPeriod } = useReferralsFilterStore()
+export function ReferralsPeriodTab() {
+  const { period, setPeriod } = usePeriodStore()
 
   const filterOptions = [
     {
@@ -30,15 +27,16 @@ export function ReferralsTabButtons() {
       value: 'last_year',
       isActive: period === 'last_year',
     },
-  ]
+  ] as const
 
   return (
     <TabSelect
       buttons={filterOptions.map((option) => ({
-        ...option,
-        onClick: () => setPeriod(option.value as Period),
+        label: option.label,
+        isActive: option.value === period,
+        onClick: () => setPeriod(option.value),
       }))}
-      className='w-full'
+      className='col-span-full'
     />
   )
 }

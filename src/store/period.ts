@@ -2,12 +2,12 @@ import { create } from 'zustand'
 
 export type Period = 'today' | 'last_week' | 'last_month' | 'last_year'
 
-interface ReferralsFilterState {
+interface PeriodState {
   period: Period
   setPeriod: (period: Period) => void
 }
 
-export const useReferralsFilterStore = create<ReferralsFilterState>((set) => ({
+export const usePeriodStore = create<PeriodState>((set) => ({
   period: 'today',
   setPeriod: (period) => set({ period }),
 }))

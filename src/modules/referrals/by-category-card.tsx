@@ -20,16 +20,16 @@ const MOCK_DATA = [
 
 const isEmpty = MOCK_DATA.length === 0
 
-export function ReferralsBySpecialist(
+export function ReferralsByCategoryCard(
   props: Readonly<React.ComponentProps<'div'>>,
 ) {
   return (
     <DashboardCardChart
       icon={ChartBarDecreasingIcon}
-      title='Encaminhamentos por especialista'
+      title='Encaminhamentos por categoria'
       {...props}
     >
-      <div className='flex h-full min-h-44 items-center justify-center'>
+      <div className='flex h-full min-h-72 items-center justify-center'>
         {!isEmpty && (
           <div className='size-full min-h-40'>
             <BarChart data={MOCK_DATA} />

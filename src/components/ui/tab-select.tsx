@@ -20,7 +20,7 @@ export function TabSelect({
 }: Readonly<TabSelectProps>) {
   return (
     <div
-      className={cn('bg-accent flex h-9 gap-1 rounded-lg p-1', className)}
+      className={cn('bg-border/40 flex h-10 gap-1 rounded-lg p-1', className)}
       {...props}
     >
       {buttons.map(({ label, isActive, className, ...buttonProps }) => (
@@ -29,7 +29,7 @@ export function TabSelect({
           variant='ghost'
           data-active={isActive}
           className={cn(
-            'text-disabled hover:bg-background hover:text-foreground h-auto min-h-auto flex-1 rounded-md text-sm hover:shadow',
+            'text-foreground-soft hover:bg-background hover:text-foreground h-auto min-h-auto flex-1 rounded-md hover:shadow',
             'data-[active=true]:bg-background data-[active=true]:text-foreground data-[active=true]:pointer-events-none data-[active=true]:shadow',
             className,
           )}
