@@ -17,7 +17,7 @@ export function TabButtons({
   const router = useRouter()
 
   return (
-    <section className={cn('relative top-px flex gap-6', className)} {...props}>
+    <section className={cn('relative top-px flex gap-8', className)} {...props}>
       {buttons.map((button) => {
         const isActive = button.path === currentPathname
         return (
@@ -26,7 +26,7 @@ export function TabButtons({
             disabled={isActive}
             data-active={isActive}
             onClick={() => router.push(button.path)}
-            className='text-disabled hover:text-foreground focus-visible:ring-ring focus-visible:outline-ring data-[active=true]:border-primary data-[active=true]:text-foreground cursor-pointer border-b-2 border-transparent pt-4 pb-3 text-sm font-medium transition-all data-[active=true]:pointer-events-none'
+            className='text-disabled hover:text-foreground focus-visible:ring-ring focus-visible:outline-ring data-[active=true]:border-primary data-[active=true]:text-foreground cursor-pointer border-b-2 border-transparent pt-4 pb-3 font-medium transition-all data-[active=true]:pointer-events-none'
           >
             {button.title}
           </button>

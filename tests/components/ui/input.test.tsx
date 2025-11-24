@@ -12,7 +12,7 @@ describe('Input', () => {
     const inputElement = screen.getByRole('textbox')
     expect(inputElement).toBeInTheDocument()
     expect(inputElement).toHaveClass(
-      'h-10 w-full rounded-lg border px-3 text-sm shadow-xs transition-colors disabled:cursor-not-allowed disabled:opacity-50 border-border text-foreground',
+      'w-full rounded-lg border px-3 shadow-xs transition-colors disabled:cursor-not-allowed disabled:opacity-50 border-border text-foreground',
     )
   })
   it('should render an error Input', () => {

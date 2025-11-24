@@ -15,19 +15,19 @@ export default function PatientsListTableBodySkeleton() {
             </div>
           </TableCell>
           <TableCell>
-            <Skeleton className='h-5 w-30 rounded-md' />
+            <Skeleton className='h-5 w-32 rounded-md' />
           </TableCell>
           <TableCell>
             <Skeleton className='h-5 w-56 rounded-md' />
           </TableCell>
           <TableCell>
-            <Skeleton className='h-6 w-20 rounded-md' />
+            <Skeleton className='h-6 w-18 rounded-md' />
           </TableCell>
           <TableCell>
             <Skeleton className='h-5 w-24 rounded-md' />
           </TableCell>
-          <TableCell className='text-center'>
-            <Skeleton className='size-8 rounded-md' />
+          <TableCell>
+            <Skeleton className='mx-auto size-8 rounded-md' />
           </TableCell>
         </TableRow>
       ))}

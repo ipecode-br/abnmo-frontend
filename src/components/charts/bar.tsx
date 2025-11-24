@@ -79,7 +79,7 @@ export function BarChart({
 
         <Tooltip content={<CustomTooltip />} cursor={false} shared={false} />
 
-        <Bar dataKey='value' fill={barColor} />
+        <Bar dataKey='value' fill={barColor} maxBarSize={32} />
       </RechartBarChart>
     </ResponsiveContainer>
   )

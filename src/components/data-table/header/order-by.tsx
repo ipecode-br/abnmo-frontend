@@ -40,7 +40,7 @@ export function DataTableHeaderOrderBy({
       <SelectTrigger size='sm' className={cn('shrink-0', className)} {...props}>
         <ArrowDownWideNarrowIcon />
         <div className='w-full overflow-hidden text-left text-ellipsis'>
-          <SelectValue placeholder='Ordenar por...' />
+          <SelectValue placeholder='Ordenar por' />
         </div>
       </SelectTrigger>
       <SelectContent>

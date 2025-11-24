@@ -5,7 +5,7 @@ export const QUEUE_SERVICE_PATIENTS_MOCK = [
     appointmentDate: new Date('2023-10-01T10:00:00Z'),
     professional: 'Dr. Ana Souza',
     specialty: 'Cardiologista',
-    general_condition: 'outbreak',
+    general_condition: 'in_crisis',
   },
   {
     id: '2',
@@ -21,7 +21,7 @@ export const QUEUE_SERVICE_PATIENTS_MOCK = [
     appointmentDate: new Date('2023-10-01T12:00:00Z'),
     professional: 'Dr. Fernanda Lima',
     specialty: 'Neurologista',
-    general_condition: 'outbreak',
+    general_condition: 'in_crisis',
   },
   {
     id: '4',
@@ -39,4 +39,4 @@ export const QUEUE_SERVICE_PATIENTS_MOCK = [
     specialty: 'Cardiologista',
     general_condition: 'stable',
   },
-]
+] as const
