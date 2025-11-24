@@ -14,7 +14,7 @@ export function Label({
     <label
       aria-readonly={readOnly}
       className={cn(
-        'text-sm font-medium peer-disabled:opacity-50 aria-readonly:pointer-events-none',
+        'font-medium peer-disabled:opacity-50 aria-readonly:pointer-events-none',
         className,
       )}
       {...props}

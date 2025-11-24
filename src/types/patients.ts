@@ -1,6 +1,6 @@
 import {
   AlertTriangleIcon,
-  CheckCircle2Icon,
+  CircleCheckIcon,
   CircleXIcon,
   FlagIcon,
 } from 'lucide-react'
@@ -46,21 +46,43 @@ export type GenderType = keyof typeof GENDERS
 export const GENDERS_OPTIONS = convertObjectToOptions(GENDERS)
 
 export const PATIENT_STATUS = {
-  active: 'Ativo',
-  inactive: 'Inativo',
-}
+  active: {
+    variant: 'success',
+    label: 'Ativo',
+    icon: CircleCheckIcon,
+    color: '[&_svg]:text-success',
+  },
+  inactive: {
+    variant: 'error',
+    label: 'Inativo',
+    icon: CircleXIcon,
+    color: '[&_svg]:text-error',
+  },
+} as const
 export type PatientStatusType = keyof typeof PATIENT_STATUS
 
-const PATIENT_STATUS_ICONS_AND_COLOR = {
-  active: { icon: CheckCircle2Icon, color: '[&_svg]:text-success' },
-  inactive: { icon: CircleXIcon, color: '[&_svg]:text-error' },
-}
-export const PATIENT_STATUS_OPTIONS = convertObjectToOptions(
-  PATIENT_STATUS,
-).map((option) => ({
-  ...option,
-  ...PATIENT_STATUS_ICONS_AND_COLOR[option.value as PatientStatusType],
-}))
+export const PATIENT_STATUS_OPTIONS = Object.entries(PATIENT_STATUS).map(
+  ([key, status]) => ({
+    label: status.label,
+    value: key,
+    icon: status.icon,
+    color: status.color,
+  }),
+)
+
+export const PATIENT_CONDITIONS = {
+  in_crisis: {
+    variant: 'warning',
+    label: 'Em surto',
+    icon: AlertTriangleIcon,
+  },
+  stable: {
+    variant: 'info',
+    label: 'Estável',
+    icon: FlagIcon,
+  },
+} as const
+export type PatientCondition = keyof typeof PATIENT_CONDITIONS
 
 export const PATIENTS_ORDER = {
   name_asc: 'Nome (Crescente)',
@@ -72,41 +94,3 @@ export const PATIENTS_ORDER = {
 }
 export type PatientsOrderType = keyof typeof PATIENTS_ORDER
 export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDER)
-
-export const PATIENT_CONDITIONS = {
-  outbreak: 'Em surto',
-  stable: 'Estável',
-} as const
-export type PatientConditionType = keyof typeof PATIENT_CONDITIONS
-
-export const PATIENT_CONDITION_ICONS_AND_COLOR = {
-  outbreak: {
-    icon: AlertTriangleIcon,
-    tagClassName: 'bg-warning/10 text-warning border-none',
-    iconClassName: 'fill-warning text-white',
-  },
-  stable: {
-    icon: FlagIcon,
-    tagClassName: 'bg-foreground-soft/5 border-none',
-    iconClassName: 'fill-foreground-soft',
-  },
-}
-
-export const PATIENT_REQUIREMENT_STATUS = {
-  pending: 'Pendente',
-  under_review: 'Em análise',
-  approved: 'Aprovado',
-  declined: 'Recusado',
-} as const
-export type PatientRequirementStatusType =
-  keyof typeof PATIENT_REQUIREMENT_STATUS
-
-export type PatientRequirementType = {
-  id: string
-  type: string
-  title: string
-  status: PatientRequirementStatusType
-  submitted_at: string | null
-  approved_at: string | null
-  created_at: string
-}

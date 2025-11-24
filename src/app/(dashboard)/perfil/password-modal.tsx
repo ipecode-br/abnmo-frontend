@@ -3,49 +3,47 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog } from '@/components/ui/dialog'
+import { DialogContent } from '@/components/ui/dialog/content'
+import { DialogHeader } from '@/components/ui/dialog/header'
+import { DialogTitle } from '@/components/ui/dialog/title'
 
-import {
-  newPasswordFormDefaultValues,
-  newPasswordFormSchema,
-} from '../../conta/nova-senha/new-password-form-schema'
-
-function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+// TODO: create a shared schema for password change and new password forms
+const changePasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(1, 'Insira sua senha')
+      .min(8, 'Sua senha precisa conter 8 ou mais caracteres')
+      .regex(/^(?=.*[A-Z])(?=.*\d)/, 'Senha inválida'),
+    confirmPassword: z.string(),
+    currentPassword: z.string().min(1, 'Digite sua senha atual'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Suas senhas não coincidem',
+    path: ['confirmPassword'],
+  })
+type ChangePasswordSchema = z.infer<typeof changePasswordSchema>
 
 interface PasswordModalProps {
   open: boolean
   onClose: () => void
 }
 
-export default function PasswordModal({ open, onClose }: PasswordModalProps) {
-  const extendedSchema = newPasswordFormSchema.extend({
-    currentPassword: z.string().min(1, 'Digite sua senha atual'),
-  })
-
-  type ExtendedSchema = z.infer<typeof extendedSchema>
-
-  const defaultValues: ExtendedSchema = {
-    ...newPasswordFormDefaultValues,
-    currentPassword: '',
-  }
-
-  const methods = useForm<ExtendedSchema>({
-    resolver: zodResolver(extendedSchema),
-    defaultValues,
+export default function PasswordModal({
+  open,
+  onClose,
+}: Readonly<PasswordModalProps>) {
+  const methods = useForm<ChangePasswordSchema>({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: { password: '', confirmPassword: '', currentPassword: '' },
     mode: 'onBlur',
   })
 
@@ -53,10 +51,8 @@ export default function PasswordModal({ open, onClose }: PasswordModalProps) {
   const errorMessage = methods.formState.errors.root?.message
   const success = false
 
-  async function onSubmit(data: ExtendedSchema) {
+  async function onSubmit(data: ChangePasswordSchema) {
     console.log('Dados enviados para troca de senha:', data)
-
-    await wait(500)
 
     onClose()
   }

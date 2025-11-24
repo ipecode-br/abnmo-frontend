@@ -116,20 +116,14 @@ export default function PatientHistoryTable() {
                             {Object.entries(PATIENT_STATUS).map(
                               ([key, value]) => (
                                 <SelectItem key={key} value={key}>
-                                  {value}
+                                  {value.label}
                                 </SelectItem>
                               ),
                             )}
                           </SelectContent>
                         </Select>
                       ) : (
-                        <p>
-                          {
-                            PATIENT_STATUS[
-                              patient.status as keyof typeof PATIENT_STATUS
-                            ]
-                          }
-                        </p>
+                        <p>Status</p>
                       )}
                     </div>
 

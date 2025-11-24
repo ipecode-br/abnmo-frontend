@@ -83,7 +83,7 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button variant='fancy' type='submit' loading={isPending}>
+        <Button type='submit' loading={isPending}>
           Entrar
         </Button>
 

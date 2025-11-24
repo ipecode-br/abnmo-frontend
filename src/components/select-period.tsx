@@ -27,7 +27,7 @@ export function SelectPeriod({
       value={period}
       onValueChange={(value: QueryPeriodType) => onSelect(value)}
     >
-      <SelectTrigger size='xs' disabled={disabled}>
+      <SelectTrigger size='sm' disabled={disabled}>
         <SelectValue>{defaultValue?.label}</SelectValue>
       </SelectTrigger>
       <SelectContent align='end' className='min-w-44'>

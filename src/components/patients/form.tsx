@@ -5,12 +5,15 @@ import {
   CircleCheckIcon,
   CircleXIcon,
   ClipboardEditIcon,
+  PlusIcon,
+  Trash2Icon,
   UserPlus2Icon,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import React from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
@@ -18,6 +21,7 @@ import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
+import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   BRAZILIAN_STATES_OPTIONS,
   type UFType,
@@ -25,10 +29,16 @@ import {
 } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
 import { useCities } from '@/hooks/cities'
+import { api } from '@/lib/api'
+import { queryClient } from '@/lib/tanstack-query'
 import { GENDERS_OPTIONS, PatientType } from '@/types/patients'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
+import { removeNonNumbers } from '@/utils/sanitizers'
 
+import { ComboboxInput } from '../form/combobox-input'
+import { Dialog } from '../ui/dialog'
+import CancelPatientCreationModal from './cancel-patient-creation-modal'
 import { type PatientsFormSchema, patientsFormSchema } from './form-schema'
 
 type PatientsFormModeType = 'view' | 'edit' | 'create'
@@ -39,8 +49,9 @@ interface PatientsFormProps {
 }
 
 export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
+  const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
+    useState(false)
   const [formState, setFormState] = useState<PatientsFormModeType>(mode)
-  const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
 
@@ -59,6 +70,10 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
     take_medication: patient?.take_medication ? 'yes' : 'no',
     medication_desc: patient?.medication_desc ?? '',
     has_nmo_diagnosis: patient?.has_nmo_diagnosis ? 'yes' : 'no',
+    supports: patient?.supports?.map((support) => ({
+      ...support,
+      phone: formatPhoneNumber(support.phone),
+    })) ?? [{ name: '', phone: '', kinship: '' }],
   }
 
   const formMethods = useForm<PatientsFormSchema>({
@@ -66,7 +81,11 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
     defaultValues,
     mode: 'onBlur',
   })
-  const { clearErrors, setValue, watch } = formMethods
+  const { clearErrors, setValue, watch, control } = formMethods
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'supports',
+  })
 
   const patientSupports =
     patient?.supports && patient.supports.length > 0
@@ -80,9 +99,8 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
   const cities = useCities(selectedUF)
 
   const isViewMode = formState === 'view'
-  const showPatientSupports = patientSupports.length > 0
 
-  function handleSelectState(value: UFType) {
+  function handleSelectState(value: string) {
     setValue('state', value)
     setValue('city', '')
     clearErrors('state')
@@ -90,25 +108,66 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
   }
 
   function handleCancel() {
-    formMethods.reset()
-    setFormState('view')
-
     if (formState === 'create') {
-      router.push(ROUTES.patient.main)
+      setIsCancelConfirmModalOpen(true)
+      return
     }
+    setFormState('view')
+    formMethods.reset()
   }
 
-  function submitForm(data: PatientsFormSchema) {
-    startTransition(async () => {
-      if (formState === 'edit') {
-        // TODO: Implement update patient request
-        console.log(data)
-        return
-      }
-
-      // TODO: Implement create patient request
+  async function submitForm(data: PatientsFormSchema) {
+    if (formState === 'edit') {
+      // TODO: Implement update patient request
       console.log(data)
+      return
+    }
+
+    const patient = patientsFormSchema.safeParse(data)
+
+    if (!patient.success) {
+      toast.error(
+        'Verifique se todos os dados estão corretos e tente novamente!',
+      )
+      return
+    }
+
+    const supports =
+      data.supports && data.supports.length > 0
+        ? data.supports.map((contact) => ({
+            ...contact,
+            phone: removeNonNumbers(contact.phone),
+          }))
+        : undefined
+
+    const payload = {
+      ...patient.data,
+      phone: removeNonNumbers(patient.data.phone),
+      cpf: removeNonNumbers(patient.data.cpf),
+      has_disability: patient.data.has_disability === 'yes',
+      disability_desc: patient.data.disability_desc ?? null,
+      need_legal_assistance: patient.data.need_legal_assistance === 'yes',
+      take_medication: patient.data.take_medication === 'yes',
+      medication_desc: patient.data.medication_desc ?? null,
+      has_nmo_diagnosis: patient.data.has_nmo_diagnosis === 'yes',
+      supports,
+    }
+
+    const response = await api('/patients', {
+      method: 'POST',
+      body: JSON.stringify(payload),
     })
+
+    if (!response.success) {
+      toast.error(response.message)
+      return
+    }
+
+    queryClient.invalidateQueries({ queryKey: [QUERY_CACHE_KEYS.patients] })
+    toast.success(response.message)
+    formMethods.reset()
+
+    router.push(ROUTES.dashboard.patients.main)
   }
 
   return (
@@ -123,6 +182,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           maxLength={50}
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='Insira o nome completo'
           wrapperClassName='sm:col-span-2'
         />
         <DateInput
@@ -140,8 +200,8 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           inputMode='numeric'
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='000.000.000-00'
           wrapperClassName='sm:col-span-2'
-          message={mode === 'view' ? '' : 'Insira somente números'}
         />
 
         <SelectInput
@@ -150,26 +210,29 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           options={GENDERS_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='Selecione o gênero'
           wrapperClassName='sm:col-span-2'
         />
-        <SelectInput
+
+        <ComboboxInput
           name='state'
           label='Estado'
           options={BRAZILIAN_STATES_OPTIONS}
-          onValueChange={handleSelectState}
-          readOnly={isViewMode}
-          disabled={!selectedUF}
+          placeholder='Selecione o estado'
+          className='sm:col-span-2'
           isRequired={!isViewMode}
-          wrapperClassName='sm:col-span-2'
+          onValueChange={handleSelectState}
         />
-        <SelectInput
+
+        <ComboboxInput
           name='city'
           label='Cidade'
           options={cities}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          wrapperClassName='sm:col-span-2'
-          placeholder='Selecione sua cidade'
+          disabled={!selectedUF}
+          placeholder='Selecione a cidade'
+          className='sm:col-span-2'
         />
 
         <TextInput
@@ -179,8 +242,8 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           inputMode='tel'
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='(00) 00000-0000'
           wrapperClassName='sm:col-span-3'
-          message={mode === 'view' ? '' : 'Insira somente números'}
         />
         <TextInput
           name='email'
@@ -188,6 +251,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           inputMode='email'
           readOnly={isViewMode}
           isRequired={!isViewMode}
+          placeholder='Insira o e-mail'
           wrapperClassName='sm:col-span-3'
         />
 
@@ -242,43 +306,114 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           wrapperClassName='sm:col-span-3'
         />
 
-        {showPatientSupports && (
-          <>
-            <Divider className='sm:col-span-6' />
-            <div className='space-y-6 sm:col-span-6'>
-              <h1 className='text-xl font-medium'>Rede de apoio</h1>
-              <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
-                {patientSupports.length >= 1 &&
-                  patientSupports.map((support) => (
-                    <React.Fragment key={support.id}>
-                      <TextInput
-                        name={`support_name_${support.id}`}
-                        label='Nome completo'
-                        value={support.name}
-                        maxLength={50}
-                        readOnly={isViewMode}
-                        wrapperClassName='sm:col-span-3'
-                      />
-                      <TextInput
-                        name={`support_kinship_${support.id}`}
-                        label='Parentesco'
-                        value={support.kinship}
-                        maxLength={50}
-                        readOnly={isViewMode}
-                        wrapperClassName='sm:col-span-1'
-                      />
-                      <TextInput
-                        name={`support_phone_${support.id}`}
-                        label='Telefone (WhatsApp)'
-                        value={support.phone}
-                        readOnly={isViewMode}
-                        wrapperClassName='sm:col-span-2'
-                      />
-                    </React.Fragment>
-                  ))}
-              </div>
+        {(formState === 'create' || patientSupports.length >= 1) && (
+          <Divider className='sm:col-span-6' />
+        )}
+
+        {patientSupports.length >= 1 && (
+          <div className='space-y-6 sm:col-span-6'>
+            <h1 className='text-xl font-medium'>Rede de apoio</h1>
+            <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
+              {fields.map((support, index) => (
+                <React.Fragment key={support.id}>
+                  <TextInput
+                    name={`supports.${index}.name`}
+                    label='Nome completo'
+                    maxLength={50}
+                    readOnly={isViewMode}
+                    wrapperClassName='sm:col-span-3'
+                  />
+                  <TextInput
+                    name={`supports.${index}.kinship`}
+                    label='Parentesco'
+                    maxLength={50}
+                    readOnly={isViewMode}
+                    wrapperClassName='sm:col-span-1'
+                  />
+                  <div className='flex gap-1 sm:col-span-2'>
+                    <TextInput
+                      name={`supports.${index}.phone`}
+                      label='Telefone (WhatsApp)'
+                      readOnly={isViewMode}
+                      mask='phone'
+                    />
+                    <Button
+                      variant='ghost'
+                      className='text-foreground-soft mt-6'
+                      onClick={() => remove(index)}
+                      disabled={isViewMode}
+                    >
+                      <Trash2Icon />
+                    </Button>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
-          </>
+            <Button
+              variant='outline'
+              className='text-primary'
+              type='button'
+              onClick={() => append({ name: '', kinship: '', phone: '' })}
+              disabled={isViewMode}
+            >
+              <PlusIcon /> Adicionar novo contato
+            </Button>
+          </div>
+        )}
+
+        {formState === 'create' && (
+          <div className='space-y-6 sm:col-span-6'>
+            <h1 className='text-xl font-medium'>Rede de apoio</h1>
+            <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
+              {fields.map((support, index) => (
+                <React.Fragment key={support.id}>
+                  <TextInput
+                    name={`supports.${index}.name`}
+                    label='Nome completo'
+                    maxLength={50}
+                    isRequired
+                    placeholder='Insira o nome completo'
+                    wrapperClassName='sm:col-span-3'
+                  />
+                  <TextInput
+                    name={`supports.${index}.kinship`}
+                    label='Parentesco'
+                    maxLength={50}
+                    isRequired
+                    placeholder='Selecione o parentesco'
+                    wrapperClassName='sm:col-span-1'
+                  />
+                  <div className='flex items-end gap-1 sm:col-span-2'>
+                    <TextInput
+                      name={`supports.${index}.phone`}
+                      label='Telefone (WhatsApp)'
+                      readOnly={isViewMode}
+                      mask='phone'
+                      isRequired
+                    />
+                    <Button
+                      size='icon'
+                      type='button'
+                      variant='ghost'
+                      className='text-foreground-soft'
+                      disabled={index === 0}
+                      onClick={() => (index > 0 ? remove(index) : null)}
+                    >
+                      <Trash2Icon />
+                    </Button>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+            <Button
+              type='button'
+              variant='outline'
+              onClick={() => append({ name: '', kinship: '', phone: '' })}
+              disabled={isViewMode}
+            >
+              <PlusIcon /> Adicionar novo contato
+            </Button>
+          </div>
         )}
 
         <div className='mt-3 flex justify-end gap-2 sm:col-span-6'>
@@ -286,47 +421,50 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
             <Button
               type='button'
               variant='outline'
-              className='w-fit'
               onClick={() => setFormState('edit')}
             >
               <ClipboardEditIcon /> Editar
             </Button>
           )}
 
-          {formState === 'edit' && (
+          {!isViewMode && (
             <>
               <Button
                 type='button'
                 variant='outline'
-                className='w-fit'
-                disabled={isPending}
+                disabled={formMethods.formState.isSubmitting}
                 onClick={handleCancel}
               >
                 <CircleXIcon /> Cancelar
               </Button>
-              <Button type='submit' className='w-fit' loading={isPending}>
-                <CircleCheckIcon /> Salvar
-              </Button>
-            </>
-          )}
-
-          {formState === 'create' && (
-            <>
               <Button
-                type='button'
-                variant='outline'
-                className='w-fit'
-                disabled={isPending}
-                onClick={handleCancel}
+                type='submit'
+                loading={formMethods.formState.isSubmitting}
               >
-                <CircleXIcon /> Cancelar
-              </Button>
-              <Button type='submit' className='w-fit' loading={isPending}>
-                <UserPlus2Icon /> Adicionar
+                {formState === 'create' ? (
+                  <>
+                    <UserPlus2Icon />
+                    <span>Cadastrar</span>
+                  </>
+                ) : (
+                  <>
+                    <CircleCheckIcon />
+                    <span>Salvar</span>
+                  </>
+                )}
               </Button>
             </>
           )}
         </div>
+
+        <Dialog
+          open={isCancelConfirmModalOpen}
+          onOpenChange={setIsCancelConfirmModalOpen}
+        >
+          {isCancelConfirmModalOpen && (
+            <CancelPatientCreationModal onConfirm={() => router.back()} />
+          )}
+        </Dialog>
       </FormContainer>
     </FormProvider>
   )

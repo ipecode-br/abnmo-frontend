@@ -2,7 +2,7 @@
 
 import 'react-day-picker/style.css'
 
-import { CalendarDays } from 'lucide-react'
+import { CalendarDaysIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
@@ -18,6 +18,7 @@ export interface DatePickerProps
     Pick<CalendarProps, 'allowFutureDates' | 'navMode'> {
   value?: string
   onSelectDate?: (date: string) => void
+  modal?: boolean
 }
 
 export function DatePicker({
@@ -26,6 +27,7 @@ export function DatePicker({
   className,
   allowFutureDates,
   onSelectDate,
+  modal,
   ...props
 }: Readonly<DatePickerProps>) {
   const [open, setOpen] = useState(false)
@@ -52,7 +54,7 @@ export function DatePicker({
   }, [value])
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={modal}>
       <PopoverTrigger
         variant='outline'
         className={cn(
@@ -61,7 +63,7 @@ export function DatePicker({
         )}
         {...props}
       >
-        <CalendarDays />
+        <CalendarDaysIcon />
         {date ? (
           formatDate(date, { dateStyle: 'short' })
         ) : (

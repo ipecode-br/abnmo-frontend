@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
+import { ComboboxInput } from '@/components/form/combobox-input'
 import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
@@ -17,7 +18,6 @@ import { GENDERS_OPTIONS } from '@/types/patients'
 
 import { useScreening } from '../hooks'
 import {
-  screeningPatientDataFormDefaultValues,
   type ScreeningPatientDataFormSchema,
   screeningPatientDataFormSchema,
 } from './patient-data-form-schema'
@@ -29,14 +29,22 @@ export function ScreeningPatientDataForm() {
 
   const formMethods = useForm<ScreeningPatientDataFormSchema>({
     resolver: zodResolver(screeningPatientDataFormSchema),
-    defaultValues: screeningPatientDataFormDefaultValues,
+    defaultValues: {
+      name: '',
+      gender: '',
+      date_of_birth: '',
+      city: '',
+      state: '',
+      phone: '',
+      cpf: '',
+    },
     mode: 'onBlur',
   })
   const { clearErrors, setValue, watch, reset } = formMethods
   const UF = watch('state') as UFType
   const cities = useCities(UF)
 
-  function handleSelectState(value: UFType) {
+  function handleSelectState(value: string) {
     setValue('state', value)
     setValue('city', '')
     clearErrors('state')
@@ -85,7 +93,7 @@ export function ScreeningPatientDataForm() {
           isRequired
         />
 
-        <SelectInput
+        <ComboboxInput
           name='state'
           label='Estado'
           options={BRAZILIAN_STATES_OPTIONS}
@@ -93,7 +101,8 @@ export function ScreeningPatientDataForm() {
           onValueChange={handleSelectState}
           isRequired
         />
-        <SelectInput
+
+        <ComboboxInput
           name='city'
           label='Cidade'
           options={cities}
