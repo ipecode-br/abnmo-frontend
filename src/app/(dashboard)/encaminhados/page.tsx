@@ -1,9 +1,17 @@
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Encaminhados',
-}
+import { ReferralsByCategoryCard } from '@/modules/referrals/by-category-card'
+import { ReferralsByCityCards } from '@/modules/referrals/by-city-cards'
+import { ReferralsPeriodTab } from '@/modules/referrals/period-tab'
+import { ReferralsSummaryCard } from '@/modules/referrals/summary-card'
 
 export default function Page() {
-  return <p>Dados Gerais</p>
+  return (
+    <div className='grid gap-6 sm:grid-cols-2'>
+      <ReferralsPeriodTab />
+
+      <ReferralsSummaryCard />
+
+      <ReferralsByCategoryCard />
+      <ReferralsByCityCards />
+    </div>
+  )
 }

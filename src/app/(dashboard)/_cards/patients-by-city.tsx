@@ -67,7 +67,7 @@ export function DashboardOverviewPatientsByCity(
         {isLoading && <Skeleton className='bg-border/75 size-full' />}
 
         {!isLoading && !isEmpty && (
-          <div className='flex size-full items-center gap-6 2xl:gap-10'>
+          <div className='flex size-full items-center gap-6 xl:gap-10'>
             <PieChart
               data={data}
               label='cidades'
