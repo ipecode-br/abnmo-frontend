@@ -16,8 +16,8 @@ import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
 import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
 import { Avatar } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { NavButton } from '@/components/ui/nav-button'
 import {
   Table,
   TableBody,
@@ -119,10 +119,10 @@ export function PatientsListTable() {
             onClick={() => setShowFilters(!showFilters)}
           />
 
-          <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
+          <Button size='sm'>
             <PlusIcon />
             Novo paciente
-          </NavButton>
+          </Button>
         </DataTableHeaderActions>
       </DataTableHeader>
 
