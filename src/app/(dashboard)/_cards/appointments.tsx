@@ -10,7 +10,6 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-import { NewAppointmentButton } from '@/components/appointments/new-button'
 import { DataTableHeader } from '@/components/data-table/header'
 import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
@@ -33,6 +32,7 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { ROUTES } from '@/constants/routes'
+import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
 import { PATIENT_CONDITIONS } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { QUEUE_SERVICE_PATIENTS_MOCK } from '@/utils/mock/queue-service-patients'

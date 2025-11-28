@@ -83,6 +83,12 @@ export const PATIENT_CONDITIONS = {
   },
 } as const
 export type PatientCondition = keyof typeof PATIENT_CONDITIONS
+export const PATIENT_CONDITION_OPTIONS = Object.entries(PATIENT_CONDITIONS).map(
+  ([key, status]) => ({ label: status.label, value: key }),
+)
+export const PATIENT_CONDITION_ENUM = Object.keys(PATIENT_CONDITIONS) as [
+  PatientCondition,
+]
 
 export const PATIENTS_ORDER = {
   name_asc: 'Nome (Crescente)',

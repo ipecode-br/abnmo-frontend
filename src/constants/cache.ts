@@ -8,7 +8,13 @@ export const NEXT_CACHE_TAGS = {
 
 export const QUERY_CACHE_KEYS = {
   profile: 'profile',
-  patients: 'patients',
+  patients: {
+    all: 'patients-all',
+    list: 'patients-list',
+  },
+  referrals: {
+    list: 'referrals-list',
+  },
   approvals: {
     pending: 'approvals-pending',
     approved: 'approvals-approved',
