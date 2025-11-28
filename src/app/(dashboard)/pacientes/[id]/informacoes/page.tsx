@@ -6,8 +6,7 @@ import { getPatient } from '@/actions/patients/get-patient'
 import { PatientsForm } from '@/components/patients/form'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
-
-import { PatientInactivateButton } from './inactivate-button'
+import { InactivatePatientButton } from '@/modules/patients/inactivate-button'
 
 export const metadata: Metadata = {
   title: 'Informações do paciente',
@@ -45,7 +44,7 @@ export default async function Page({
         </div>
 
         <div className='flex gap-2'>
-          {isPatientActive && <PatientInactivateButton patient={patient} />}
+          {isPatientActive && <InactivatePatientButton patient={patient} />}
           <Button>
             <ForwardIcon />
             Encaminhar paciente

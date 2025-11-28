@@ -9,7 +9,7 @@ export const NEXT_CACHE_TAGS = {
 export const QUERY_CACHE_KEYS = {
   profile: 'profile',
   patients: {
-    all: 'patients-all',
+    allActive: 'patients-all-active',
     list: 'patients-list',
   },
   referrals: {

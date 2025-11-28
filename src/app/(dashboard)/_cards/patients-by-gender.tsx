@@ -11,12 +11,12 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { api } from '@/lib/api'
 import { GENDERS, type GenderType } from '@/types/patients'
-import { type QueryPeriodType } from '@/types/queries'
+import { type QueryPeriod } from '@/types/queries'
 
 export function DashboardOverviewPatientsByGender(
   props: Readonly<React.ComponentProps<'div'>>,
 ) {
-  const [period, setPeriod] = useState<QueryPeriodType>('last-year')
+  const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByGender, period],

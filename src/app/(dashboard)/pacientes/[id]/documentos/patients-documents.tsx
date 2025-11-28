@@ -1,17 +1,19 @@
 'use client'
 
-import { CircleXIcon, PaperclipIcon, PlusIcon, Trash2Icon } from 'lucide-react'
+import { PaperclipIcon, PlusIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Dialog } from '@/components/ui/dialog'
-import { DialogClose } from '@/components/ui/dialog/close'
-import { DialogContainer } from '@/components/ui/dialog/container'
-import { DialogDescription } from '@/components/ui/dialog/description'
-import { DialogFooter } from '@/components/ui/dialog/footer'
-import { DialogHeader } from '@/components/ui/dialog/header'
-import { DialogTitle } from '@/components/ui/dialog/title'
-import { DialogTrigger } from '@/components/ui/dialog/trigger'
+import {
+  Dialog,
+  DialogClose,
+  DialogContainer,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { NavLink } from '@/components/ui/nav-link'
 import { formatDate } from '@/utils/formatters/format-date'
 
@@ -85,11 +87,7 @@ export function PatientsDocuments({
                     </DialogTrigger>
 
                     <DialogContainer>
-                      <DialogHeader
-                        icon={CircleXIcon}
-                        className='border-none'
-                        iconClassName='text-error bg-error/10'
-                      >
+                      <DialogHeader>
                         <DialogTitle>Excluir documento?</DialogTitle>
                         <DialogDescription>
                           Confirme a exclusão do documento{' '}

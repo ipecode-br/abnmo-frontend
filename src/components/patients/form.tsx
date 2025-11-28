@@ -24,7 +24,7 @@ import { Divider } from '@/components/ui/divider'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   BRAZILIAN_STATES_OPTIONS,
-  type UFType,
+  type UF,
   YES_OR_NO_OPTIONS,
 } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
@@ -48,7 +48,10 @@ interface PatientsFormProps {
   mode?: PatientsFormModeType
 }
 
-export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
+export function PatientsForm({
+  patient,
+  mode = 'view',
+}: Readonly<PatientsFormProps>) {
   const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
     useState(false)
   const [formState, setFormState] = useState<PatientsFormModeType>(mode)
@@ -95,7 +98,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
         }))
       : []
 
-  const selectedUF = watch('state') as UFType
+  const selectedUF = watch('state') as UF
   const cities = useCities(selectedUF)
 
   const isViewMode = formState === 'view'
@@ -211,7 +214,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           readOnly={isViewMode}
           isRequired={!isViewMode}
           placeholder='Selecione o gênero'
-          wrapperClassName='sm:col-span-2'
+          className='sm:col-span-2'
         />
 
         <ComboboxInput
@@ -263,7 +266,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          wrapperClassName='sm:col-span-2'
+          className='sm:col-span-2'
         />
         <TextInput
           name='disability_desc'
@@ -279,7 +282,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          wrapperClassName='sm:col-span-2'
+          className='sm:col-span-2'
         />
         <TextInput
           name='medication_desc'
@@ -295,7 +298,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          wrapperClassName='sm:col-span-3'
+          className='sm:col-span-3'
         />
         <SelectInput
           name='need_legal_assistance'
@@ -303,7 +306,7 @@ export function PatientsForm({ patient, mode = 'view' }: PatientsFormProps) {
           options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          wrapperClassName='sm:col-span-3'
+          className='sm:col-span-3'
         />
 
         {(formState === 'create' || patientSupports.length >= 1) && (

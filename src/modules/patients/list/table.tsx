@@ -71,7 +71,7 @@ export function PatientsListTable() {
   }
 
   const { data: response, isLoading } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.patients, filterQueries],
+    queryKey: [QUERY_CACHE_KEYS.patients.list, filterQueries],
     queryFn: () =>
       api<{ patients: PatientType[]; total: number }>('/patients', {
         params: {

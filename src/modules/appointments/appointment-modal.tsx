@@ -58,9 +58,11 @@ interface AppointmentModalProps {
 
 export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
   const { data: response } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.patients.all],
+    queryKey: [QUERY_CACHE_KEYS.patients.allActive],
     queryFn: () =>
-      api<{ patients: PatientType[] }>('/patients', { params: { all: true } }),
+      api<{ patients: PatientType[] }>('/patients', {
+        params: { all: true, status: 'active' },
+      }),
   })
 
   const formMethods = useForm<AppointmentFormSchema>({

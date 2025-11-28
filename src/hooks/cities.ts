@@ -2,12 +2,12 @@
 
 import { useMemo } from 'react'
 
-import type { SelectOptions } from '@/components/ui/select'
+import type { SelectOption } from '@/components/ui/select'
 import { CITIES_BY_UF } from '@/constants/cities'
-import type { UFType } from '@/constants/enums'
+import type { UF } from '@/constants/enums'
 
-export function useCities(uf: UFType) {
-  const cities = useMemo<SelectOptions>(() => {
+export function useCities(uf: UF) {
+  const cities = useMemo<SelectOption[]>(() => {
     if (!uf || !(uf in CITIES_BY_UF)) {
       return []
     }

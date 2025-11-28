@@ -59,7 +59,10 @@ export function InactivatePatientModal({
     }
 
     queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.patients.all, QUERY_CACHE_KEYS.patients.list],
+      queryKey: [QUERY_CACHE_KEYS.patients.list],
+    })
+    queryClient.invalidateQueries({
+      queryKey: [QUERY_CACHE_KEYS.patients.allActive],
     })
     revalidateCache(NEXT_CACHE_TAGS.patient(id))
     toast.success(response.message)
@@ -95,6 +98,7 @@ export function InactivatePatientModal({
 
       <DialogFooter>
         <Button
+          className='flex-1'
           variant='destructive'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}

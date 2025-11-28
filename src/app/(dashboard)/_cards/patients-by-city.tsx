@@ -10,12 +10,12 @@ import { SelectPeriod } from '@/components/select-period'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { api } from '@/lib/api'
-import { type QueryPeriodType } from '@/types/queries'
+import { type QueryPeriod } from '@/types/queries'
 
 export function DashboardOverviewPatientsByCity(
   props: Readonly<React.ComponentProps<'div'>>,
 ) {
-  const [period, setPeriod] = useState<QueryPeriodType>('last-year')
+  const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const limit = 6
   const withPercentage = true

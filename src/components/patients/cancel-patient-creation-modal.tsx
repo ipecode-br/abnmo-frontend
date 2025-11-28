@@ -1,12 +1,15 @@
 import { CircleAlertIcon } from 'lucide-react'
 
 import { Button } from '../ui/button'
-import { DialogClose } from '../ui/dialog/close'
-import { DialogContainer } from '../ui/dialog/container'
-import { DialogDescription } from '../ui/dialog/description'
-import { DialogFooter } from '../ui/dialog/footer'
-import { DialogHeader } from '../ui/dialog/header'
-import { DialogTitle } from '../ui/dialog/title'
+import {
+  DialogClose,
+  DialogContainer,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogIcon,
+  DialogTitle,
+} from '../ui/dialog'
 
 interface CancelPatientCreationModalProps {
   onConfirm: () => void
@@ -14,13 +17,16 @@ interface CancelPatientCreationModalProps {
 
 export default function CancelPatientCreationModal({
   onConfirm,
-}: CancelPatientCreationModalProps) {
+}: Readonly<CancelPatientCreationModalProps>) {
   return (
     <DialogContainer>
       <DialogHeader
-        icon={CircleAlertIcon}
-        iconClassName='bg-error/10 text-error'
-        className='border-none'
+        icon={
+          <DialogIcon
+            icon={CircleAlertIcon}
+            className='bg-error/10 text-error'
+          />
+        }
       >
         <DialogTitle>Cancelar o cadastro do paciente?</DialogTitle>
         <DialogDescription>
@@ -28,11 +34,7 @@ export default function CancelPatientCreationModal({
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <Button
-          type='button'
-          className='bg-error hover:bg-error/80 flex-1'
-          onClick={onConfirm}
-        >
+        <Button variant='destructive' onClick={onConfirm}>
           Cancelar cadastro
         </Button>
         <DialogClose className='flex-1'>Voltar</DialogClose>
