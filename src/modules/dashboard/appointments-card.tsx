@@ -37,7 +37,7 @@ import { PATIENT_CONDITIONS } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { QUEUE_SERVICE_PATIENTS_MOCK } from '@/utils/mock/queue-service-patients'
 
-export default function DashboardOverviewAppointments() {
+export default function AppointmentsCard() {
   const patients = QUEUE_SERVICE_PATIENTS_MOCK
   const router = useRouter()
 

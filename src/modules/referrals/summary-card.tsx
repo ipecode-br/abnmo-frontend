@@ -1,22 +1,15 @@
 import { HeartPulse, Waypoints } from 'lucide-react'
 
-import {
-  getMockReferralsCount,
-  getMockReferredPatients,
-} from '@/app/(dashboard)/encaminhados/_cards/mock-data'
 import { Card } from '@/components/ui/card'
 
 export function ReferralsSummaryCard() {
-  const referrals = getMockReferralsCount()
-  const referredPatients = getMockReferredPatients()
-
   const statistics = [
     {
-      value: referrals.total,
+      value: 50,
       label: 'referrals',
     },
     {
-      value: `${referredPatients.percentage}%`,
+      value: `${70}%`,
       label: 'patients',
     },
   ] as const

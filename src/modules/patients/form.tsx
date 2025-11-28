@@ -36,25 +36,25 @@ import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { removeNonNumbers } from '@/utils/sanitizers'
 
-import { ComboboxInput } from '../form/combobox-input'
-import { Dialog } from '../ui/dialog'
-import CancelPatientCreationModal from './cancel-patient-creation-modal'
+import { ComboboxInput } from '../../components/form/combobox-input'
+import { Dialog } from '../../components/ui/dialog'
+import CancelPatientFormModal from './cancel-form-modal'
 import { type PatientsFormSchema, patientsFormSchema } from './form-schema'
 
-type PatientsFormModeType = 'view' | 'edit' | 'create'
+type PatientFormMode = 'view' | 'edit' | 'create'
 
-interface PatientsFormProps {
+interface PatientFormProps {
   patient?: Patient | null
-  mode?: PatientsFormModeType
+  mode?: PatientFormMode
 }
 
-export function PatientsForm({
+export function PatientForm({
   patient,
   mode = 'view',
-}: Readonly<PatientsFormProps>) {
+}: Readonly<PatientFormProps>) {
   const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
     useState(false)
-  const [formState, setFormState] = useState<PatientsFormModeType>(mode)
+  const [formState, setFormState] = useState<PatientFormMode>(mode)
 
   const router = useRouter()
 
@@ -465,7 +465,7 @@ export function PatientsForm({
           onOpenChange={setIsCancelConfirmModalOpen}
         >
           {isCancelConfirmModalOpen && (
-            <CancelPatientCreationModal onConfirm={() => router.back()} />
+            <CancelPatientFormModal onConfirm={() => router.back()} />
           )}
         </Dialog>
       </FormContainer>

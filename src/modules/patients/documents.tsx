@@ -15,26 +15,19 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { NavLink } from '@/components/ui/nav-link'
+import type { PatientDocument } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 
-type Document = {
-  id: string
-  name: string
-  url: string
-  created_at: string
-  size: string
-}
-
-interface PatientsDocumentsProps {
+interface PatientDocumentsProps {
   sections: {
     title: string
-    documents: Document[]
+    documents: PatientDocument[]
   }[]
 }
 
-export function PatientsDocuments({
+export function PatientDocuments({
   sections,
-}: Readonly<PatientsDocumentsProps>) {
+}: Readonly<PatientDocumentsProps>) {
   const [isEditing, setIsEditing] = useState(false)
 
   function handleConfirmDelete(id: string) {

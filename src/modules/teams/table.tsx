@@ -38,7 +38,7 @@ import { TEAMS_ORDER_OPTIONS } from '@/types/teams'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
 
-export function MembersListTable() {
+export function TeamListTable() {
   const members = TEAMS_MOCK
 
   const [statusFilter, setStatusFilter] = useState<

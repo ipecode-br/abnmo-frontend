@@ -103,3 +103,11 @@ export const PATIENTS_ORDERS = {
 export type PatientsOrder = keyof typeof PATIENTS_ORDERS
 
 export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDERS)
+
+export type PatientDocument = {
+  id: string
+  name: string
+  url: string
+  created_at: string
+  size: string
+}

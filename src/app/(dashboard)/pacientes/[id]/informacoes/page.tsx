@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getPatient } from '@/actions/patients/get-patient'
-import { PatientsForm } from '@/components/patients/form'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
+import { PatientForm } from '@/modules/patients/form'
 import { InactivatePatientButton } from '@/modules/patients/inactivate-button'
 
 export const metadata: Metadata = {
@@ -52,7 +52,7 @@ export default async function Page({
         </div>
       </header>
 
-      <PatientsForm patient={patient} mode='view' />
+      <PatientForm patient={patient} mode='view' />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { CircleAlertIcon } from 'lucide-react'
 
-import { Button } from '../ui/button'
+import { Button } from '../../components/ui/button'
 import {
   DialogClose,
   DialogContainer,
@@ -9,15 +9,15 @@ import {
   DialogHeader,
   DialogIcon,
   DialogTitle,
-} from '../ui/dialog'
+} from '../../components/ui/dialog'
 
-interface CancelPatientCreationModalProps {
+interface CancelPatientFormModalProps {
   onConfirm: () => void
 }
 
-export default function CancelPatientCreationModal({
+export default function CancelPatientFormModal({
   onConfirm,
-}: Readonly<CancelPatientCreationModalProps>) {
+}: Readonly<CancelPatientFormModalProps>) {
   return (
     <DialogContainer>
       <DialogHeader
@@ -34,7 +34,7 @@ export default function CancelPatientCreationModal({
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <Button variant='destructive' onClick={onConfirm}>
+        <Button className='flex-1' variant='destructive' onClick={onConfirm}>
           Cancelar cadastro
         </Button>
         <DialogClose className='flex-1'>Voltar</DialogClose>

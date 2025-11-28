@@ -13,7 +13,7 @@ import { api } from '@/lib/api'
 import { type Gender, GENDERS } from '@/types/patients'
 import { type QueryPeriod } from '@/types/queries'
 
-export function DashboardOverviewPatientsByGender(
+export function PatientsByGenderCard(
   props: Readonly<React.ComponentProps<'div'>>,
 ) {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')

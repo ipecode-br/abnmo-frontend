@@ -3,7 +3,7 @@ import { CheckCircle2Icon, CircleXIcon, Users2Icon } from 'lucide-react'
 import { getTotalPatientsByStatus } from '@/actions/patients/statistics/get-total-patients-by-status'
 import { Card } from '@/components/ui/card'
 
-export async function DashboardOverviewPatientsByStatus() {
+export async function PatientsByStatusCards() {
   const statistics = await getTotalPatientsByStatus()
 
   if (!statistics) {

@@ -12,7 +12,7 @@ import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { api } from '@/lib/api'
 import { type QueryPeriod } from '@/types/queries'
 
-export function DashboardOverviewPatientsByCity(
+export function PatientsByCityCard(
   props: Readonly<React.ComponentProps<'div'>>,
 ) {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')

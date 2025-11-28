@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
+import { TeamListTable } from '@/modules/teams/table'
+
 export const metadata: Metadata = {
-  title: 'Equipes',
+  title: 'Equipe',
 }
 
-import { MembersListTable } from './table'
-
 export default function Page() {
-  return <MembersListTable />
+  return <TeamListTable />
 }
