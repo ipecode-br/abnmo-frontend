@@ -9,26 +9,31 @@ export const PATIENT_REQUIREMENTS_ORDERS = {
   type_desc: 'Tipo (Decrescente)',
 }
 export type PatientRequirementsOrder = keyof typeof PATIENT_REQUIREMENTS_ORDERS
+
 export const PATIENT_REQUIREMENTS_ORDER_OPTIONS = convertObjectToOptions(
   PATIENT_REQUIREMENTS_ORDERS,
 )
 
-export const PATIENT_REQUIREMENT_STATUS = {
+export const PATIENT_REQUIREMENT_STATUSES = {
   pending: 'Pendente',
   under_review: 'Em análise',
   approved: 'Aprovado',
   declined: 'Recusado',
 }
-export type PatientRequirementStatus = keyof typeof PATIENT_REQUIREMENT_STATUS
+export type PatientRequirementStatus = keyof typeof PATIENT_REQUIREMENT_STATUSES
 
 export const PATIENT_REQUIREMENT_TYPES = {
   screening: 'Triagem',
   medical_report: 'Laudo',
 }
 export type PatientRequirementType = keyof typeof PATIENT_REQUIREMENT_TYPES
+
 export const PATIENT_REQUIREMENT_TYPE_OPTIONS = convertObjectToOptions(
   PATIENT_REQUIREMENT_TYPES,
 )
+export const PATIENT_REQUIREMENT_TYPE_ENUM = Object.keys(
+  PATIENT_REQUIREMENT_TYPES,
+) as [PatientRequirementType]
 
 export type PatientRequirement = {
   id: string

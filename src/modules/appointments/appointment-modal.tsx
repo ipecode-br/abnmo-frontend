@@ -35,7 +35,7 @@ import {
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 
 const appointmentFormSchema = z.object({
-  patient_id: z.string().uuid('O nome do paciente é obrigatório'),
+  patient_id: z.string().uuid('Paciente é obrigatório'),
   date: z.string().datetime('A data é obrigatória'),
   referred_to: z
     .string()
