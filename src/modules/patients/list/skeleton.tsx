@@ -1,7 +1,7 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { TableBody, TableCell, TableRow } from '@/components/ui/table'
 
-export default function PatientsListTableBodySkeleton() {
+export default function PatientsListTableSkeleton() {
   const skeletons = Array.from({ length: 10 }).map((_, index) => index)
 
   return (

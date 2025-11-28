@@ -45,7 +45,7 @@ import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 import { PatientsListTableActions } from './actions'
-import PatientsListTableBodySkeleton from './skeleton'
+import PatientsListTableSkeleton from './skeleton'
 
 export function PatientsListTable() {
   const [showFilters, setShowFilters] = useState(false)
@@ -154,7 +154,7 @@ export function PatientsListTable() {
             </TableRow>
           </TableHeader>
 
-          {isLoading && <PatientsListTableBodySkeleton />}
+          {isLoading && <PatientsListTableSkeleton />}
 
           {!isLoading && isPatientsEmpty && (
             <TableBody>

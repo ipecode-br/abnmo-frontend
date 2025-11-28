@@ -16,12 +16,14 @@ export type SelectOption = {
 
 export type SelectProps = Omit<SelectRootProps<string, false>, 'items'> & {
   options: SelectOption[]
+  className?: string
   placeholder?: string
 }
 
 export function Select({
   value,
   options,
+  className,
   placeholder = 'Selecione uma opção',
   ...props
 }: Readonly<SelectProps>) {
@@ -35,6 +37,7 @@ export function Select({
           'focus-visible:outline-ring outline-offset-4 outline-transparent',
           'disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
           'data-[placeholder]:text-disabled',
+          className,
         )}
       >
         <BaseSelect.Value>

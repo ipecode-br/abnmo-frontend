@@ -6,15 +6,15 @@ import {
   EllipsisIcon,
   SendIcon,
 } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
-import { PatientsInactivateModal } from '@/components/patients/inactivate-modal'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { InactivatePatientModal } from '@/modules/patients/inactivate-modal'
 import type { PatientType } from '@/types/patients'
 
 interface PatientsListTableActionsProps {
@@ -26,19 +26,13 @@ export function PatientsListTableActions({
 }: PatientsListTableActionsProps) {
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const [isInactivateModalOpen, setInactivateModalOpen] = useState(false)
-  const dropdownTriggerRef = useRef<HTMLButtonElement | null>(null)
 
   const isPatientActive = patient.status === 'active'
 
   return (
     <>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setDropdownOpen}>
-        <DropdownMenuTrigger
-          size='icon'
-          variant='ghost'
-          className='size-8'
-          ref={dropdownTriggerRef}
-        >
+        <DropdownMenuTrigger size='icon' variant='ghost' className='size-8'>
           <EllipsisIcon />
         </DropdownMenuTrigger>
 
@@ -78,11 +72,10 @@ export function PatientsListTableActions({
           onOpenChange={setInactivateModalOpen}
         >
           {isInactivateModalOpen && (
-            <PatientsInactivateModal
+            <InactivatePatientModal
               id={patient.id}
               name={patient.name}
-              dropdownTrigger={dropdownTriggerRef}
-              onOpenChange={setInactivateModalOpen}
+              onClose={() => setInactivateModalOpen(false)}
             />
           )}
         </Dialog>

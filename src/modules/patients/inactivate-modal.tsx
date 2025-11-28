@@ -7,32 +7,34 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { revalidateCache } from '@/actions/cache'
+import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { DialogClose } from '@/components/ui/dialog/close'
-import { DialogContainer } from '@/components/ui/dialog/container'
-import { DialogContent } from '@/components/ui/dialog/content'
-import { DialogDescription } from '@/components/ui/dialog/description'
-import { DialogFooter } from '@/components/ui/dialog/footer'
-import { DialogHeader } from '@/components/ui/dialog/header'
-import { DialogTitle } from '@/components/ui/dialog/title'
+import {
+  DialogClose,
+  DialogContainer,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogIcon,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
 
-interface PatientsInactivateModalProps {
+interface InactivatePatientModalProps {
   id: string
   name: string
-  dropdownTrigger?: React.RefObject<HTMLButtonElement | null>
-  onOpenChange: (open: boolean) => void
+  onClose: () => void
 }
 
-export function PatientsInactivateModal({
+export function InactivatePatientModal({
   id,
   name,
-  dropdownTrigger,
-  onOpenChange,
-}: PatientsInactivateModalProps) {
+  onClose,
+}: Readonly<InactivatePatientModalProps>) {
   const inactivatePatientFormSchema = z.object({
     name: z.string().refine((val) => val === name, {
       message: `Insira o nome do paciente corretamente: ${name}`,
@@ -56,55 +58,56 @@ export function PatientsInactivateModal({
       return
     }
 
-    queryClient.invalidateQueries({ queryKey: [QUERY_CACHE_KEYS.patients] })
+    queryClient.invalidateQueries({
+      queryKey: [QUERY_CACHE_KEYS.patients.all, QUERY_CACHE_KEYS.patients.list],
+    })
     revalidateCache(NEXT_CACHE_TAGS.patient(id))
     toast.success(response.message)
-    onOpenChange(false)
-  }
-
-  function handleFocusOnTrigger(e: Event) {
-    if (!dropdownTrigger) return
-
-    e.preventDefault()
-    dropdownTrigger?.current?.focus()
+    onClose()
   }
 
   return (
-    <DialogContainer
-      className='sm:max-w-md'
-      onCloseAutoFocus={handleFocusOnTrigger}
-    >
+    <DialogContainer className='max-w-md'>
       <DialogHeader
-        icon={CircleXIcon}
-        iconClassName='text-warning bg-warning/10'
+        icon={
+          <DialogIcon
+            icon={CircleXIcon}
+            className='text-warning bg-warning/10 border-none'
+          />
+        }
       >
         <DialogTitle>Inativar {name}?</DialogTitle>
         <DialogDescription>Confirme a inativação do paciente</DialogDescription>
       </DialogHeader>
 
-      <FormProvider {...formMethods}>
-        <form onSubmit={formMethods.handleSubmit(submitForm)}>
-          <DialogContent className='space-y-2'>
+      <DialogContent>
+        <FormProvider {...formMethods}>
+          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
             <TextInput
               name='name'
               label='Digite o nome completo do paciente:'
               message={`Nome: ${name}`}
               isRequired
             />
-          </DialogContent>
+          </FormContainer>
+        </FormProvider>
+      </DialogContent>
 
-          <DialogFooter>
-            <Button
-              type='submit'
-              loading={formMethods.formState.isSubmitting}
-              className='bg-warning hover:bg-warning/80 flex-1'
-            >
-              Inativar paciente
-            </Button>
-            <DialogClose className='flex-1'>Cancelar</DialogClose>
-          </DialogFooter>
-        </form>
-      </FormProvider>
+      <DialogFooter>
+        <Button
+          variant='destructive'
+          loading={formMethods.formState.isSubmitting}
+          onClick={formMethods.handleSubmit(submitForm)}
+        >
+          Inativar paciente
+        </Button>
+        <DialogClose
+          className='flex-1'
+          disabled={formMethods.formState.isSubmitting}
+        >
+          Cancelar
+        </DialogClose>
+      </DialogFooter>
     </DialogContainer>
   )
 }
