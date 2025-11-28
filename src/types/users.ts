@@ -2,7 +2,7 @@ import { CheckCircle2Icon, CircleXIcon } from 'lucide-react'
 
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
-import type { PatientType } from './patients'
+import type { Patient } from './patients'
 
 export type UserType = {
   id: string
@@ -12,7 +12,7 @@ export type UserType = {
   avatar_url: string | null
   created_at: Date
   updated_at: Date
-  patient: PatientType | null
+  patient: Patient | null
 }
 
 export const USER_ROLES = {

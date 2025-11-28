@@ -4,9 +4,9 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { ComboboxInput } from '@/components/form/combobox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
-import { TextInput } from '@/components/form/text-input'
 import { TextareaInput } from '@/components/form/textarea-input'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,7 +18,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { api } from '@/lib/api'
+import { queryClient } from '@/lib/tanstack-query'
 import {
   PATIENT_REQUIREMENT_TYPE_ENUM,
   PATIENT_REQUIREMENT_TYPE_OPTIONS,
@@ -42,6 +45,8 @@ interface PatientRequirementModalProps {
 export function PatientRequirementModal({
   onClose,
 }: Readonly<PatientRequirementModalProps>) {
+  const { patientOptions } = usePatientOptions()
+
   const formMethods = useForm<PatientRequirementFormSchema>({
     resolver: zodResolver(patientRequirementFormSchema),
     defaultValues: {
@@ -63,7 +68,9 @@ export function PatientRequirementModal({
       return
     }
 
-    // TODO: revalidate the patient requirements list cache
+    queryClient.invalidateQueries({
+      queryKey: [QUERY_CACHE_KEYS.approvals.pending],
+    })
     toast.success(response.message)
     onClose()
   }
@@ -81,7 +88,13 @@ export function PatientRequirementModal({
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <TextInput name='name' label='Paciente' isRequired />
+            <ComboboxInput
+              name='patient_id'
+              label='Paciente'
+              placeholder='Selecione um paciente'
+              options={patientOptions}
+              isRequired
+            />
 
             <SelectInput
               name='type'

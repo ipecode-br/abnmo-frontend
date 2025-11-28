@@ -20,7 +20,7 @@ export function DashboardSidebarContainer({
         className={cn(
           'border-border flex h-screen shrink-0 flex-col gap-8 overflow-x-hidden overflow-y-auto border-r py-6 transition-all duration-500',
           className,
-          expanded ? 'w-56 px-6' : 'w-18 px-4',
+          expanded ? 'w-60 px-6' : 'w-18 px-4',
         )}
         {...props}
       />

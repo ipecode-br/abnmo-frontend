@@ -9,7 +9,7 @@ import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 import { PatientSupportType } from './patient-support'
 
-export type PatientType = {
+export type Patient = {
   id: string
   user_id: string
   gender: GenderType

@@ -35,11 +35,11 @@ import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
 import type { OrderMappingType } from '@/types/order'
 import {
+  type Patient,
   PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
   PATIENTS_ORDER_OPTIONS,
   type PatientsOrderType,
-  type PatientType,
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
@@ -73,7 +73,7 @@ export function PatientsListTable() {
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.patients.list, filterQueries],
     queryFn: () =>
-      api<{ patients: PatientType[]; total: number }>('/patients', {
+      api<{ patients: Patient[]; total: number }>('/patients', {
         params: {
           page,
           search,

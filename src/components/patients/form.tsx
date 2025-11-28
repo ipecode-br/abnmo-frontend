@@ -31,7 +31,7 @@ import { ROUTES } from '@/constants/routes'
 import { useCities } from '@/hooks/cities'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
-import { GENDERS_OPTIONS, PatientType } from '@/types/patients'
+import { GENDERS_OPTIONS, Patient } from '@/types/patients'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { removeNonNumbers } from '@/utils/sanitizers'
@@ -44,7 +44,7 @@ import { type PatientsFormSchema, patientsFormSchema } from './form-schema'
 type PatientsFormModeType = 'view' | 'edit' | 'create'
 
 interface PatientsFormProps {
-  patient?: PatientType | null
+  patient?: Patient | null
   mode?: PatientsFormModeType
 }
 

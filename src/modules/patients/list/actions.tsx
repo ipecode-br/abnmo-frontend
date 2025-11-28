@@ -15,10 +15,10 @@ import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { InactivatePatientModal } from '@/modules/patients/inactivate-modal'
-import type { PatientType } from '@/types/patients'
+import type { Patient } from '@/types/patients'
 
 interface PatientsListTableActionsProps {
-  patient: PatientType
+  patient: Patient
 }
 
 export function PatientsListTableActions({

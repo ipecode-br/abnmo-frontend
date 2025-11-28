@@ -5,10 +5,10 @@ import { useState } from 'react'
 
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { InactivatePatientModal } from '@/modules/patients/inactivate-modal'
-import type { PatientType } from '@/types/patients'
+import type { Patient } from '@/types/patients'
 
 interface InactivatePatientButtonProps {
-  patient: PatientType
+  patient: Patient
 }
 
 export function InactivatePatientButton({

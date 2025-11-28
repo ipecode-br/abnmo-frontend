@@ -69,7 +69,7 @@ export function DialogHeader({
   ...props
 }: Readonly<DialogHeaderProps>) {
   return (
-    <header className='flex items-center gap-4 p-5'>
+    <header className='flex items-center gap-4 p-5 pr-12'>
       {icon && icon}
       <div className={cn('flex flex-col gap-0.5', className)} {...props} />
     </header>

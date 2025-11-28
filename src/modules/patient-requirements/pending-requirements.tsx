@@ -51,7 +51,7 @@ export function PendingPatientRequirements() {
 
   const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
     orderBy: 'date',
-    order: 'DESC',
+    order: 'ASC',
   }
 
   const { data: response, isLoading } = useQuery({

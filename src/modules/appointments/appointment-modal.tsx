@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQuery } from '@tanstack/react-query'
 import { SmilePlusIcon } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -25,14 +24,13 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
+import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
 import {
   PATIENT_CONDITION_ENUM,
   PATIENT_CONDITION_OPTIONS,
-  type PatientType,
 } from '@/types/patients'
-import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 
 const appointmentFormSchema = z.object({
   patient_id: z.string().uuid('Paciente é obrigatório'),
@@ -57,13 +55,7 @@ interface AppointmentModalProps {
 }
 
 export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
-  const { data: response } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.patients.allActive],
-    queryFn: () =>
-      api<{ patients: PatientType[] }>('/patients', {
-        params: { all: true, status: 'active' },
-      }),
-  })
+  const { patientOptions } = usePatientOptions()
 
   const formMethods = useForm<AppointmentFormSchema>({
     resolver: zodResolver(appointmentFormSchema),
@@ -76,13 +68,6 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
     } as unknown as AppointmentFormSchema,
     mode: 'onBlur',
   })
-
-  const patients =
-    response?.data?.patients.map((patient) => ({
-      value: patient.id,
-      label: patient.name,
-      description: `CPF: ${formatCpfNumber(patient.cpf)}`,
-    })) || []
 
   async function submitForm(data: AppointmentFormSchema) {
     const response = await api('/appointments', {
@@ -120,7 +105,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
               label='Paciente'
               className='sm:col-span-3'
               placeholder='Selecione um paciente'
-              options={patients}
+              options={patientOptions}
               isRequired
             />
             <DateInput
@@ -132,7 +117,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
             />
             <TextInput
               name='referred_to'
-              label='Nome do especialista'
+              label='Profissional responsável'
               wrapperClassName='sm:col-span-3'
             />
             <SelectInput

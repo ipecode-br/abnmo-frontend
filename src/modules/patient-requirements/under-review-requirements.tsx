@@ -48,7 +48,7 @@ export function UnderReviewPatientRequirements() {
 
   const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
     orderBy: 'submitted_at',
-    order: 'DESC',
+    order: 'ASC',
   }
 
   const { data: response, isLoading } = useQuery({
@@ -92,7 +92,7 @@ export function UnderReviewPatientRequirements() {
       </DataTableHeader>
 
       <Card className='grid gap-4 p-6 sm:grid-cols-2 xl:grid-cols-3'>
-        {isLoading && <Skeleton quantity={12} className='h-40 rounded-xl' />}
+        {isLoading && <Skeleton quantity={12} className='h-32 rounded-xl' />}
 
         {isEmpty && !isLoading && (
           <div className='text-foreground-soft col-span-full py-8 text-center'>

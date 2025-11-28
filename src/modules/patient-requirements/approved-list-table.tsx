@@ -55,8 +55,8 @@ export function ApprovedPatientRequirementsListTable() {
   }
 
   const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
-    orderBy: 'approved_at',
-    order: 'DESC',
+    orderBy: 'name',
+    order: 'ASC',
   }
 
   const { data: response, isLoading } = useQuery({
