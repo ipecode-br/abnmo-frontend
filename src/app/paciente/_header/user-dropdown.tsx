@@ -16,10 +16,10 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
-import type { UserType } from '@/types/users'
+import type { User } from '@/types/users'
 
 interface PatientHeaderUserDropdownProps {
-  user: UserType
+  user: User
 }
 
 export function PatientHeaderUserDropdown({

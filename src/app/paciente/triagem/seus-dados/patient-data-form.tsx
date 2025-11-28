@@ -10,11 +10,11 @@ import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { BRAZILIAN_STATES_OPTIONS, type UFType } from '@/constants/enums'
+import { BRAZILIAN_STATES_OPTIONS, type UF } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import { useCities } from '@/hooks/cities'
-import { GENDERS_OPTIONS } from '@/types/patients'
+import { GENDER_OPTIONS } from '@/types/patients'
 
 import { useScreening } from '../hooks'
 import {
@@ -41,7 +41,7 @@ export function ScreeningPatientDataForm() {
     mode: 'onBlur',
   })
   const { clearErrors, setValue, watch, reset } = formMethods
-  const UF = watch('state') as UFType
+  const UF = watch('state') as UF
   const cities = useCities(UF)
 
   function handleSelectState(value: string) {
@@ -82,7 +82,7 @@ export function ScreeningPatientDataForm() {
         <SelectInput
           name='gender'
           label='Gênero'
-          options={GENDERS_OPTIONS}
+          options={GENDER_OPTIONS}
           placeholder='Selecione seu gênero'
           isRequired
         />

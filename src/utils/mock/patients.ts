@@ -1,6 +1,6 @@
-import type { PatientType } from '@/types/patients'
+import type { Patient } from '@/types/patients'
 
-export const PATIENTS_MOCKS: PatientType[] = [
+export const PATIENTS_MOCKS: Patient[] = [
   {
     id: '1',
     user_id: '1',

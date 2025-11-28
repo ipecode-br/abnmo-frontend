@@ -26,7 +26,7 @@ export const comboboxInputVariants = cva(
 export type ComboboxOption = {
   label: string
   value: string
-  description?: number
+  description?: string
 }
 
 export interface ComboboxProps
@@ -93,7 +93,7 @@ export function Combobox({
       </div>
 
       <BaseCombobox.Portal>
-        <BaseCombobox.Positioner align='start' sideOffset={6}>
+        <BaseCombobox.Positioner align='start' sideOffset={6} className='z-50'>
           <BaseCombobox.Popup
             className={cn(
               'border-border bg-popover rounded-lg border p-2 shadow-lg',
@@ -115,7 +115,7 @@ export function Combobox({
                     {option.label}
                     {option.description && (
                       <span className='text-sm opacity-60'>
-                        ({option.description})
+                        {option.description}
                       </span>
                     )}
                   </div>
