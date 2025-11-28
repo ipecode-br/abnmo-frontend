@@ -10,7 +10,7 @@ import { SelectPeriod } from '@/components/select-period'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { api } from '@/lib/api'
-import { GENDERS, type GenderType } from '@/types/patients'
+import { type Gender, GENDERS } from '@/types/patients'
 import { type QueryPeriod } from '@/types/queries'
 
 export function DashboardOverviewPatientsByGender(
@@ -22,7 +22,7 @@ export function DashboardOverviewPatientsByGender(
     queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByGender, period],
     queryFn: () =>
       api<{
-        genders: { gender: GenderType; total: string }[]
+        genders: { gender: Gender; total: string }[]
         total: number
       }>('/statistics/patients-by-gender', {
         params: { period },

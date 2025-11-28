@@ -75,7 +75,7 @@ export function InactivatePatientModal({
         icon={
           <DialogIcon
             icon={CircleXIcon}
-            className='text-warning bg-warning/10 border-none'
+            className='text-error bg-error/10 border-none'
           />
         }
       >

@@ -2,6 +2,25 @@ import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 import type { PatientCondition } from './patients'
 
+export type Referral = {
+  id: string
+  patient_id: string
+  date: string
+  category: ReferralCategory
+  condition: PatientCondition
+  annotation: string | null
+  status: string
+  referred_to: string | null
+  referred_by: string | null
+  created_at: string
+  updated_at: string
+  patient: {
+    id: string
+    name: string
+    avatar_url: string | null
+  }
+}
+
 export const REFERRAL_STATUSES = {
   scheduled: 'Agendado',
   canceled: 'Cancelado',
@@ -36,22 +55,3 @@ export const REFERRAL_CATEGORY_OPTIONS =
 export const REFERRAL_CATEGORY_ENUM = Object.keys(REFERRAL_CATEGORIES) as [
   ReferralCategory,
 ]
-
-export type Referral = {
-  id: string
-  patient_id: string
-  date: string
-  category: ReferralCategory
-  condition: PatientCondition
-  annotation: string | null
-  status: string
-  referred_to: string | null
-  referred_by: string | null
-  created_at: string
-  updated_at: string
-  patient: {
-    id: string
-    name: string
-    avatar_url: string | null
-  }
-}

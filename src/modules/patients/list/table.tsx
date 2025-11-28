@@ -33,13 +33,13 @@ import { QUERY_PARAMS } from '@/constants/params'
 import { ROUTES } from '@/constants/routes'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { OrderMappingType } from '@/types/order'
+import type { OrderMapping } from '@/types/order'
 import {
   type Patient,
-  PATIENT_STATUS,
   PATIENT_STATUS_OPTIONS,
+  PATIENT_STATUSES,
   PATIENTS_ORDER_OPTIONS,
-  type PatientsOrderType,
+  type PatientsOrder,
 } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
@@ -61,7 +61,7 @@ export function PatientsListTable() {
   const endDate = getParam(QUERY_PARAMS.endDate)
   const filterQueries = [page, search, orderBy, status, startDate, endDate]
 
-  const ORDER_MAPPING: OrderMappingType<PatientsOrderType> = {
+  const ORDER_MAPPING: OrderMapping<PatientsOrder> = {
     date_asc: { orderBy: 'date', order: 'ASC' },
     date_desc: { orderBy: 'date', order: 'DESC' },
     email_asc: { orderBy: 'email', order: 'ASC' },
@@ -80,7 +80,7 @@ export function PatientsListTable() {
           status,
           startDate,
           endDate,
-          ...ORDER_MAPPING[orderBy as PatientsOrderType],
+          ...ORDER_MAPPING[orderBy as PatientsOrder],
         },
       }),
   })
@@ -171,7 +171,7 @@ export function PatientsListTable() {
           {!isLoading && !isPatientsEmpty && (
             <TableBody>
               {patients.map((patient) => {
-                const status = PATIENT_STATUS[patient.status]
+                const status = PATIENT_STATUSES[patient.status]
                 return (
                   <TableRow key={patient.id}>
                     <TableCell className='py-0'>

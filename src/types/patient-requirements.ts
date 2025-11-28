@@ -1,5 +1,20 @@
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
+export type PatientRequirement = {
+  id: string
+  type: PatientRequirementType
+  status: PatientRequirementStatus
+  description: string | null
+  submitted_at: string | null
+  approved_at: string | null
+  created_at: string
+  patient: {
+    id: string
+    name: string
+    avatar_url: string | null
+  }
+}
+
 export const PATIENT_REQUIREMENTS_ORDERS = {
   name_asc: 'Nome (Crescente)',
   name_desc: 'Nome (Decrescente)',
@@ -34,18 +49,3 @@ export const PATIENT_REQUIREMENT_TYPE_OPTIONS = convertObjectToOptions(
 export const PATIENT_REQUIREMENT_TYPE_ENUM = Object.keys(
   PATIENT_REQUIREMENT_TYPES,
 ) as [PatientRequirementType]
-
-export type PatientRequirement = {
-  id: string
-  type: PatientRequirementType
-  status: PatientRequirementStatus
-  description: string | null
-  submitted_at: string | null
-  approved_at: string | null
-  created_at: string
-  patient: {
-    id: string
-    name: string
-    avatar_url: string | null
-  }
-}
