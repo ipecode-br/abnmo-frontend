@@ -43,6 +43,7 @@ export const GENDERS = {
   other: 'Outro',
 }
 export type GenderType = keyof typeof GENDERS
+
 export const GENDERS_OPTIONS = convertObjectToOptions(GENDERS)
 
 export const PATIENT_STATUS = {
@@ -83,6 +84,7 @@ export const PATIENT_CONDITIONS = {
   },
 } as const
 export type PatientCondition = keyof typeof PATIENT_CONDITIONS
+
 export const PATIENT_CONDITION_OPTIONS = Object.entries(PATIENT_CONDITIONS).map(
   ([key, status]) => ({ label: status.label, value: key }),
 )
@@ -99,4 +101,5 @@ export const PATIENTS_ORDER = {
   email_desc: 'E-mail (Decrescente)',
 }
 export type PatientsOrderType = keyof typeof PATIENTS_ORDER
+
 export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDER)
