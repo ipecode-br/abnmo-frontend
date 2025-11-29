@@ -5,7 +5,7 @@ import { Loader2Icon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 aria-readonly:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
+  'ring-offset-background focus-visible:ring-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 aria-readonly:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
   {
     variants: {
       variant: {
@@ -13,20 +13,19 @@ const buttonVariants = cva(
           'bg-primary text-primary-foreground hover:bg-primary/80 shadow-xs',
         destructive:
           'bg-error text-primary-foreground hover:bg-error/80 shadow-xs',
-        fancy:
-          'bg-primary text-primary-foreground hover:bg-primary/80 inset-shadow-md shadow-xs',
         outline:
           'border-border hover:bg-accent text-accent-foreground bg-background border shadow-xs',
-        muted: 'bg-background-soft text-accent-foreground hover:bg-accent',
+        muted: 'bg-background-soft text-accent-foreground hover:bg-border',
         ghost: 'text-accent-foreground hover:bg-accent bg-transparent',
         error: 'border-error focus-visible:ring-error hover:bg-accent border',
       },
       size: {
         default: 'h-10 min-h-10 px-4 [&_svg]:size-5',
-        xs: 'h-8 min-h-8 rounded-md px-2.5 text-xs [&_svg]:size-4',
+        xs: 'h-8 min-h-8 rounded-md px-2.5 text-sm [&_svg]:size-4',
         sm: 'h-9 min-h-9 px-4 [&_svg]:size-4',
-        lg: 'h-11 min-h-11 rounded-xl px-3 text-base [&_svg]:size-5',
+        lg: 'h-11 min-h-11 rounded-xl px-3 [&_svg]:size-5',
         icon: 'min-size-10 size-10 [&_svg]:size-5',
+        icon_sm: 'min-size-9 size-9 [&_svg]:size-5',
       },
     },
     defaultVariants: {

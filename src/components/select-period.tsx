@@ -1,16 +1,13 @@
 'use client'
 
-import { QUERY_PERIODS_OPTIONS, type QueryPeriodType } from '@/types/queries'
+import { QUERY_PERIODS_OPTIONS, type QueryPeriod } from '@/types/queries'
 
-import { Select, SelectValue } from './ui/select'
-import { SelectContent } from './ui/select/content'
-import { SelectItem } from './ui/select/item'
-import { SelectTrigger } from './ui/select/trigger'
+import { Select, type SelectOption } from './ui/select'
 
 interface SelectPeriodProps {
-  period: QueryPeriodType
-  onSelect: (value: QueryPeriodType) => void
+  period: QueryPeriod
   disabled?: boolean
+  onSelect: (value: QueryPeriod) => void
 }
 
 export function SelectPeriod({
@@ -18,25 +15,21 @@ export function SelectPeriod({
   disabled,
   onSelect,
 }: Readonly<SelectPeriodProps>) {
-  const defaultValue = QUERY_PERIODS_OPTIONS.find(
-    (option) => option.value === period,
-  )
+  const options: SelectOption[] = QUERY_PERIODS_OPTIONS.map((option) => ({
+    label: option.label,
+    value: option.value,
+  }))
+
+  function handleValueChange(value: string) {
+    onSelect(value as QueryPeriod)
+  }
 
   return (
     <Select
       value={period}
-      onValueChange={(value: QueryPeriodType) => onSelect(value)}
-    >
-      <SelectTrigger size='xs' disabled={disabled}>
-        <SelectValue>{defaultValue?.label}</SelectValue>
-      </SelectTrigger>
-      <SelectContent align='end' className='min-w-44'>
-        {QUERY_PERIODS_OPTIONS.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+      options={options}
+      onValueChange={handleValueChange}
+      disabled={disabled}
+    />
   )
 }

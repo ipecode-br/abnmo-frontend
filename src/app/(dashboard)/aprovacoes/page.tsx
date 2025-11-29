@@ -1,15 +1,11 @@
 import type { Metadata } from 'next'
 
+import { UnderReviewPatientRequirements } from '@/modules/patient-requirements/under-review-requirements'
+
 export const metadata: Metadata = {
-  title: 'Aprovações',
+  title: 'Aprovações pendentes',
 }
 
-import { DashboardContainer } from '@/components/dashboard/container'
-
 export default function Page() {
-  return (
-    <DashboardContainer className='flex flex-col gap-6'>
-      Aprovações
-    </DashboardContainer>
-  )
+  return <UnderReviewPatientRequirements />
 }

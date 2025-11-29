@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
-import type { UserType } from '@/types/users'
+import type { User } from '@/types/users'
 
 import { getDataFromToken } from './token'
 
@@ -16,7 +16,7 @@ export async function getProfile() {
 
   if (!data?.userId) return null
 
-  const response = await api<UserType>('/users/profile', {
+  const response = await api<User>('/users/profile', {
     includeCookies: true,
     cache: 'force-cache',
     next: {

@@ -1,16 +1,41 @@
+import { cva, type VariantProps } from 'class-variance-authority'
+import type { HTMLAttributes } from 'react'
+
 import { cn } from '@/utils/class-name-merge'
 
+const tagVariants = cva(
+  'flex w-fit items-center gap-1.5 border font-medium transition-colors [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  {
+    variants: {
+      variant: {
+        outlined: 'bg-background text-foreground-soft border-border',
+        info: 'bg-border/50 text-foreground border-border',
+        warning: 'bg-warning/10 text-warning border-warning/25',
+        error: 'bg-error/10 text-error border-error/25',
+        success: 'bg-success/10 text-success border-success/25',
+      },
+      size: {
+        default: 'rounded-lg px-3 py-1.5 text-sm leading-none [&_svg]:size-5',
+        sm: 'rounded-md px-2 py-1.25 text-sm leading-none [&_svg]:size-4',
+      },
+    },
+    defaultVariants: {
+      variant: 'outlined',
+      size: 'default',
+    },
+  },
+)
+
+export type TagProps = HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof tagVariants>
+
 export function Tag({
+  variant,
+  size,
   className,
   ...props
-}: Readonly<React.ComponentProps<'div'>>) {
+}: Readonly<TagProps>) {
   return (
-    <div
-      className={cn(
-        'border-border text-foreground-soft bg-background flex w-fit items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium [&_svg]:size-3.5',
-        className,
-      )}
-      {...props}
-    />
+    <div className={cn(tagVariants({ variant, size, className }))} {...props} />
   )
 }

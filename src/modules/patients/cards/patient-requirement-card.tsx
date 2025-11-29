@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { type PatientRequirementType } from '@/types/patients'
+import type { PatientRequirement } from '@/types/patient-requirements'
 import { formatDate } from '@/utils/formatters/format-date'
 
 type PatientRequirementCardProps = {
-  requirement: PatientRequirementType
+  requirement: PatientRequirement
 }
 
 export function PatientRequirementCard({
@@ -15,9 +15,7 @@ export function PatientRequirementCard({
       <div className='bg-accent aspect-video w-full' />
 
       <div className='flex flex-col gap-1 p-4'>
-        <h3 className='text-foreground text-lg font-medium'>
-          {requirement.title}
-        </h3>
+        <h3 className='text-foreground text-lg font-medium'>Laudo médico</h3>
         <p className='text-foreground-soft text-sm'>
           Solicitado em: {formatDate(requirement.created_at)}
         </p>

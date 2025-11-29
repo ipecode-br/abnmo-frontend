@@ -1,21 +1,21 @@
 import {
   AlertTriangleIcon,
-  CheckCircle2Icon,
+  CircleCheckIcon,
   CircleXIcon,
   FlagIcon,
 } from 'lucide-react'
 
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
-import { PatientSupportType } from './patient-support'
+import { PatientSupport } from './patient-support'
 
-export type PatientType = {
+export type Patient = {
   id: string
   user_id: string
-  gender: GenderType
+  gender: Gender
   date_of_birth: string
   phone: string
-  status: PatientStatusType
+  status: PatientStatus
   cpf: string
   state: string
   city: string
@@ -30,7 +30,7 @@ export type PatientType = {
   name: string
   email: string
   avatar_url: string | null
-  supports?: PatientSupportType[]
+  supports?: PatientSupport[]
 }
 
 export const GENDERS = {
@@ -42,27 +42,57 @@ export const GENDERS = {
   prefer_not_to_say: 'Prefiro não informar',
   other: 'Outro',
 }
-export type GenderType = keyof typeof GENDERS
-export const GENDERS_OPTIONS = convertObjectToOptions(GENDERS)
+export type Gender = keyof typeof GENDERS
 
-export const PATIENT_STATUS = {
-  active: 'Ativo',
-  inactive: 'Inativo',
-}
-export type PatientStatusType = keyof typeof PATIENT_STATUS
+export const GENDER_OPTIONS = convertObjectToOptions(GENDERS)
 
-const PATIENT_STATUS_ICONS_AND_COLOR = {
-  active: { icon: CheckCircle2Icon, color: '[&_svg]:text-success' },
-  inactive: { icon: CircleXIcon, color: '[&_svg]:text-error' },
-}
-export const PATIENT_STATUS_OPTIONS = convertObjectToOptions(
-  PATIENT_STATUS,
-).map((option) => ({
-  ...option,
-  ...PATIENT_STATUS_ICONS_AND_COLOR[option.value as PatientStatusType],
-}))
+export const PATIENT_STATUSES = {
+  active: {
+    variant: 'success',
+    label: 'Ativo',
+    icon: CircleCheckIcon,
+    color: '[&_svg]:text-success',
+  },
+  inactive: {
+    variant: 'error',
+    label: 'Inativo',
+    icon: CircleXIcon,
+    color: '[&_svg]:text-error',
+  },
+} as const
+export type PatientStatus = keyof typeof PATIENT_STATUSES
 
-export const PATIENTS_ORDER = {
+export const PATIENT_STATUS_OPTIONS = Object.entries(PATIENT_STATUSES).map(
+  ([key, status]) => ({
+    label: status.label,
+    value: key,
+    icon: status.icon,
+    color: status.color,
+  }),
+)
+
+export const PATIENT_CONDITIONS = {
+  in_crisis: {
+    variant: 'warning',
+    label: 'Em surto',
+    icon: AlertTriangleIcon,
+  },
+  stable: {
+    variant: 'info',
+    label: 'Estável',
+    icon: FlagIcon,
+  },
+} as const
+export type PatientCondition = keyof typeof PATIENT_CONDITIONS
+
+export const PATIENT_CONDITION_OPTIONS = Object.entries(PATIENT_CONDITIONS).map(
+  ([key, status]) => ({ label: status.label, value: key }),
+)
+export const PATIENT_CONDITION_ENUM = Object.keys(PATIENT_CONDITIONS) as [
+  PatientCondition,
+]
+
+export const PATIENTS_ORDERS = {
   name_asc: 'Nome (Crescente)',
   name_desc: 'Nome (Decrescente)',
   date_asc: 'Data (Crescente)',
@@ -70,43 +100,14 @@ export const PATIENTS_ORDER = {
   email_asc: 'E-mail (Crescente)',
   email_desc: 'E-mail (Decrescente)',
 }
-export type PatientsOrderType = keyof typeof PATIENTS_ORDER
-export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDER)
+export type PatientsOrder = keyof typeof PATIENTS_ORDERS
 
-export const PATIENT_CONDITIONS = {
-  outbreak: 'Em surto',
-  stable: 'Estável',
-} as const
-export type PatientConditionType = keyof typeof PATIENT_CONDITIONS
+export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDERS)
 
-export const PATIENT_CONDITION_ICONS_AND_COLOR = {
-  outbreak: {
-    icon: AlertTriangleIcon,
-    tagClassName: 'bg-warning/10 text-warning border-none',
-    iconClassName: 'fill-warning text-white',
-  },
-  stable: {
-    icon: FlagIcon,
-    tagClassName: 'bg-foreground-soft/5 border-none',
-    iconClassName: 'fill-foreground-soft',
-  },
-}
-
-export const PATIENT_REQUIREMENT_STATUS = {
-  pending: 'Pendente',
-  under_review: 'Em análise',
-  approved: 'Aprovado',
-  declined: 'Recusado',
-} as const
-export type PatientRequirementStatusType =
-  keyof typeof PATIENT_REQUIREMENT_STATUS
-
-export type PatientRequirementType = {
+export type PatientDocument = {
   id: string
-  type: string
-  title: string
-  status: PatientRequirementStatusType
-  submitted_at: string | null
-  approved_at: string | null
+  name: string
+  url: string
   created_at: string
+  size: string
 }

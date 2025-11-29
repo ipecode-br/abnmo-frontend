@@ -4,20 +4,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
+import { ComboboxInput } from '@/components/form/combobox-input'
 import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { BRAZILIAN_STATES_OPTIONS, type UFType } from '@/constants/enums'
+import { BRAZILIAN_STATES_OPTIONS, type UF } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import { useCities } from '@/hooks/cities'
-import { GENDERS_OPTIONS } from '@/types/patients'
+import { GENDER_OPTIONS } from '@/types/patients'
 
 import { useScreening } from '../hooks'
 import {
-  screeningPatientDataFormDefaultValues,
   type ScreeningPatientDataFormSchema,
   screeningPatientDataFormSchema,
 } from './patient-data-form-schema'
@@ -29,14 +29,22 @@ export function ScreeningPatientDataForm() {
 
   const formMethods = useForm<ScreeningPatientDataFormSchema>({
     resolver: zodResolver(screeningPatientDataFormSchema),
-    defaultValues: screeningPatientDataFormDefaultValues,
+    defaultValues: {
+      name: '',
+      gender: '',
+      date_of_birth: '',
+      city: '',
+      state: '',
+      phone: '',
+      cpf: '',
+    },
     mode: 'onBlur',
   })
   const { clearErrors, setValue, watch, reset } = formMethods
-  const UF = watch('state') as UFType
+  const UF = watch('state') as UF
   const cities = useCities(UF)
 
-  function handleSelectState(value: UFType) {
+  function handleSelectState(value: string) {
     setValue('state', value)
     setValue('city', '')
     clearErrors('state')
@@ -74,7 +82,7 @@ export function ScreeningPatientDataForm() {
         <SelectInput
           name='gender'
           label='Gênero'
-          options={GENDERS_OPTIONS}
+          options={GENDER_OPTIONS}
           placeholder='Selecione seu gênero'
           isRequired
         />
@@ -85,7 +93,7 @@ export function ScreeningPatientDataForm() {
           isRequired
         />
 
-        <SelectInput
+        <ComboboxInput
           name='state'
           label='Estado'
           options={BRAZILIAN_STATES_OPTIONS}
@@ -93,7 +101,8 @@ export function ScreeningPatientDataForm() {
           onValueChange={handleSelectState}
           isRequired
         />
-        <SelectInput
+
+        <ComboboxInput
           name='city'
           label='Cidade'
           options={cities}

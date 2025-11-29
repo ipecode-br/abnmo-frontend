@@ -1,6 +1,6 @@
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
-export const TEAMS_ORDER = {
+export const TEAMS_ORDERS = {
   name_asc: 'Nome (Crescente)',
   name_desc: 'Nome (Decrescente)',
   date_asc: 'Data (Crescente)',
@@ -10,5 +10,5 @@ export const TEAMS_ORDER = {
   specialty_desc: 'Especialidade (Decrescente)',
   specialty_asc: 'Especialidade (Crescente)',
 }
-export type TeamsOrderType = keyof typeof TEAMS_ORDER
-export const TEAMS_ORDER_OPTIONS = convertObjectToOptions(TEAMS_ORDER)
+export type TeamsOrder = keyof typeof TEAMS_ORDERS
+export const TEAMS_ORDER_OPTIONS = convertObjectToOptions(TEAMS_ORDERS)
