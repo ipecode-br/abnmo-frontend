@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2 } from 'lucide-react'
+import { Loader2, RectangleEllipsisIcon } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -10,8 +10,10 @@ import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { Dialog } from '@/components/ui/dialog'
+import { DialogClose } from '@/components/ui/dialog/close'
+import { DialogContainer } from '@/components/ui/dialog/container'
 import { DialogContent } from '@/components/ui/dialog/content'
+import { DialogFooter } from '@/components/ui/dialog/footer'
 import { DialogHeader } from '@/components/ui/dialog/header'
 import { DialogTitle } from '@/components/ui/dialog/title'
 
@@ -30,17 +32,14 @@ const changePasswordSchema = z
     message: 'Suas senhas não coincidem',
     path: ['confirmPassword'],
   })
+
 type ChangePasswordSchema = z.infer<typeof changePasswordSchema>
 
 interface PasswordModalProps {
-  open: boolean
-  onClose: () => void
+  onOpenChange: (open: boolean) => void
 }
 
-export default function PasswordModal({
-  open,
-  onClose,
-}: Readonly<PasswordModalProps>) {
+export default function PasswordModal({ onOpenChange }: PasswordModalProps) {
   const methods = useForm<ChangePasswordSchema>({
     resolver: zodResolver(changePasswordSchema),
     defaultValues: { password: '', confirmPassword: '', currentPassword: '' },
@@ -53,19 +52,21 @@ export default function PasswordModal({
 
   async function onSubmit(data: ChangePasswordSchema) {
     console.log('Dados enviados para troca de senha:', data)
-
-    onClose()
+    onOpenChange(false)
   }
 
   return (
-    <Dialog open={open} onOpenChange={(val) => !val && onClose()}>
-      <DialogContent className='max-w-lg'>
-        <DialogHeader>
-          <DialogTitle>Alterar senha</DialogTitle>
-        </DialogHeader>
+    <DialogContainer>
+      <DialogHeader
+        icon={RectangleEllipsisIcon}
+        iconClassName='border border-border bg-transparent'
+      >
+        <DialogTitle>Alterar Senha</DialogTitle>
+      </DialogHeader>
 
-        <FormProvider {...methods}>
-          <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider {...methods}>
+        <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
+          <DialogContent className='flex flex-col gap-8'>
             <FormField>
               <PasswordInput
                 name='currentPassword'
@@ -90,19 +91,21 @@ export default function PasswordModal({
               />
             </FormField>
 
-            <div className='flex justify-end gap-2 pt-2'>
-              <Button variant='outline' type='button' onClick={onClose}>
-                Cancelar
-              </Button>
-
-              <Button type='submit' disabled={isSubmitting}>
+            <DialogFooter>
+              <Button type='submit' disabled={isSubmitting} className='flex-1'>
                 {isSubmitting ? (
                   <Loader2 className='h-4 w-4 animate-spin' />
                 ) : (
                   'Aplicar alterações'
                 )}
               </Button>
-            </div>
+              <DialogClose
+                className='flex-1'
+                disabled={methods.formState.isSubmitting}
+              >
+                Cancelar
+              </DialogClose>
+            </DialogFooter>
 
             {success && (
               <Alert variant='success' className='text-center'>
@@ -115,9 +118,9 @@ export default function PasswordModal({
                 {errorMessage}
               </Alert>
             )}
-          </FormContainer>
-        </FormProvider>
-      </DialogContent>
-    </Dialog>
+          </DialogContent>
+        </FormContainer>
+      </FormProvider>
+    </DialogContainer>
   )
 }
