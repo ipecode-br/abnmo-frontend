@@ -1,12 +1,12 @@
-import { ForwardIcon, UserRoundIcon } from 'lucide-react'
+import { UserRoundIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getPatient } from '@/actions/patients/get-patient'
-import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 import { PatientForm } from '@/modules/patients/form'
 import { InactivatePatientButton } from '@/modules/patients/inactivate-button'
+import { ReferPatientButton } from '@/modules/referrals/referral-button'
 
 export const metadata: Metadata = {
   title: 'Informações do paciente',
@@ -45,10 +45,7 @@ export default async function Page({
 
         <div className='flex gap-2'>
           {isPatientActive && <InactivatePatientButton patient={patient} />}
-          <Button>
-            <ForwardIcon />
-            Encaminhar paciente
-          </Button>
+          <ReferPatientButton id={patient.id} />
         </div>
       </header>
 
