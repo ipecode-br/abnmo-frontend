@@ -6,16 +6,13 @@ import { useState } from 'react'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 import type { ButtonProps } from '../../components/ui/button'
-import { ReferralsPatientModal } from './referrals-modal'
+import { ReferralPatientModal } from './referrals-modal'
 
 interface ReferPatientButtonProps extends ButtonProps {
-  patient: {
-    id: string
-    name: string
-  }
+  id?: string
 }
 export function ReferPatientButton({
-  patient,
+  id,
   ...props
 }: Readonly<ReferPatientButtonProps>) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -28,10 +25,7 @@ export function ReferPatientButton({
       </DialogTrigger>
 
       {modalOpen && (
-        <ReferralsPatientModal
-          patient={patient}
-          onClose={() => setModalOpen(false)}
-        />
+        <ReferralPatientModal id={id} onClose={() => setModalOpen(false)} />
       )}
     </Dialog>
   )

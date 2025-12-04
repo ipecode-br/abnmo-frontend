@@ -45,9 +45,7 @@ export default async function Page({
 
         <div className='flex gap-2'>
           {isPatientActive && <InactivatePatientButton patient={patient} />}
-          <ReferPatientButton
-            patient={{ id: patient.id, name: patient.name }}
-          />
+          <ReferPatientButton id={patient.id} />
         </div>
       </header>
 
