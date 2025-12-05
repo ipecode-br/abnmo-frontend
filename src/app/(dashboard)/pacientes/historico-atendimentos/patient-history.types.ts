@@ -18,7 +18,7 @@ export interface PatientHistory {
   professional_name?: string | null
   category: PatientHistoryCategory
   status: PatientHistoryStatus
-  observations: string
+  observations?: string
 }
 
 export type PatientHistoryOrder =

@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import { PatientHistory } from './patient-history.types'
+import type { PatientHistory } from './patient-history.types'
 
 interface Props {
   data: PatientHistory | null
@@ -22,14 +22,14 @@ export default function PatientHistoryObservationsModal({
   if (!data) return null
 
   return (
-    <Dialog>
+    <Dialog open={true} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Observações do atendimento</DialogTitle>
         </DialogHeader>
-
-        <p className='text-sm whitespace-pre-wrap'>{data.observations}</p>
-
+        <p className='text-sm whitespace-pre-wrap'>
+          {data.observations || '-'}
+        </p>
         <div className='mt-4 flex justify-end'>
           <Button variant='outline' onClick={onClose}>
             Fechar
