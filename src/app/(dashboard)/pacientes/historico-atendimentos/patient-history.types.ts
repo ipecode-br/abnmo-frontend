@@ -14,6 +14,7 @@ export type PatientHistoryCategory =
 
 export interface PatientHistory {
   id: string
+  patient_id: string
   date: string
   professional_name?: string | null
   category: PatientHistoryCategory

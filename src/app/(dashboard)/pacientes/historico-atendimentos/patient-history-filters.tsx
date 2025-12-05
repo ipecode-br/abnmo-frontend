@@ -1,76 +1,136 @@
-import { useState } from 'react'
+'use client'
 
+import { useEffect, useState } from 'react'
+
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
-import { useParams } from '@/hooks/params'
 
-import { PATIENT_HISTORY_CATEGORY_LABELS } from './patient-history.constants'
 import type {
   PatientHistoryCategory,
   PatientHistoryStatus,
 } from './patient-history.types'
 
-export default function PatientHistoryFilters() {
-  const { updateParams } = useParams()
-  const [selectedCategories, setSelectedCategories] = useState<
-    PatientHistoryCategory[]
-  >([])
+interface Props {
+  onFilterChange?: (filters: {
+    searchName: string
+    statusFilter: PatientHistoryStatus | 'all'
+    categoryFilter: PatientHistoryCategory | ''
+    sortOption: string
+  }) => void
+}
 
-  function toggleCategory(value: string) {
-    const category = value as PatientHistoryCategory
-    const updated = selectedCategories.includes(category)
-      ? selectedCategories.filter((v) => v !== category)
-      : [...selectedCategories, category]
+export function PatientHistoryFilters({ onFilterChange }: Props) {
+  const [searchName, setSearchName] = useState('')
+  const [statusFilter, setStatusFilter] = useState<
+    PatientHistoryStatus | 'all'
+  >('all')
+  const [categoryFilter, setCategoryFilter] = useState<
+    PatientHistoryCategory | ''
+  >('')
+  const [sortOption, setSortOption] = useState('')
 
-    setSelectedCategories(updated)
+  useEffect(() => {
+    onFilterChange?.({ searchName, statusFilter, categoryFilter, sortOption })
+  }, [searchName, statusFilter, categoryFilter, sortOption, onFilterChange])
 
-    updateParams({
-      set: [{ key: 'categories', value: updated.join(',') }],
-    })
+  function clearFilters() {
+    setSearchName('')
+    setStatusFilter('all')
+    setCategoryFilter('')
+    setSortOption('')
   }
 
-  function handleStatusChange(value: string) {
-    const status = value as PatientHistoryStatus
-    updateParams({ set: [{ key: 'status', value: status }] })
+  const CATEGORY_LABELS: Record<PatientHistoryCategory, string> = {
+    medicine: 'Medicina',
+    lawyer: 'Advogado',
+    nurse: 'Enfermeiro',
+    psychologist: 'Psicólogo',
+    nutritionist: 'Nutricionista',
+    physical_trainer: 'Preparador físico',
+    social_service: 'Serviço-social',
+    psychiatry: 'Psiquiatria',
+    neurologist: 'Neurologista',
+    ophthalmologist: 'Oftalmologista',
   }
 
   return (
-    <div className='flex flex-wrap gap-2'>
-      <Input
-        type='date'
-        onChange={(e) =>
-          updateParams({ set: [{ key: 'date', value: e.target.value }] })
-        }
-      />
-      <Input
-        type='date'
-        onChange={(e) =>
-          updateParams({ set: [{ key: 'startDate', value: e.target.value }] })
-        }
-      />
-      <Input
-        type='date'
-        onChange={(e) =>
-          updateParams({ set: [{ key: 'endDate', value: e.target.value }] })
-        }
-      />
+    <div className='mb-4 flex flex-wrap items-center justify-between gap-2 text-xs'>
+      <div className='flex gap-2'>
+        <Button
+          variant={statusFilter === 'all' ? 'default' : 'outline'}
+          size='sm'
+          className='px-2 py-1 text-xs'
+          onClick={() => setStatusFilter('all')}
+        >
+          Todos
+        </Button>
+        <Button
+          variant={statusFilter === 'stable' ? 'default' : 'outline'}
+          size='sm'
+          className='px-2 py-1 text-xs'
+          onClick={() => setStatusFilter('stable')}
+        >
+          Estável
+        </Button>
+        <Button
+          variant={statusFilter === 'crisis' ? 'default' : 'outline'}
+          size='sm'
+          className='px-2 py-1 text-xs'
+          onClick={() => setStatusFilter('crisis')}
+        >
+          Em surto
+        </Button>
+      </div>
 
-      <Select
-        placeholder='Categoria'
-        options={Object.entries(PATIENT_HISTORY_CATEGORY_LABELS).map(
-          ([value, label]) => ({ value, label }),
-        )}
-        onValueChange={toggleCategory}
-      />
+      <div className='flex gap-2'>
+        <Input
+          placeholder='Pesquisar'
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          className='w-36 text-xs'
+        />
 
-      <Select
-        placeholder='Quadro'
-        options={[
-          { value: 'stable', label: 'Estável' },
-          { value: 'crisis', label: 'Em surto' },
-        ]}
-        onValueChange={handleStatusChange}
-      />
+        <Select
+          placeholder='Categoria'
+          value={categoryFilter}
+          onValueChange={(v: string) =>
+            setCategoryFilter(v as PatientHistoryCategory)
+          }
+          options={[
+            { value: '', label: 'Categoria' },
+            ...Object.entries(CATEGORY_LABELS).map(([value, label]) => ({
+              value,
+              label,
+            })),
+          ]}
+          className='w-36 text-xs'
+        />
+
+        <Select
+          placeholder='Ordenar'
+          value={sortOption}
+          onValueChange={(v: string) => setSortOption(v)}
+          options={[
+            { value: 'date_desc', label: 'Mais recente → Mais antigo' },
+            { value: 'date_asc', label: 'Mais antigo → Mais recente' },
+            { value: 'status_asc', label: 'Estável' },
+            { value: 'status_desc', label: 'Em surto' },
+            { value: 'alpha_asc', label: 'A-Z' },
+            { value: 'alpha_desc', label: 'Z-A' },
+          ]}
+          className='w-36 text-xs'
+        />
+
+        <Button
+          variant='muted'
+          size='sm'
+          className='px-2 py-1 text-xs'
+          onClick={clearFilters}
+        >
+          Limpar filtros
+        </Button>
+      </div>
     </div>
   )
 }

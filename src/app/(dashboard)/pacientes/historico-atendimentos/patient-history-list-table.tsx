@@ -1,5 +1,7 @@
+'use client'
+
 import { EyeIcon } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
@@ -13,128 +15,160 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
-import { useParams } from '@/hooks/params'
-import { api } from '@/lib/api'
 
-import {
-  PATIENT_HISTORY_CATEGORY_LABELS,
-  PATIENT_HISTORY_STATUS_LABELS,
-} from './patient-history.constants'
 import type {
   PatientHistory,
-  PatientHistoryOrder,
+  PatientHistoryCategory,
+  PatientHistoryStatus,
 } from './patient-history.types'
 import PatientHistoryObservationsModal from './patient-history-observationsModal'
 import PatientHistorySkeleton from './patient-history-skeleton'
 
 interface Props {
   patientId: string
+  filters: {
+    searchName: string
+    statusFilter: PatientHistoryStatus | 'all'
+    categoryFilter: PatientHistoryCategory | ''
+    sortOption: string
+  }
 }
 
-export function PatientHistoryListTable({ patientId }: Props) {
-  const [total, setTotal] = useState(0)
-  const [selected, setSelected] = useState<PatientHistory | null>(null)
-  const [history, setHistory] = useState<PatientHistory[]>([])
-  const [loading, setLoading] = useState(false)
-  const { getParam, updateParams } = useParams()
-
-  const page = getParam('page')
-  const orderBy = getParam('orderBy')
-  const date = getParam('date')
-  const startDate = getParam('startDate')
-  const endDate = getParam('endDate')
-  const categories = getParam('categories')
-  const status = getParam('status')
-
-  const ORDER_MAPPING: Record<
-    PatientHistoryOrder,
-    { orderBy: string; order: string }
-  > = {
-    date_asc: { orderBy: 'date', order: 'ASC' },
-    date_desc: { orderBy: 'date', order: 'DESC' },
-    status_asc: { orderBy: 'status', order: 'ASC' },
-    status_desc: { orderBy: 'status', order: 'DESC' },
+const PATIENT_HISTORY_CATEGORY_LABELS: Record<PatientHistoryCategory, string> =
+  {
+    medicine: 'Medicina',
+    lawyer: 'Advogado',
+    nurse: 'Enfermeiro',
+    psychologist: 'Psicólogo',
+    nutritionist: 'Nutricionista',
+    physical_trainer: 'Preparador físico',
+    social_service: 'Serviço-social',
+    psychiatry: 'Psiquiatria',
+    neurologist: 'Neurologista',
+    ophthalmologist: 'Oftalmologista',
   }
 
-  const fetchHistory = useCallback(async () => {
-    setLoading(true)
-    try {
-      const response = await api<{ history: PatientHistory[]; total: number }>(
-        `/patients/${patientId}/history`,
-        {
-          params: {
-            page,
-            date,
-            startDate,
-            endDate,
-            categories,
-            status,
-            ...ORDER_MAPPING[(orderBy as PatientHistoryOrder) || 'date_desc'],
-          },
-        },
-      )
-      if (response.data) {
-        setHistory(response.data.history)
-        setTotal(response.data.total)
-      }
-    } finally {
-      setLoading(false)
-    }
-  }, [patientId, page, orderBy, date, startDate, endDate, categories, status])
+const PATIENT_HISTORY_STATUS_LABELS: Record<PatientHistoryStatus, string> = {
+  stable: 'Estável',
+  crisis: 'Em surto',
+}
+
+export const MOCK_HISTORY: PatientHistory[] = [
+  {
+    id: '1',
+    patient_id: '1',
+    date: '2025-11-01T10:30:00Z',
+    professional_name: 'Dra. Ana Silva',
+    category: 'medicine',
+    status: 'stable',
+    observations: 'Paciente apresentou melhora significativa.',
+  },
+  {
+    id: '2',
+    patient_id: '1',
+    date: '2025-11-15T14:00:00Z',
+    professional_name: 'Dr. Pedro Souza',
+    category: 'nurse',
+    status: 'crisis',
+    observations: 'Exame de sangue solicitado.',
+  },
+  {
+    id: '3',
+    patient_id: '1',
+    date: '2025-10-20T09:00:00Z',
+    professional_name: 'Dra. Fernanda Lima',
+    category: 'psychologist',
+    status: 'stable',
+    observations: 'Consulta psicológica sem complicações.',
+  },
+]
+
+export default function PatientHistoryListTable({ patientId, filters }: Props) {
+  const [history, setHistory] = useState<PatientHistory[]>([])
+  const [selected, setSelected] = useState<PatientHistory | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    fetchHistory()
-  }, [fetchHistory])
+    setLoading(true)
+    let filtered = MOCK_HISTORY
 
-  const handleClear = () => {
-    updateParams({
-      remove: [
-        'page',
-        'orderBy',
-        'date',
-        'startDate',
-        'endDate',
-        'categories',
-        'status',
-      ],
-    })
-  }
+    if (filters.statusFilter !== 'all')
+      filtered = filtered.filter((h) => h.status === filters.statusFilter)
+    if (filters.categoryFilter)
+      filtered = filtered.filter((h) => h.category === filters.categoryFilter)
+    if (filters.searchName)
+      filtered = filtered.filter((h) =>
+        h.professional_name
+          ?.toLowerCase()
+          .includes(filters.searchName.toLowerCase()),
+      )
+
+    switch (filters.sortOption) {
+      case 'date_asc':
+        filtered.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+        )
+        break
+      case 'date_desc':
+        filtered.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        )
+        break
+      case 'status_asc':
+        filtered.sort((a, b) => a.status.localeCompare(b.status))
+        break
+      case 'status_desc':
+        filtered.sort((a, b) => b.status.localeCompare(a.status))
+        break
+      case 'alpha_asc':
+        filtered.sort((a, b) =>
+          (a.professional_name ?? '').localeCompare(b.professional_name ?? ''),
+        )
+        break
+      case 'alpha_desc':
+        filtered.sort((a, b) =>
+          (b.professional_name ?? '').localeCompare(a.professional_name ?? ''),
+        )
+        break
+    }
+
+    setHistory(filtered)
+    setTotal(filtered.length)
+    setLoading(false)
+  }, [patientId, filters])
 
   return (
     <>
-      <div className='mb-4 flex items-center justify-between'>
-        <span>Total de atendimentos: {total}</span>
-        <Button variant='outline' onClick={handleClear}>
-          Limpar
-        </Button>
-      </div>
-
-      <Card className='p-6'>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Data</TableHead>
-              <TableHead>Profissional</TableHead>
-              <TableHead>Categoria</TableHead>
-              <TableHead>Quadro</TableHead>
-              <TableHead className='text-center'>Obs</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          {loading ? (
-            <PatientHistorySkeleton />
-          ) : (
+      <Card className='p-4'>
+        {loading ? (
+          <PatientHistorySkeleton />
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className='text-xs'>Data de atendimento</TableHead>
+                <TableHead className='text-xs'>Profissional</TableHead>
+                <TableHead className='text-xs'>Categoria</TableHead>
+                <TableHead className='text-xs'>Status</TableHead>
+                <TableHead className='text-center text-xs'>
+                  Observações
+                </TableHead>
+              </TableRow>
+            </TableHeader>
             <TableBody>
               {history.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>
+                  <TableCell className='text-base'>
                     {new Date(item.date).toLocaleDateString()}
                   </TableCell>
-                  <TableCell>{item.professional_name || '-'}</TableCell>
-                  <TableCell>
+                  <TableCell className='text-base'>
+                    {item.professional_name ?? '-'}
+                  </TableCell>
+                  <TableCell className='text-base'>
                     <Tag>{PATIENT_HISTORY_CATEGORY_LABELS[item.category]}</Tag>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className='text-base'>
                     <Tag>{PATIENT_HISTORY_STATUS_LABELS[item.status]}</Tag>
                   </TableCell>
                   <TableCell className='text-center'>
@@ -149,8 +183,8 @@ export function PatientHistoryListTable({ patientId }: Props) {
                 </TableRow>
               ))}
             </TableBody>
-          )}
-        </Table>
+          </Table>
+        )}
       </Card>
 
       <Pagination totalItems={total} />
