@@ -1,4 +1,4 @@
-import { CircleAlertIcon, CircleCheckIcon, CircleXIcon } from 'lucide-react'
+import { CircleAlert, CircleCheckIcon, CircleXIcon } from 'lucide-react'
 
 import { Tag } from '@/components/ui/tag'
 import { cn } from '@/utils/class-name-merge'
@@ -15,7 +15,7 @@ export const STATUS_MAPPING = {
     class: '[&_svg]:text-error',
   },
   waiting: {
-    icon: CircleAlertIcon,
+    icon: CircleAlert,
     label: 'Aprovação pendente',
     class: '[&_svg]:text-warning',
   },

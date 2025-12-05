@@ -73,9 +73,13 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
         : undefined
 
     const payload = {
-      ...patient.data,
+      name: patient.data.name,
+      gender: patient.data.gender,
+      date_of_birth: patient.data.date_of_birth,
       phone: removeNonNumbers(patient.data.phone),
       cpf: removeNonNumbers(patient.data.cpf),
+      state: patient.data.state,
+      city: patient.data.city,
       has_disability: medicalReport.data.has_disability === 'yes',
       disability_desc: medicalReport.data.disability_desc ?? null,
       need_legal_assistance: medicalReport.data.need_legal_assistance === 'yes',

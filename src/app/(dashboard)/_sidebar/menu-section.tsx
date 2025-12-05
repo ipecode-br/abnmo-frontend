@@ -8,7 +8,7 @@ import { cn } from '@/utils/class-name-merge'
 
 interface DashboardSidebarMenuSectionProps {
   sections: {
-    id: string
+    title: string
     links: {
       label: string
       icon: React.ReactNode
@@ -26,7 +26,14 @@ export function DashboardSidebarMenuSection({
   return (
     <section className='mb-auto space-y-8'>
       {sections.map((section) => (
-        <section key={section.id} className='transition-all'>
+        <section key={section.title} className='transition-all'>
+          <p
+            data-visible={expanded}
+            className='text-disabled mb-4 text-xs font-medium uppercase opacity-0 transition-opacity delay-75 data-[visible=true]:opacity-100'
+          >
+            {section.title}
+          </p>
+
           <nav className='flex flex-col gap-2'>
             {section.links.map((link) => {
               const isActive = link.path === pathname
