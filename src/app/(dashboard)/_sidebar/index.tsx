@@ -1,9 +1,10 @@
 import {
-  BoltIcon,
-  HeartHandshakeIcon,
-  LayoutDashboardIcon,
-  Share2Icon,
-  UserRoundCheckIcon,
+  Bolt,
+  Headset,
+  LayoutDashboard,
+  Share2,
+  UserRoundCheck,
+  UserRoundCog,
   Users2Icon,
 } from 'lucide-react'
 
@@ -36,11 +37,11 @@ export async function DashboardSidebar() {
 
 const SIDEBAR_SECTIONS = [
   {
-    id: 'common',
+    title: 'Geral',
     links: [
       {
         label: 'Visão Geral',
-        icon: <LayoutDashboardIcon />,
+        icon: <LayoutDashboard />,
         path: ROUTES.dashboard.main,
       },
       {
@@ -50,34 +51,34 @@ const SIDEBAR_SECTIONS = [
       },
       {
         label: 'Encaminhados',
-        icon: <Share2Icon />,
-        path: ROUTES.dashboard.referrals.main,
+        icon: <Share2 />,
+        path: ROUTES.dashboard.forwarded.main,
       },
       {
         label: 'Aprovações',
-        icon: <UserRoundCheckIcon />,
+        icon: <UserRoundCheck />,
         path: ROUTES.dashboard.approvals.main,
-      },
-      {
-        label: 'Equipe',
-        icon: <HeartHandshakeIcon />,
-        path: ROUTES.dashboard.teams.main,
       },
     ],
   },
   {
-    id: 'others',
+    title: 'Outros',
     links: [
       {
+        label: 'Equipes',
+        icon: <UserRoundCog />,
+        path: ROUTES.dashboard.teams.main,
+      },
+      {
         label: 'Configurações',
-        icon: <BoltIcon />,
+        icon: <Bolt />,
         path: ROUTES.dashboard.settings.main,
       },
-      // {
-      //   label: 'Suporte',
-      //   icon: <HeadsetIcon />,
-      //   path: ROUTES.dashboard.support.main,
-      // },
+      {
+        label: 'Suporte',
+        icon: <Headset />,
+        path: ROUTES.dashboard.support.main,
+      },
     ],
   },
 ]

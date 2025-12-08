@@ -5,6 +5,7 @@ export const ROUTES = {
     forgotPassword: '/conta/recuperar-senha',
     signOut: '/api/sair',
   },
+
   patient: {
     main: '/paciente',
     screening: {
@@ -17,8 +18,10 @@ export const ROUTES = {
       sent: '/paciente/documentos/enviados',
     },
   },
+
   dashboard: {
     main: '/',
+
     patients: {
       main: '/pacientes',
       new: '/pacientes/cadastrar',
@@ -28,22 +31,31 @@ export const ROUTES = {
         history: (id: string) => `/pacientes/${id}/historico`,
       },
     },
+
     referrals: {
       main: '/encaminhados',
       list: '/encaminhados/encaminhamentos',
     },
+
+    forwarded: {
+      main: '/encaminhados',
+    },
+
     approvals: {
       main: '/aprovacoes',
       pending: '/aprovacoes/pendentes',
       approved: '/aprovacoes/aprovados',
     },
+
     teams: {
       main: '/equipes',
       specialists: '/equipes/especialistas',
     },
+
     settings: {
       main: '/configuracoes',
     },
+
     support: {
       main: '/suporte',
     },
