@@ -1,6 +1,6 @@
 'use client'
 
-import { EyeIcon } from 'lucide-react'
+import { AlertTriangle, Eye, Flag } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Pagination } from '@/components/pagination'
@@ -14,14 +14,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Tag } from '@/components/ui/tag'
 
 import type {
   PatientHistory,
   PatientHistoryCategory,
   PatientHistoryStatus,
 } from './patient-history.types'
-import PatientHistoryObservationsModal from './patient-history-observationsModal'
+import PatientHistoryObservationsModal from './patient-history-observations-modal'
 import PatientHistorySkeleton from './patient-history-skeleton'
 
 interface Props {
@@ -34,25 +33,33 @@ interface Props {
   }
 }
 
-const PATIENT_HISTORY_CATEGORY_LABELS: Record<PatientHistoryCategory, string> =
-  {
-    medicine: 'Medicina',
-    lawyer: 'Advogado',
-    nurse: 'Enfermeiro',
-    psychologist: 'Psicólogo',
-    nutritionist: 'Nutricionista',
-    physical_trainer: 'Preparador físico',
-    social_service: 'Serviço-social',
-    psychiatry: 'Psiquiatria',
-    neurologist: 'Neurologista',
-    ophthalmologist: 'Oftalmologista',
-  }
+const CATEGORY_LABELS: Record<PatientHistoryCategory, string> = {
+  medicine: 'Medicina',
+  lawyer: 'Advogado',
+  nurse: 'Enfermeiro',
+  psychologist: 'Psicólogo',
+  nutritionist: 'Nutricionista',
+  physical_trainer: 'Preparador físico',
+  social_service: 'Serviço-social',
+  psychiatry: 'Psiquiatria',
+  neurologist: 'Neurologista',
+  ophthalmologist: 'Oftalmologista',
+}
 
-const PATIENT_HISTORY_STATUS_LABELS: Record<PatientHistoryStatus, string> = {
+const STATUS_LABELS: Record<PatientHistoryStatus, string> = {
   stable: 'Estável',
   crisis: 'Em surto',
 }
 
+const STATUS_STYLES: Record<
+  PatientHistoryStatus,
+  { bg: string; color: string }
+> = {
+  stable: { bg: '#EFEFEF', color: '#000' },
+  crisis: { bg: '#FEF3EB', color: '#F17B2C' },
+}
+
+// Mock de histórico
 export const MOCK_HISTORY: PatientHistory[] = [
   {
     id: '1',
@@ -91,16 +98,17 @@ export default function PatientHistoryListTable({ patientId, filters }: Props) {
 
   useEffect(() => {
     setLoading(true)
-    let filtered = MOCK_HISTORY
-
+    let filtered = MOCK_HISTORY.filter(
+      (h) => String(h.patient_id) === patientId,
+    )
     if (filters.statusFilter !== 'all')
       filtered = filtered.filter((h) => h.status === filters.statusFilter)
     if (filters.categoryFilter)
       filtered = filtered.filter((h) => h.category === filters.categoryFilter)
     if (filters.searchName)
       filtered = filtered.filter((h) =>
-        h.professional_name
-          ?.toLowerCase()
+        (h.professional_name ?? '')
+          .toLowerCase()
           .includes(filters.searchName.toLowerCase()),
       )
 
@@ -140,53 +148,63 @@ export default function PatientHistoryListTable({ patientId, filters }: Props) {
 
   return (
     <>
-      <Card className='p-4'>
+      <div className='mb-4 h-[1px] w-full bg-[#FCFCFC]' />
+      <Card className='p-4 text-[16px]'>
         {loading ? (
           <PatientHistorySkeleton />
         ) : (
-          <Table>
+          <Table className='text-[16px]'>
             <TableHeader>
               <TableRow>
-                <TableHead className='text-xs'>Data de atendimento</TableHead>
-                <TableHead className='text-xs'>Profissional</TableHead>
-                <TableHead className='text-xs'>Categoria</TableHead>
-                <TableHead className='text-xs'>Status</TableHead>
-                <TableHead className='text-center text-xs'>
-                  Observações
-                </TableHead>
+                <TableHead>Data de atendimento</TableHead>
+                <TableHead>Profissional</TableHead>
+                <TableHead>Especialidade</TableHead>
+                <TableHead className='text-center'>Quadro Geral</TableHead>
+                <TableHead className='text-center'>Observações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {history.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className='text-base'>
-                    {new Date(item.date).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell className='text-base'>
-                    {item.professional_name ?? '-'}
-                  </TableCell>
-                  <TableCell className='text-base'>
-                    <Tag>{PATIENT_HISTORY_CATEGORY_LABELS[item.category]}</Tag>
-                  </TableCell>
-                  <TableCell className='text-base'>
-                    <Tag>{PATIENT_HISTORY_STATUS_LABELS[item.status]}</Tag>
-                  </TableCell>
-                  <TableCell className='text-center'>
-                    <Button
-                      size='icon'
-                      variant='ghost'
-                      onClick={() => setSelected(item)}
-                    >
-                      <EyeIcon />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {history.map((item) => {
+                const style = STATUS_STYLES[item.status]
+                return (
+                  <TableRow key={item.id}>
+                    <TableCell>
+                      {new Date(item.date).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>{item.professional_name ?? '-'}</TableCell>
+                    <TableCell>{CATEGORY_LABELS[item.category]}</TableCell>
+                    <TableCell className='text-center'>
+                      <div
+                        className='mx-auto flex w-fit items-center justify-center gap-1 rounded-md px-2 py-[2px]'
+                        style={{ backgroundColor: style.bg }}
+                      >
+                        {item.status === 'stable' && (
+                          <Flag size={16} color={style.color} />
+                        )}
+                        {item.status === 'crisis' && (
+                          <AlertTriangle size={16} color={style.color} />
+                        )}
+                        <span style={{ color: style.color }}>
+                          {STATUS_LABELS[item.status]}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell className='text-center'>
+                      <Button
+                        size='icon'
+                        variant='ghost'
+                        onClick={() => setSelected(item)}
+                      >
+                        <Eye size={16} color='#868C98' />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         )}
       </Card>
-
       <Pagination totalItems={total} />
       <PatientHistoryObservationsModal
         data={selected}
