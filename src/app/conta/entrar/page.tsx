@@ -5,8 +5,7 @@ import { AuthCard } from '@/components/auth/auth-card'
 import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
-
-import { SignInForm } from './sign-in-form'
+import { SignInForm } from '@/modules/auth/sign-in-form'
 
 export const metadata: Metadata = {
   title: 'Acessar conta',
@@ -19,7 +18,7 @@ export default function Page() {
       title='Bem vindo(a)'
       description='Insira seus dados para entrar na sua conta'
     >
-      <SignInForm />
+      <SignInForm type='patient' />
 
       <Divider text='ou' />
 

@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import React from 'react'
 
-import { getProfile } from '@/actions/users'
+import { getCurrentUser } from '@/actions/users'
 import { PatientRequirementCard } from '@/modules/patients/cards/patient-requirement-card'
 import type { PatientRequirement } from '@/types/patient-requirements'
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const patient = await getProfile()
+  const patient = await getCurrentUser()
 
   const patientName = patient ? `, ${patient.name}` : ''
 
