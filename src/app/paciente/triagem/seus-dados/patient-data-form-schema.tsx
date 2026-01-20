@@ -23,14 +23,3 @@ export const screeningPatientDataFormSchema = z.object({
 export type ScreeningPatientDataFormSchema = z.infer<
   typeof screeningPatientDataFormSchema
 >
-
-export const screeningPatientDataFormDefaultValues: ScreeningPatientDataFormSchema =
-  {
-    name: '',
-    gender: '',
-    date_of_birth: '',
-    city: '',
-    state: '',
-    phone: '',
-    cpf: '',
-  }

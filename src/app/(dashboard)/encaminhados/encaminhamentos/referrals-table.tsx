@@ -7,7 +7,6 @@ import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
 import { DataTableHeaderSearch } from '@/components/data-table/header/search'
 import { Pagination } from '@/components/pagination'
-import { AppointmentConditionTag } from '@/components/tags/appointment-condition'
 import { Card } from '@/components/ui/card'
 import { TabSelect } from '@/components/ui/tab-select'
 import {
@@ -19,8 +18,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tag } from '@/components/ui/tag'
 import {
-  PatientConditionType,
+  PATIENT_CONDITIONS,
+  PatientCondition,
   PATIENTS_REFERRALS_ORDER_OPTIONS,
 } from '@/types/patients'
 
@@ -171,29 +172,35 @@ export function ReferralsTable() {
 
           {!isLoading && !isReferralsEmpty && (
             <TableBody>
-              {referrals?.map((forwarding) => (
-                <TableRow key={forwarding.id}>
-                  <TableCell className='py-0'>{forwarding.nome}</TableCell>
+              {referrals?.map((forwarding) => {
+                const condition =
+                  PATIENT_CONDITIONS[forwarding.quadroGeral as PatientCondition]
+                const ConditionIcon = condition.icon
+                return (
+                  <TableRow key={forwarding.id}>
+                    <TableCell className='py-0'>{forwarding.nome}</TableCell>
 
-                  <TableCell>{forwarding.encaminhadoEm}</TableCell>
-                  <TableCell>{forwarding.profissional}</TableCell>
-                  <TableCell>
-                    <span className='border-border text-foreground-soft rounded-md border px-2 py-1'>
-                      {forwarding.especialidade}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <AppointmentConditionTag
-                      label={forwarding.quadroGeral as PatientConditionType}
-                    />
-                  </TableCell>
-                  <TableCell className='flex justify-center'>
-                    <TableButton>
-                      <Eye className='text-foreground-soft/70' />
-                    </TableButton>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    <TableCell>{forwarding.encaminhadoEm}</TableCell>
+                    <TableCell>{forwarding.profissional}</TableCell>
+                    <TableCell>
+                      <span className='border-border text-foreground-soft rounded-md border px-2 py-1'>
+                        {forwarding.especialidade}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <Tag variant={condition.variant} size='sm'>
+                        <ConditionIcon />
+                        {condition.label}
+                      </Tag>
+                    </TableCell>
+                    <TableCell className='flex justify-center'>
+                      <TableButton>
+                        <Eye className='text-foreground-soft/70' />
+                      </TableButton>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           )}
         </Table>

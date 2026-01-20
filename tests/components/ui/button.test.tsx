@@ -17,17 +17,6 @@ describe('Button', () => {
     expect(buttonElement).toHaveClass('px-4')
   })
 
-  it('should render a fancy button', () => {
-    const buttonText = 'Fancy Button'
-    render(<Button variant='fancy'>{buttonText}</Button>)
-
-    const buttonElement = screen.getByRole('button', { name: buttonText })
-
-    expect(buttonElement).toHaveClass('bg-primary')
-    expect(buttonElement).toHaveClass('text-primary-foreground')
-    expect(buttonElement).toHaveClass('inset-shadow-md')
-  })
-
   it('should render a outline button', () => {
     const buttonText = 'Outline Button'
     render(<Button variant='outline'>{buttonText}</Button>)

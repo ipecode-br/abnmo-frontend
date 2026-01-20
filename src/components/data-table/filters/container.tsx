@@ -13,7 +13,7 @@ export function DataTableFilterContainer({
 }: Readonly<DataTableFilterContainerProps>) {
   return (
     <div className={cn('flex flex-col gap-1', className)} {...props}>
-      <label className='text-xs font-medium'>{title}</label>
+      <label className='text-sm font-medium'>{title}</label>
       {children}
     </div>
   )

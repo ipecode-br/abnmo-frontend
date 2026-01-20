@@ -95,7 +95,7 @@ export function Pagination({
 
   return (
     <div className='text-foreground-soft grid grid-cols-[10rem_1fr_10rem] items-center gap-2'>
-      <div className='text-sm'>
+      <div>
         Exibindo {getCurrentItems()} {totalItems > 1 ? 'itens' : 'item'}
       </div>
 
@@ -138,7 +138,7 @@ export function Pagination({
         )}
       </div>
 
-      <div className='text-right text-sm'>
+      <div className='text-right'>
         Página {currentPage} de {totalPages}
       </div>
     </div>

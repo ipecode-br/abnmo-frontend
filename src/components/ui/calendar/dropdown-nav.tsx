@@ -3,10 +3,7 @@ import { useEffect, useState } from 'react'
 import { NavProps, useDayPicker } from 'react-day-picker'
 
 import { Button } from '../button'
-import { Select, SelectValue } from '../select'
-import { SelectContent } from '../select/content'
-import { SelectItem } from '../select/item'
-import { SelectTrigger } from '../select/trigger'
+import { Select, type SelectOption } from '../select'
 
 const monthsOfYear = [
   'Jan',
@@ -59,6 +56,16 @@ export function CalendarDropdownNav({
       ? monthsOfYear.filter((_, index) => index <= new Date().getMonth())
       : monthsOfYear
 
+  const monthOptions: SelectOption[] = availableMonths.map((month) => ({
+    label: month,
+    value: month,
+  }))
+
+  const yearOptions: SelectOption[] = availableYears.map((year) => ({
+    label: String(year),
+    value: String(year),
+  }))
+
   useEffect(() => {
     if (!months.length) return
 
@@ -80,42 +87,24 @@ export function CalendarDropdownNav({
 
       <Select
         value={monthSelected}
-        onValueChange={(value) => {
+        onValueChange={(value: string) => {
           setMonthSeleted(value)
           goToMonth(new Date(yearSelected, monthsOfYear.indexOf(value)))
         }}
-      >
-        <SelectTrigger size='sm' className='h-8 w-16 gap-1 px-2 pr-1'>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className='min-w-24'>
-          {availableMonths.map((month) => (
-            <SelectItem value={month} key={month}>
-              {month}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        options={monthOptions}
+        className='h-8 w-16'
+      />
 
       <Select
         value={yearSelected.toString()}
-        onValueChange={(value) => {
+        onValueChange={(value: string) => {
           const year = Number(value)
           setYearSeleted(year)
           goToMonth(new Date(year, monthsOfYear.indexOf(monthSelected)))
         }}
-      >
-        <SelectTrigger size='sm' className='h-8 w-18 gap-1 px-2 pr-1'>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className='min-w-24'>
-          {availableYears.map((year) => (
-            <SelectItem value={String(year)} key={year}>
-              {year}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        options={yearOptions}
+        className='h-8 w-18'
+      />
 
       <Button
         size='icon'

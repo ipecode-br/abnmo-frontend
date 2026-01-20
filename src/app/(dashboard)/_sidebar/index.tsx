@@ -7,7 +7,7 @@ import {
   Users2Icon,
 } from 'lucide-react'
 
-import { getProfile } from '@/actions/users'
+import { getCurrentUser } from '@/actions/users'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
 
@@ -17,7 +17,7 @@ import { SidebarHeader } from './header'
 import { DashboardSidebarMenuSection } from './menu-section'
 
 export async function DashboardSidebar() {
-  const user = await getProfile()
+  const user = await getCurrentUser()
 
   return (
     <DashboardSidebarContainer>

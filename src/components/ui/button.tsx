@@ -13,11 +13,9 @@ const buttonVariants = cva(
           'bg-primary text-primary-foreground hover:bg-primary/80 shadow-xs',
         destructive:
           'bg-error text-primary-foreground hover:bg-error/80 shadow-xs',
-        fancy:
-          'bg-primary text-primary-foreground hover:bg-primary/80 inset-shadow-md shadow-xs',
         outline:
           'border-border hover:bg-accent text-accent-foreground bg-background border shadow-xs',
-        muted: 'bg-background-soft text-accent-foreground hover:bg-accent',
+        muted: 'bg-background-soft text-accent-foreground hover:bg-border',
         ghost: 'text-accent-foreground hover:bg-accent bg-transparent',
         error: 'border-error focus-visible:ring-error hover:bg-accent border',
       },
@@ -27,6 +25,7 @@ const buttonVariants = cva(
         sm: 'h-9 min-h-9 px-4 [&_svg]:size-4',
         lg: 'h-11 min-h-11 rounded-xl px-3 [&_svg]:size-5',
         icon: 'min-size-10 size-10 [&_svg]:size-5',
+        icon_sm: 'min-size-9 size-9 [&_svg]:size-5',
       },
     },
     defaultVariants: {

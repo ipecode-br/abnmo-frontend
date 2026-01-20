@@ -4,8 +4,7 @@ import { PlusIcon } from 'lucide-react'
 import React, { useState } from 'react'
 
 import type { ButtonProps } from '@/components/ui/button'
-import { Dialog } from '@/components/ui/dialog/index'
-import { DialogTrigger } from '@/components/ui/dialog/trigger'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 import { PatientRequirementModal } from './requirement-modal'
 
@@ -24,7 +23,9 @@ export function AddPatientRequirementButton(props: Readonly<ButtonProps>) {
       </DialogTrigger>
 
       {isPatientRequirementOpen && (
-        <PatientRequirementModal onOpenChange={setIsPatientRequirementOpen} />
+        <PatientRequirementModal
+          onClose={() => setIsPatientRequirementOpen(false)}
+        />
       )}
     </Dialog>
   )

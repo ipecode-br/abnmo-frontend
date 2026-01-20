@@ -2,7 +2,7 @@ import { UserRoundPlusIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 
 import { DashboardContainer } from '@/components/dashboard/container'
-import { PatientsForm } from '@/components/patients/form'
+import { PatientForm } from '@/modules/patients/form'
 
 export const metadata: Metadata = {
   title: 'Cadastrar novo paciente',
@@ -19,7 +19,7 @@ export default function Page() {
         <h1 className='text-xl font-medium'>Cadastrar novo paciente</h1>
       </div>
 
-      <PatientsForm mode='create' />
+      <PatientForm mode='create' />
     </DashboardContainer>
   )
 }

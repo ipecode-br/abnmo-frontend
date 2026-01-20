@@ -6,7 +6,7 @@ import { useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { revalidateCache } from '@/actions/cache'
-import { getDataFromToken } from '@/actions/token'
+import { getUserFromToken } from '@/actions/token'
 import { Avatar } from '@/components/ui/avatar'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
@@ -16,10 +16,10 @@ import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
-import type { UserType } from '@/types/users'
+import type { User } from '@/types/users'
 
 interface SidebarAccountProps {
-  user: UserType
+  user: User
 }
 
 export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
@@ -30,9 +30,9 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
 
   async function logout() {
     startTransition(async () => {
-      const data = await getDataFromToken()
+      const user = await getUserFromToken()
 
-      if (!data?.userId) return
+      if (!user?.id) return
 
       const response = await api('/logout', { method: 'POST' })
 
@@ -41,7 +41,7 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
         return
       }
 
-      revalidateCache(NEXT_CACHE_TAGS.user(data.userId))
+      revalidateCache(NEXT_CACHE_TAGS.user(user.id))
       toast.success(response.message)
       router.push(ROUTES.auth.signIn)
     })

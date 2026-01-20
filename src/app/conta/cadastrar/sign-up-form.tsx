@@ -93,7 +93,7 @@ export function SignUpForm() {
           }
         />
 
-        <Button variant='fancy' type='submit' loading={isSubmitting}>
+        <Button type='submit' loading={isSubmitting}>
           Cadastrar
         </Button>
 

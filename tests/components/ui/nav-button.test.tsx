@@ -21,25 +21,7 @@ describe('NavButton', () => {
     expect(fancyButtonElement).toHaveClass('h-10')
     expect(fancyButtonElement).toHaveClass('px-4')
   })
-  it('should render a fancy NavButton', () => {
-    const buttonText = 'Fancy'
-    render(
-      <NavButton href='/' variant='fancy'>
-        {buttonText}
-      </NavButton>,
-    )
 
-    const fancyButtonElement = screen.getByText(buttonText)
-    expect(fancyButtonElement).toBeInTheDocument()
-
-    expect(fancyButtonElement).toHaveAttribute('href', '/')
-
-    expect(fancyButtonElement).toHaveClass('bg-primary')
-    expect(fancyButtonElement).toHaveClass('text-primary-foreground')
-    expect(fancyButtonElement).toHaveClass('hover:bg-primary/80')
-    expect(fancyButtonElement).toHaveClass('inset-shadow-md')
-    expect(fancyButtonElement).toHaveClass('shadow-xs')
-  })
   it('should render an outlined NavButton', () => {
     const buttonText = 'Outiline'
     render(
@@ -58,6 +40,7 @@ describe('NavButton', () => {
     expect(outlinedButtonElement).toHaveClass('border')
     expect(outlinedButtonElement).toHaveClass('bg-background')
   })
+
   it('should render a small NavButton', () => {
     const buttonText = 'Small'
     render(

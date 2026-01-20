@@ -25,7 +25,7 @@ import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAMS } from '@/constants/params'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { OrderMappingType } from '@/types/order'
+import type { OrderMapping } from '@/types/order'
 import {
   PATIENT_REQUIREMENT_TYPES,
   PATIENT_REQUIREMENTS_ORDER_OPTIONS,
@@ -45,7 +45,7 @@ export function ApprovedPatientRequirementsListTable() {
   const search = getParam(QUERY_PARAMS.search)
   const orderBy = getParam(QUERY_PARAMS.orderBy)
 
-  const ORDER_MAPPING: OrderMappingType<PatientRequirementsOrder> = {
+  const ORDER_MAPPING: OrderMapping<PatientRequirementsOrder> = {
     name_asc: { orderBy: 'name', order: 'ASC' },
     name_desc: { orderBy: 'name', order: 'DESC' },
     date_asc: { orderBy: 'approved_at', order: 'ASC' },
@@ -55,8 +55,8 @@ export function ApprovedPatientRequirementsListTable() {
   }
 
   const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
-    orderBy: 'approved_at',
-    order: 'DESC',
+    orderBy: 'name',
+    order: 'ASC',
   }
 
   const { data: response, isLoading } = useQuery({

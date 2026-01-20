@@ -36,5 +36,5 @@ export const UF_LIST = {
   SE: 'Sergipe',
   TO: 'Tocantins',
 }
-export type UFType = keyof typeof UF_LIST
+export type UF = keyof typeof UF_LIST
 export const BRAZILIAN_STATES_OPTIONS = convertObjectToOptions(UF_LIST)

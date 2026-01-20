@@ -1,4 +1,4 @@
-import { PatientsDocuments } from './patients-documents'
+import { PatientDocuments } from '../../../../../modules/patients/documents'
 
 const PATIENT_SECTIONS = [
   {
@@ -46,5 +46,5 @@ export default function Page() {
     return <p className='text-foreground-soft'>Nenhum documento encontrado.</p>
   }
 
-  return <PatientsDocuments sections={PATIENT_SECTIONS} />
+  return <PatientDocuments sections={PATIENT_SECTIONS} />
 }

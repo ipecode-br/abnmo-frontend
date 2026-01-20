@@ -1,4 +1,4 @@
-export type PatientSupportType = {
+export type PatientSupport = {
   id: string
   name: string
   phone: string

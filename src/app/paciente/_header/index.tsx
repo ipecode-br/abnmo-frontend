@@ -3,17 +3,17 @@ import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { getProfile } from '@/actions/users'
+import { getCurrentUser } from '@/actions/users'
 import { PatientHeaderAccessibilityDropdown } from '@/app/paciente/_header/accessibility-dropdown'
 import { PatientHeaderUserDropdown } from '@/app/paciente/_header/user-dropdown'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 
-import PatientDocumentsTab from '../_components/documents-tab'
+import { PatientDocumentsTab } from '../_components/documents-tab'
 
 export async function PatientHeader() {
-  const user = await getProfile()
+  const user = await getCurrentUser()
 
   if (!user) return null
 

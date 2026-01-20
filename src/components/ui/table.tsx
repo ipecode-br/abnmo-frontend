@@ -7,7 +7,7 @@ export function Table({
 }: Readonly<React.ComponentProps<'div'>>) {
   return (
     <div
-      className={cn('w-full overflow-x-auto text-left text-sm', className)}
+      className={cn('w-full overflow-x-auto text-left', className)}
       {...props}
     >
       <table className='w-full border-separate border-spacing-y-0'>

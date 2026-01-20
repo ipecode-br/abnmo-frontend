@@ -2,13 +2,13 @@
 
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { api } from '@/lib/api'
-import type { PatientType } from '@/types/patients'
+import type { Patient } from '@/types/patients'
 
 export async function getPatient(id: string) {
   const REVALIDATE_IN_SECONDS = 3600
 
   try {
-    const response = await api<PatientType>(`/patients/${id}`, {
+    const response = await api<Patient>(`/patients/${id}`, {
       includeCookies: true,
       cache: 'force-cache',
       next: {

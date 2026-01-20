@@ -1,12 +1,11 @@
 import { Suspense } from 'react'
 
-import { DashboardOverviewPatientsByGender } from '@/app/(dashboard)/_cards/patients-by-gender'
-import { DashboardOverviewPatientsByStatus } from '@/app/(dashboard)/_cards/patients-by-status'
 import { DashboardContainer } from '@/components/dashboard/container'
 import { Skeleton } from '@/components/ui/skeleton'
-
-import DashboardOverviewAppointments from './_cards/appointments'
-import { DashboardOverviewPatientsByCity } from './_cards/patients-by-city'
+import AppointmentsCard from '@/modules/dashboard/appointments-card'
+import { PatientsByCityCard } from '@/modules/dashboard/patients-by-city-card'
+import { PatientsByGenderCard } from '@/modules/dashboard/patients-by-gender-card'
+import { PatientsByStatusCards } from '@/modules/dashboard/patients-by-status-cards'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,13 +18,13 @@ export default function Page() {
             <Skeleton quantity={3} className='h-28 rounded-2xl sm:col-span-2' />
           }
         >
-          <DashboardOverviewPatientsByStatus />
+          <PatientsByStatusCards />
         </Suspense>
 
-        <DashboardOverviewPatientsByGender className='sm:col-span-3' />
-        <DashboardOverviewPatientsByCity className='sm:col-span-3' />
+        <PatientsByGenderCard className='sm:col-span-3' />
+        <PatientsByCityCard className='sm:col-span-3' />
 
-        <DashboardOverviewAppointments />
+        <AppointmentsCard />
       </div>
     </DashboardContainer>
   )

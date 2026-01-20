@@ -1,18 +1,14 @@
-import { CheckCircle2Icon, CircleXIcon } from 'lucide-react'
+import type { Patient } from './patients'
 
-import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
-
-import type { PatientType } from './patients'
-
-export type UserType = {
+export type User = {
   id: string
   name: string
   email: string
-  role: 'admin' | 'nurse' | 'specialist' | 'manager' | 'patient'
+  role: UserRole
   avatar_url: string | null
   created_at: Date
   updated_at: Date
-  patient: PatientType | null
+  patient: Patient | null
 }
 
 export const USER_ROLES = {
@@ -22,20 +18,10 @@ export const USER_ROLES = {
   manager: 'Manager',
   patient: 'Paciente',
 }
+export type UserRole = keyof typeof USER_ROLES
 
 export const USER_STATUS = {
   active: 'Ativo',
   inactive: 'Inativo',
 }
-export type UserStatusType = keyof typeof USER_STATUS
-
-const PATIENT_STATUS_ICONS_AND_COLOR = {
-  active: { icon: CheckCircle2Icon, color: '[&_svg]:text-success' },
-  inactive: { icon: CircleXIcon, color: '[&_svg]:text-error' },
-}
-export const USER_STATUS_OPTIONS = convertObjectToOptions(USER_STATUS).map(
-  (option) => ({
-    ...option,
-    ...PATIENT_STATUS_ICONS_AND_COLOR[option.value as UserStatusType],
-  }),
-)
+export type UserStatus = keyof typeof USER_STATUS
