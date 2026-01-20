@@ -5,8 +5,8 @@ import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { getDataFromToken } from '@/actions/token'
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
@@ -18,27 +18,38 @@ import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 
-import {
-  signInFormDefaultValues,
-  type SignInFormSchema,
-  signInFormSchema,
-} from './sign-in-form-schema'
+export const signInFormSchema = z.object({
+  email: z.string().email('Insira um e-mail válido'),
+  password: z.string().min(8, 'Sua senha deve conter 8 ou mais caracteres'),
+  keepLoggedIn: z.boolean().optional(),
+})
+export type SignInFormSchema = z.infer<typeof signInFormSchema>
 
-export function SignInForm() {
+interface SignInFormProps {
+  type: 'patient' | 'user'
+}
+
+export function SignInForm({ type }: Readonly<SignInFormProps>) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
+
   const formMethods = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
-    defaultValues: signInFormDefaultValues,
+    defaultValues: { email: '', password: '', keepLoggedIn: false },
     mode: 'onBlur',
   })
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  async function signIn({ email, password, rememberMe }: SignInFormSchema) {
+  async function signIn({ email, password, keepLoggedIn }: SignInFormSchema) {
     startTransition(async () => {
       const response = await api('/login', {
         method: 'POST',
-        body: JSON.stringify({ email, password, rememberMe }),
+        body: JSON.stringify({
+          email,
+          password,
+          keep_logged_in: keepLoggedIn,
+          account_type: type,
+        }),
       })
 
       if (!response.success) {
@@ -46,12 +57,7 @@ export function SignInForm() {
         return
       }
 
-      const data = await getDataFromToken()
-
-      const redirectPath =
-        data?.userRole === 'admin' ? ROUTES.dashboard.main : ROUTES.patient.main
-
-      router.push(redirectPath)
+      router.push(type === 'user' ? ROUTES.dashboard.main : ROUTES.patient.main)
     })
   }
 
@@ -73,7 +79,7 @@ export function SignInForm() {
         </FormField>
 
         <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
-          <CheckboxInput name='rememberMe' label='Manter conectado' />
+          <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
             href={ROUTES.auth.forgotPassword}

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { TabButtons } from '@/components/ui/tab-buttons'
 import { ROUTES } from '@/constants/routes'
 
-export default function PatientDocumentsTab() {
+export function PatientDocumentsTab() {
   const pathname = usePathname()
 
   const hideTabButtons = pathname.startsWith('/paciente/triagem')

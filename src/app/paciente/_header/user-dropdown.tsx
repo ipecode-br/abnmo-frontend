@@ -6,7 +6,7 @@ import { useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { revalidateCache } from '@/actions/cache'
-import { getDataFromToken } from '@/actions/token'
+import { getUserFromToken } from '@/actions/token'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
@@ -32,9 +32,9 @@ export function PatientHeaderUserDropdown({
 
   async function logout() {
     startTransition(async () => {
-      const data = await getDataFromToken()
+      const user = await getUserFromToken()
 
-      if (!data?.userId) return
+      if (!user?.id) return
 
       const response = await api('/logout', { method: 'POST' })
 
@@ -43,7 +43,7 @@ export function PatientHeaderUserDropdown({
         return
       }
 
-      revalidateCache(NEXT_CACHE_TAGS.user(data.userId))
+      revalidateCache(NEXT_CACHE_TAGS.user(user.id))
       toast.success(response.message)
       router.replace(ROUTES.auth.signIn)
     })

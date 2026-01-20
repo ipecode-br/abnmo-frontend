@@ -8,9 +8,10 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   const accessToken = cookies.get('access_token')
+  const refreshToken = cookies.get('refresh_token')
   const isAuthRoute = pathname.startsWith('/conta')
 
-  if (isAuthRoute && accessToken) {
+  if (isAuthRoute && (accessToken || refreshToken)) {
     return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
   }
 
