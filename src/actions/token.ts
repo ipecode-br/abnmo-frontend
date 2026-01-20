@@ -6,18 +6,20 @@ import type { Role } from '@/lib/permissions/schemas'
 
 import { getCookie } from './cookies'
 
-export async function getDataFromToken() {
-  const accessTokenCookie = await getCookie('access_token')
+export async function getUserFromToken() {
+  const accessToken = await getCookie('access_token')
 
-  if (!accessTokenCookie) return null
+  if (!accessToken) return null
 
-  const tokenWithoutPrefix = accessTokenCookie.slice(2)
+  const tokenWithoutPrefix = accessToken.slice(2)
   const extractedToken = tokenWithoutPrefix.split('.').slice(0, 3).join('.')
 
-  const payload = jwt.decode(extractedToken) as { sub: string; role: string }
+  const payload = jwt.decode(extractedToken) as { sub: string; role: Role }
 
-  const userId = payload?.sub
-  const userRole = payload?.role as Role | undefined
+  if (!payload) return null
 
-  return { userId, userRole }
+  const id = payload.sub
+  const role = payload.role
+
+  return { id, role }
 }
