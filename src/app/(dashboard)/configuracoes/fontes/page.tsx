@@ -1,16 +1,17 @@
 import type { Metadata } from 'next'
 
-import { NotificationPreferences } from '@/modules/settings/cards/notifications/notifications-cards'
 import { SettingsContainer } from '@/modules/settings/layout/settings-container'
 
+import { FontSizeCards } from '../../../../modules/settings/cards/fontsize/fontsize-cards'
+
 export const metadata: Metadata = {
-  title: 'Configurações',
+  title: 'Tamanho da fonte',
 }
 
 export default function Page() {
   return (
-    <SettingsContainer>
-      <NotificationPreferences />
+    <SettingsContainer className='flex flex-col gap-6'>
+      <FontSizeCards />
     </SettingsContainer>
   )
 }

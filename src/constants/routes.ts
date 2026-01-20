@@ -43,6 +43,7 @@ export const ROUTES = {
     },
     settings: {
       main: '/configuracoes',
+      fontSize: '/configuracoes/fontes',
     },
     support: {
       main: '/suporte',
