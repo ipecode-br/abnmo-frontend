@@ -18,7 +18,7 @@ export default function Page() {
       title='Bem vindo(a)'
       description='Insira seus dados para entrar na sua conta'
     >
-      <SignInForm type='patient' />
+      <SignInForm />
 
       <Divider text='ou' />
 
@@ -28,7 +28,7 @@ export default function Page() {
           href={ROUTES.auth.signUp}
           className='text-foreground font-medium whitespace-nowrap'
         >
-          Crie sua conta aqui
+          Registre-se como paciente aqui
         </NavLink>
       </p>
     </AuthCard>

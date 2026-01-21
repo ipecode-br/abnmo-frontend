@@ -11,6 +11,7 @@ import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
+import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -22,25 +23,32 @@ export const signInFormSchema = z.object({
   email: z.string().email('Insira um e-mail válido'),
   password: z.string().min(8, 'Sua senha deve conter 8 ou mais caracteres'),
   keepLoggedIn: z.boolean().optional(),
+  type: z.enum(['patient', 'user']),
 })
 export type SignInFormSchema = z.infer<typeof signInFormSchema>
 
-interface SignInFormProps {
-  type: 'patient' | 'user'
-}
-
-export function SignInForm({ type }: Readonly<SignInFormProps>) {
+export function SignInForm() {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const formMethods = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
-    defaultValues: { email: '', password: '', keepLoggedIn: false },
+    defaultValues: {
+      email: '',
+      password: '',
+      keepLoggedIn: false,
+      type: 'user',
+    },
     mode: 'onBlur',
   })
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  async function signIn({ email, password, keepLoggedIn }: SignInFormSchema) {
+  async function signIn({
+    email,
+    password,
+    keepLoggedIn,
+    type,
+  }: SignInFormSchema) {
     startTransition(async () => {
       const response = await api('/login', {
         method: 'POST',
@@ -64,7 +72,7 @@ export function SignInForm({ type }: Readonly<SignInFormProps>) {
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(signIn)}>
-        <FormField>
+        <FormField className='gap-4'>
           <TextInput
             name='email'
             label='E-mail'
@@ -76,9 +84,18 @@ export function SignInForm({ type }: Readonly<SignInFormProps>) {
             label='Senha'
             placeholder='Digite sua senha'
           />
+          <SelectInput
+            name='type'
+            label='Tipo de acesso'
+            options={[
+              { label: 'Paciente', value: 'patient' },
+              { label: 'Administração', value: 'user' },
+            ]}
+            className='sm:col-span-2'
+          />
         </FormField>
 
-        <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
+        <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[28rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
