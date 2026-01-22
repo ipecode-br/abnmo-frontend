@@ -4,19 +4,19 @@ import { usePathname } from 'next/navigation'
 
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Divider } from '@/components/ui/divider'
-import { PAGE_TITLES, type PageTitle } from '@/constants/page-titles'
+import { SECTION_TITLES, type SectionTitle } from '@/constants/section-titles'
 
 export function DashboardHeader() {
-  const pathname = usePathname()
+  const pathnames = usePathname().split('/')
 
-  const showBreadcrumbs = pathname !== '/'
+  const section = pathnames[1] as SectionTitle
+  const sectionTitle = SECTION_TITLES[section || 'default']
 
-  const page = pathname.split('/')[1] as PageTitle
-  const pageTitle = PAGE_TITLES[page || 'default']
+  const showBreadcrumbs = !!pathnames[2]
 
   return (
     <header className='border-border flex items-center gap-4 border-b px-8 py-4'>
-      <h1 className='text-xl font-medium'>{pageTitle}</h1>
+      <h1 className='text-xl font-medium'>{sectionTitle}</h1>
 
       {showBreadcrumbs && (
         <>

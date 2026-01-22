@@ -1,4 +1,4 @@
-export const PAGE_TITLES = {
+export const SECTION_TITLES = {
   default: 'Visão geral',
   pacientes: 'Pacientes',
   encaminhamentos: 'Encaminhamentos',
@@ -7,4 +7,4 @@ export const PAGE_TITLES = {
   configuracoes: 'Configurações',
   profile: 'Perfil',
 }
-export type PageTitle = keyof typeof PAGE_TITLES
+export type SectionTitle = keyof typeof SECTION_TITLES
