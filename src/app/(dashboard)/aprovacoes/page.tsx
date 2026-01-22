@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
-import { UnderReviewPatientRequirements } from '@/modules/patient-requirements/under-review-requirements'
+import { ROUTES } from '@/constants/routes'
 
 export const metadata: Metadata = {
-  title: 'Aprovações pendentes',
+  title: 'Aprovações',
 }
 
 export default function Page() {
-  return <UnderReviewPatientRequirements />
+  redirect(ROUTES.dashboard.approvals.pendingApprovals)
 }

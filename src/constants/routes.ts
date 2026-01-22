@@ -40,7 +40,8 @@ export const ROUTES = {
     },
     approvals: {
       main: '/aprovacoes',
-      pending: '/aprovacoes/pendentes',
+      pendingApprovals: '/aprovacoes/aprovacoes-pendentes',
+      pendingSubmissions: '/aprovacoes/envios-pendentes',
       approved: '/aprovacoes/aprovados',
     },
     team: {

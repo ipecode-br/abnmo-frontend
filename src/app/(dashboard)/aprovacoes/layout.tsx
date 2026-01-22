@@ -12,7 +12,7 @@ export default function Layout({
     },
     {
       title: 'Envios pendentes',
-      path: ROUTES.dashboard.approvals.pending,
+      path: ROUTES.dashboard.approvals.pendingSubmissions,
     },
     {
       title: 'Aprovados',

@@ -1,25 +1,21 @@
-import { HomeIcon, type LucideIcon } from 'lucide-react'
+import { type LucideIcon } from 'lucide-react'
 
-import { ROUTES } from '../routes'
 import { DASHBOARD_BREADCRUMBS } from './dashboard'
-import { PATIENT_BREADCRUMBS } from './patient'
 
-type BreadcrumbDataType = {
+type BreadcrumbItem = {
   icon: LucideIcon
   name: string
   path: string
 }
 
-export type Breadcrumbs = Record<string, BreadcrumbDataType>
+export type Breadcrumbs = Record<string, Record<string, BreadcrumbItem>>
 
 export const BREADCRUMBS: Breadcrumbs = {
-  home: {
-    icon: HomeIcon,
-    name: 'Início',
-    path: ROUTES.dashboard.main,
-  },
-  ...PATIENT_BREADCRUMBS,
   ...DASHBOARD_BREADCRUMBS,
+  // ...PATIENT_BREADCRUMBS,
 }
 
-export type BreadcrumbType = keyof typeof BREADCRUMBS
+export type BreadcrumbSection = keyof typeof BREADCRUMBS
+export type Breadcrumb = {
+  [K in keyof typeof DASHBOARD_BREADCRUMBS]: keyof (typeof DASHBOARD_BREADCRUMBS)[K]
+}[keyof typeof DASHBOARD_BREADCRUMBS]

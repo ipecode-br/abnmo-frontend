@@ -56,7 +56,7 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Aprovações',
         icon: <UserRoundCheckIcon />,
-        path: ROUTES.dashboard.approvals.main,
+        path: ROUTES.dashboard.approvals.pendingApprovals,
       },
       {
         label: 'Equipe',
