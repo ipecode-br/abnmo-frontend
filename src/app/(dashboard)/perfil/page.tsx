@@ -4,7 +4,6 @@ import { ArrowLeftIcon, Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { getCurrentUser } from '@/actions/users'
-import { DashboardContainer } from '@/components/dashboard/container'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { DatePicker } from '@/components/ui/date-picker'
@@ -78,79 +77,77 @@ export default function Page() {
 
   return (
     <div className='mx-auto max-w-3xl p-6'>
-      <DashboardContainer className='flex flex-col gap-6'>
-        <NavButton
-          href=''
-          variant='ghost'
-          className='text-foreground-soft mr-auto'
-        >
-          <ArrowLeftIcon />
-          Voltar
-        </NavButton>
-        <div className='flex gap-3'>
-          <div className='flex flex-col items-center gap-1'>
-            <Avatar className='size-16' />
-            <Button variant='outline'>Escolher</Button>
-          </div>
-          <div className='flex flex-col'>
-            <span>Imagem</span>
-            <span className='text-foreground-soft text-sm'>
-              Min 400x400px, PNG ou JPEG
-            </span>
-          </div>
+      <NavButton
+        href=''
+        variant='ghost'
+        className='text-foreground-soft mr-auto'
+      >
+        <ArrowLeftIcon />
+        Voltar
+      </NavButton>
+      <div className='flex gap-3'>
+        <div className='flex flex-col items-center gap-1'>
+          <Avatar className='size-16' />
+          <Button variant='outline'>Escolher</Button>
+        </div>
+        <div className='flex flex-col'>
+          <span>Imagem</span>
+          <span className='text-foreground-soft text-sm'>
+            Min 400x400px, PNG ou JPEG
+          </span>
+        </div>
+        <div>
           <div>
-            <div>
-              <label className='text-muted-foreground text-sm'>
-                Data de entrada
-              </label>
-              <DatePicker
-                value={new Date().toLocaleDateString('pt-BR')}
-                readOnly
-              />
-            </div>
+            <label className='text-muted-foreground text-sm'>
+              Data de entrada
+            </label>
+            <DatePicker
+              value={new Date().toLocaleDateString('pt-BR')}
+              readOnly
+            />
+          </div>
 
-            <div>
-              <label className='text-muted-foreground text-sm'>
-                Profissional
-              </label>
-              <Input value={user.role ?? ''} readOnly />
-            </div>
+          <div>
+            <label className='text-muted-foreground text-sm'>
+              Profissional
+            </label>
+            <Input value={user.role ?? ''} readOnly />
+          </div>
 
-            {isEspecialist && (
-              <>
-                <div>
-                  <label className='text-muted-foreground text-sm'>
-                    Categoria
-                  </label>
-                  <Input
-                    value={user.category ?? ''}
-                    placeholder='Não informado'
-                    readOnly
-                  />
-                </div>
+          {isEspecialist && (
+            <>
+              <div>
+                <label className='text-muted-foreground text-sm'>
+                  Categoria
+                </label>
+                <Input
+                  value={user.category ?? ''}
+                  placeholder='Não informado'
+                  readOnly
+                />
+              </div>
 
-                <div>
-                  <label className='text-muted-foreground text-sm'>
-                    Registro
-                  </label>
-                  <Input
-                    value={user.register ?? ''}
-                    placeholder='Não informado'
-                    readOnly
-                  />
-                </div>
-              </>
-            )}
+              <div>
+                <label className='text-muted-foreground text-sm'>
+                  Registro
+                </label>
+                <Input
+                  value={user.register ?? ''}
+                  placeholder='Não informado'
+                  readOnly
+                />
+              </div>
+            </>
+          )}
 
-            <div className='pt-4'>
-              <ChangePasswordButton />
-            </div>
+          <div className='pt-4'>
+            <ChangePasswordButton />
           </div>
         </div>
-        <ProfileForm />
-        <Divider />
-        <ChangePasswordButton />
-      </DashboardContainer>
+      </div>
+      <ProfileForm />
+      <Divider />
+      <ChangePasswordButton />
     </div>
   )
 }

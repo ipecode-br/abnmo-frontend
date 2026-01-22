@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { canUser } from '@/actions/auth'
 import { DashboardHeader } from '@/components/dashboard/header'
+import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { DashboardWrapper } from '@/components/dashboard/wrapper'
 import { DashboardSidebar } from '@/components/sidebar'
 import { ROUTES } from '@/constants/routes'
@@ -21,7 +22,11 @@ export default async function Layout({
 
       <DashboardWrapper>
         <DashboardHeader />
-        {children}
+        <DashboardTabButtons />
+
+        <main className='bg-background-soft flex flex-1 flex-col gap-6 p-8'>
+          {children}
+        </main>
       </DashboardWrapper>
     </>
   )

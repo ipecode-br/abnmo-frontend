@@ -1,7 +1,6 @@
 import { UserRoundPlusIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 
-import { DashboardContainer } from '@/components/dashboard/container'
 import { PatientForm } from '@/modules/patients/form'
 
 export const metadata: Metadata = {
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <DashboardContainer className='flex flex-col gap-6'>
+    <>
       <div className='flex items-center gap-4'>
         <span className='bg-border/50 rounded-lg p-2'>
           <UserRoundPlusIcon className='text-primary size-5.5' />
@@ -20,6 +19,6 @@ export default function Page() {
       </div>
 
       <PatientForm mode='create' />
-    </DashboardContainer>
+    </>
   )
 }
