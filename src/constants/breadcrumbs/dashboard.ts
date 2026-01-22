@@ -37,10 +37,10 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
     name: 'Cadastrar novo paciente',
     path: ROUTES.dashboard.patients.new,
   },
-  equipes: {
+  equipe: {
     icon: UserCog2Icon,
     name: 'Equipes',
-    path: ROUTES.dashboard.teams.main,
+    path: ROUTES.dashboard.team.main,
   },
   aprovacoes: {
     icon: UserRoundCheckIcon,

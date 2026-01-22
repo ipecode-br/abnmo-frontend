@@ -9,13 +9,13 @@ import type { Action, Subject } from '@/lib/permissions/schemas'
 import { getUserFromToken } from './token'
 
 export async function canUser(action: Action, subject: Subject) {
-  const data = await getUserFromToken()
+  const user = await getUserFromToken()
 
-  if (!data || !data.role) {
+  if (!user || !user.role) {
     redirect(ROUTES.auth.signOut)
   }
 
-  const { can } = definePermissionsFor(data.role)
+  const { can } = definePermissionsFor(user.role)
 
   return can(action, subject)
 }

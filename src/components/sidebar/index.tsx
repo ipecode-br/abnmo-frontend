@@ -12,34 +12,34 @@ import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
 
 import { SidebarAccount } from './account'
-import { DashboardSidebarContainer } from './container'
+import { SidebarContainer } from './container'
 import { SidebarHeader } from './header'
-import { DashboardSidebarMenuSection } from './menu-section'
+import { SidebarMenuSection } from './menu-section'
 
 export async function DashboardSidebar() {
   const user = await getCurrentUser()
 
   return (
-    <DashboardSidebarContainer>
+    <SidebarContainer>
       <SidebarHeader />
 
       <Divider />
 
-      <DashboardSidebarMenuSection sections={SIDEBAR_SECTIONS} />
+      <SidebarMenuSection sections={SIDEBAR_SECTIONS} />
 
       <Divider />
 
-      <SidebarAccount user={user!} />
-    </DashboardSidebarContainer>
+      <SidebarAccount user={user} />
+    </SidebarContainer>
   )
 }
 
 const SIDEBAR_SECTIONS = [
   {
-    id: 'common',
+    id: 'main',
     links: [
       {
-        label: 'Visão Geral',
+        label: 'Visão geral',
         icon: <LayoutDashboardIcon />,
         path: ROUTES.dashboard.main,
       },
@@ -49,7 +49,7 @@ const SIDEBAR_SECTIONS = [
         path: ROUTES.dashboard.patients.main,
       },
       {
-        label: 'Encaminhados',
+        label: 'Encaminhamentos',
         icon: <Share2Icon />,
         path: ROUTES.dashboard.referrals.main,
       },
@@ -61,23 +61,18 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Equipe',
         icon: <HeartHandshakeIcon />,
-        path: ROUTES.dashboard.teams.main,
+        path: ROUTES.dashboard.team.main,
       },
     ],
   },
   {
-    id: 'others',
+    id: 'utils',
     links: [
       {
         label: 'Configurações',
         icon: <BoltIcon />,
         path: ROUTES.dashboard.settings.main,
       },
-      // {
-      //   label: 'Suporte',
-      //   icon: <HeadsetIcon />,
-      //   path: ROUTES.dashboard.support.main,
-      // },
     ],
   },
 ]

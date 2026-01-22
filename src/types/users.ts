@@ -1,14 +1,12 @@
-import type { Patient } from './patients'
-
 export type User = {
   id: string
   name: string
   email: string
-  role: UserRole
   avatar_url: string | null
-  created_at: Date
+  status: UserStatus
+  role: UserRole
   updated_at: Date
-  patient: Patient | null
+  created_at: Date
 }
 
 export const USER_ROLES = {
@@ -16,12 +14,11 @@ export const USER_ROLES = {
   nurse: 'Enfermagem',
   specialist: 'Especialista',
   manager: 'Manager',
-  patient: 'Paciente',
 }
 export type UserRole = keyof typeof USER_ROLES
 
-export const USER_STATUS = {
+export const USER_STATUSES = {
   active: 'Ativo',
   inactive: 'Inativo',
 }
-export type UserStatus = keyof typeof USER_STATUS
+export type UserStatus = keyof typeof USER_STATUSES

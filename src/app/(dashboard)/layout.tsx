@@ -1,10 +1,10 @@
 import { redirect } from 'next/navigation'
 
 import { canUser } from '@/actions/auth'
-import { DashboardSidebar } from '@/app/(dashboard)/_sidebar'
+import { DashboardHeader } from '@/components/dashboard/header'
+import { DashboardWrapper } from '@/components/dashboard/wrapper'
+import { DashboardSidebar } from '@/components/sidebar'
 import { ROUTES } from '@/constants/routes'
-
-import { DashboardHeader } from './_header'
 
 export default async function Layout({
   children,
@@ -16,13 +16,13 @@ export default async function Layout({
   }
 
   return (
-    <div className='flex min-h-svh'>
+    <>
       <DashboardSidebar />
 
-      <div className='flex flex-1 flex-col overflow-hidden'>
+      <DashboardWrapper>
         <DashboardHeader />
         {children}
-      </div>
-    </div>
+      </DashboardWrapper>
+    </>
   )
 }

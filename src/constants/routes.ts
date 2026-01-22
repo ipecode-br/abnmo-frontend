@@ -3,6 +3,8 @@ export const ROUTES = {
     signIn: '/conta/entrar',
     signUp: '/conta/cadastrar',
     forgotPassword: '/conta/recuperar-senha',
+    resetPassword: '/conta/nova-senha',
+    registerUser: '/conta/cadastrar/usuario',
     signOut: '/api/sair',
   },
   patient: {
@@ -29,24 +31,25 @@ export const ROUTES = {
       },
     },
     referrals: {
-      main: '/encaminhados',
-      list: '/encaminhados/encaminhamentos',
+      main: '/encaminhamentos',
+      list: '/encaminhamentos/listagem',
+    },
+    appointments: {
+      main: '/atendimentos',
+      list: '/atendimentos/listagem',
     },
     approvals: {
       main: '/aprovacoes',
       pending: '/aprovacoes/pendentes',
       approved: '/aprovacoes/aprovados',
     },
-    teams: {
-      main: '/equipes',
-      specialists: '/equipes/especialistas',
+    team: {
+      main: '/equipe',
     },
     settings: {
       main: '/configuracoes',
       fontSize: '/configuracoes/fontes',
     },
-    support: {
-      main: '/suporte',
-    },
+    profile: '/perfil',
   },
 }

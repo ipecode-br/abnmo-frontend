@@ -6,20 +6,16 @@ import { NavButton } from '@/components/ui/nav-button'
 import { useSidebar } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
-interface DashboardSidebarMenuSectionProps {
-  sections: {
+interface SidebarMenuSectionProps {
+  sections: Array<{
     id: string
-    links: {
-      label: string
-      icon: React.ReactNode
-      path: string
-    }[]
-  }[]
+    links: Array<{ label: string; icon: React.ReactNode; path: string }>
+  }>
 }
 
-export function DashboardSidebarMenuSection({
+export function SidebarMenuSection({
   sections,
-}: Readonly<DashboardSidebarMenuSectionProps>) {
+}: Readonly<SidebarMenuSectionProps>) {
   const expanded = useSidebar((state) => state.expanded)
   const pathname = usePathname()
 
@@ -40,7 +36,7 @@ export function DashboardSidebarMenuSection({
                   className={cn(
                     '[&_svg]:text-disabled text-foreground-soft size-10 justify-start gap-3 px-2.5 text-base transition-all duration-300',
                     'data-[visible=true]:w-full',
-                    'data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary data-[active=true]:pointer-events-none data-[active=true]:size-10',
+                    'data-[active=true]:bg-background-soft data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary data-[active=true]:pointer-events-none data-[active=true]:size-10',
                   )}
                 >
                   {link.icon}

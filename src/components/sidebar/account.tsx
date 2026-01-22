@@ -6,7 +6,6 @@ import { useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { revalidateCache } from '@/actions/cache'
-import { getUserFromToken } from '@/actions/token'
 import { Avatar } from '@/components/ui/avatar'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
@@ -19,7 +18,7 @@ import { useSidebar } from '@/store/sidebar'
 import type { User } from '@/types/users'
 
 interface SidebarAccountProps {
-  user: User
+  user?: User | null
 }
 
 export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
@@ -30,8 +29,6 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
 
   async function logout() {
     startTransition(async () => {
-      const user = await getUserFromToken()
-
       if (!user?.id) return
 
       const response = await api('/logout', { method: 'POST' })
@@ -55,8 +52,8 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
         data-visible={expanded}
         className='space-y-1 truncate pr-8 opacity-0 transition-opacity duration-750 data-[visible=true]:opacity-100'
       >
-        <p className='truncate text-sm whitespace-nowrap'>{user.name}</p>
-        <p className='text-foreground-soft truncate text-xs'>{user.email}</p>
+        <p className='truncate text-sm whitespace-nowrap'>{user?.name}</p>
+        <p className='text-foreground-soft truncate text-xs'>{user?.email}</p>
       </div>
 
       <DropdownMenu>
