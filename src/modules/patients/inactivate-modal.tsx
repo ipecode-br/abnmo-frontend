@@ -62,7 +62,7 @@ export function InactivatePatientModal({
       queryKey: [QUERY_CACHE_KEYS.patients.list],
     })
     queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.patients.allActive],
+      queryKey: [QUERY_CACHE_KEYS.patients.allOptions],
     })
     revalidateCache(NEXT_CACHE_TAGS.patient(id))
     toast.success(response.message)

@@ -2,8 +2,10 @@
 
 import {
   Select as BaseSelect,
+  type SelectPositionerProps,
   type SelectRootProps,
 } from '@base-ui-components/react/select'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
@@ -14,14 +16,33 @@ export type SelectOption = {
   description?: string
 }
 
-export type SelectProps = Omit<SelectRootProps<string, false>, 'items'> & {
-  options: SelectOption[]
-  className?: string
-  placeholder?: string
-}
+const selectTriggerVariants = cva(
+  'border-border bg-background hover:bg-accent focus-visible:outline-ring data-[placeholder]:text-disabled flex cursor-pointer items-center justify-between gap-2 rounded-lg border pr-2 pl-3 shadow-xs outline-offset-4 outline-transparent transition-colors disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
+  {
+    variants: {
+      size: {
+        default: 'h-10',
+        sm: 'h-9',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  },
+)
+
+export type SelectProps = Omit<SelectRootProps<string, false>, 'items'> &
+  VariantProps<typeof selectTriggerVariants> & {
+    options: SelectOption[]
+    align?: SelectPositionerProps['align']
+    className?: string
+    placeholder?: string
+  }
 
 export function Select({
+  size,
   value,
+  align,
   options,
   className,
   placeholder = 'Selecione uma opção',
@@ -32,13 +53,7 @@ export function Select({
   return (
     <BaseSelect.Root value={value} items={options} {...props}>
       <BaseSelect.Trigger
-        className={cn(
-          'border-border bg-background hover:bg-accent flex h-10 w-full cursor-pointer items-center justify-between gap-2 rounded-lg border pr-2 pl-3 shadow-xs transition-colors',
-          'focus-visible:outline-ring outline-offset-4 outline-transparent',
-          'disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
-          'data-[placeholder]:text-disabled',
-          className,
-        )}
+        className={cn('w-full', selectTriggerVariants({ size, className }))}
       >
         <BaseSelect.Value>
           {() => (selectedOption ? selectedOption.label : placeholder)}
@@ -49,6 +64,7 @@ export function Select({
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
         <BaseSelect.Positioner
+          align={align}
           sideOffset={4}
           alignItemWithTrigger={false}
           className='z-50'

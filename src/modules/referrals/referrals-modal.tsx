@@ -24,6 +24,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
+import { SPECIALTIES_ENUM, SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
@@ -31,10 +32,6 @@ import {
   PATIENT_CONDITION_ENUM,
   PATIENT_CONDITION_OPTIONS,
 } from '@/types/patients'
-import {
-  REFERRAL_CATEGORY_ENUM,
-  REFERRAL_CATEGORY_OPTIONS,
-} from '@/types/referrals'
 
 interface ReferralModalProps {
   onClose(): void
@@ -46,7 +43,7 @@ export function ReferralPatientModal({ onClose, id }: ReferralModalProps) {
   const referralFormSchema = z.object({
     patient_id: z.string().uuid('Paciente é obrigatório'),
     date: z.string().datetime('A data é obrigatória'),
-    category: z.enum(REFERRAL_CATEGORY_ENUM, {
+    category: z.enum(SPECIALTIES_ENUM, {
       message: 'Categoria é obrigatório',
     }),
     condition: z.enum(PATIENT_CONDITION_ENUM, {
@@ -137,7 +134,7 @@ export function ReferralPatientModal({ onClose, id }: ReferralModalProps) {
             <SelectInput
               name='category'
               label='Categoria'
-              options={REFERRAL_CATEGORY_OPTIONS}
+              options={SPECIALTIES_OPTIONS}
               className='sm:col-span-2'
               isRequired
             />

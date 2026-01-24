@@ -1,10 +1,11 @@
 import { CheckCircle2Icon, CircleXIcon, Users2Icon } from 'lucide-react'
 
-import { getTotalPatientsByStatus } from '@/actions/patients/statistics/get-total-patients-by-status'
+import { getTotalPatients } from '@/actions/statistics/get-total-patients'
 import { Card } from '@/components/ui/card'
+import { cn } from '@/utils/class-name-merge'
 
 export async function PatientsByStatusCards() {
-  const statistics = await getTotalPatientsByStatus()
+  const statistics = await getTotalPatients()
 
   if (!statistics) {
     return (
@@ -16,22 +17,26 @@ export async function PatientsByStatusCards() {
 
   return statistics.map((statistic) => {
     const data = STATISTICS_MAPPING[statistic.label]
+
     if (!data) return null
 
     return (
       <Card
         key={statistic.label}
-        className='flex min-h-28 flex-col justify-between gap-3 p-6 sm:col-span-2'
+        className='flex min-h-32 flex-col justify-between gap-3 p-6 sm:col-span-2'
       >
         <div className='flex items-center justify-between'>
           <span className='text-4xl font-semibold'>{statistic.value}</span>
           <div
-            className={`border-border rounded-full border p-2 [&_svg]:size-5 ${data.iconColor}`}
+            className={cn(
+              'border-border rounded-full border p-2 [&_svg]:size-5',
+              data.iconColor,
+            )}
           >
             <data.icon />
           </div>
         </div>
-        <p className='text-foreground-soft text-xs uppercase'>{data.title}</p>
+        <p className='text-foreground-soft text-sm uppercase'>{data.title}</p>
       </Card>
     )
   })

@@ -1,16 +1,25 @@
 export const NEXT_CACHE_TAGS = {
   user: (id: string) => `user/${id}`,
   patient: (id: string) => `patient/${id}`,
+  appointments: (query: string) => `appointments/${query}`,
   statistics: {
-    totalPatientsByStatus: 'total-patients-by-status',
+    totalPatients: (query: string) => `total-patients/${query}`,
+    totalReferrals: (query: string) => `total-referrals/${query}`,
+    totalAppointments: (query: string) => `total-appointments/${query}`,
   },
 }
 
 export const QUERY_CACHE_KEYS = {
-  profile: 'profile',
+  dashboard: {
+    patientsByGender: 'dashboard-patients-by-gender',
+    patientsByCity: 'dashboard-patients-by-city',
+  },
   patients: {
-    allActive: 'patients-all-active',
+    allOptions: 'patients-all-options',
     list: 'patients-list',
+  },
+  appointments: {
+    list: 'appointments-list',
   },
   referrals: {
     list: 'referrals-list',
@@ -19,8 +28,5 @@ export const QUERY_CACHE_KEYS = {
     pending: 'approvals-pending',
     approved: 'approvals-approved',
   },
-  dashboard: {
-    patientsByGender: 'dashboard-patients-by-gender',
-    patientsByCity: 'dashboard-patients-by-city',
-  },
+  profile: 'profile',
 }

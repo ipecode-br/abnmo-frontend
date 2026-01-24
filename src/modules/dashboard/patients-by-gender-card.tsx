@@ -9,13 +9,11 @@ import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { type QueryPeriod } from '@/enums/queries'
 import { api } from '@/lib/api'
 import { type Gender, GENDERS } from '@/types/patients'
-import { type QueryPeriod } from '@/types/queries'
 
-export function PatientsByGenderCard(
-  props: Readonly<React.ComponentProps<'div'>>,
-) {
+export function DashboardPatientsByGenderCard() {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const { data: response, isLoading } = useQuery({
@@ -39,8 +37,9 @@ export function PatientsByGenderCard(
 
   return (
     <DashboardCardChart
-      icon={ChartBarDecreasingIcon}
       title='Gêneros'
+      icon={ChartBarDecreasingIcon}
+      className='sm:col-span-3'
       menu={
         <SelectPeriod
           period={period}
@@ -48,7 +47,6 @@ export function PatientsByGenderCard(
           onSelect={(value) => setPeriod(value)}
         />
       }
-      {...props}
     >
       <div className='flex h-full min-h-44 items-center justify-center'>
         {isLoading && <Skeleton className='bg-border/75 size-full' />}

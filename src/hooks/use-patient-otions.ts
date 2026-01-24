@@ -9,11 +9,8 @@ import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 
 export function usePatientOptions() {
   const { data: response } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.patients.allActive],
-    queryFn: () =>
-      api<{ patients: Patient[] }>('/patients', {
-        params: { all: true, status: 'active' },
-      }),
+    queryKey: [QUERY_CACHE_KEYS.patients.allOptions],
+    queryFn: () => api<{ patients: Patient[] }>('/patients/options'),
   })
 
   const patientOptions =

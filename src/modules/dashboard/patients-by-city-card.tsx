@@ -9,12 +9,10 @@ import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { type QueryPeriod } from '@/enums/queries'
 import { api } from '@/lib/api'
-import { type QueryPeriod } from '@/types/queries'
 
-export function PatientsByCityCard(
-  props: Readonly<React.ComponentProps<'div'>>,
-) {
+export function DashboardPatientsByCityCard() {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const limit = 6
@@ -52,8 +50,9 @@ export function PatientsByCityCard(
 
   return (
     <DashboardCardChart
-      icon={ChartPieIcon}
       title='Cidades'
+      icon={ChartPieIcon}
+      className='sm:col-span-3'
       menu={
         <SelectPeriod
           period={period}
@@ -61,7 +60,6 @@ export function PatientsByCityCard(
           onSelect={(value) => setPeriod(value)}
         />
       }
-      {...props}
     >
       <div className='flex h-full min-h-44 items-center justify-center'>
         {isLoading && <Skeleton className='bg-border/75 size-full' />}

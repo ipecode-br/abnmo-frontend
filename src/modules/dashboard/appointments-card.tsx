@@ -1,5 +1,3 @@
-'use client'
-
 import {
   ClipboardCheckIcon,
   ClipboardListIcon,
@@ -8,38 +6,43 @@ import {
   Users2Icon,
   XCircleIcon,
 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 
+import { getAppointments } from '@/actions/appointments/get-appointments'
 import { DataTableHeader } from '@/components/data-table/header'
 import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
 import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'
 import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { NavButton } from '@/components/ui/nav-button'
 import {
   Table,
   TableBody,
-  TableButton,
   TableCell,
+  TableEmptyCell,
   TableHead,
   TableHeader,
+  TableLink,
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { ROUTES } from '@/constants/routes'
+import { SPECIALTIES } from '@/enums/shared'
 import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
 import { PATIENT_CONDITIONS } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
-import { QUEUE_SERVICE_PATIENTS_MOCK } from '@/utils/mock/queue-service-patients'
 
-export default function AppointmentsCard() {
-  const patients = QUEUE_SERVICE_PATIENTS_MOCK
-  const router = useRouter()
+// TODO: update dropdown menu
+
+export async function DashboardAppointmentsCard() {
+  const response = await getAppointments({ limit: 5 })
+
+  const appointments = response?.appointments
+  const showAppointments = appointments && appointments.length > 0
 
   return (
     <Card className='p-6 sm:col-span-6'>
@@ -51,9 +54,13 @@ export default function AppointmentsCard() {
         />
 
         <DataTableHeaderActions>
-          <Button size='sm' variant='outline'>
+          <NavButton
+            size='sm'
+            variant='outline'
+            href={ROUTES.dashboard.appointments.list}
+          >
             Ver todos
-          </Button>
+          </NavButton>
 
           <NewAppointmentButton size='sm' />
         </DataTableHeaderActions>
@@ -63,86 +70,97 @@ export default function AppointmentsCard() {
         <TableHeader>
           <TableRow>
             <TableHead className='w-64'>Paciente</TableHead>
-            <TableHead>Data de atendimento</TableHead>
+            <TableHead className='w-36'>Data</TableHead>
+            <TableHead className='w-44'>Categoria</TableHead>
             <TableHead>Profissional</TableHead>
-            <TableHead>Especialidade</TableHead>
-            <TableHead>Quadro Geral</TableHead>
-            <TableHead>Ações</TableHead>
+            <TableHead className='w-36'>Quadro geral</TableHead>
+            <TableHead className='w-20 text-center'>Ações</TableHead>
           </TableRow>
         </TableHeader>
 
-        <TableBody>
-          {patients.map((patient) => {
-            const condition = PATIENT_CONDITIONS[patient.general_condition]
-            const ConditionIcon = condition.icon
-            return (
-              <TableRow key={patient.id}>
-                <TableCell>
-                  <TableButton
-                    className='w-64'
-                    onClick={() =>
-                      router.push(
-                        ROUTES.dashboard.patients.details.info(
-                          patient.id.toString(),
-                        ),
-                      )
-                    }
-                  >
-                    <Avatar className='size-9' />
-                    <span className='truncate'>{patient.name}</span>
-                  </TableButton>
-                </TableCell>
-                <TableCell>{formatDate(patient.appointmentDate)}</TableCell>
-                <TableCell>{patient.professional}</TableCell>
-                <TableCell>{patient.specialty}</TableCell>
-                <TableCell>
-                  <Tag variant={condition.variant} size='sm'>
-                    <ConditionIcon />
-                    {condition.label}
-                  </Tag>
-                </TableCell>
+        {showAppointments && (
+          <TableBody>
+            {appointments.map((appointment) => {
+              const condition = PATIENT_CONDITIONS[appointment.condition]
+              const Icon = condition.icon
 
-                <TableCell className='text-center'>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      indicator={false}
-                      size='icon'
-                      variant='ghost'
-                      className='size-8'
+              return (
+                <TableRow key={appointment.id}>
+                  <TableCell>
+                    <TableLink
+                      className='w-64'
+                      href={ROUTES.dashboard.patients.details.info(
+                        appointment.patient_id,
+                      )}
                     >
-                      <EllipsisIcon />
-                    </DropdownMenuTrigger>
+                      <Avatar
+                        className='size-9'
+                        src={appointment.patient.avatar_url}
+                      />
+                      <span className='truncate'>
+                        {appointment.patient.name}
+                      </span>
+                    </TableLink>
+                  </TableCell>
+                  <TableCell>{formatDate(appointment.date)}</TableCell>
+                  <TableCell>{SPECIALTIES[appointment.category]}</TableCell>
+                  <TableCell>{appointment.professional_name ?? '-'}</TableCell>
+                  <TableCell>
+                    <Tag variant={condition.variant} size='sm'>
+                      <Icon />
+                      {condition.label}
+                    </Tag>
+                  </TableCell>
 
-                    <DropdownMenuContent align='end'>
-                      <DropdownMenuItem>
-                        <ClipboardPenIcon />
-                        Editar
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <ClipboardListIcon />
-                        Informações do paciente
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <ClipboardCheckIcon />
-                        Histórico do paciente
-                      </DropdownMenuItem>
-
-                      <Divider />
-
-                      <DropdownMenuItem
-                        variant='destructive'
-                        className='text-center'
+                  <TableCell className='text-center'>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        indicator={false}
+                        size='icon'
+                        variant='ghost'
+                        className='size-8'
                       >
-                        <XCircleIcon />
-                        Cancelar
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
+                        <EllipsisIcon />
+                      </DropdownMenuTrigger>
+
+                      <DropdownMenuContent align='end'>
+                        <DropdownMenuItem>
+                          <ClipboardPenIcon />
+                          Editar
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <ClipboardListIcon />
+                          Informações do paciente
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <ClipboardCheckIcon />
+                          Histórico do paciente
+                        </DropdownMenuItem>
+
+                        <Divider />
+
+                        <DropdownMenuItem variant='destructive'>
+                          <XCircleIcon />
+                          Cancelar
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        )}
+
+        {!showAppointments && (
+          <TableBody>
+            <TableRow>
+              <TableEmptyCell colSpan={6}>
+                Nenhum atendimento encontrado
+              </TableEmptyCell>
+            </TableRow>
+          </TableBody>
+        )}
       </Table>
     </Card>
   )

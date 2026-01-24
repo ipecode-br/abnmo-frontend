@@ -23,6 +23,7 @@ import {
   TableBody,
   TableButton,
   TableCell,
+  TableEmptyCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -159,11 +160,9 @@ export function PatientsListTable() {
           {!isLoading && isPatientsEmpty && (
             <TableBody>
               <TableRow>
-                <TableCell colSpan={6}>
-                  <div className='p-2 text-center'>
-                    Nenhum paciente encontrado
-                  </div>
-                </TableCell>
+                <TableEmptyCell colSpan={6}>
+                  Nenhum paciente encontrado
+                </TableEmptyCell>
               </TableRow>
             </TableBody>
           )}

@@ -3,20 +3,27 @@
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { api } from '@/lib/api'
 
-type StatisticType = 'total' | 'active' | 'inactive'
+type Status = 'total' | 'active' | 'inactive'
 
-export async function getTotalPatientsByStatus() {
+type GetTotalPatientsParams = {
+  period?: string
+}
+
+export async function getTotalPatients(params?: GetTotalPatientsParams) {
   const REVALIDATE_IN_SECONDS = 3600
 
   try {
-    const response = await api<Record<StatisticType, number>>(
-      '/statistics/patients/total',
+    const response = await api<Record<Status, number>>(
+      '/statistics/patients-total',
       {
+        params,
         includeCookies: true,
         cache: 'force-cache',
         next: {
           revalidate: REVALIDATE_IN_SECONDS,
-          tags: [NEXT_CACHE_TAGS.statistics.totalPatientsByStatus],
+          tags: [
+            NEXT_CACHE_TAGS.statistics.totalPatients(JSON.stringify(params)),
+          ],
         },
       },
     )
@@ -25,10 +32,7 @@ export async function getTotalPatientsByStatus() {
       return null
     }
 
-    return Object.entries(response.data).map(([label, value]) => ({
-      label: label as StatisticType,
-      value,
-    }))
+    return response.data
   } catch (error) {
     console.error('Failed to fetch patients statistics:', error)
     return null

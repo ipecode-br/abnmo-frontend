@@ -24,6 +24,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
+import { SPECIALTIES_ENUM, SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
@@ -35,16 +36,17 @@ import {
 const appointmentFormSchema = z.object({
   patient_id: z.string().uuid('Paciente é obrigatório'),
   date: z.string().datetime('A data é obrigatória'),
-  referred_to: z
-    .string()
-    .nullable()
-    .transform((value) => (!value ? null : value)),
+  category: z.enum(SPECIALTIES_ENUM, { message: 'Categoria é obrigatório' }),
   condition: z.enum(PATIENT_CONDITION_ENUM, {
     message: 'O quadro é obrigatório',
   }),
   annotation: z
     .string()
     .max(500)
+    .nullable()
+    .transform((value) => (!value ? null : value)),
+  professional_name: z
+    .string()
     .nullable()
     .transform((value) => (!value ? null : value)),
 })
@@ -62,9 +64,10 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
     defaultValues: {
       patient_id: '',
       date: '',
-      referred_to: '',
+      category: '',
       condition: '',
       annotation: '',
+      professional_name: '',
     } as unknown as AppointmentFormSchema,
     mode: 'onBlur',
   })
@@ -81,7 +84,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
     }
 
     queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.referrals.list],
+      queryKey: [QUERY_CACHE_KEYS.appointments.list],
     })
     revalidateCache(NEXT_CACHE_TAGS.patient(data.patient_id))
     toast.success(response.message)
@@ -89,7 +92,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
   }
 
   return (
-    <DialogContainer className='max-w-2xl'>
+    <DialogContainer className='max-w-xl'>
       <DialogHeader icon={<DialogIcon icon={SmilePlusIcon} />}>
         <DialogTitle>Novo atendimento</DialogTitle>
       </DialogHeader>
@@ -97,13 +100,13 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer
-            className='grid gap-4 sm:grid-cols-5'
+            className='grid gap-4 sm:grid-cols-2'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
             <ComboboxInput
               name='patient_id'
               label='Paciente'
-              className='sm:col-span-3'
+              className='sm:col-span-full'
               placeholder='Selecione um paciente'
               options={patientOptions}
               isRequired
@@ -111,20 +114,28 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
             <DateInput
               name='date'
               label='Data do atendimento'
-              wrapperClassName='sm:col-span-2'
+              wrapperClassName='sm:col-span-1'
               allowFutureDates
               isRequired
             />
-            <TextInput
-              name='referred_to'
-              label='Profissional responsável'
-              wrapperClassName='sm:col-span-3'
+            <SelectInput
+              name='category'
+              label='Categoria'
+              options={SPECIALTIES_OPTIONS}
+              className='sm:col-span-1'
+              isRequired
             />
             <SelectInput
               name='condition'
               label='Quadro geral'
               options={PATIENT_CONDITION_OPTIONS}
-              className='sm:col-span-2'
+              className='sm:col-span-1'
+              isRequired
+            />
+            <TextInput
+              name='professional_name'
+              label='Profissional responsável'
+              wrapperClassName='sm:col-span-1'
             />
             <TextareaInput
               rows={8}
@@ -132,7 +143,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
               name='annotation'
               label='Observações'
               placeholder='Insira observações sobre o paciente'
-              wrapperClassName='sm:col-span-5'
+              wrapperClassName='sm:col-span-full'
             />
           </FormContainer>
         </FormProvider>
