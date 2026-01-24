@@ -9,9 +9,9 @@ import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { PATIENT_GENDERS, type PatientGender } from '@/enums/patients'
 import { type QueryPeriod } from '@/enums/queries'
 import { api } from '@/lib/api'
-import { type Gender, GENDERS } from '@/types/patients'
 
 export function DashboardPatientsByGenderCard() {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')
@@ -20,7 +20,7 @@ export function DashboardPatientsByGenderCard() {
     queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByGender, period],
     queryFn: () =>
       api<{
-        genders: { gender: Gender; total: string }[]
+        genders: { gender: PatientGender; total: string }[]
         total: number
       }>('/statistics/patients-by-gender', {
         params: { period },
@@ -31,7 +31,7 @@ export function DashboardPatientsByGenderCard() {
   const isEmpty = genders.length === 0 && !isLoading
 
   const data = genders.map((item) => ({
-    label: GENDERS[item.gender],
+    label: PATIENT_GENDERS[item.gender],
     value: Number(item.total),
   }))
 

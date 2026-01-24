@@ -16,7 +16,7 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
-import type { User } from '@/types/users'
+import type { User } from '@/types/users.d.ts'
 
 interface PatientHeaderUserDropdownProps {
   user: User

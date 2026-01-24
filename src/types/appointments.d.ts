@@ -1,7 +1,6 @@
 import type { AppointmentStatus } from '@/enums/appointments'
+import type { PatientCondition } from '@/enums/patients'
 import type { Specialty } from '@/enums/shared'
-
-import type { PatientCondition } from './patients'
 
 export type Appointment = {
   id: string

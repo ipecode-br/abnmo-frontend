@@ -32,16 +32,16 @@ import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAMS } from '@/constants/params'
 import { ROUTES } from '@/constants/routes'
-import { useParams } from '@/hooks/params'
-import { api } from '@/lib/api'
-import type { OrderMapping } from '@/types/order'
 import {
-  type Patient,
   PATIENT_STATUS_OPTIONS,
   PATIENT_STATUSES,
   PATIENTS_ORDER_OPTIONS,
   type PatientsOrder,
-} from '@/types/patients'
+} from '@/enums/patients'
+import { useParams } from '@/hooks/params'
+import { api } from '@/lib/api'
+import type { OrderMapping } from '@/types/order.d.ts'
+import type { Patient } from '@/types/patients.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 

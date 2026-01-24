@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { InactivatePatientModal } from '@/modules/patients/inactivate-modal'
-import type { Patient } from '@/types/patients'
+import type { Patient } from '@/types/patients.d.ts'
 
 interface InactivatePatientButtonProps {
   patient: Patient

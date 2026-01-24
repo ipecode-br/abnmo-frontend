@@ -1,4 +1,4 @@
-import type { Patient } from '@/types/patients'
+import type { Patient } from '@/types/patients.d.ts'
 
 export const PATIENTS_MOCKS: Patient[] = [
   {

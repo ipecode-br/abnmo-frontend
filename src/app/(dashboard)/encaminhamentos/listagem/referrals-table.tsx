@@ -19,11 +19,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
-import {
-  PATIENT_CONDITIONS,
-  PatientCondition,
-  PATIENTS_REFERRALS_ORDER_OPTIONS,
-} from '@/types/patients'
+import { PATIENT_CONDITIONS, type PatientCondition } from '@/enums/patients'
+import { REFERRALS_ORDER_OPTIONS } from '@/enums/referrals'
 
 import ReferralsSkeleton from './referrals-skeleton'
 
@@ -139,7 +136,7 @@ export function ReferralsTable() {
         <TabSelect buttons={filterOptions} />
         <DataTableHeaderActions>
           <DataTableHeaderSearch placeholder='Pesquisar' />
-          <DataTableHeaderOrderBy options={PATIENTS_REFERRALS_ORDER_OPTIONS} />
+          <DataTableHeaderOrderBy options={REFERRALS_ORDER_OPTIONS} />
         </DataTableHeaderActions>
       </DataTableHeader>
 

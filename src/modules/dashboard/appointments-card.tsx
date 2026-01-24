@@ -31,9 +31,9 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { ROUTES } from '@/constants/routes'
+import { PATIENT_CONDITIONS } from '@/enums/patients'
 import { SPECIALTIES } from '@/enums/shared'
 import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
-import { PATIENT_CONDITIONS } from '@/types/patients'
 import { formatDate } from '@/utils/formatters/format-date'
 
 // TODO: update dropdown menu

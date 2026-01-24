@@ -2,7 +2,7 @@
 
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { api } from '@/lib/api'
-import type { Patient } from '@/types/patients'
+import type { Patient } from '@/types/patients.d.ts'
 
 export async function getPatient(id: string) {
   const REVALIDATE_IN_SECONDS = 3600

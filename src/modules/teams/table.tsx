@@ -34,7 +34,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
-import { TEAMS_ORDER_OPTIONS } from '@/types/teams'
+import { TEAMS_ORDER_OPTIONS } from '@/enums/team'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
 

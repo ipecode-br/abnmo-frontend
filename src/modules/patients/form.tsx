@@ -28,10 +28,11 @@ import {
   YES_OR_NO_OPTIONS,
 } from '@/constants/enums'
 import { ROUTES } from '@/constants/routes'
+import { PATIENT_GENDER_OPTIONS } from '@/enums/patients'
 import { useCities } from '@/hooks/cities'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
-import { GENDER_OPTIONS, Patient } from '@/types/patients'
+import type { Patient } from '@/types/patients.d.ts'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { removeNonNumbers } from '@/utils/sanitizers'
@@ -210,7 +211,7 @@ export function PatientForm({
         <SelectInput
           name='gender'
           label='Gênero'
-          options={GENDER_OPTIONS}
+          options={PATIENT_GENDER_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
           placeholder='Selecione o gênero'

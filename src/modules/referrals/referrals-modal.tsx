@@ -24,14 +24,14 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
+import {
+  PATIENT_CONDITION_ENUM,
+  PATIENT_CONDITION_OPTIONS,
+} from '@/enums/patients'
 import { SPECIALTIES_ENUM, SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
-import {
-  PATIENT_CONDITION_ENUM,
-  PATIENT_CONDITION_OPTIONS,
-} from '@/types/patients'
 
 interface ReferralModalProps {
   onClose(): void

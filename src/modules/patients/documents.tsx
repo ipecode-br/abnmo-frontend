@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { NavLink } from '@/components/ui/nav-link'
-import type { PatientDocument } from '@/types/patients'
+import type { PatientDocument } from '@/types/patients.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 
 interface PatientDocumentsProps {

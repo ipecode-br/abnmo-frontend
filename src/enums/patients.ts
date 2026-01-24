@@ -7,33 +7,7 @@ import {
 
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
-import { PatientSupport } from './patient-support'
-
-export type Patient = {
-  id: string
-  user_id: string
-  gender: Gender
-  date_of_birth: string
-  phone: string
-  status: PatientStatus
-  cpf: string
-  state: string
-  city: string
-  has_disability: boolean
-  disability_desc: string | null
-  need_legal_assistance: boolean
-  take_medication: boolean
-  medication_desc: string | null
-  has_nmo_diagnosis: boolean
-  created_at: string
-  updated_at: string
-  name: string
-  email: string
-  avatar_url: string | null
-  supports?: PatientSupport[]
-}
-
-export const GENDERS = {
+export const PATIENT_GENDERS = {
   male_cis: 'Homem (Cis)',
   female_cis: 'Mulher (Cis)',
   male_trans: 'Homem (Trans)',
@@ -42,9 +16,9 @@ export const GENDERS = {
   prefer_not_to_say: 'Prefiro não informar',
   other: 'Outro',
 }
-export type Gender = keyof typeof GENDERS
+export type PatientGender = keyof typeof PATIENT_GENDERS
 
-export const GENDER_OPTIONS = convertObjectToOptions(GENDERS)
+export const PATIENT_GENDER_OPTIONS = convertObjectToOptions(PATIENT_GENDERS)
 
 export const PATIENT_STATUSES = {
   active: {
@@ -103,26 +77,3 @@ export const PATIENTS_ORDERS = {
 export type PatientsOrder = keyof typeof PATIENTS_ORDERS
 
 export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDERS)
-
-export type PatientDocument = {
-  id: string
-  name: string
-  url: string
-  created_at: string
-  size: string
-}
-
-export const PATIENT_REFERRALS_ORDER = {
-  name_asc: 'Nome (Crescente)',
-  name_desc: 'Nome (Decrescente)',
-  date_asc: 'Data (Crescente)',
-  date_desc: 'Data (Decrescente)',
-  general_overview_asc: 'Em surto (Crescente)',
-  general_overview_desc: 'Estável (Decrescente)',
-}
-
-export type PatientsReferralsOrderType = keyof typeof PATIENT_REFERRALS_ORDER
-
-export const PATIENTS_REFERRALS_ORDER_OPTIONS = convertObjectToOptions(
-  PATIENT_REFERRALS_ORDER,
-)

@@ -14,16 +14,16 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAMS } from '@/constants/params'
-import { getTimeDistanceToNow } from '@/helpers/get-time-distance-to-now'
-import { useParams } from '@/hooks/params'
-import { api } from '@/lib/api'
-import type { OrderMapping } from '@/types/order'
-import type { PatientRequirement } from '@/types/patient-requirements'
 import {
   PATIENT_REQUIREMENT_TYPES,
   PATIENT_REQUIREMENTS_ORDER_OPTIONS,
   type PatientRequirementsOrder,
-} from '@/types/patient-requirements'
+} from '@/enums/patient-requirements'
+import { getTimeDistanceToNow } from '@/helpers/get-time-distance-to-now'
+import { useParams } from '@/hooks/params'
+import { api } from '@/lib/api'
+import type { OrderMapping } from '@/types/order.d.ts'
+import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 
 import { AddPatientRequirementButton } from './add-patient-requirement-button'
 

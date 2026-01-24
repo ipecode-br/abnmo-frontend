@@ -15,7 +15,7 @@ import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
-import type { User } from '@/types/users'
+import type { User } from '@/types/users.d.ts'
 
 interface SidebarAccountProps {
   user?: User | null

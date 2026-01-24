@@ -3,7 +3,7 @@ import React from 'react'
 
 import { getCurrentUser } from '@/actions/users'
 import { PatientRequirementCard } from '@/modules/patients/cards/patient-requirement-card'
-import type { PatientRequirement } from '@/types/patient-requirements'
+import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 
 export const metadata: Metadata = {
   title: 'Pendentes',
