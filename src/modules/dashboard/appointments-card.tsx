@@ -1,11 +1,4 @@
-import {
-  ClipboardCheckIcon,
-  ClipboardListIcon,
-  ClipboardPenIcon,
-  EllipsisIcon,
-  Users2Icon,
-  XCircleIcon,
-} from 'lucide-react'
+import { Users2Icon } from 'lucide-react'
 
 import { getAppointments } from '@/actions/appointments/get-appointments'
 import { DataTableHeader } from '@/components/data-table/header'
@@ -13,11 +6,6 @@ import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
 import { Avatar } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
-import { Divider } from '@/components/ui/divider'
-import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuContent } from '@/components/ui/dropdown/content'
-import { DropdownMenuItem } from '@/components/ui/dropdown/item'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { NavButton } from '@/components/ui/nav-button'
 import {
   Table,
@@ -35,6 +23,8 @@ import { PATIENT_CONDITIONS } from '@/enums/patients'
 import { SPECIALTIES } from '@/enums/shared'
 import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
 import { formatDate } from '@/utils/formatters/format-date'
+
+import { DashboardAppointmentsCardActions } from './appointments-card-actions'
 
 // TODO: update dropdown menu
 
@@ -113,38 +103,9 @@ export async function DashboardAppointmentsCard() {
                   </TableCell>
 
                   <TableCell className='text-center'>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger
-                        indicator={false}
-                        size='icon'
-                        variant='ghost'
-                        className='size-8'
-                      >
-                        <EllipsisIcon />
-                      </DropdownMenuTrigger>
-
-                      <DropdownMenuContent align='end'>
-                        <DropdownMenuItem>
-                          <ClipboardPenIcon />
-                          Editar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <ClipboardListIcon />
-                          Informações do paciente
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <ClipboardCheckIcon />
-                          Histórico do paciente
-                        </DropdownMenuItem>
-
-                        <Divider />
-
-                        <DropdownMenuItem variant='destructive'>
-                          <XCircleIcon />
-                          Cancelar
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <DashboardAppointmentsCardActions
+                      appointment={appointment}
+                    />
                   </TableCell>
                 </TableRow>
               )
