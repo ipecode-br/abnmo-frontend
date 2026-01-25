@@ -1,21 +1,20 @@
 'use client'
 
-import { EllipsisVerticalIcon, LogOutIcon } from 'lucide-react'
+import { EllipsisVerticalIcon, LogOutIcon, UserCircle2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { revalidateCache } from '@/actions/cache'
 import { Avatar } from '@/components/ui/avatar'
-import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuContent } from '@/components/ui/dropdown/content'
-import { DropdownMenuItem } from '@/components/ui/dropdown/item'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
 import type { User } from '@/types/users.d.ts'
+
+import { Divider } from '../ui/divider'
+import { Menu, MenuContent, MenuItem, MenuTrigger } from '../ui/menu'
 
 interface SidebarAccountProps {
   user?: User | null
@@ -56,24 +55,28 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
         <p className='text-foreground-soft truncate text-xs'>{user?.email}</p>
       </div>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          size='icon'
+      <Menu>
+        <MenuTrigger
+          size='icon_sm'
           variant='ghost'
           data-visible={expanded}
           aria-label='Abrir menu'
-          className='absolute right-0 ml-auto size-10 opacity-0 transition-opacity duration-500 data-[visible=true]:size-8 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
+          className='absolute right-0 ml-auto opacity-0 transition-opacity duration-500 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
         >
           <EllipsisVerticalIcon className='text-foreground-soft' />
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align='start' sideOffset={8} className='min-w-32'>
-          <DropdownMenuItem onClick={logout} disabled={isPending}>
+        </MenuTrigger>
+        <MenuContent sideOffset={8} className='min-w-32'>
+          <MenuItem onClick={() => router.push(ROUTES.dashboard.profile)}>
+            <UserCircle2Icon />
+            Perfil
+          </MenuItem>
+          <Divider className='my-1' />
+          <MenuItem onClick={logout} disabled={isPending}>
             <LogOutIcon />
             Sair
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          </MenuItem>
+        </MenuContent>
+      </Menu>
     </div>
   )
 }
