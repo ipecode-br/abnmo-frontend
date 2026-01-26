@@ -44,9 +44,10 @@ export function CancelAppointmentModal({
       }
 
       queryClient.invalidateQueries({
-        queryKey: [QUERY_CACHE_KEYS.appointments.list],
+        queryKey: [QUERY_CACHE_KEYS.appointments.main],
       })
       revalidateCache(NEXT_CACHE_TAGS.patient(appointment.patient_id))
+      revalidateCache(NEXT_CACHE_TAGS.appointments.main)
       toast.success(response.message)
       onClose()
     })
@@ -60,8 +61,9 @@ export function CancelAppointmentModal({
 
       <DialogContent>
         Você tem certeza que deseja cancelar o atendimento de{' '}
-        <span className='font-medium'>{appointment.patient.name}</span>, dia{' '}
-        <span className='font-medium'>{formatDate(appointment.date)}</span>?
+        <span className='font-semibold'>{appointment.patient.name}</span>,
+        agendado para dia{' '}
+        <span className='font-semibold'>{formatDate(appointment.date)}</span>?
       </DialogContent>
 
       <DialogFooter>

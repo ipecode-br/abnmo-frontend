@@ -1,5 +1,6 @@
 'use server'
 
+import { DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS } from '@/config/cache'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { api } from '@/lib/api'
 
@@ -10,8 +11,6 @@ type GetTotalPatientsParams = {
 }
 
 export async function getTotalPatients(params?: GetTotalPatientsParams) {
-  const REVALIDATE_IN_SECONDS = 3600
-
   try {
     const response = await api<Record<Status, number>>(
       '/statistics/patients-total',
@@ -20,7 +19,7 @@ export async function getTotalPatients(params?: GetTotalPatientsParams) {
         includeCookies: true,
         cache: 'force-cache',
         next: {
-          revalidate: REVALIDATE_IN_SECONDS,
+          revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
           tags: [
             NEXT_CACHE_TAGS.statistics.totalPatients(JSON.stringify(params)),
           ],

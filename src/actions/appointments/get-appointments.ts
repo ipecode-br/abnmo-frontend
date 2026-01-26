@@ -1,26 +1,37 @@
 'use server'
 
+import { DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS } from '@/config/cache'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
+import type { AppointmentStatus } from '@/enums/appointments'
 import { api } from '@/lib/api'
 import type { Appointment } from '@/types/appointments'
 
-type GetAppointmentsParams = {
+type Params = {
+  status?: AppointmentStatus
   limit?: number
 }
 
-export async function getAppointments(params?: GetAppointmentsParams) {
-  const REVALIDATE_IN_SECONDS = 3600
+interface GetAppointmentsProps {
+  params?: Params
+  cacheKey?: string
+}
 
+export async function getAppointments({
+  params,
+  cacheKey,
+}: GetAppointmentsProps = {}) {
   try {
     const response = await api<{ appointments: Appointment[]; total: number }>(
       '/appointments',
       {
-        params,
         includeCookies: true,
         cache: 'force-cache',
+        params,
         next: {
-          revalidate: REVALIDATE_IN_SECONDS,
-          tags: [NEXT_CACHE_TAGS.appointments(JSON.stringify(params))],
+          revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
+          tags: cacheKey
+            ? [NEXT_CACHE_TAGS.appointments.main, cacheKey]
+            : [NEXT_CACHE_TAGS.appointments.main],
         },
       },
     )

@@ -59,7 +59,7 @@ export function InactivatePatientModal({
     }
 
     queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.patients.list],
+      queryKey: [QUERY_CACHE_KEYS.patients.main],
     })
     queryClient.invalidateQueries({
       queryKey: [QUERY_CACHE_KEYS.patients.allOptions],

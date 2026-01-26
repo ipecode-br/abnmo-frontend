@@ -1,7 +1,7 @@
 'use client'
 
 import {
-  ClipboardCheckIcon,
+  ClipboardClockIcon,
   ClipboardListIcon,
   ClipboardPenIcon,
   EllipsisIcon,
@@ -63,7 +63,7 @@ export function DashboardAppointmentsCardActions({
               )
             }
           >
-            <ClipboardCheckIcon />
+            <ClipboardClockIcon />
             Histórico do paciente
           </MenuItem>
 

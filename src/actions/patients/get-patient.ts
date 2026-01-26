@@ -1,18 +1,17 @@
 'use server'
 
+import { DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS } from '@/config/cache'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { api } from '@/lib/api'
 import type { Patient } from '@/types/patients.d.ts'
 
 export async function getPatient(id: string) {
-  const REVALIDATE_IN_SECONDS = 3600
-
   try {
     const response = await api<Patient>(`/patients/${id}`, {
       includeCookies: true,
       cache: 'force-cache',
       next: {
-        revalidate: REVALIDATE_IN_SECONDS,
+        revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
         tags: [NEXT_CACHE_TAGS.patient(id)],
       },
     })

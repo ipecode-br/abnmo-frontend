@@ -18,6 +18,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
+import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_CONDITIONS } from '@/enums/patients'
 import { SPECIALTIES } from '@/enums/shared'
@@ -26,10 +27,11 @@ import { formatDate } from '@/utils/formatters/format-date'
 
 import { DashboardAppointmentsCardActions } from './appointments-card-actions'
 
-// TODO: update dropdown menu
-
 export async function DashboardAppointmentsCard() {
-  const response = await getAppointments({ limit: 5 })
+  const response = await getAppointments({
+    params: { status: 'scheduled', limit: 5 },
+    cacheKey: NEXT_CACHE_TAGS.appointments.dashboard,
+  })
 
   const appointments = response?.appointments
   const showAppointments = appointments && appointments.length > 0

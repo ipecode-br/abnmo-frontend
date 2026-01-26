@@ -84,7 +84,7 @@ export function ReferralPatientModal({ onClose, id }: ReferralModalProps) {
       return
     }
     queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.referrals.list],
+      queryKey: [QUERY_CACHE_KEYS.referrals.main],
     })
     revalidateCache(NEXT_CACHE_TAGS.patient(data.patient_id))
     toast.success(response.message)

@@ -84,7 +84,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
     }
 
     queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.appointments.list],
+      queryKey: [QUERY_CACHE_KEYS.appointments.main],
     })
     revalidateCache(NEXT_CACHE_TAGS.patient(data.patient_id))
     toast.success(response.message)
