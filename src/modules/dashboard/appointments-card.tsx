@@ -1,6 +1,9 @@
 import { Users2Icon } from 'lucide-react'
 
-import { getAppointments } from '@/actions/appointments/get-appointments'
+import {
+  getAppointments,
+  type GetAppointmentsParams,
+} from '@/actions/appointments/get-appointments'
 import { DataTableHeader } from '@/components/data-table/header'
 import { DataTableHeaderActions } from '@/components/data-table/header/actions'
 import { DataTableHeaderInfo } from '@/components/data-table/header/info'
@@ -28,9 +31,14 @@ import { formatDate } from '@/utils/formatters/format-date'
 import { DashboardAppointmentsCardActions } from './appointments-card-actions'
 
 export async function DashboardAppointmentsCard() {
+  const params: GetAppointmentsParams = {
+    status: 'scheduled',
+    limit: 5,
+  }
+
   const response = await getAppointments({
-    params: { status: 'scheduled', limit: 5 },
-    cacheKey: NEXT_CACHE_TAGS.appointments.dashboard,
+    params,
+    cacheKey: NEXT_CACHE_TAGS.appointments.query(JSON.stringify(params)),
   })
 
   const appointments = response?.appointments

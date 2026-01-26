@@ -6,13 +6,13 @@ import type { AppointmentStatus } from '@/enums/appointments'
 import { api } from '@/lib/api'
 import type { Appointment } from '@/types/appointments'
 
-type Params = {
+export type GetAppointmentsParams = {
   status?: AppointmentStatus
   limit?: number
 }
 
 interface GetAppointmentsProps {
-  params?: Params
+  params?: GetAppointmentsParams
   cacheKey?: string
 }
 

@@ -9,19 +9,27 @@ type GetTotalReferralsParams = {
   period?: QueryPeriod
 }
 
-export async function getTotalReferrals(params?: GetTotalReferralsParams) {
+interface GetTotalReferralsProps {
+  params?: GetTotalReferralsParams
+  cacheKey?: string
+}
+
+export async function getTotalReferrals({
+  params,
+  cacheKey,
+}: GetTotalReferralsProps = {}) {
   try {
     const response = await api<{ total: number }>(
       '/statistics/referrals-total',
       {
-        params,
         includeCookies: true,
         cache: 'force-cache',
+        params,
         next: {
           revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
-          tags: [
-            NEXT_CACHE_TAGS.statistics.totalReferrals(JSON.stringify(params)),
-          ],
+          tags: cacheKey
+            ? [NEXT_CACHE_TAGS.statistics.totalReferrals.main, cacheKey]
+            : [NEXT_CACHE_TAGS.statistics.totalReferrals.main],
         },
       },
     )

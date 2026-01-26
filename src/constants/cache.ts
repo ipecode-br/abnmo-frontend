@@ -3,12 +3,21 @@ export const NEXT_CACHE_TAGS = {
   patient: (id: string) => `patient/${id}`,
   appointments: {
     main: 'appointments',
-    dashboard: 'appointments-dashboard',
+    query: (query: string) => `appointments/${query}`,
   },
   statistics: {
-    totalPatients: (query: string) => `total-patients/${query}`,
-    totalReferrals: (query: string) => `total-referrals/${query}`,
-    totalAppointments: (query: string) => `total-appointments/${query}`,
+    totalAppointments: {
+      main: 'total-appointments',
+      query: (query: string) => `total-appointments/${query}`,
+    },
+    totalPatients: {
+      main: 'total-patients',
+      query: (query: string) => `total-patients/${query}`,
+    },
+    totalReferrals: {
+      main: 'total-referrals',
+      query: (query: string) => `total-referrals/${query}`,
+    },
   },
 }
 
