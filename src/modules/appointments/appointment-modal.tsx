@@ -24,59 +24,81 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
-import {
-  PATIENT_CONDITION_ENUM,
-  PATIENT_CONDITION_OPTIONS,
-} from '@/enums/patients'
-import { SPECIALTIES_ENUM, SPECIALTIES_OPTIONS } from '@/enums/shared'
+import { PATIENT_CONDITION_OPTIONS } from '@/enums/patients'
+import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
+import {
+  dateSchema,
+  patientConditionSchema,
+  professionalNameSchema,
+  specialtySchema,
+} from '@/schemas'
+import type { Appointment } from '@/types/appointments'
 
 const appointmentFormSchema = z.object({
   patient_id: z.string().uuid('Paciente é obrigatório'),
-  date: z.string().datetime('A data é obrigatória'),
-  category: z.enum(SPECIALTIES_ENUM, { message: 'Categoria é obrigatório' }),
-  condition: z.enum(PATIENT_CONDITION_ENUM, {
-    message: 'O quadro é obrigatório',
-  }),
+  date: dateSchema,
+  category: specialtySchema,
+  condition: patientConditionSchema,
   annotation: z
     .string()
     .max(500)
     .nullable()
     .transform((value) => (!value ? null : value)),
-  professional_name: z
-    .string()
-    .nullable()
-    .transform((value) => (!value ? null : value)),
+  professional_name: professionalNameSchema,
 })
 type AppointmentFormSchema = z.infer<typeof appointmentFormSchema>
 
 interface AppointmentModalProps {
+  appointment?: Appointment
   onClose: () => void
 }
 
-export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
+export function AppointmentModal({
+  appointment,
+  onClose,
+}: Readonly<AppointmentModalProps>) {
   const { patientOptions } = usePatientOptions()
+
+  const isEditMode = !!appointment
 
   const formMethods = useForm<AppointmentFormSchema>({
     resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
-      patient_id: '',
-      date: '',
-      category: '',
-      condition: '',
-      annotation: '',
-      professional_name: '',
+      patient_id: appointment?.patient_id || '',
+      date: appointment?.date || '',
+      category: appointment?.category || '',
+      condition: appointment?.condition || '',
+      annotation: appointment?.annotation || '',
+      professional_name: appointment?.professional_name || '',
     } as unknown as AppointmentFormSchema,
     mode: 'onBlur',
   })
 
-  async function submitForm(data: AppointmentFormSchema) {
-    const response = await api('/appointments', {
+  function createAppointment(data: AppointmentFormSchema) {
+    return api('/appointments', {
       method: 'POST',
       body: JSON.stringify(data),
     })
+  }
+
+  function updateAppointment({
+    date,
+    condition,
+    annotation,
+  }: AppointmentFormSchema) {
+    return api(`/appointments/${appointment?.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ date, condition, annotation }),
+    })
+  }
+
+  async function submitForm(data: AppointmentFormSchema) {
+    const response = isEditMode
+      ? await updateAppointment(data)
+      : await createAppointment(data)
 
     if (!response.success) {
       toast.error(response.message)
@@ -87,6 +109,8 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
       queryKey: [QUERY_CACHE_KEYS.appointments.main],
     })
     revalidateCache(NEXT_CACHE_TAGS.patient(data.patient_id))
+    revalidateCache(NEXT_CACHE_TAGS.appointments.main)
+    revalidateCache(NEXT_CACHE_TAGS.statistics.totalAppointments.main)
     toast.success(response.message)
     onClose()
   }
@@ -109,6 +133,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
               className='sm:col-span-full'
               placeholder='Selecione um paciente'
               options={patientOptions}
+              readOnly={isEditMode}
               isRequired
             />
             <DateInput
@@ -123,6 +148,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
               label='Categoria'
               options={SPECIALTIES_OPTIONS}
               className='sm:col-span-1'
+              readOnly={isEditMode}
               isRequired
             />
             <SelectInput
@@ -136,6 +162,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
               name='professional_name'
               label='Profissional responsável'
               wrapperClassName='sm:col-span-1'
+              readOnly={isEditMode}
             />
             <TextareaInput
               rows={8}
@@ -155,7 +182,7 @@ export function AppointmentModal({ onClose }: Readonly<AppointmentModalProps>) {
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
-          Cadastrar
+          {isEditMode ? 'Atualizar' : 'Cadastrar'}
         </Button>
         <DialogClose
           className='flex-1'

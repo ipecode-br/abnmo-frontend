@@ -7,6 +7,8 @@ import {
   NON_SPECIAL_CHAR_REGEX,
   PHONE_REGEX,
 } from '@/constants/regex'
+import { PATIENT_CONDITION_ENUM } from '@/enums/patients'
+import { SPECIALTIES_ENUM } from '@/enums/shared'
 
 export const nameSchema = z
   .string()
@@ -61,3 +63,18 @@ export const kinshipSchema = z
 export const yesOrNoSchema = z.enum(YES_OR_NO_TUPLE, {
   message: 'Selecione "Sim" ou "Não"',
 })
+
+export const dateSchema = z.string().datetime('A data é obrigatória')
+
+export const specialtySchema = z.enum(SPECIALTIES_ENUM, {
+  message: 'Categoria é obrigatório',
+})
+
+export const patientConditionSchema = z.enum(PATIENT_CONDITION_ENUM, {
+  message: 'O quadro é obrigatório',
+})
+
+export const professionalNameSchema = z
+  .string()
+  .nullable()
+  .transform((value) => (!value ? null : value))

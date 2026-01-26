@@ -16,18 +16,19 @@ import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { ROUTES } from '@/constants/routes'
 import type { Appointment } from '@/types/appointments'
 
-import { CancelAppointmentModal } from '../appointments/cancel-appointment-modal'
+import { AppointmentModal } from '../appointment-modal'
+import { CancelAppointmentModal } from '../cancel-appointment-modal'
 
-interface DashboardAppointmentsCardActionsProps {
+type AppointmentModalMode = 'edit' | 'cancel'
+
+interface AppointmentsTableActionsProps {
   appointment: Appointment
 }
 
-// TODO: add edit appointment functionality
-
-export function DashboardAppointmentsCardActions({
+export function AppointmentsTableActions({
   appointment,
-}: Readonly<DashboardAppointmentsCardActionsProps>) {
-  const [cancelModalOpen, setCancelModalOpen] = useState(false)
+}: Readonly<AppointmentsTableActionsProps>) {
+  const [modalOpen, setModalOpen] = useState<AppointmentModalMode | null>(null)
 
   const router = useRouter()
 
@@ -40,7 +41,7 @@ export function DashboardAppointmentsCardActions({
         </MenuTrigger>
 
         <MenuContent align='end'>
-          <MenuItem>
+          <MenuItem onClick={() => setModalOpen('edit')}>
             <ClipboardPenIcon />
             Editar
           </MenuItem>
@@ -71,7 +72,7 @@ export function DashboardAppointmentsCardActions({
 
           <MenuItem
             variant='destructive'
-            onClick={() => setCancelModalOpen(true)}
+            onClick={() => setModalOpen('cancel')}
           >
             <XCircleIcon />
             Cancelar
@@ -79,11 +80,26 @@ export function DashboardAppointmentsCardActions({
         </MenuContent>
       </Menu>
 
-      {cancelModalOpen && (
-        <Dialog open={cancelModalOpen} onOpenChange={setCancelModalOpen}>
+      {modalOpen === 'edit' && (
+        <Dialog
+          open={modalOpen === 'edit'}
+          onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
+        >
+          <AppointmentModal
+            appointment={appointment}
+            onClose={() => setModalOpen(null)}
+          />
+        </Dialog>
+      )}
+
+      {modalOpen === 'cancel' && (
+        <Dialog
+          open={modalOpen === 'cancel'}
+          onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}
+        >
           <CancelAppointmentModal
             appointment={appointment}
-            onClose={() => setCancelModalOpen(false)}
+            onClose={() => setModalOpen(null)}
           />
         </Dialog>
       )}
