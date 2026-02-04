@@ -8,6 +8,7 @@ import type { Appointment } from '@/types/appointments'
 
 export type GetAppointmentsParams = {
   status?: AppointmentStatus
+  startDate?: string
   limit?: number
 }
 

@@ -18,7 +18,11 @@ import { NewAppointmentButton } from '@/modules/appointments/new-appointment-but
 import { AppointmentsTable } from '../appointments/table'
 
 export async function DashboardAppointmentsCard() {
-  const params: GetAppointmentsParams = { status: 'scheduled', limit: 5 }
+  const params: GetAppointmentsParams = {
+    startDate: new Date().toISOString(),
+    status: 'scheduled',
+    limit: 5,
+  }
 
   const response = await getAppointments({
     cacheKey: NEXT_CACHE_TAGS.appointments.query(JSON.stringify(params)),
