@@ -118,7 +118,9 @@ export function AppointmentModal({
   return (
     <DialogContainer className='max-w-xl'>
       <DialogHeader icon={<DialogIcon icon={SmilePlusIcon} />}>
-        <DialogTitle>Novo atendimento</DialogTitle>
+        <DialogTitle>
+          {isEditMode ? 'Atualizar atendimento' : 'Novo atendimento'}
+        </DialogTitle>
       </DialogHeader>
 
       <DialogContent>

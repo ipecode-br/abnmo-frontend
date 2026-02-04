@@ -25,7 +25,7 @@ interface AppointmentsTableProps {
 export function AppointmentsTable({
   appointments,
 }: Readonly<AppointmentsTableProps>) {
-  const showAppointments = appointments.length > 0
+  const isEmpty = appointments.length <= 0
 
   return (
     <Table>
@@ -40,7 +40,7 @@ export function AppointmentsTable({
         </TableRow>
       </TableHeader>
 
-      {showAppointments && (
+      {!isEmpty && (
         <TableBody>
           {appointments.map((appointment) => {
             const condition = PATIENT_CONDITIONS[appointment.condition]
@@ -81,11 +81,11 @@ export function AppointmentsTable({
         </TableBody>
       )}
 
-      {!showAppointments && (
+      {isEmpty && (
         <TableBody>
           <TableRow>
             <TableEmptyCell colSpan={6}>
-              Nenhum atendimento encontrado
+              Nenhum atendimento registrado
             </TableEmptyCell>
           </TableRow>
         </TableBody>

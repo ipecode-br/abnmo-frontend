@@ -1,12 +1,14 @@
-import { Users2Icon } from 'lucide-react'
+import { ClipboardListIcon } from 'lucide-react'
 
 import {
   getAppointments,
   type GetAppointmentsParams,
 } from '@/actions/appointments/get-appointments'
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderInfo } from '@/components/data-table/header/info'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
 import { Card } from '@/components/ui/card'
 import { NavButton } from '@/components/ui/nav-button'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
@@ -16,28 +18,23 @@ import { NewAppointmentButton } from '@/modules/appointments/new-appointment-but
 import { AppointmentsTable } from '../appointments/table'
 
 export async function DashboardAppointmentsCard() {
-  const params: GetAppointmentsParams = {
-    status: 'scheduled',
-    limit: 5,
-  }
+  const params: GetAppointmentsParams = { status: 'scheduled', limit: 5 }
 
   const response = await getAppointments({
-    params,
     cacheKey: NEXT_CACHE_TAGS.appointments.query(JSON.stringify(params)),
+    params,
   })
 
   const appointments = response?.appointments ?? []
 
   return (
     <Card className='p-6 sm:col-span-6'>
-      <DataTableHeader className='mb-8'>
-        <DataTableHeaderInfo
-          icon={<Users2Icon />}
-          iconClassName='text-foreground-soft'
+      <SectionHeader className='mb-6'>
+        <SectionHeaderTitle
           title='Fila de atendimento'
+          icon={<ClipboardListIcon />}
         />
-
-        <DataTableHeaderActions>
+        <SectionHeaderActions>
           <NavButton
             size='sm'
             variant='outline'
@@ -47,8 +44,8 @@ export async function DashboardAppointmentsCard() {
           </NavButton>
 
           <NewAppointmentButton size='sm' />
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        </SectionHeaderActions>
+      </SectionHeader>
 
       <AppointmentsTable appointments={appointments} />
     </Card>
