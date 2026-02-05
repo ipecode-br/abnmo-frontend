@@ -1,15 +1,17 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { UserCheck2Icon } from 'lucide-react'
+import { ClipboardCheckIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderInfo } from '@/components/data-table/header/info'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
 import { Pagination } from '@/components/pagination'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
 import { Avatar } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
 import {
@@ -85,21 +87,23 @@ export function ApprovedPatientRequirementsListTable() {
 
   return (
     <>
-      <DataTableHeader>
-        <DataTableHeaderInfo
-          icon={<UserCheck2Icon />}
-          total={stableTotal}
+      <SectionHeader>
+        <SectionHeaderTitle
           title='Aprovações'
+          icon={<ClipboardCheckIcon />}
+          total={stableTotal}
         />
-
-        <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar nome...' />
-          <DataTableHeaderOrderBy
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar nome...' className='w-56' />
+          <FilterSelect
+            param={QUERY_PARAMS.orderBy}
             options={PATIENT_REQUIREMENTS_ORDER_OPTIONS}
+            placeholder='Ordenar por...'
+            resetLabel='Limpar ordem'
             className='w-52'
           />
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        </SectionHeaderActions>
+      </SectionHeader>
 
       <Card className='p-6'>
         <Table>

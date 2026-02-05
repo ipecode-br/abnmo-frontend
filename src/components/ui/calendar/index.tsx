@@ -16,26 +16,42 @@ import { CalendarStepNav } from './step-nav'
 export interface CalendarProps extends Omit<PropsSingle, 'mode'> {
   navMode?: 'step' | 'dropdown'
   allowFutureDates?: boolean
+  startDate?: string | Date
 }
 
 export function Calendar({
   navMode = 'step',
   allowFutureDates,
+  startDate,
   ...props
 }: Readonly<CalendarProps>) {
   const defaultClassNames = getDefaultClassNames()
 
-  const dateRestrictions = !allowFutureDates
-    ? {
-        toDate: new Date(),
-        toMonth: new Date(),
-        disabled: (date: Date) => {
-          const today = new Date()
-          today.setHours(23, 59, 59, 999)
-          return date > today
-        },
-      }
-    : {}
+  const dateRestrictions = {
+    ...(startDate && {
+      fromDate: new Date(startDate),
+      fromMonth: new Date(startDate),
+      disabled: (date: Date) => {
+        const start = new Date(startDate)
+        start.setHours(0, 0, 0, 0)
+        return date < start
+      },
+    }),
+    ...(!allowFutureDates && {
+      toDate: new Date(),
+      toMonth: new Date(),
+      disabled: (date: Date) => {
+        const today = new Date()
+        today.setHours(23, 59, 59, 999)
+        if (startDate) {
+          const start = new Date(startDate)
+          start.setHours(0, 0, 0, 0)
+          return date > today || date < start
+        }
+        return date > today
+      },
+    }),
+  }
 
   return (
     <DayPicker

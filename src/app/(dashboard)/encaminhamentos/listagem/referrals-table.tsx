@@ -2,11 +2,13 @@
 import { Eye } from 'lucide-react'
 import { useState } from 'react'
 
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
 import { Pagination } from '@/components/pagination'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+} from '@/components/section-header'
 import { Card } from '@/components/ui/card'
 import { TabSelect } from '@/components/ui/tab-select'
 import {
@@ -19,6 +21,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
+import { QUERY_PARAMS } from '@/constants/params'
 import { PATIENT_CONDITIONS, type PatientCondition } from '@/enums/patients'
 import { REFERRALS_ORDER_OPTIONS } from '@/enums/referrals'
 
@@ -132,13 +135,16 @@ export function ReferralsTable() {
 
   return (
     <div className='space-y-6'>
-      <DataTableHeader>
+      <SectionHeader>
         <TabSelect buttons={filterOptions} />
-        <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar' />
-          <DataTableHeaderOrderBy options={REFERRALS_ORDER_OPTIONS} />
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar' />
+          <FilterSelect
+            param={QUERY_PARAMS.orderBy}
+            options={REFERRALS_ORDER_OPTIONS}
+          />
+        </SectionHeaderActions>
+      </SectionHeader>
 
       <Card className='p-6'>
         <Table>

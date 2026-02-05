@@ -40,8 +40,8 @@ export function SectionHeaderTitle({
         {icon}
       </div>
       <div className='flex items-center gap-2'>
-        {total > 0 && <span className='text-2xl font-semibold'>{total}</span>}
-        <p className='text-foreground-soft text-lg'>{title}</p>
+        {total > 0 && <span className='text-3xl font-semibold'>{total}</span>}
+        <p className='text-foreground-soft text-xl'>{title}</p>
       </div>
     </div>
   )

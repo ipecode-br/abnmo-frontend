@@ -4,16 +4,21 @@ import { SearchIcon, XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Input, type InputProps } from '@/components/ui/input'
+import { Input } from '@/components/ui/input'
 import { QUERY_PARAMS } from '@/constants/params'
 import { useDebounce } from '@/hooks/debounce'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 
-export function DataTableHeaderSearch({
+interface SearchInputProps {
+  placeholder: string
+  className?: string
+}
+
+export function SearchInput({
+  placeholder,
   className,
-  ...props
-}: Readonly<InputProps>) {
+}: Readonly<SearchInputProps>) {
   const queryParam = QUERY_PARAMS.search
   const pageParam = QUERY_PARAMS.page
 
@@ -36,15 +41,15 @@ export function DataTableHeaderSearch({
   }, [searchQuery])
 
   return (
-    <div className='relative'>
+    <div className={cn('relative', className)}>
       <Input
         size='sm'
         name='search'
         value={query}
         icon={SearchIcon}
         onChange={(e) => setQuery(e.target.value)}
-        className={cn('w-52 pr-10', className)}
-        {...props}
+        placeholder={placeholder}
+        className='w-full pr-10'
       />
 
       {query && (

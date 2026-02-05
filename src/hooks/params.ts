@@ -38,9 +38,14 @@ export function useParams() {
     router.replace(`?${pageParams.toString()}`)
   }
 
+  function clearParams() {
+    router.replace(window.location.pathname)
+  }
+
   return {
     searchParams,
     getParam,
     updateParams,
+    clearParams,
   }
 }

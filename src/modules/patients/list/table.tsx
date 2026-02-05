@@ -5,16 +5,18 @@ import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { DataTableFilters } from '@/components/data-table/filters'
-import { DataTableFilterDate } from '@/components/data-table/filters/date'
-import { DataTableFilterStatus } from '@/components/data-table/filters/status'
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderFilterButton } from '@/components/data-table/header/filter-button'
-import { DataTableHeaderInfo } from '@/components/data-table/header/info'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
+import { FilterContainer } from '@/components/filters/container'
+import { FilterDate } from '@/components/filters/date'
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
+import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
 import { Avatar } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
 import { NavButton } from '@/components/ui/nav-button'
@@ -104,40 +106,43 @@ export function PatientsListTable() {
 
   return (
     <>
-      <DataTableHeader>
-        <DataTableHeaderInfo
+      <SectionHeader>
+        <SectionHeaderTitle
+          title='Pacientes'
           icon={<Users2Icon />}
           total={stableTotal}
-          title='Pacientes'
         />
-        <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar nome' />
-          <DataTableHeaderOrderBy
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar...' className='w-48' />
+          <FilterSelect
+            param={QUERY_PARAMS.orderBy}
             options={PATIENTS_ORDER_OPTIONS}
+            placeholder='Ordenar por...'
+            resetLabel='Limpar ordem'
             className='w-52'
           />
-          <DataTableHeaderFilterButton
-            onClick={() => setShowFilters(!showFilters)}
-          />
+          <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
 
           <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
             <PlusIcon />
             Novo paciente
           </NavButton>
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        </SectionHeaderActions>
+      </SectionHeader>
 
       {showFilters && (
-        <DataTableFilters
-          queries={[
-            QUERY_PARAMS.status,
-            QUERY_PARAMS.startDate,
-            QUERY_PARAMS.endDate,
-          ]}
-        >
-          <DataTableFilterStatus options={PATIENT_STATUS_OPTIONS} />
-          <DataTableFilterDate />
-        </DataTableFilters>
+        <section className='flex items-end gap-8'>
+          <FilterContainer title='Status' className='w-48'>
+            <FilterSelect
+              param={QUERY_PARAMS.status}
+              options={PATIENT_STATUS_OPTIONS}
+              placeholder='Selecione o status'
+              resetLabel='Limpar status'
+            />
+          </FilterContainer>
+          <FilterDate />
+          <ClearFiltersButton />
+        </section>
       )}
 
       <Card className='p-6'>
@@ -156,16 +161,6 @@ export function PatientsListTable() {
           </TableHeader>
 
           {isLoading && <PatientsListTableSkeleton />}
-
-          {!isLoading && isEmpty && (
-            <TableBody>
-              <TableRow>
-                <TableEmptyCell colSpan={6}>
-                  Nenhum paciente encontrado
-                </TableEmptyCell>
-              </TableRow>
-            </TableBody>
-          )}
 
           {!isLoading && !isEmpty && (
             <TableBody>
@@ -201,6 +196,16 @@ export function PatientsListTable() {
                   </TableRow>
                 )
               })}
+            </TableBody>
+          )}
+
+          {!isLoading && isEmpty && (
+            <TableBody>
+              <TableRow>
+                <TableEmptyCell colSpan={6}>
+                  Nenhum paciente encontrado
+                </TableEmptyCell>
+              </TableRow>
             </TableBody>
           )}
         </Table>

@@ -1,14 +1,12 @@
 'use client'
 
+import { FilterContainer } from '@/components/filters/container'
 import { DatePicker } from '@/components/ui/date-picker'
 import { QUERY_PARAMS } from '@/constants/params'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 
-import { DataTableFilterContainer } from './container'
-
-// TODO: implement date pickers
-export function DataTableFilterDate({
+export function FilterDate({
   className,
   ...props
 }: Readonly<React.ComponentProps<'div'>>) {
@@ -36,21 +34,22 @@ export function DataTableFilterDate({
 
   return (
     <div className={cn('grid w-96 grid-cols-2 gap-2', className)} {...props}>
-      <DataTableFilterContainer title='Data inicial'>
+      <FilterContainer title='Data inicial'>
         <DatePicker
           size='sm'
           value={startDate}
           onSelectDate={handleSelectStartDate}
         />
-      </DataTableFilterContainer>
-      <DataTableFilterContainer title='Data final'>
+      </FilterContainer>
+      <FilterContainer title='Data final'>
         <DatePicker
           size='sm'
           value={endDate}
           onSelectDate={handleSelectEndDate}
+          startDate={startDate}
           disabled={!startDate}
         />
-      </DataTableFilterContainer>
+      </FilterContainer>
     </div>
   )
 }

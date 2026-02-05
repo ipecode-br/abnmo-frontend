@@ -6,9 +6,11 @@ import {
   type SelectRootProps,
 } from '@base-ui-components/react/select'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
+import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
+
+import { Divider } from './divider'
 
 export type SelectOption = {
   label: string
@@ -17,7 +19,7 @@ export type SelectOption = {
 }
 
 const selectTriggerVariants = cva(
-  'border-border bg-background hover:bg-accent focus-visible:outline-ring data-[placeholder]:text-disabled flex cursor-pointer items-center justify-between gap-2 rounded-lg border pr-2 pl-3 shadow-xs outline-offset-4 outline-transparent transition-colors disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
+  'border-border bg-background data-[placeholder]:text-disabled outline-ring hover:bg-accent flex cursor-pointer items-center justify-between gap-2 rounded-lg border pr-2 pl-3 shadow-xs outline-offset-4 transition-colors disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
   {
     variants: {
       size: {
@@ -37,6 +39,7 @@ export type SelectProps = Omit<SelectRootProps<string, false>, 'items'> &
     align?: SelectPositionerProps['align']
     className?: string
     placeholder?: string
+    resetLabel?: string
   }
 
 export function Select({
@@ -45,6 +48,7 @@ export function Select({
   align,
   options,
   className,
+  resetLabel,
   placeholder = 'Selecione uma opção',
   ...props
 }: Readonly<SelectProps>) {
@@ -101,6 +105,19 @@ export function Select({
                   </BaseSelect.ItemIndicator>
                 </BaseSelect.Item>
               ))}
+
+              {resetLabel && selectedOption && (
+                <>
+                  <Divider className='my-1' />
+                  <BaseSelect.Item
+                    value='reset'
+                    className='data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground flex cursor-pointer items-center gap-2 rounded-md px-3 py-1.5 transition-colors outline-none [&_svg]:size-4'
+                  >
+                    <XIcon />
+                    <BaseSelect.ItemText>{resetLabel}</BaseSelect.ItemText>
+                  </BaseSelect.Item>
+                </>
+              )}
             </BaseSelect.List>
           </BaseSelect.Popup>
         </BaseSelect.Positioner>

@@ -8,12 +8,13 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderFilterButton } from '@/components/data-table/header/filter-button'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
 import { Pagination } from '@/components/pagination'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+} from '@/components/section-header'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -34,6 +35,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
+import { QUERY_PARAMS } from '@/constants/params'
 import { TEAMS_ORDER_OPTIONS } from '@/enums/team'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
@@ -72,25 +74,26 @@ export function TeamListTable() {
 
   return (
     <>
-      <DataTableHeader>
+      <SectionHeader>
         <TabSelect buttons={filterOptions} />
 
-        <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar' />
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar...' className='w-48' />
 
-          <DataTableHeaderFilterButton />
-
-          <DataTableHeaderOrderBy
+          <FilterSelect
+            param={QUERY_PARAMS.orderBy}
             options={TEAMS_ORDER_OPTIONS}
-            className='min-w-48'
+            placeholder='Ordenar por...'
+            resetLabel='Limpar ordem'
+            className='w-68'
           />
 
           <Button size='sm'>
             <PlusIcon />
             Novo membro
           </Button>
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        </SectionHeaderActions>
+      </SectionHeader>
 
       <Card className='p-6 sm:col-span-6'>
         <Table>

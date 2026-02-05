@@ -5,7 +5,7 @@ import { ListFilterIcon } from 'lucide-react'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/utils/class-name-merge'
 
-export function DataTableHeaderFilterButton({
+export function ShowFilterButton({
   className,
   ...props
 }: Readonly<ButtonProps>) {

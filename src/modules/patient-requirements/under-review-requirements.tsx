@@ -1,14 +1,17 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { CircleAlertIcon } from 'lucide-react'
+import { CircleAlertIcon, ClipboardClockIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
 import { Pagination } from '@/components/pagination'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
@@ -85,16 +88,24 @@ export function UnderReviewPatientRequirements() {
 
   return (
     <>
-      <DataTableHeader>
-        <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar nome...' />
-          <DataTableHeaderOrderBy
+      <SectionHeader>
+        <SectionHeaderTitle
+          title='Aprovações pendentes'
+          icon={<ClipboardClockIcon />}
+          total={stableTotal}
+        />
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar nome...' className='w-56' />
+          <FilterSelect
+            param={QUERY_PARAMS.orderBy}
             options={PATIENT_REQUIREMENTS_ORDER_OPTIONS}
+            placeholder='Ordenar por...'
+            resetLabel='Limpar ordem'
             className='w-52'
           />
           <AddPatientRequirementButton size='sm' />
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        </SectionHeaderActions>
+      </SectionHeader>
 
       <Card className='grid gap-4 p-6 sm:grid-cols-2 xl:grid-cols-3'>
         {isLoading && <Skeleton quantity={12} className='h-32 rounded-xl' />}
