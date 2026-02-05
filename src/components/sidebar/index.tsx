@@ -1,8 +1,8 @@
 import {
+  ClipboardListIcon,
   HeartHandshakeIcon,
   LayoutDashboardIcon,
   Share2Icon,
-  UserRoundCheckIcon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -48,15 +48,21 @@ const SIDEBAR_SECTIONS = [
         path: ROUTES.dashboard.patients.main,
       },
       {
+        label: 'Atendimentos',
+        icon: <ClipboardListIcon />,
+        path: ROUTES.dashboard.appointments.main,
+      },
+      {
         label: 'Encaminhamentos',
         icon: <Share2Icon />,
         path: ROUTES.dashboard.referrals.main,
       },
-      {
-        label: 'Aprovações',
-        icon: <UserRoundCheckIcon />,
-        path: ROUTES.dashboard.approvals.pendingApprovals,
-      },
+      // TODO: uncomment approvals when it's ready
+      // {
+      //   label: 'Aprovações',
+      //   icon: <UserRoundCheckIcon />,
+      //   path: ROUTES.dashboard.approvals.pendingApprovals,
+      // },
       {
         label: 'Equipe',
         icon: <HeartHandshakeIcon />,
@@ -64,6 +70,7 @@ const SIDEBAR_SECTIONS = [
       },
     ],
   },
+  // TODO: uncomment utils when it's ready
   // {
   //   id: 'utils',
   //   links: [

@@ -8,16 +8,25 @@ type TabButton = {
 export const SECTION_TAB_BUTTONS: Record<string, Array<TabButton>> = {
   pacientes: [
     {
-      title: 'Informações do paciente',
+      title: 'Informações',
       path: ROUTES.dashboard.patients.details.info,
     },
     {
-      title: 'Histórico do paciente',
+      title: 'Histórico',
       path: ROUTES.dashboard.patients.details.history,
     },
+    // TODO: uncomment documents when it's ready
+    // {
+    //   title: 'Documentos',
+    //   path: ROUTES.dashboard.patients.details.documents,
+    // },
     {
-      title: 'Documentos',
-      path: ROUTES.dashboard.patients.details.documents,
+      title: 'Atendimentos',
+      path: ROUTES.dashboard.patients.details.appointments,
+    },
+    {
+      title: 'Encaminhamentos',
+      path: ROUTES.dashboard.patients.details.referrals,
     },
   ],
   encaminhamentos: [

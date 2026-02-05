@@ -26,8 +26,10 @@ export const ROUTES = {
       new: '/pacientes/cadastrar',
       details: {
         info: (id: string) => `/pacientes/${id}/informacoes`,
-        documents: (id: string) => `/pacientes/${id}/documentos`,
         history: (id: string) => `/pacientes/${id}/historico`,
+        documents: (id: string) => `/pacientes/${id}/documentos`,
+        referrals: (id: string) => `/pacientes/${id}/encaminhamentos`,
+        appointments: (id: string) => `/pacientes/${id}/atendimentos`,
       },
     },
     referrals: {
