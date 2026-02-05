@@ -30,7 +30,7 @@ import {
 } from '@/enums/patient-requirements'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { OrderMapping } from '@/types/order.d.ts'
+import type { QueryOrderMapping } from '@/types/orders'
 import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 
@@ -45,7 +45,7 @@ export function ApprovedPatientRequirementsListTable() {
   const search = getParam(QUERY_PARAMS.search)
   const orderBy = getParam(QUERY_PARAMS.orderBy)
 
-  const ORDER_MAPPING: OrderMapping<PatientRequirementsOrder> = {
+  const ORDER_MAPPING: QueryOrderMapping<PatientRequirementsOrder> = {
     name_asc: { orderBy: 'name', order: 'ASC' },
     name_desc: { orderBy: 'name', order: 'DESC' },
     date_asc: { orderBy: 'approved_at', order: 'ASC' },

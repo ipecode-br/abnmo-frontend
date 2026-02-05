@@ -5,9 +5,12 @@ import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import type { AppointmentStatus } from '@/enums/appointments'
 import { api } from '@/lib/api'
 import type { Appointment } from '@/types/appointments'
+import type { AppointmentsOrderBy, QueryOrder } from '@/types/orders'
 
 export type GetAppointmentsParams = {
   status?: AppointmentStatus
+  order?: QueryOrder
+  orderBy?: AppointmentsOrderBy
   startDate?: string
   limit?: number
 }

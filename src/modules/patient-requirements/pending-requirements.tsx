@@ -23,7 +23,7 @@ import {
 import { getTimeDistanceToNow } from '@/helpers/get-time-distance-to-now'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { OrderMapping } from '@/types/order.d.ts'
+import type { QueryOrderMapping } from '@/types/orders'
 import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -40,7 +40,7 @@ export function PendingPatientRequirements() {
   const search = getParam(QUERY_PARAMS.search)
   const orderBy = getParam(QUERY_PARAMS.orderBy)
 
-  const ORDER_MAPPING: OrderMapping<PatientRequirementsOrder> = {
+  const ORDER_MAPPING: QueryOrderMapping<PatientRequirementsOrder> = {
     name_asc: { orderBy: 'name', order: 'ASC' },
     name_desc: { orderBy: 'name', order: 'DESC' },
     date_asc: { orderBy: 'date', order: 'ASC' },

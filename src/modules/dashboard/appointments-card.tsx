@@ -21,6 +21,8 @@ export async function DashboardAppointmentsCard() {
   const params: GetAppointmentsParams = {
     startDate: new Date().toISOString(),
     status: 'scheduled',
+    orderBy: 'date',
+    order: 'ASC',
     limit: 5,
   }
 
