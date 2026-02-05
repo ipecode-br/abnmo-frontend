@@ -52,7 +52,7 @@ import PatientsTableSkeleton from './skeleton'
 export function PatientsTable() {
   const [showFilters, setShowFilters] = useState(false)
   const [stableTotal, setStableTotal] = useState(0)
-  const { getParam } = useParams()
+  const { getParam, paramsQueryKey } = useParams()
 
   const page = getParam(QUERY_PARAMS.page)
   const search = getParam(QUERY_PARAMS.search)
@@ -60,7 +60,6 @@ export function PatientsTable() {
   const orderBy = getParam(QUERY_PARAMS.orderBy)
   const startDate = getParam(QUERY_PARAMS.startDate)
   const endDate = getParam(QUERY_PARAMS.endDate)
-  const filterQueries = [page, search, orderBy, status, startDate, endDate]
 
   const ORDER_MAPPING: QueryOrderMapping<PatientsOrder, PatientsOrderBy> = {
     date_asc: { orderBy: 'date', order: 'ASC' },
@@ -72,7 +71,7 @@ export function PatientsTable() {
   }
 
   const { data: response, isLoading } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.patients.main, filterQueries],
+    queryKey: [QUERY_CACHE_KEYS.patients.main, paramsQueryKey],
     queryFn: () =>
       api<{ patients: Patient[]; total: number }>('/patients', {
         params: {

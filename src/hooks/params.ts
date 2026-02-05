@@ -44,6 +44,7 @@ export function useParams() {
 
   return {
     searchParams,
+    paramsQueryKey: searchParams.toString(),
     getParam,
     updateParams,
     clearParams,
