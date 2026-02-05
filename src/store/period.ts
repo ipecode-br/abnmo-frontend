@@ -1,10 +1,10 @@
 import { create } from 'zustand'
 
-export type Period = 'today' | 'last_week' | 'last_month' | 'last_year'
+import type { QueryPeriod } from '@/enums/queries'
 
 interface PeriodState {
-  period: Period
-  setPeriod: (period: Period) => void
+  period: QueryPeriod
+  setPeriod: (period: QueryPeriod) => void
 }
 
 export const usePeriodStore = create<PeriodState>((set) => ({
