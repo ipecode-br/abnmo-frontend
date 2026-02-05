@@ -30,7 +30,10 @@ import {
 } from '@/enums/patient-requirements'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { QueryOrderMapping } from '@/types/orders'
+import type {
+  PatientRequirementsOrderBy,
+  QueryOrderMapping,
+} from '@/types/orders'
 import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 
@@ -45,19 +48,21 @@ export function ApprovedPatientRequirementsListTable() {
   const search = getParam(QUERY_PARAMS.search)
   const orderBy = getParam(QUERY_PARAMS.orderBy)
 
-  const ORDER_MAPPING: QueryOrderMapping<PatientRequirementsOrder> = {
-    name_asc: { orderBy: 'name', order: 'ASC' },
-    name_desc: { orderBy: 'name', order: 'DESC' },
+  const ORDER_MAPPING: QueryOrderMapping<
+    PatientRequirementsOrder,
+    PatientRequirementsOrderBy
+  > = {
+    name_asc: { orderBy: 'patient', order: 'ASC' },
+    name_desc: { orderBy: 'patient', order: 'DESC' },
     date_asc: { orderBy: 'approved_at', order: 'ASC' },
     date_desc: { orderBy: 'approved_at', order: 'DESC' },
     type_asc: { orderBy: 'type', order: 'ASC' },
     type_desc: { orderBy: 'type', order: 'DESC' },
   }
 
-  const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
-    orderBy: 'name',
-    order: 'ASC',
-  }
+  const orderByQuery =
+    ORDER_MAPPING[orderBy as PatientRequirementsOrder] ??
+    ORDER_MAPPING['name_asc']
 
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.approvals.approved, search, page, orderByQuery],

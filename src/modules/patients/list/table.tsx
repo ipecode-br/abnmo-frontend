@@ -40,7 +40,7 @@ import {
 } from '@/enums/patients'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { QueryOrderMapping } from '@/types/orders'
+import type { PatientsOrderBy, QueryOrderMapping } from '@/types/orders'
 import type { Patient } from '@/types/patients.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
@@ -62,7 +62,7 @@ export function PatientsListTable() {
   const endDate = getParam(QUERY_PARAMS.endDate)
   const filterQueries = [page, search, orderBy, status, startDate, endDate]
 
-  const ORDER_MAPPING: QueryOrderMapping<PatientsOrder> = {
+  const ORDER_MAPPING: QueryOrderMapping<PatientsOrder, PatientsOrderBy> = {
     date_asc: { orderBy: 'date', order: 'ASC' },
     date_desc: { orderBy: 'date', order: 'DESC' },
     email_asc: { orderBy: 'email', order: 'ASC' },
@@ -87,7 +87,7 @@ export function PatientsListTable() {
   })
 
   const patients = response?.data?.patients ?? []
-  const isPatientsEmpty = patients.length === 0
+  const isEmpty = patients.length === 0
 
   // Update stable total only when we have actual data to prevent pagination flickering
   useEffect(() => {
@@ -157,7 +157,7 @@ export function PatientsListTable() {
 
           {isLoading && <PatientsListTableSkeleton />}
 
-          {!isLoading && isPatientsEmpty && (
+          {!isLoading && isEmpty && (
             <TableBody>
               <TableRow>
                 <TableEmptyCell colSpan={6}>
@@ -167,7 +167,7 @@ export function PatientsListTable() {
             </TableBody>
           )}
 
-          {!isLoading && !isPatientsEmpty && (
+          {!isLoading && !isEmpty && (
             <TableBody>
               {patients.map((patient) => {
                 const status = PATIENT_STATUSES[patient.status]

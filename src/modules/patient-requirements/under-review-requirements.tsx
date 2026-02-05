@@ -22,7 +22,10 @@ import {
 import { getTimeDistanceToNow } from '@/helpers/get-time-distance-to-now'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { QueryOrderMapping } from '@/types/orders'
+import type {
+  PatientRequirementsOrderBy,
+  QueryOrderMapping,
+} from '@/types/orders'
 import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 
 import { AddPatientRequirementButton } from './add-patient-requirement-button'
@@ -37,19 +40,21 @@ export function UnderReviewPatientRequirements() {
   const search = getParam(QUERY_PARAMS.search)
   const orderBy = getParam(QUERY_PARAMS.orderBy)
 
-  const ORDER_MAPPING: QueryOrderMapping<PatientRequirementsOrder> = {
-    name_asc: { orderBy: 'name', order: 'ASC' },
-    name_desc: { orderBy: 'name', order: 'DESC' },
+  const ORDER_MAPPING: QueryOrderMapping<
+    PatientRequirementsOrder,
+    PatientRequirementsOrderBy
+  > = {
+    name_asc: { orderBy: 'patient', order: 'ASC' },
+    name_desc: { orderBy: 'patient', order: 'DESC' },
     date_asc: { orderBy: 'submitted_at', order: 'ASC' },
     date_desc: { orderBy: 'submitted_at', order: 'DESC' },
     type_asc: { orderBy: 'type', order: 'ASC' },
     type_desc: { orderBy: 'type', order: 'DESC' },
   }
 
-  const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
-    orderBy: 'submitted_at',
-    order: 'ASC',
-  }
+  const orderByQuery =
+    ORDER_MAPPING[orderBy as PatientRequirementsOrder] ??
+    ORDER_MAPPING['date_asc']
 
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.approvals.pending, search, page, orderByQuery],
