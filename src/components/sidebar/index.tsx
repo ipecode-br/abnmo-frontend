@@ -1,5 +1,4 @@
 import {
-  BoltIcon,
   HeartHandshakeIcon,
   LayoutDashboardIcon,
   Share2Icon,
@@ -65,14 +64,14 @@ const SIDEBAR_SECTIONS = [
       },
     ],
   },
-  {
-    id: 'utils',
-    links: [
-      {
-        label: 'Configurações',
-        icon: <BoltIcon />,
-        path: ROUTES.dashboard.settings.main,
-      },
-    ],
-  },
+  // {
+  //   id: 'utils',
+  //   links: [
+  //     {
+  //       label: 'Configurações',
+  //       icon: <BoltIcon />,
+  //       path: ROUTES.dashboard.settings.main,
+  //     },
+  //   ],
+  // },
 ]

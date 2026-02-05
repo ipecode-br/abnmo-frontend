@@ -16,13 +16,13 @@ export function DataTableHeaderInfo({
 }: Readonly<DataTableHeaderInfoProps>) {
   return (
     <div className='flex items-center gap-4'>
-      <div className='bg-border/50 flex size-10 items-center justify-center rounded-lg'>
+      <div className='bg-background border-border flex size-10 items-center justify-center rounded-lg border shadow shadow-black/5'>
         <Slot className={cn('text-primary size-5.5')}>{icon}</Slot>
       </div>
 
       <div className='flex items-center gap-2'>
         {total > 0 && <span className='text-2xl font-semibold'>{total}</span>}
-        <p className='text-foreground-soft'>{title}</p>
+        <p className='text-foreground-soft text-lg'>{title}</p>
       </div>
     </div>
   )
