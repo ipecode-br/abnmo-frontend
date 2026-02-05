@@ -6,7 +6,7 @@ import { getPatient } from '@/actions/patients/get-patient'
 import { ROUTES } from '@/constants/routes'
 import { PatientForm } from '@/modules/patients/form'
 import { InactivatePatientButton } from '@/modules/patients/inactivate-button'
-import { ReferPatientButton } from '@/modules/referrals/referral-button'
+import { NewReferralButton } from '@/modules/referrals/new-referral-button'
 
 export const metadata: Metadata = {
   title: 'Informações do paciente',
@@ -45,7 +45,7 @@ export default async function Page({
 
         <div className='flex gap-2'>
           {isPatientActive && <InactivatePatientButton patient={patient} />}
-          <ReferPatientButton id={patient.id} />
+          <NewReferralButton id={patient.id} />
         </div>
       </header>
 

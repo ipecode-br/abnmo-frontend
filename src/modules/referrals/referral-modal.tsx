@@ -35,72 +35,68 @@ import {
   professionalNameSchema,
   specialtySchema,
 } from '@/schemas'
-import type { Appointment } from '@/types/appointments'
+import type { Referral } from '@/types/referrals'
 
-const appointmentFormSchema = z.object({
+const referralFormSchema = z.object({
   patient_id: z.string().uuid('Paciente é obrigatório'),
   date: dateSchema,
   category: specialtySchema,
   condition: patientConditionSchema,
   annotation: z
     .string()
-    .max(500)
+    .max(2000)
     .nullable()
     .transform((value) => (!value ? null : value)),
   professional_name: professionalNameSchema,
 })
-type AppointmentFormSchema = z.infer<typeof appointmentFormSchema>
+type ReferralFormSchema = z.infer<typeof referralFormSchema>
 
-interface AppointmentModalProps {
+interface ReferralModalProps {
   patientId?: string
-  appointment?: Appointment
+  referral?: Referral
   onClose: () => void
 }
 
-export function AppointmentModal({
+export function ReferralModal({
   patientId,
-  appointment,
+  referral,
   onClose,
-}: Readonly<AppointmentModalProps>) {
+}: ReferralModalProps) {
   const { patientOptions } = usePatientOptions()
 
-  const isEditMode = !!appointment
+  const isEditMode = !!referral
 
-  const formMethods = useForm<AppointmentFormSchema>({
-    resolver: zodResolver(appointmentFormSchema),
+  const formMethods = useForm<ReferralFormSchema>({
+    resolver: zodResolver(referralFormSchema),
     defaultValues: {
-      patient_id: patientId ?? (appointment?.patient_id || ''),
-      date: appointment?.date || '',
-      category: appointment?.category || '',
-      condition: appointment?.condition || '',
-      annotation: appointment?.annotation || '',
-      professional_name: appointment?.professional_name || '',
-    } as unknown as AppointmentFormSchema,
+      patient_id: patientId ?? (referral?.patient_id || ''),
+      date: referral?.date || '',
+      category: referral?.category || '',
+      condition: referral?.condition || '',
+      annotation: referral?.annotation || '',
+      professional_name: referral?.professional_name || '',
+    } as unknown as ReferralFormSchema,
     mode: 'onBlur',
   })
 
-  function createAppointment(data: AppointmentFormSchema) {
-    return api('/appointments', {
+  function createReferral(data: ReferralFormSchema) {
+    return api('/referrals', {
       method: 'POST',
       body: JSON.stringify(data),
     })
   }
 
-  function updateAppointment({
-    date,
-    condition,
-    annotation,
-  }: AppointmentFormSchema) {
-    return api(`/appointments/${appointment?.id}`, {
+  function updateReferral({ date, condition, annotation }: ReferralFormSchema) {
+    return api(`/referrals/${referral?.id}`, {
       method: 'PUT',
       body: JSON.stringify({ date, condition, annotation }),
     })
   }
 
-  async function submitForm(data: AppointmentFormSchema) {
+  async function submitForm(data: ReferralFormSchema) {
     const response = isEditMode
-      ? await updateAppointment(data)
-      : await createAppointment(data)
+      ? await updateReferral(data)
+      : await createReferral(data)
 
     if (!response.success) {
       toast.error(response.message)
@@ -108,11 +104,11 @@ export function AppointmentModal({
     }
 
     queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.appointments.main],
+      queryKey: [QUERY_CACHE_KEYS.referrals.main],
     })
     revalidateCache(NEXT_CACHE_TAGS.patient(data.patient_id))
-    revalidateCache(NEXT_CACHE_TAGS.appointments.main)
-    revalidateCache(NEXT_CACHE_TAGS.statistics.totalAppointments.main)
+    revalidateCache(NEXT_CACHE_TAGS.referrals.main)
+    revalidateCache(NEXT_CACHE_TAGS.statistics.totalReferrals.main)
     toast.success(response.message)
     onClose()
   }
@@ -121,7 +117,7 @@ export function AppointmentModal({
     <DialogContainer className='max-w-xl'>
       <DialogHeader icon={<DialogIcon icon={SmilePlusIcon} />}>
         <DialogTitle>
-          {isEditMode ? 'Atualizar atendimento' : 'Novo atendimento'}
+          {isEditMode ? 'Atualizar encaminhamento' : 'Encaminhar paciente'}
         </DialogTitle>
       </DialogHeader>
 
@@ -170,7 +166,7 @@ export function AppointmentModal({
             />
             <TextareaInput
               rows={8}
-              maxLength={500}
+              maxLength={2000}
               name='annotation'
               label='Observações'
               placeholder='Insira observações sobre o paciente'

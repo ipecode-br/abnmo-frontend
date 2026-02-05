@@ -57,7 +57,7 @@ export function SearchInput({
           size='icon'
           variant='ghost'
           title='Limpar pesquisa'
-          className='absolute top-0 right-0 size-9 [&_svg]:size-4'
+          className='absolute top-1 right-1 size-7 rounded-md [&_svg]:size-4'
           onClick={() => setQuery('')}
         >
           <XIcon />

@@ -1,32 +1,24 @@
 'use client'
 
-import { ForwardIcon } from 'lucide-react'
+import { ClipboardPasteIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 import type { ButtonProps } from '../../components/ui/button'
-import { ReferralPatientModal } from './referrals-modal'
+import { ReferralModal } from './referral-modal'
 
-interface ReferPatientButtonProps extends ButtonProps {
-  id?: string
-}
-export function ReferPatientButton({
-  id,
-  ...props
-}: Readonly<ReferPatientButtonProps>) {
+export function NewReferralButton(props: Readonly<ButtonProps>) {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger {...props}>
-        <ForwardIcon />
+        <ClipboardPasteIcon />
         Encaminhar paciente
       </DialogTrigger>
 
-      {modalOpen && (
-        <ReferralPatientModal id={id} onClose={() => setModalOpen(false)} />
-      )}
+      {modalOpen && <ReferralModal onClose={() => setModalOpen(false)} />}
     </Dialog>
   )
 }

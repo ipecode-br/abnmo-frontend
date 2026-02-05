@@ -2,7 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { PlusIcon, Users2Icon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
@@ -23,11 +22,11 @@ import { NavButton } from '@/components/ui/nav-button'
 import {
   Table,
   TableBody,
-  TableButton,
   TableCell,
   TableEmptyCell,
   TableHead,
   TableHeader,
+  TableLink,
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
@@ -47,14 +46,13 @@ import type { Patient } from '@/types/patients.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
-import { PatientsListTableActions } from './actions'
-import PatientsListTableSkeleton from './skeleton'
+import { PatientsTableActions } from './actions'
+import PatientsTableSkeleton from './skeleton'
 
-export function PatientsListTable() {
+export function PatientsTable() {
   const [showFilters, setShowFilters] = useState(false)
   const [stableTotal, setStableTotal] = useState(0)
   const { getParam } = useParams()
-  const router = useRouter()
 
   const page = getParam(QUERY_PARAMS.page)
   const search = getParam(QUERY_PARAMS.search)
@@ -89,7 +87,8 @@ export function PatientsListTable() {
   })
 
   const patients = response?.data?.patients ?? []
-  const isEmpty = patients.length === 0
+  const showPatients = !isLoading && patients.length > 0
+  const showEmptyMessage = !isLoading && patients.length === 0
 
   // Update stable total only when we have actual data to prevent pagination flickering
   useEffect(() => {
@@ -150,7 +149,7 @@ export function PatientsListTable() {
           <TableHeader>
             <TableRow>
               <TableHead className='w-64'>Nome do paciente</TableHead>
-              <TableHead className='w-44'>Telefone</TableHead>
+              <TableHead className='w-64'>Telefone</TableHead>
               <TableHead>E-mail</TableHead>
               <TableHead className='w-28'>Status</TableHead>
               <TableHead className='w-40 whitespace-nowrap'>
@@ -160,28 +159,25 @@ export function PatientsListTable() {
             </TableRow>
           </TableHeader>
 
-          {isLoading && <PatientsListTableSkeleton />}
+          <TableBody>
+            {isLoading && <PatientsTableSkeleton />}
 
-          {!isLoading && !isEmpty && (
-            <TableBody>
-              {patients.map((patient) => {
+            {showPatients &&
+              patients.map((patient) => {
                 const status = PATIENT_STATUSES[patient.status]
                 return (
                   <TableRow key={patient.id}>
-                    <TableCell className='py-0'>
-                      <TableButton
+                    <TableCell>
+                      <TableLink
                         className='w-64'
-                        onClick={() =>
-                          router.push(
-                            ROUTES.dashboard.patients.details.info(patient.id),
-                          )
-                        }
+                        href={ROUTES.dashboard.patients.details.info(
+                          patient.id,
+                        )}
                       >
                         <Avatar className='size-9' src={patient.avatar_url} />
                         <span className='truncate'>{patient.name}</span>
-                      </TableButton>
+                      </TableLink>
                     </TableCell>
-
                     <TableCell>{formatPhoneNumber(patient.phone)}</TableCell>
                     <TableCell>{patient.email}</TableCell>
                     <TableCell>
@@ -191,23 +187,20 @@ export function PatientsListTable() {
                     </TableCell>
                     <TableCell>{formatDate(patient.created_at)}</TableCell>
                     <TableCell className='text-center'>
-                      <PatientsListTableActions patient={patient} />
+                      <PatientsTableActions patient={patient} />
                     </TableCell>
                   </TableRow>
                 )
               })}
-            </TableBody>
-          )}
 
-          {!isLoading && isEmpty && (
-            <TableBody>
+            {showEmptyMessage && (
               <TableRow>
                 <TableEmptyCell colSpan={6}>
                   Nenhum paciente encontrado
                 </TableEmptyCell>
               </TableRow>
-            </TableBody>
-          )}
+            )}
+          </TableBody>
         </Table>
       </Card>
 

@@ -5,6 +5,10 @@ export const NEXT_CACHE_TAGS = {
     main: 'appointments',
     query: (query: string) => `appointments/${query}`,
   },
+  referrals: {
+    main: 'referrals',
+    query: (query: string) => `referrals/${query}`,
+  },
   statistics: {
     totalAppointments: {
       main: 'total-appointments',
