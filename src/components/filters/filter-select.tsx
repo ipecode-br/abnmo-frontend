@@ -1,17 +1,17 @@
 'use client'
 
 import { Select, type SelectProps } from '@/components/ui/select'
-import { QUERY_PARAMS } from '@/constants/params'
+import { QUERY_PARAM_KEYS, type QueryParamKey } from '@/enums/params'
 import { useParams } from '@/hooks/params'
 
 interface FilterSelectProps extends SelectProps {
-  param: string
+  param: QueryParamKey
 }
 
 export function FilterSelect({ param, ...props }: Readonly<FilterSelectProps>) {
   const { getParam, updateParams } = useParams()
 
-  const pageParam = QUERY_PARAMS.page
+  const pageParam = QUERY_PARAM_KEYS.page
   const selectValue = getParam(param) || ''
 
   function handleSelect(value: string) {
@@ -29,6 +29,7 @@ export function FilterSelect({ param, ...props }: Readonly<FilterSelectProps>) {
   return (
     <Select
       size='sm'
+      align='end'
       value={selectValue}
       onValueChange={handleSelect}
       {...props}

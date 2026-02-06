@@ -2,7 +2,7 @@
 
 import { FilterContainer } from '@/components/filters/container'
 import { DatePicker } from '@/components/ui/date-picker'
-import { QUERY_PARAMS } from '@/constants/params'
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 
@@ -17,9 +17,9 @@ export function FilterDate({
 }: Readonly<FilterDateProps>) {
   const { getParam, updateParams } = useParams()
 
-  const pageParam = QUERY_PARAMS.page
-  const startDateParam = QUERY_PARAMS.startDate
-  const endDateParam = QUERY_PARAMS.endDate
+  const pageParam = QUERY_PARAM_KEYS.page
+  const startDateParam = QUERY_PARAM_KEYS.startDate
+  const endDateParam = QUERY_PARAM_KEYS.endDate
   const startDate = getParam(startDateParam) || ''
   const endDate = getParam(endDateParam) || ''
 

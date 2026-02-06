@@ -35,7 +35,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
-import { QUERY_PARAMS } from '@/constants/params'
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { TEAMS_ORDER_OPTIONS } from '@/enums/team'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
@@ -73,7 +73,7 @@ export function TeamListTable() {
           <SearchInput placeholder='Pesquisar...' className='w-48' />
 
           <FilterSelect
-            param={QUERY_PARAMS.orderBy}
+            param={QUERY_PARAM_KEYS.orderBy}
             options={TEAMS_ORDER_OPTIONS}
             placeholder='Ordenar por...'
             resetLabel='Limpar ordem'

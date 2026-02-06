@@ -31,8 +31,8 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
-import { QUERY_PARAMS } from '@/constants/params'
 import { ROUTES } from '@/constants/routes'
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import {
   PATIENT_STATUS_OPTIONS,
   PATIENT_STATUSES,
@@ -54,12 +54,12 @@ export function PatientsTable() {
   const [stableTotal, setStableTotal] = useState(0)
   const { getParam, paramsQueryKey } = useParams()
 
-  const page = getParam(QUERY_PARAMS.page)
-  const search = getParam(QUERY_PARAMS.search)
-  const status = getParam(QUERY_PARAMS.status)
-  const orderBy = getParam(QUERY_PARAMS.orderBy)
-  const startDate = getParam(QUERY_PARAMS.startDate)
-  const endDate = getParam(QUERY_PARAMS.endDate)
+  const page = getParam(QUERY_PARAM_KEYS.page)
+  const search = getParam(QUERY_PARAM_KEYS.search)
+  const status = getParam(QUERY_PARAM_KEYS.status)
+  const orderBy = getParam(QUERY_PARAM_KEYS.orderBy)
+  const startDate = getParam(QUERY_PARAM_KEYS.startDate)
+  const endDate = getParam(QUERY_PARAM_KEYS.endDate)
 
   const ORDER_MAPPING: QueryOrderMapping<PatientsOrder, PatientsOrderBy> = {
     date_asc: { orderBy: 'date', order: 'ASC' },
@@ -113,7 +113,7 @@ export function PatientsTable() {
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar...' className='w-48' />
           <FilterSelect
-            param={QUERY_PARAMS.orderBy}
+            param={QUERY_PARAM_KEYS.orderBy}
             options={PATIENTS_ORDER_OPTIONS}
             placeholder='Ordenar por...'
             resetLabel='Limpar ordem'
@@ -132,7 +132,7 @@ export function PatientsTable() {
         <section className='flex items-end gap-8'>
           <FilterContainer title='Status' className='w-48'>
             <FilterSelect
-              param={QUERY_PARAMS.status}
+              param={QUERY_PARAM_KEYS.status}
               options={PATIENT_STATUS_OPTIONS}
               placeholder='Selecione o status'
               resetLabel='Limpar status'

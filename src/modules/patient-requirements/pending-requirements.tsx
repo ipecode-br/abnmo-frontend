@@ -17,7 +17,7 @@ import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
-import { QUERY_PARAMS } from '@/constants/params'
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import {
   PATIENT_REQUIREMENT_TYPES,
   PATIENT_REQUIREMENTS_ORDER_OPTIONS,
@@ -42,9 +42,9 @@ export function PendingPatientRequirements() {
   const { getParam } = useParams()
 
   const perPage = 12
-  const page = getParam(QUERY_PARAMS.page)
-  const search = getParam(QUERY_PARAMS.search)
-  const orderBy = getParam(QUERY_PARAMS.orderBy)
+  const page = getParam(QUERY_PARAM_KEYS.page)
+  const search = getParam(QUERY_PARAM_KEYS.search)
+  const orderBy = getParam(QUERY_PARAM_KEYS.orderBy)
 
   const ORDER_MAPPING: QueryOrderMapping<
     PatientRequirementsOrder,
@@ -100,7 +100,7 @@ export function PendingPatientRequirements() {
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar nome...' className='w-56' />
           <FilterSelect
-            param={QUERY_PARAMS.orderBy}
+            param={QUERY_PARAM_KEYS.orderBy}
             options={PATIENT_REQUIREMENTS_ORDER_OPTIONS}
             placeholder='Ordenar por...'
             resetLabel='Limpar ordem'

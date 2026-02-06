@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { QUERY_PARAMS } from '@/constants/params'
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useDebounce } from '@/hooks/debounce'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
@@ -19,8 +19,8 @@ export function SearchInput({
   placeholder,
   className,
 }: Readonly<SearchInputProps>) {
-  const queryParam = QUERY_PARAMS.search
-  const pageParam = QUERY_PARAMS.page
+  const queryParam = QUERY_PARAM_KEYS.search
+  const pageParam = QUERY_PARAM_KEYS.page
 
   const { getParam, updateParams } = useParams()
   const searchQuery = getParam(queryParam) || ''
