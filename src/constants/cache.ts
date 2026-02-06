@@ -22,6 +22,10 @@ export const NEXT_CACHE_TAGS = {
       main: 'total-referrals',
       query: (query: string) => `total-referrals/${query}`,
     },
+    totalReferredPatients: {
+      main: 'total-referred-patients',
+      query: (query: string) => `total-referred-patients/${query}`,
+    },
   },
 }
 
@@ -44,6 +48,11 @@ export const QUERY_CACHE_KEYS = {
     main: 'approvals',
     pending: 'approvals-pending',
     approved: 'approvals-approved',
+  },
+  statistics: {
+    totalReferrals: 'total-referrals',
+    referralsByCategory: 'referrals-by-category',
+    referralsByState: 'referrals-by-state',
   },
   profile: 'profile',
 }

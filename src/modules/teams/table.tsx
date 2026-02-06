@@ -40,12 +40,12 @@ import { TEAMS_ORDER_OPTIONS } from '@/enums/team'
 import { formatDate } from '@/utils/formatters/format-date'
 import { TEAMS_MOCK } from '@/utils/mock/teams'
 
+type Status = 'all' | 'active' | 'inactive'
+
 export function TeamListTable() {
   const members = TEAMS_MOCK
 
-  const [statusFilter, setStatusFilter] = useState<
-    'all' | 'active' | 'inactive'
-  >('all')
+  const [statusFilter, setStatusFilter] = useState<Status>('all')
 
   const filteredMembers = members.filter((member) => {
     if (statusFilter === 'all') {
@@ -54,28 +54,20 @@ export function TeamListTable() {
     return member.status === statusFilter
   })
 
-  const filterOptions = [
-    {
-      label: 'Todos',
-      isActive: statusFilter === 'all',
-      onClick: () => setStatusFilter('all'),
-    },
-    {
-      label: 'Ativos',
-      isActive: statusFilter === 'active',
-      onClick: () => setStatusFilter('active'),
-    },
-    {
-      label: 'Inativos',
-      isActive: statusFilter === 'inactive',
-      onClick: () => setStatusFilter('inactive'),
-    },
+  const filterOptions: Array<{ label: string; value: Status }> = [
+    { label: 'Todos', value: 'all' },
+    { label: 'Ativos', value: 'active' },
+    { label: 'Inativos', value: 'inactive' },
   ]
 
   return (
     <>
       <SectionHeader>
-        <TabSelect buttons={filterOptions} />
+        <TabSelect
+          value={statusFilter}
+          onSelect={(value) => setStatusFilter(value)}
+          options={filterOptions}
+        />
 
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar...' className='w-48' />

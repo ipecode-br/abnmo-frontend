@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { UF_LIST, YES_OR_NO_TUPLE } from '@/constants/enums'
 import {
   CPF_REGEX,
   NAME_REGEX,
@@ -8,7 +7,7 @@ import {
   PHONE_REGEX,
 } from '@/constants/regex'
 import { PATIENT_CONDITION_ENUM } from '@/enums/patients'
-import { SPECIALTIES_ENUM } from '@/enums/shared'
+import { SPECIALTIES_ENUM, UF_LIST, YES_OR_NO_TUPLE } from '@/enums/shared'
 
 export const nameSchema = z
   .string()

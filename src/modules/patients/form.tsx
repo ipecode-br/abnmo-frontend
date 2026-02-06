@@ -22,13 +22,13 @@ import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { ROUTES } from '@/constants/routes'
+import { PATIENT_GENDER_OPTIONS } from '@/enums/patients'
 import {
   BRAZILIAN_STATES_OPTIONS,
   type UF,
   YES_OR_NO_OPTIONS,
-} from '@/constants/enums'
-import { ROUTES } from '@/constants/routes'
-import { PATIENT_GENDER_OPTIONS } from '@/enums/patients'
+} from '@/enums/shared'
 import { useCities } from '@/hooks/cities'
 import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'

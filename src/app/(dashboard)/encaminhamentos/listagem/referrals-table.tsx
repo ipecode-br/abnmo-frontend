@@ -115,28 +115,23 @@ export function ReferralsTable() {
   const [isReferralsEmpty] = useState<boolean>(referrals.length <= 0)
   const [statusFilter, setStatusFilter] = useState<string>('all')
 
-  const filterOptions = [
-    {
-      label: 'Todos',
-      isActive: statusFilter === 'all',
-      onClick: () => setStatusFilter('all'),
-    },
-    {
-      label: 'Em surto',
-      isActive: statusFilter === 'outbreak',
-      onClick: () => setStatusFilter('outbreak'),
-    },
-    {
-      label: 'Estável',
-      isActive: statusFilter === 'stable',
-      onClick: () => setStatusFilter('stable'),
-    },
+  const filterOptions: Array<{
+    label: string
+    value: PatientCondition | 'all'
+  }> = [
+    { label: 'Todos', value: 'all' },
+    { label: 'Em surto', value: 'in_crisis' },
+    { label: 'Estável', value: 'stable' },
   ]
 
   return (
     <div className='space-y-6'>
       <SectionHeader>
-        <TabSelect buttons={filterOptions} />
+        <TabSelect
+          value={statusFilter}
+          options={filterOptions}
+          onSelect={(value) => setStatusFilter(value)}
+        />
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar' />
           <FilterSelect

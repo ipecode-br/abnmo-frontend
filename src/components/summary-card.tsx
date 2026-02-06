@@ -3,11 +3,13 @@ import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 import { Card, type CardProps } from './ui/card'
+import { Skeleton } from './ui/skeleton'
 
 interface SummaryCardProps extends CardProps {
   label: string
   icon: LucideIcon
   value?: number | string
+  loading?: boolean
 }
 
 export function SummaryCard({
@@ -15,6 +17,7 @@ export function SummaryCard({
   icon: Icon,
   value = 0,
   className,
+  loading,
   ...props
 }: Readonly<SummaryCardProps>) {
   return (
@@ -26,7 +29,12 @@ export function SummaryCard({
       {...props}
     >
       <div className='flex items-center justify-between'>
-        <span className='text-4xl font-semibold'>{value}</span>
+        {loading ? (
+          <Skeleton className='size-10' />
+        ) : (
+          <span className='text-4xl font-semibold'>{value}</span>
+        )}
+
         <div className='border-border text-primary rounded-full border p-2 [&_svg]:size-5'>
           <Icon />
         </div>
