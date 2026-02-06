@@ -6,10 +6,15 @@ import { QUERY_PARAMS } from '@/constants/params'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 
+interface FilterDateProps extends React.ComponentProps<'div'> {
+  allowFutureDates?: boolean
+}
+
 export function FilterDate({
+  allowFutureDates,
   className,
   ...props
-}: Readonly<React.ComponentProps<'div'>>) {
+}: Readonly<FilterDateProps>) {
   const { getParam, updateParams } = useParams()
 
   const pageParam = QUERY_PARAMS.page
@@ -39,6 +44,7 @@ export function FilterDate({
           size='sm'
           value={startDate}
           onSelectDate={handleSelectStartDate}
+          allowFutureDates={allowFutureDates}
         />
       </FilterContainer>
       <FilterContainer title='Data final'>
@@ -48,6 +54,7 @@ export function FilterDate({
           onSelectDate={handleSelectEndDate}
           startDate={startDate}
           disabled={!startDate}
+          allowFutureDates={allowFutureDates}
         />
       </FilterContainer>
     </div>
