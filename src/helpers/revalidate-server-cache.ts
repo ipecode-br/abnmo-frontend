@@ -2,7 +2,7 @@
 
 import { revalidateTag } from 'next/cache'
 
-export async function revalidateCache(tags: string | string[]) {
+export async function revalidateServerCache(tags: string | string[]) {
   if (Array.isArray(tags)) {
     for (const tag of tags) {
       revalidateTag(tag)

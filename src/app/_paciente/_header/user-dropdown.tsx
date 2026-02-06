@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 
-import { revalidateCache } from '@/actions/cache'
 import { getUserFromToken } from '@/actions/token'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
@@ -15,6 +14,7 @@ import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
+import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
 import type { User } from '@/types/users.d.ts'
 
@@ -43,7 +43,7 @@ export function PatientHeaderUserDropdown({
         return
       }
 
-      revalidateCache(NEXT_CACHE_TAGS.user(user.id))
+      revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
       toast.success(response.message)
       router.replace(ROUTES.auth.signIn)
     })

@@ -4,7 +4,6 @@ import { CircleXIcon } from 'lucide-react'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 
-import { revalidateCache } from '@/actions/cache'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -16,8 +15,9 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
+import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
+import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
-import { queryClient } from '@/lib/tanstack-query'
 import type { Appointment } from '@/types/appointments'
 import { formatDate } from '@/utils/formatters/format-date'
 
@@ -43,11 +43,11 @@ export function CancelAppointmentModal({
         return
       }
 
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_CACHE_KEYS.appointments.main],
-      })
-      revalidateCache(NEXT_CACHE_TAGS.patient(appointment.patient_id))
-      revalidateCache(NEXT_CACHE_TAGS.appointments.main)
+      revalidateClientCache(QUERY_CACHE_KEYS.appointments.main)
+      revalidateServerCache([
+        NEXT_CACHE_TAGS.patient(appointment.patient_id),
+        NEXT_CACHE_TAGS.appointments.main,
+      ])
       toast.success(response.message)
       onClose()
     })
@@ -55,7 +55,14 @@ export function CancelAppointmentModal({
 
   return (
     <DialogContainer>
-      <DialogHeader icon={<DialogIcon icon={CircleXIcon} />}>
+      <DialogHeader
+        icon={
+          <DialogIcon
+            icon={CircleXIcon}
+            className='text-error bg-error/10 border-none'
+          />
+        }
+      >
         <DialogTitle>Cancelar atendimento</DialogTitle>
       </DialogHeader>
 
@@ -76,7 +83,7 @@ export function CancelAppointmentModal({
           Confirmar cancelamento
         </Button>
         <DialogClose className='flex-1' disabled={isPending}>
-          Cancelar
+          Voltar
         </DialogClose>
       </DialogFooter>
     </DialogContainer>

@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 
-import { revalidateCache } from '@/actions/cache'
 import { Avatar } from '@/components/ui/avatar'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
+import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
 import type { User } from '@/types/users.d.ts'
@@ -37,7 +37,7 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
         return
       }
 
-      revalidateCache(NEXT_CACHE_TAGS.user(user.id))
+      revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
       toast.success(response.message)
       router.push(ROUTES.auth.signIn)
     })

@@ -6,7 +6,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { revalidateCache } from '@/actions/cache'
 import { ComboboxInput } from '@/components/form/combobox-input'
 import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
@@ -26,9 +25,10 @@ import {
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { PATIENT_CONDITION_OPTIONS } from '@/enums/patients'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
+import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
+import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { api } from '@/lib/api'
-import { queryClient } from '@/lib/tanstack-query'
 import {
   dateSchema,
   patientConditionSchema,
@@ -107,12 +107,12 @@ export function AppointmentModal({
       return
     }
 
-    queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.appointments.main],
-    })
-    revalidateCache(NEXT_CACHE_TAGS.patient(data.patient_id))
-    revalidateCache(NEXT_CACHE_TAGS.appointments.main)
-    revalidateCache(NEXT_CACHE_TAGS.statistics.totalAppointments.main)
+    revalidateClientCache(QUERY_CACHE_KEYS.appointments.main)
+    revalidateServerCache([
+      NEXT_CACHE_TAGS.patient(data.patient_id),
+      NEXT_CACHE_TAGS.appointments.main,
+      NEXT_CACHE_TAGS.statistics.totalAppointments.main,
+    ])
     toast.success(response.message)
     onClose()
   }

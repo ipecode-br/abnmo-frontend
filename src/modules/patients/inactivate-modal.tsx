@@ -6,7 +6,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { revalidateCache } from '@/actions/cache'
 import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
@@ -21,8 +20,9 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
+import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
+import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
-import { queryClient } from '@/lib/tanstack-query'
 
 interface InactivatePatientModalProps {
   id: string
@@ -58,13 +58,11 @@ export function InactivatePatientModal({
       return
     }
 
-    queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.patients.main],
-    })
-    queryClient.invalidateQueries({
-      queryKey: [QUERY_CACHE_KEYS.patients.allOptions],
-    })
-    revalidateCache(NEXT_CACHE_TAGS.patient(id))
+    revalidateClientCache([
+      QUERY_CACHE_KEYS.patients.main,
+      QUERY_CACHE_KEYS.patients.allOptions,
+    ])
+    revalidateServerCache(NEXT_CACHE_TAGS.patient(id))
     toast.success(response.message)
     onClose()
   }
