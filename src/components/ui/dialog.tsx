@@ -1,5 +1,5 @@
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog'
-import type { VariantProps } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { type LucideIcon, XIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
@@ -79,18 +79,29 @@ export function DialogHeader({
 interface DialogIconProps extends React.ComponentProps<'div'> {
   icon: LucideIcon
 }
+
+const dialogIconVariants = cva('border-border size-12 rounded-full p-2.5', {
+  variants: {
+    variant: {
+      default: 'text-foreground-soft border',
+      destructive: 'text-error bg-error/10',
+      success: 'text-success bg-success/10',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
+
+type DialogIconComponentProps = DialogIconProps &
+  VariantProps<typeof dialogIconVariants>
+
 export function DialogIcon({
   icon: Icon,
+  variant,
   className,
-}: Readonly<DialogIconProps>) {
-  return (
-    <Icon
-      className={cn(
-        'border-border text-foreground-soft size-12 rounded-full border p-2.5',
-        className,
-      )}
-    />
-  )
+}: Readonly<DialogIconComponentProps>) {
+  return <Icon className={cn(dialogIconVariants({ variant, className }))} />
 }
 
 export function DialogTitle({

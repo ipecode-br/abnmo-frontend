@@ -34,6 +34,9 @@ export const QUERY_CACHE_KEYS = {
     patientsByGender: 'dashboard-patients-by-gender',
     patientsByCity: 'dashboard-patients-by-city',
   },
+  users: {
+    main: 'users',
+  },
   patients: {
     main: 'patients',
     allOptions: 'patients-all-options',

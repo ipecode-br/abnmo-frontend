@@ -64,7 +64,7 @@ export function AppointmentsTable({
                 </TableCell>
                 <TableCell>{formatDate(appointment.date)}</TableCell>
                 <TableCell>
-                  <Tag>{SPECIALTIES[appointment.category]}</Tag>
+                  <Tag size='sm'>{SPECIALTIES[appointment.category]}</Tag>
                 </TableCell>
                 <TableCell>{appointment.professional_name ?? '-'}</TableCell>
                 <TableCell>

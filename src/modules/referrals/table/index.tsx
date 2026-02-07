@@ -79,7 +79,7 @@ export function ReferralsTable({
                 </TableCell>
                 <TableCell>{formatDate(referral.date)}</TableCell>
                 <TableCell>
-                  <Tag>{SPECIALTIES[referral.category]}</Tag>
+                  <Tag size='sm'>{SPECIALTIES[referral.category]}</Tag>
                 </TableCell>
                 <TableCell>{referral.professional_name ?? '-'}</TableCell>
                 <TableCell>

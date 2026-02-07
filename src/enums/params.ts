@@ -4,6 +4,7 @@ export const QUERY_PARAM_KEYS = {
   order: 'order',
   orderBy: 'orderBy',
   status: 'status',
+  role: 'role',
   category: 'category',
   startDate: 'startDate',
   endDate: 'endDate',

@@ -66,7 +66,7 @@ const SIDEBAR_SECTIONS = [
       {
         label: 'Equipe',
         icon: <HeartHandshakeIcon />,
-        path: ROUTES.dashboard.team.main,
+        path: ROUTES.dashboard.users.main,
       },
     ],
   },

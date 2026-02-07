@@ -46,8 +46,9 @@ export const ROUTES = {
       pendingSubmissions: '/aprovacoes/envios-pendentes',
       approved: '/aprovacoes/aprovados',
     },
-    team: {
+    users: {
       main: '/equipe',
+      details: (id: string) => `/equipe/membro/${id}`,
     },
     settings: {
       main: '/configuracoes',

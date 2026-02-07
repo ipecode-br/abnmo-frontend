@@ -63,6 +63,8 @@ const menuItemVariants = cva(
     variants: {
       variant: {
         default: 'text-foreground-soft',
+        success:
+          'text-success data-[highlighted]:bg-success/10 data-[highlighted]:text-success',
         destructive:
           'text-error data-[highlighted]:bg-error/10 data-[highlighted]:text-error',
       },
