@@ -20,6 +20,19 @@ export function useParams() {
     return searchParams.get(key)
   }
 
+  function getParams(keys: string[]): (string | null)[] {
+    const values = []
+
+    if (Array.isArray(keys)) {
+      for (const key of keys) {
+        const value = searchParams.get(key)
+        values.push(value)
+      }
+    }
+
+    return values
+  }
+
   function updateParams({ set, remove }: Readonly<UpdateParamsProps>) {
     const pageParams = new URLSearchParams(searchParams)
 
@@ -46,6 +59,7 @@ export function useParams() {
     searchParams,
     paramsQueryKey: searchParams.toString(),
     getParam,
+    getParams,
     updateParams,
     clearParams,
   }
