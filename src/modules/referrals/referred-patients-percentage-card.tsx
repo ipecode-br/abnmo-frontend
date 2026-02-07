@@ -1,20 +1,20 @@
 import { Users2Icon } from 'lucide-react'
 
-import { getTotalReferrals } from '@/actions/statistics/get-total-referrals'
+import { getTotalPatients } from '@/actions/statistics/get-total-patients'
 import { getTotalReferredPatients } from '@/actions/statistics/get-total-referred-patients'
 import { SummaryCard } from '@/components/summary-card'
 
 export async function ReferredPatientsPercentageCard() {
-  const [totalReferrals, totalReferredPatients] = await Promise.all([
-    getTotalReferrals(),
+  const [totalPatients, totalReferredPatients] = await Promise.all([
+    getTotalPatients(),
     getTotalReferredPatients(),
   ])
 
-  const totalReferralsValue = totalReferrals?.total ?? 0
+  const totalPatientsValue = totalPatients?.total ?? 0
   const totalReferredPatientsValue = totalReferredPatients?.total ?? 0
 
   const referredPatientsPercentage =
-    (totalReferredPatientsValue / totalReferralsValue) * 100
+    (totalReferredPatientsValue / totalPatientsValue) * 100
 
   return (
     <SummaryCard
