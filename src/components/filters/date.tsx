@@ -37,7 +37,7 @@ export function FilterDate({
   }
 
   return (
-    <div className={cn('grid w-96 grid-cols-2 gap-2', className)} {...props}>
+    <div className={cn('grid w-80 grid-cols-2 gap-2', className)} {...props}>
       <FilterContainer title='Data inicial'>
         <DatePicker
           size='sm'

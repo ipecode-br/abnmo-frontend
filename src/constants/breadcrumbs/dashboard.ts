@@ -2,10 +2,10 @@ import {
   ClipboardCheckIcon,
   ClipboardClockIcon,
   ClipboardListIcon,
+  ClipboardPasteIcon,
   ClockArrowUpIcon,
   HistoryIcon,
   PaperclipIcon,
-  Share2Icon,
   User2Icon,
   UserRoundCheckIcon,
   UserRoundPlusIcon,
@@ -43,9 +43,9 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       path: ROUTES.dashboard.patients.new,
     },
   },
-  referrals: {
+  encaminhamentos: {
     encaminhamentos: {
-      icon: Share2Icon,
+      icon: ClipboardPasteIcon,
       name: 'Encaminhamentos',
       path: ROUTES.dashboard.referrals.main,
     },

@@ -32,6 +32,8 @@ export function ReferralsTableActions({
 
   const router = useRouter()
 
+  const canEdit = referral.status !== 'canceled'
+
   return (
     <>
       <Menu>
@@ -41,10 +43,12 @@ export function ReferralsTableActions({
         </MenuTrigger>
 
         <MenuContent align='end'>
-          <MenuItem onClick={() => setModalOpen('edit')}>
-            <ClipboardPenIcon />
-            Editar
-          </MenuItem>
+          {canEdit && (
+            <MenuItem onClick={() => setModalOpen('edit')}>
+              <ClipboardPenIcon />
+              Editar
+            </MenuItem>
+          )}
           <MenuItem
             onClick={() =>
               router.push(
@@ -66,19 +70,23 @@ export function ReferralsTableActions({
             Histórico do paciente
           </MenuItem>
 
-          <Divider className='my-1' />
+          {canEdit && (
+            <>
+              <Divider className='my-1' />
 
-          <MenuItem
-            variant='destructive'
-            onClick={() => setModalOpen('cancel')}
-          >
-            <XCircleIcon />
-            Cancelar
-          </MenuItem>
+              <MenuItem
+                variant='destructive'
+                onClick={() => setModalOpen('cancel')}
+              >
+                <XCircleIcon />
+                Cancelar
+              </MenuItem>
+            </>
+          )}
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && (
+      {modalOpen === 'edit' && canEdit && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -90,7 +98,7 @@ export function ReferralsTableActions({
         </Dialog>
       )}
 
-      {modalOpen === 'cancel' && (
+      {modalOpen === 'cancel' && canEdit && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

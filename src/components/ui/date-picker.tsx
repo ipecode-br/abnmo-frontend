@@ -59,7 +59,7 @@ export function DatePicker({
       <PopoverTrigger
         variant='outline'
         className={cn(
-          '[&_svg]:text-disabled justify-start pl-3 font-normal [&_svg]:size-4.5',
+          '[&_svg]:text-disabled justify-start overflow-hidden pl-3 font-normal [&_svg]:size-4.5',
           className,
         )}
         {...props}
@@ -68,7 +68,7 @@ export function DatePicker({
         {date ? (
           formatDate(date, { dateStyle: 'short' })
         ) : (
-          <span className='text-disabled'>Selecione a data</span>
+          <span className='text-disabled'>Selecionar...</span>
         )}
       </PopoverTrigger>
 

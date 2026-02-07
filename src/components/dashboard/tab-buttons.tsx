@@ -17,7 +17,8 @@ export function DashboardTabButtons() {
   const buttons = SECTION_TAB_BUTTONS[section as SectionTabButton]
 
   const hidePatientDetailsButtons =
-    section === 'pacientes' && segments.length < 2
+    (section === 'pacientes' && segments.length < 2) ||
+    segments[1] === 'cadastrar'
 
   if (!buttons || hidePatientDetailsButtons) {
     return null

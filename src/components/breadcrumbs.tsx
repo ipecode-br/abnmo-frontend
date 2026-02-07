@@ -19,6 +19,8 @@ export function Breadcrumbs() {
   const section = pathnames[1]
   const breadcrumbSection = BREADCRUMBS[section as BreadcrumbSection]
 
+  console.log(breadcrumbSection)
+
   if (!breadcrumbSection) {
     return null
   }
