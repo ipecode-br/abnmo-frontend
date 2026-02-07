@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { DashboardAppointmentsCard } from '@/modules/dashboard/appointments-card'
 import { DashboardPatientsByCityCard } from '@/modules/dashboard/patients-by-city-card'
 import { DashboardPatientsByGenderCard } from '@/modules/dashboard/patients-by-gender-card'
 import { DashboardSummaryCards } from '@/modules/dashboard/summary-cards'
+import { DashboardUpcomingAppointmentsCard } from '@/modules/dashboard/upcoming-appointments-card'
 
 export default function Page() {
   return (
@@ -20,7 +20,7 @@ export default function Page() {
       <DashboardPatientsByGenderCard />
       <DashboardPatientsByCityCard />
 
-      <DashboardAppointmentsCard />
+      <DashboardUpcomingAppointmentsCard />
     </div>
   )
 }

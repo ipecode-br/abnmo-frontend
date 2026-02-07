@@ -125,7 +125,7 @@ export function PatientsTable() {
 
           <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
             <PlusIcon />
-            Novo paciente
+            Cadastrar paciente
           </NavButton>
         </SectionHeaderActions>
       </SectionHeader>

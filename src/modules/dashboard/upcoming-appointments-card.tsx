@@ -17,7 +17,7 @@ import { NewAppointmentButton } from '@/modules/appointments/new-appointment-but
 
 import { AppointmentsTable } from '../appointments/table'
 
-export async function DashboardAppointmentsCard() {
+export async function DashboardUpcomingAppointmentsCard() {
   const params: GetAppointmentsParams = {
     startDate: new Date().toISOString(),
     status: 'scheduled',
@@ -37,7 +37,7 @@ export async function DashboardAppointmentsCard() {
     <Card className='p-6 sm:col-span-6'>
       <SectionHeader className='mb-6'>
         <SectionHeaderTitle
-          title='Fila de atendimento'
+          title='Próximos atendimentos'
           icon={<ClipboardListIcon />}
         />
         <SectionHeaderActions>
