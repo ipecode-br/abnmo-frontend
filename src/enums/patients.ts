@@ -67,12 +67,12 @@ export const PATIENT_CONDITION_ENUM = Object.keys(PATIENT_CONDITIONS) as [
 ]
 
 export const PATIENTS_ORDERS = {
-  name_asc: 'Nome (Crescente)',
-  name_desc: 'Nome (Decrescente)',
-  date_asc: 'Data (Crescente)',
-  date_desc: 'Data (Decrescente)',
-  email_asc: 'E-mail (Crescente)',
-  email_desc: 'E-mail (Decrescente)',
+  name_asc: 'Nome (Asc.)',
+  name_desc: 'Nome (Desc.)',
+  date_asc: 'Data (Asc.)',
+  date_desc: 'Data (Desc.)',
+  email_asc: 'E-mail (Asc.)',
+  email_desc: 'E-mail (Desc.)',
 }
 export type PatientsOrder = keyof typeof PATIENTS_ORDERS
 

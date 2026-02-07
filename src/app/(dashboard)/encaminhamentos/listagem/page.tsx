@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
-import { ReferralsTable } from './referrals-table'
+import { ReferralsList } from '@/modules/referrals/list'
 
 export const metadata: Metadata = {
   title: 'Encaminhamentos',
 }
 
 export default function Page() {
-  return <ReferralsTable />
+  return <ReferralsList />
 }

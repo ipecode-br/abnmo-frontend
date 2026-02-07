@@ -15,7 +15,7 @@ export function NewReferralButton(props: Readonly<ButtonProps>) {
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger {...props}>
         <ClipboardPasteIcon />
-        Encaminhar paciente
+        Encaminhar
       </DialogTrigger>
 
       {modalOpen && <ReferralModal onClose={() => setModalOpen(false)} />}
