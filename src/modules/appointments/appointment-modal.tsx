@@ -192,7 +192,7 @@ export function AppointmentModal({
           className='flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
-          Cancelar
+          Voltar
         </DialogClose>
       </DialogFooter>
     </DialogContainer>
