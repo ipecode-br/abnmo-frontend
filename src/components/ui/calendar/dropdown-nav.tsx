@@ -74,11 +74,11 @@ export function CalendarDropdownNav({
   }, [dateCurrent, months.length])
 
   return (
-    <div className='bg-background-soft flex items-center justify-center gap-1 rounded-lg p-1.5'>
+    <div className='bg-accent flex items-center justify-center gap-1 rounded-lg p-1.5'>
       <Button
         size='icon'
         variant='ghost'
-        className='size-7'
+        className='mr-auto size-8'
         onClick={onPreviousClick}
         disabled={!previousMonth}
       >
@@ -86,30 +86,34 @@ export function CalendarDropdownNav({
       </Button>
 
       <Select
+        size='sm'
+        placeholder='Mês'
         value={monthSelected}
+        options={monthOptions}
+        className='w-20'
         onValueChange={(value: string) => {
           setMonthSeleted(value)
           goToMonth(new Date(yearSelected, monthsOfYear.indexOf(value)))
         }}
-        options={monthOptions}
-        className='h-8 w-16'
       />
 
       <Select
+        size='sm'
+        placeholder='Ano'
+        options={yearOptions}
         value={yearSelected.toString()}
+        className='w-22'
         onValueChange={(value: string) => {
           const year = Number(value)
           setYearSeleted(year)
           goToMonth(new Date(year, monthsOfYear.indexOf(monthSelected)))
         }}
-        options={yearOptions}
-        className='h-8 w-18'
       />
 
       <Button
         size='icon'
         variant='ghost'
-        className='size-7 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-25'
+        className='ml-auto size-8'
         onClick={onNextClick}
         disabled={!nextMonth}
       >
