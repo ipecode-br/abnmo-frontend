@@ -29,7 +29,6 @@ export function FilterSelect({ param, ...props }: Readonly<FilterSelectProps>) {
   return (
     <Select
       size='sm'
-      align='end'
       value={selectValue}
       onValueChange={handleSelect}
       {...props}

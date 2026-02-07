@@ -101,7 +101,7 @@ export function UnderReviewPatientRequirements() {
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={PATIENT_REQUIREMENTS_ORDER_OPTIONS}
-            placeholder='Ordenar por...'
+            placeholder='Ordenar por'
             resetLabel='Limpar ordem'
             className='w-52'
           />

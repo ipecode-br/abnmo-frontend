@@ -70,12 +70,12 @@ export function TeamListTable() {
         />
 
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar...' className='w-48' />
+          <SearchInput placeholder='Pesquisar' className='w-48' />
 
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={TEAMS_ORDER_OPTIONS}
-            placeholder='Ordenar por...'
+            placeholder='Ordenar por'
             resetLabel='Limpar ordem'
             className='w-68'
           />

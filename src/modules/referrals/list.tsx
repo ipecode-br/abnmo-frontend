@@ -107,11 +107,11 @@ export function ReferralsList() {
           total={stableTotal}
         />
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar...' className='w-48' />
+          <SearchInput placeholder='Pesquisar' className='w-48' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={REFERRALS_ORDER_OPTIONS}
-            placeholder='Ordenar por...'
+            placeholder='Ordenar por'
             resetLabel='Limpar ordem'
             className='w-52'
           />
@@ -122,8 +122,8 @@ export function ReferralsList() {
       </SectionHeader>
 
       {showFilters && (
-        <section className='flex items-end gap-6'>
-          <FilterContainer title='Categoria' className='w-48'>
+        <section className='flex flex-wrap items-end gap-6'>
+          <FilterContainer title='Categoria' className='w-46'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
@@ -131,7 +131,7 @@ export function ReferralsList() {
               resetLabel='Limpar categoria'
             />
           </FilterContainer>
-          <FilterContainer title='Status' className='w-48'>
+          <FilterContainer title='Status' className='w-46'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={REFERRAL_STATUS_OPTIONS}

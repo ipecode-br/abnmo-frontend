@@ -113,30 +113,30 @@ export function PatientsTable() {
           total={stableTotal}
         />
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar...' className='w-48' />
+          <SearchInput placeholder='Pesquisar' className='w-40' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={PATIENTS_ORDER_OPTIONS}
-            placeholder='Ordenar por...'
+            placeholder='Ordenar por'
             resetLabel='Limpar ordem'
-            className='w-52'
+            className='w-40'
           />
           <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
 
           <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
             <PlusIcon />
-            Cadastrar paciente
+            Cadastrar
           </NavButton>
         </SectionHeaderActions>
       </SectionHeader>
 
       {showFilters && (
         <section className='flex items-end gap-8'>
-          <FilterContainer title='Status' className='w-48'>
+          <FilterContainer title='Status' className='w-40'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={PATIENT_STATUS_OPTIONS}
-              placeholder='Selecione o status'
+              placeholder='Todos'
               resetLabel='Limpar status'
             />
           </FilterContainer>

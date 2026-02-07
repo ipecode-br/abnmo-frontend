@@ -45,7 +45,7 @@ export type SelectProps = Omit<SelectRootProps<string, false>, 'items'> &
 export function Select({
   size,
   value,
-  align,
+  align = 'start',
   options,
   className,
   resetLabel,

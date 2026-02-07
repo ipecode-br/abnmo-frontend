@@ -68,7 +68,7 @@ export function DatePicker({
         {date ? (
           formatDate(date, { dateStyle: 'short' })
         ) : (
-          <span className='text-disabled'>Selecionar...</span>
+          <span className='text-disabled'>Selecionar</span>
         )}
       </PopoverTrigger>
 
