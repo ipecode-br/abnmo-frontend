@@ -36,15 +36,18 @@ import { ReferralsTable } from './table'
 export function ReferralsList() {
   const [showFilters, setShowFilters] = useState(false)
   const [stableTotal, setStableTotal] = useState(0)
-  const { getParam, paramsQueryKey } = useParams()
+  const { getParams, paramsQueryKey } = useParams()
 
-  const page = getParam(QUERY_PARAM_KEYS.page)
-  const search = getParam(QUERY_PARAM_KEYS.search)
-  const category = getParam(QUERY_PARAM_KEYS.category)
-  const status = getParam(QUERY_PARAM_KEYS.status)
-  const orderBy = getParam(QUERY_PARAM_KEYS.orderBy)
-  const startDate = getParam(QUERY_PARAM_KEYS.startDate)
-  const endDate = getParam(QUERY_PARAM_KEYS.endDate)
+  const [page, search, category, status, orderBy, startDate, endDate] =
+    getParams([
+      QUERY_PARAM_KEYS.page,
+      QUERY_PARAM_KEYS.search,
+      QUERY_PARAM_KEYS.category,
+      QUERY_PARAM_KEYS.status,
+      QUERY_PARAM_KEYS.orderBy,
+      QUERY_PARAM_KEYS.startDate,
+      QUERY_PARAM_KEYS.endDate,
+    ])
 
   const ORDER_MAPPING: QueryOrderMapping<ReferralsOrder, ReferralsOrderBy> = {
     date_asc: { orderBy: 'date', order: 'ASC' },

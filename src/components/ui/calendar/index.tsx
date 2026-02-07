@@ -16,7 +16,7 @@ import { CalendarStepNav } from './step-nav'
 export interface CalendarProps extends Omit<PropsSingle, 'mode'> {
   navMode?: 'step' | 'dropdown'
   allowFutureDates?: boolean
-  startDate?: string | Date
+  startDate?: string | Date | null
 }
 
 export function Calendar({

@@ -15,13 +15,12 @@ export function FilterDate({
   className,
   ...props
 }: Readonly<FilterDateProps>) {
-  const { getParam, updateParams } = useParams()
+  const { getParams, updateParams } = useParams()
 
   const pageParam = QUERY_PARAM_KEYS.page
   const startDateParam = QUERY_PARAM_KEYS.startDate
   const endDateParam = QUERY_PARAM_KEYS.endDate
-  const startDate = getParam(startDateParam) || ''
-  const endDate = getParam(endDateParam) || ''
+  const [startDate, endDate] = getParams([startDateParam, endDateParam])
 
   function handleSelectStartDate(value: string) {
     updateParams({

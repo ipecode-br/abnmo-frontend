@@ -44,11 +44,13 @@ import ApprovedPatientRequirementsListTableSkeleton from './approved-list-table-
 
 export function ApprovedPatientRequirementsListTable() {
   const [stableTotal, setStableTotal] = useState(0)
-  const { getParam } = useParams()
+  const { getParams } = useParams()
 
-  const page = getParam(QUERY_PARAM_KEYS.page)
-  const search = getParam(QUERY_PARAM_KEYS.search)
-  const orderBy = getParam(QUERY_PARAM_KEYS.orderBy)
+  const [page, search, orderBy] = getParams([
+    QUERY_PARAM_KEYS.page,
+    QUERY_PARAM_KEYS.search,
+    QUERY_PARAM_KEYS.orderBy,
+  ])
 
   const ORDER_MAPPING: QueryOrderMapping<
     PatientRequirementsOrder,

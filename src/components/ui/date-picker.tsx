@@ -16,7 +16,7 @@ import { PopoverTrigger, type PopoverTriggerProps } from './popover/trigger'
 export interface DatePickerProps
   extends Omit<PopoverTriggerProps, 'value'>,
     Pick<CalendarProps, 'allowFutureDates' | 'navMode' | 'startDate'> {
-  value?: string
+  value?: string | null
   onSelectDate?: (date: string) => void
   modal?: boolean
 }

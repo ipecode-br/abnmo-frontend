@@ -39,12 +39,15 @@ import { AddPatientRequirementButton } from './add-patient-requirement-button'
 // TODO: add dropdown menu
 export function PendingPatientRequirements() {
   const [stableTotal, setStableTotal] = useState(0)
-  const { getParam } = useParams()
+
+  const { getParams } = useParams()
 
   const perPage = 12
-  const page = getParam(QUERY_PARAM_KEYS.page)
-  const search = getParam(QUERY_PARAM_KEYS.search)
-  const orderBy = getParam(QUERY_PARAM_KEYS.orderBy)
+  const [page, search, orderBy] = getParams([
+    QUERY_PARAM_KEYS.page,
+    QUERY_PARAM_KEYS.search,
+    QUERY_PARAM_KEYS.orderBy,
+  ])
 
   const ORDER_MAPPING: QueryOrderMapping<
     PatientRequirementsOrder,
