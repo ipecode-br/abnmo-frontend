@@ -31,7 +31,7 @@ import { api } from '@/lib/api'
 import type { QueryOrderMapping, UsersOrderBy } from '@/types/orders'
 import type { User } from '@/types/users'
 
-import { UsersTable } from './users-table'
+import { UsersTable } from './table'
 
 export function UsersList() {
   const [showFilters, setShowFilters] = useState(false)

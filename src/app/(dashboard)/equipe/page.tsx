@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { UsersList } from '@/modules/users/users-list'
+import { UsersList } from '@/modules/users/list'
 
 export const metadata: Metadata = {
   title: 'Equipe',

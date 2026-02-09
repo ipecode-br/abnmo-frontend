@@ -9,7 +9,7 @@ export type User = {
   avatar_url: string | null
   status: UserStatus
   specialty: Specialty | null
-  registration_id: string | null
+  registration_number: string | null
   updated_at: Date
   created_at: Date
 }
