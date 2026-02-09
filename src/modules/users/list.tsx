@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { HeartHandshakeIcon, PlusIcon } from 'lucide-react'
+import { HeartHandshakeIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
@@ -16,7 +16,6 @@ import {
   SectionHeaderActions,
   SectionHeaderTitle,
 } from '@/components/section-header'
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
@@ -31,6 +30,7 @@ import { api } from '@/lib/api'
 import type { QueryOrderMapping, UsersOrderBy } from '@/types/orders'
 import type { User } from '@/types/users'
 
+import { NewAppointmentButton } from '../appointments/new-appointment-button'
 import { UsersTable } from './table'
 
 export function UsersList() {
@@ -112,10 +112,7 @@ export function UsersList() {
             className='w-44'
           />
           <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
-          <Button size='sm'>
-            <PlusIcon />
-            Novo usuário
-          </Button>
+          <NewAppointmentButton size='sm' />
         </SectionHeaderActions>
       </SectionHeader>
 

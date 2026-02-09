@@ -49,6 +49,7 @@ export const ROUTES = {
     users: {
       main: '/equipe',
       details: (id: string) => `/equipe/membro/${id}`,
+      invites: '/equipe/convites',
     },
     settings: {
       main: '/configuracoes',

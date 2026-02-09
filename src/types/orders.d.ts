@@ -7,6 +7,8 @@ export type QueryOrder = 'ASC' | 'DESC'
 
 export type UsersOrderBy = 'name' | 'status' | 'role' | 'date'
 
+export type InvitesOrderBy = 'email' | 'date'
+
 export type PatientsOrderBy = 'name' | 'email' | 'status' | 'date'
 
 export type AppointmentsOrderBy =

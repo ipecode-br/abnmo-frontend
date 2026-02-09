@@ -8,6 +8,7 @@ export const USER_ROLES = {
 }
 export type UserRole = keyof typeof USER_ROLES
 export const USERS_ROLE_OPTIONS = convertObjectToOptions(USER_ROLES)
+export const USERS_ROLE_ENUM = Object.keys(USER_ROLES) as [UserRole]
 
 export const USER_STATUSES = {
   active: { variant: 'success', label: 'Ativo' },

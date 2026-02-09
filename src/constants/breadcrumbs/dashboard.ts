@@ -5,6 +5,7 @@ import {
   ClipboardPasteIcon,
   ClockArrowUpIcon,
   HistoryIcon,
+  MailPlusIcon,
   PaperclipIcon,
   User2Icon,
   UserRoundCheckIcon,
@@ -75,6 +76,18 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       icon: ClipboardCheckIcon,
       name: 'Aprovados',
       path: ROUTES.dashboard.approvals.approved,
+    },
+  },
+  equipe: {
+    equipe: {
+      icon: Users2Icon,
+      name: 'Membros',
+      path: ROUTES.dashboard.users.main,
+    },
+    convites: {
+      icon: MailPlusIcon,
+      name: 'Convites',
+      path: ROUTES.dashboard.users.invites,
     },
   },
 }

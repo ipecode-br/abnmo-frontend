@@ -10,6 +10,13 @@ export type User = {
   status: UserStatus
   specialty: Specialty | null
   registration_number: string | null
-  updated_at: Date
-  created_at: Date
+  updated_at: string
+  created_at: string
+}
+
+export type UserInvite = {
+  id: string
+  email: string
+  expires_at: string
+  created_at: string
 }

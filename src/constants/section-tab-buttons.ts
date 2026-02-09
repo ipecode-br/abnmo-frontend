@@ -53,5 +53,15 @@ export const SECTION_TAB_BUTTONS: Record<string, Array<TabButton>> = {
       path: ROUTES.dashboard.approvals.approved,
     },
   ],
+  equipe: [
+    {
+      title: 'Membros',
+      path: ROUTES.dashboard.users.main,
+    },
+    {
+      title: 'Convites',
+      path: ROUTES.dashboard.users.invites,
+    },
+  ],
 }
 export type SectionTabButton = keyof typeof SECTION_TAB_BUTTONS

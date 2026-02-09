@@ -36,6 +36,7 @@ export const QUERY_CACHE_KEYS = {
   },
   users: {
     main: 'users',
+    invites: 'invites',
   },
   patients: {
     main: 'patients',
