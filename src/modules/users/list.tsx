@@ -30,7 +30,7 @@ import { api } from '@/lib/api'
 import type { QueryOrderMapping, UsersOrderBy } from '@/types/orders'
 import type { User } from '@/types/users'
 
-import { NewAppointmentButton } from '../appointments/new-appointment-button'
+import { NewInviteButton } from './invites/new-invite-button'
 import { UsersTable } from './table'
 
 export function UsersList() {
@@ -112,7 +112,7 @@ export function UsersList() {
             className='w-44'
           />
           <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
-          <NewAppointmentButton size='sm' />
+          <NewInviteButton size='sm' />
         </SectionHeaderActions>
       </SectionHeader>
 

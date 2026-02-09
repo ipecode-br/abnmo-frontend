@@ -8,7 +8,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 import { NewUserInviteModal } from './new-invite-modal'
 
-export function NewAppointmentButton(props: Readonly<ButtonProps>) {
+export function NewInviteButton(props: Readonly<ButtonProps>) {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (

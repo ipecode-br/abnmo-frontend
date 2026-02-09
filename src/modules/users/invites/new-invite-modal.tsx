@@ -67,7 +67,12 @@ export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <TextInput name='email' label='E-mail' isRequired />
+            <TextInput
+              name='email'
+              label='E-mail'
+              placeholder='Insira o e-mail'
+              isRequired
+            />
             <SelectInput
               name='role'
               label='Cargo'

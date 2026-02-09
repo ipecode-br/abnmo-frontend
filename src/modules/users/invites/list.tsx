@@ -21,7 +21,7 @@ import { api } from '@/lib/api'
 import type { InvitesOrderBy, QueryOrderMapping } from '@/types/orders'
 import type { UserInvite } from '@/types/users'
 
-import { NewAppointmentButton } from './new-invite-button'
+import { NewInviteButton } from './new-invite-button'
 import { UserInvitesTable } from './table'
 
 export function UserInvitesList() {
@@ -81,7 +81,7 @@ export function UserInvitesList() {
             resetLabel='Limpar ordem'
             className='w-40'
           />
-          <NewAppointmentButton size='sm' />
+          <NewInviteButton size='sm' />
         </SectionHeaderActions>
       </SectionHeader>
 
