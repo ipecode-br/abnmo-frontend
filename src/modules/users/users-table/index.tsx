@@ -33,7 +33,7 @@ export function UsersTable({ users, loading }: Readonly<UsersTableProps>) {
         <TableRow>
           <TableHead className='w-64'>Nome</TableHead>
           <TableHead className='w-36'>Data</TableHead>
-          <TableHead className='w-40'>Função</TableHead>
+          <TableHead className='w-40'>Cargo</TableHead>
           <TableHead className='w-48'>Especialidade</TableHead>
           <TableHead className='w-44'>Registro</TableHead>
           <TableHead className='w-24'>Status</TableHead>
@@ -77,7 +77,7 @@ export function UsersTable({ users, loading }: Readonly<UsersTableProps>) {
                     '-'
                   )}
                 </TableCell>
-                <TableCell>{user.registration_number ?? '-'}</TableCell>
+                <TableCell>{user.registration_id ?? '-'}</TableCell>
                 <TableCell>
                   <Tag variant={status.variant} size='sm'>
                     {status.label}
