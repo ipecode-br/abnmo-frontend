@@ -20,7 +20,7 @@ export async function getTotalReferrals({
 }: GetTotalReferralsProps = {}) {
   try {
     const response = await api<{ total: number }>(
-      '/statistics/referrals-total',
+      '/statistics/referrals/total',
       {
         includeCookies: true,
         cache: 'force-cache',

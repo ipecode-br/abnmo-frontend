@@ -11,14 +11,14 @@ import { SPECIALTIES, type Specialty } from '@/enums/shared'
 import { api } from '@/lib/api'
 import { usePeriodStore } from '@/store/period'
 
-export function ReferralsByCategoryCard() {
+export function TotalReferralsByCategoryCard() {
   const { period } = usePeriodStore()
 
   const { data: response, isLoading } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.statistics.referralsByCategory, period],
+    queryKey: [QUERY_CACHE_KEYS.statistics.totalReferralsByCategory, period],
     queryFn: () =>
       api<{ categories: Array<{ category: Specialty; total: number }> }>(
-        '/statistics/referrals-by-category',
+        '/statistics/referrals/by-category',
         { params: { period } },
       ),
   })

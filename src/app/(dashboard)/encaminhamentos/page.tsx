@@ -1,7 +1,7 @@
-import { ReferralsByCategoryCard } from '@/modules/referrals/by-category-card'
-import { ReferralsByStateCard } from '@/modules/referrals/by-state-card'
+import { PatientsWithReferralsPercentageCard } from '@/modules/referrals/patients-with-referrals-percentage-card'
 import { ReferralsPeriodTabSelect } from '@/modules/referrals/period-tab-select'
-import { ReferredPatientsPercentageCard } from '@/modules/referrals/referred-patients-percentage-card'
+import { TotalReferralsByCategoryCard } from '@/modules/referrals/total-by-category-card'
+import { TotalReferralsByStateCard } from '@/modules/referrals/total-by-state-card'
 import { TotalReferralsCard } from '@/modules/referrals/total-referrals-card'
 
 export default function Page() {
@@ -10,10 +10,10 @@ export default function Page() {
       <ReferralsPeriodTabSelect />
 
       <TotalReferralsCard />
-      <ReferredPatientsPercentageCard />
+      <PatientsWithReferralsPercentageCard />
 
-      <ReferralsByCategoryCard />
-      <ReferralsByStateCard />
+      <TotalReferralsByCategoryCard />
+      <TotalReferralsByStateCard />
     </div>
   )
 }

@@ -12,7 +12,7 @@ import { type UF, UF_LIST } from '@/enums/shared'
 import { api } from '@/lib/api'
 import { usePeriodStore } from '@/store/period'
 
-export function ReferralsByStateCard() {
+export function TotalReferralsByStateCard() {
   const { period } = usePeriodStore()
 
   const limit = 10
@@ -20,12 +20,12 @@ export function ReferralsByStateCard() {
   const queries = [period, limit, withPercentage]
 
   const { data: response, isLoading } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.statistics.referralsByState, queries],
+    queryKey: [QUERY_CACHE_KEYS.statistics.totalReferralsByState, queries],
     queryFn: () =>
       api<{
         states: Array<{ state: UF; total: number; percentage: number }>
         total: number
-      }>('/statistics/referrals-by-state', {
+      }>('/statistics/patients/with-referrals/by-state', {
         params: { period, limit, withPercentage },
       }),
   })

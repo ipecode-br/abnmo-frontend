@@ -105,15 +105,15 @@ export function ReferralModal({
 
     revalidateClientCache([
       QUERY_CACHE_KEYS.referrals.main,
-      QUERY_CACHE_KEYS.statistics.referralsByCategory,
-      QUERY_CACHE_KEYS.statistics.referralsByState,
+      QUERY_CACHE_KEYS.statistics.totalReferralsByCategory,
+      QUERY_CACHE_KEYS.statistics.totalReferralsByState,
       QUERY_CACHE_KEYS.statistics.totalReferrals,
     ])
     revalidateServerCache([
       NEXT_CACHE_TAGS.patient(data.patient_id),
       NEXT_CACHE_TAGS.referrals.main,
       NEXT_CACHE_TAGS.statistics.totalReferrals.main,
-      NEXT_CACHE_TAGS.statistics.totalReferredPatients.main,
+      NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,
     ])
 
     toast.success(response.message)

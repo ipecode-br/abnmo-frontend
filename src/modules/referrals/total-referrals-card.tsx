@@ -14,7 +14,7 @@ export function TotalReferralsCard() {
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.statistics.totalReferrals, period],
     queryFn: () =>
-      api<{ total: number }>('/statistics/referrals-total', {
+      api<{ total: number }>('/statistics/referrals/total', {
         params: { period },
       }),
   })

@@ -20,7 +20,7 @@ export async function getTotalAppointments({
 }: GetTotalAppointmentsProps = {}) {
   try {
     const response = await api<{ total: number }>(
-      '/statistics/appointments-total',
+      '/statistics/appointments/total',
       {
         includeCookies: true,
         cache: 'force-cache',

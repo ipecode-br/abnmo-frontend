@@ -5,22 +5,22 @@ import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import type { QueryPeriod } from '@/enums/queries'
 import { api } from '@/lib/api'
 
-type GetTotalReferredPatientsParams = {
+type GetTotalPatientsWithReferralsParams = {
   period?: QueryPeriod
 }
 
-interface GetTotalReferredPatientsProps {
-  params?: GetTotalReferredPatientsParams
+interface GetTotalPatientsWithReferralsProps {
+  params?: GetTotalPatientsWithReferralsParams
   cacheKey?: string
 }
 
-export async function getTotalReferredPatients({
+export async function getTotalPatientsWithReferrals({
   params,
   cacheKey,
-}: GetTotalReferredPatientsProps = {}) {
+}: GetTotalPatientsWithReferralsProps = {}) {
   try {
     const response = await api<{ total: number }>(
-      '/statistics/referred-patients-total',
+      '/statistics/patients/with-referrals',
       {
         includeCookies: true,
         cache: 'force-cache',
@@ -28,8 +28,11 @@ export async function getTotalReferredPatients({
         next: {
           revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
           tags: cacheKey
-            ? [NEXT_CACHE_TAGS.statistics.totalReferredPatients.main, cacheKey]
-            : [NEXT_CACHE_TAGS.statistics.totalReferredPatients.main],
+            ? [
+                NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,
+                cacheKey,
+              ]
+            : [NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main],
         },
       },
     )
@@ -40,7 +43,7 @@ export async function getTotalReferredPatients({
 
     return response.data
   } catch (error) {
-    console.error('Failed to fetch total referred patients:', error)
+    console.error('Failed to fetch total patients with referrals:', error)
     return null
   }
 }

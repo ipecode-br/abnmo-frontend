@@ -22,7 +22,7 @@ export async function getTotalPatients({
 }: GetTotalPatientsProps = {}) {
   try {
     const response = await api<Record<Status, number>>(
-      '/statistics/patients-total',
+      '/statistics/patients/total',
       {
         includeCookies: true,
         cache: 'force-cache',
