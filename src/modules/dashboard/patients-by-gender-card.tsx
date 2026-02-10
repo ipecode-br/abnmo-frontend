@@ -22,7 +22,7 @@ export function DashboardPatientsByGenderCard() {
       api<{
         genders: { gender: PatientGender; total: string }[]
         total: number
-      }>('/statistics/patients-by-gender', {
+      }>('/statistics/patients/by-gender', {
         params: { period },
       }),
   })

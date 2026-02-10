@@ -76,7 +76,7 @@ export function Select({
           <BaseSelect.Popup
             className={cn(
               'border-border bg-popover rounded-lg border p-2 shadow-lg outline-none',
-              'max-h-[min(var(--available-height),30rem)] max-w-[var(--available-width)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] overflow-y-auto overscroll-contain',
+              'max-h-[min(var(--available-height),32rem)] max-w-[var(--available-width)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] overflow-y-auto overscroll-contain',
               'transition-[transform,translate,opacity]',
               'data-[ending-style]:-translate-y-2 data-[ending-style]:opacity-0',
               'data-[starting-style]:-translate-y-2 data-[starting-style]:opacity-0',

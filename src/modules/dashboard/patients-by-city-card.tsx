@@ -26,7 +26,7 @@ export function DashboardPatientsByCityCard() {
       api<{
         cities: { city: string; percentage: number }[]
         total: number
-      }>('/statistics/patients-by-city', {
+      }>('/statistics/patients/by-city', {
         params: { period, limit, withPercentage },
       }),
   })
