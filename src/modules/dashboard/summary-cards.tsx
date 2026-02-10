@@ -1,4 +1,8 @@
-import { ClipboardListIcon, ClipboardPasteIcon, Users2Icon } from 'lucide-react'
+import {
+  ClipboardCheckIcon,
+  ClipboardPasteIcon,
+  Users2Icon,
+} from 'lucide-react'
 
 import { getTotalAppointments } from '@/actions/statistics/get-total-appointments'
 import { getTotalPatients } from '@/actions/statistics/get-total-patients'
@@ -27,7 +31,7 @@ export async function DashboardSummaryCards() {
         className='sm:col-span-2'
       />
       <SummaryCard
-        icon={ClipboardListIcon}
+        icon={ClipboardCheckIcon}
         label='Atendimentos'
         value={appointments?.total}
         className='sm:col-span-2'

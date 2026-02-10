@@ -1,6 +1,7 @@
 export const SECTION_TITLES = {
   default: 'Visão geral',
   pacientes: 'Pacientes',
+  atendimentos: 'Atendimentos',
   encaminhamentos: 'Encaminhamentos',
   aprovacoes: 'Aprovações',
   equipe: 'Equipe',

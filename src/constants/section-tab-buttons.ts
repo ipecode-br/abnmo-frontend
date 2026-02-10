@@ -29,6 +29,16 @@ export const SECTION_TAB_BUTTONS: Record<string, Array<TabButton>> = {
       path: ROUTES.dashboard.patients.details.referrals,
     },
   ],
+  atendimentos: [
+    {
+      title: 'Visão geral',
+      path: ROUTES.dashboard.appointments.main,
+    },
+    {
+      title: 'Lista de atendimentos',
+      path: ROUTES.dashboard.appointments.list,
+    },
+  ],
   encaminhamentos: [
     {
       title: 'Visão geral',

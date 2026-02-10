@@ -1,8 +1,8 @@
 import {
-  ClipboardListIcon,
+  ClipboardCheckIcon,
+  ClipboardPasteIcon,
   HeartHandshakeIcon,
   LayoutDashboardIcon,
-  Share2Icon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -49,12 +49,12 @@ const SIDEBAR_SECTIONS = [
       },
       {
         label: 'Atendimentos',
-        icon: <ClipboardListIcon />,
+        icon: <ClipboardCheckIcon />,
         path: ROUTES.dashboard.appointments.main,
       },
       {
         label: 'Encaminhamentos',
-        icon: <Share2Icon />,
+        icon: <ClipboardPasteIcon />,
         path: ROUTES.dashboard.referrals.main,
       },
       // TODO: uncomment approvals when it's ready

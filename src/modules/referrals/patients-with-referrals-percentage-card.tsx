@@ -1,4 +1,4 @@
-import { Users2Icon } from 'lucide-react'
+import { UserCheck2Icon } from 'lucide-react'
 
 import { getTotalPatients } from '@/actions/statistics/get-total-patients'
 import { getTotalPatientsWithReferrals } from '@/actions/statistics/get-total-patients-with-referrals'
@@ -18,7 +18,7 @@ export async function PatientsWithReferralsPercentageCard() {
 
   return (
     <SummaryCard
-      icon={Users2Icon}
+      icon={UserCheck2Icon}
       label='Pacientes encaminhados'
       value={`${totalPatientsWithReferralsPercentage.toFixed(1)}%`}
       className='sm:col-span-1'

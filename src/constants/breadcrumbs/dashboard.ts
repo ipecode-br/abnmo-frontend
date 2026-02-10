@@ -44,6 +44,18 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       path: ROUTES.dashboard.patients.new,
     },
   },
+  atendimentos: {
+    atendimentos: {
+      icon: ClipboardCheckIcon,
+      name: 'Atendimentos',
+      path: ROUTES.dashboard.appointments.main,
+    },
+    listagem: {
+      icon: ClipboardListIcon,
+      name: 'Lista de atendimentos',
+      path: ROUTES.dashboard.appointments.list,
+    },
+  },
   encaminhamentos: {
     encaminhamentos: {
       icon: ClipboardPasteIcon,

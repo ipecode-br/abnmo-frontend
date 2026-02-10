@@ -11,21 +11,25 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { ROUTES } from '@/constants/routes'
+import { APPOINTMENT_STATUSES } from '@/enums/appointments'
 import { PATIENT_CONDITIONS } from '@/enums/patients'
 import { SPECIALTIES } from '@/enums/shared'
 import type { Appointment } from '@/types/appointments'
 import { formatDate } from '@/utils/formatters/format-date'
 
 import { AppointmentsTableActions } from './actions'
+import { AppointmentsTableSkeleton } from './skeleton'
 
 interface AppointmentsTableProps {
   appointments: Appointment[]
+  loading?: boolean
 }
 
 export function AppointmentsTable({
   appointments,
+  loading,
 }: Readonly<AppointmentsTableProps>) {
-  const isEmpty = appointments.length <= 0
+  const isEmpty = !loading && appointments.length <= 0
 
   return (
     <Table>
@@ -33,16 +37,27 @@ export function AppointmentsTable({
         <TableRow>
           <TableHead className='w-64'>Paciente</TableHead>
           <TableHead className='w-36'>Data</TableHead>
-          <TableHead className='w-44'>Categoria</TableHead>
+          <TableHead className='w-48'>Categoria</TableHead>
           <TableHead>Profissional</TableHead>
           <TableHead className='w-36'>Quadro geral</TableHead>
+          <TableHead className='w-36'>Status</TableHead>
           <TableHead className='w-20 text-center'>Ações</TableHead>
         </TableRow>
       </TableHeader>
+      <TableBody>
+        {loading && <AppointmentsTableSkeleton />}
 
-      {!isEmpty && (
-        <TableBody>
-          {appointments.map((appointment) => {
+        {isEmpty && (
+          <TableRow>
+            <TableEmptyCell colSpan={6}>
+              Nenhum atendimento registrado
+            </TableEmptyCell>
+          </TableRow>
+        )}
+
+        {!loading &&
+          appointments.map((appointment) => {
+            const status = APPOINTMENT_STATUSES[appointment.status]
             const condition = PATIENT_CONDITIONS[appointment.condition]
             const Icon = condition.icon
 
@@ -73,25 +88,18 @@ export function AppointmentsTable({
                     {condition.label}
                   </Tag>
                 </TableCell>
-
+                <TableCell>
+                  <Tag variant={status.variant} size='sm'>
+                    {status.label}
+                  </Tag>
+                </TableCell>
                 <TableCell className='text-center'>
                   <AppointmentsTableActions appointment={appointment} />
                 </TableCell>
               </TableRow>
             )
           })}
-        </TableBody>
-      )}
-
-      {isEmpty && (
-        <TableBody>
-          <TableRow>
-            <TableEmptyCell colSpan={6}>
-              Nenhum atendimento registrado
-            </TableEmptyCell>
-          </TableRow>
-        </TableBody>
-      )}
+      </TableBody>
     </Table>
   )
 }

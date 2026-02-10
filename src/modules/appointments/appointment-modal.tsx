@@ -107,12 +107,19 @@ export function AppointmentModal({
       return
     }
 
-    revalidateClientCache(QUERY_CACHE_KEYS.appointments.main)
+    revalidateClientCache([
+      QUERY_CACHE_KEYS.appointments.main,
+      QUERY_CACHE_KEYS.statistics.totalAppointmentsByCategory,
+      QUERY_CACHE_KEYS.statistics.totalAppointmentsByState,
+      QUERY_CACHE_KEYS.statistics.totalAppointments,
+    ])
     revalidateServerCache([
       NEXT_CACHE_TAGS.patient(data.patient_id),
       NEXT_CACHE_TAGS.appointments.main,
       NEXT_CACHE_TAGS.statistics.totalAppointments.main,
+      NEXT_CACHE_TAGS.statistics.totalPatientsWithAppointments.main,
     ])
+
     toast.success(response.message)
     onClose()
   }

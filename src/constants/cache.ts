@@ -18,6 +18,10 @@ export const NEXT_CACHE_TAGS = {
       main: 'total-patients',
       query: (query: string) => `total-patients/${query}`,
     },
+    totalPatientsWithAppointments: {
+      main: 'total-patients-with-appointments',
+      query: (query: string) => `total-patients-with-appointments/${query}`,
+    },
     totalPatientsWithReferrals: {
       main: 'total-patients-with-referrals',
       query: (query: string) => `total-patients-with-referrals/${query}`,
@@ -54,6 +58,9 @@ export const QUERY_CACHE_KEYS = {
     approved: 'approvals-approved',
   },
   statistics: {
+    totalAppointments: 'total-appointments',
+    totalAppointmentsByCategory: 'total-appointments-by-category',
+    totalAppointmentsByState: 'appointments-by-state',
     totalReferrals: 'total-referrals',
     totalReferralsByCategory: 'total-referrals-by-category',
     totalReferralsByState: 'referrals-by-state',

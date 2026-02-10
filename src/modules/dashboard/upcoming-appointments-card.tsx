@@ -1,4 +1,4 @@
-import { ClipboardListIcon } from 'lucide-react'
+import { ClipboardCheckIcon } from 'lucide-react'
 
 import {
   getAppointments,
@@ -38,7 +38,7 @@ export async function DashboardUpcomingAppointmentsCard() {
       <SectionHeader className='mb-6'>
         <SectionHeaderTitle
           title='Próximos atendimentos'
-          icon={<ClipboardListIcon />}
+          icon={<ClipboardCheckIcon />}
         />
         <SectionHeaderActions>
           <NavButton

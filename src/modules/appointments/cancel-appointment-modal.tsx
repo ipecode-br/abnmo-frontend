@@ -43,10 +43,17 @@ export function CancelAppointmentModal({
         return
       }
 
-      revalidateClientCache(QUERY_CACHE_KEYS.appointments.main)
+      revalidateClientCache([
+        QUERY_CACHE_KEYS.appointments.main,
+        QUERY_CACHE_KEYS.statistics.totalAppointments,
+        QUERY_CACHE_KEYS.statistics.totalAppointmentsByCategory,
+        QUERY_CACHE_KEYS.statistics.totalAppointmentsByState,
+      ])
       revalidateServerCache([
         NEXT_CACHE_TAGS.patient(appointment.patient_id),
         NEXT_CACHE_TAGS.appointments.main,
+        NEXT_CACHE_TAGS.statistics.totalAppointments.main,
+        NEXT_CACHE_TAGS.statistics.totalPatientsWithAppointments.main,
       ])
       toast.success(response.message)
       onClose()
