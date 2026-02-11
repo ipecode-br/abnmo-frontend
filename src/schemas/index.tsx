@@ -1,13 +1,16 @@
 import { z } from 'zod'
 
+import { PASSWORD_MIN_LENGTH } from '@/constants/auth'
 import {
   CPF_REGEX,
   NAME_REGEX,
   NON_SPECIAL_CHAR_REGEX,
+  PASSWORD_REGEX,
   PHONE_REGEX,
 } from '@/constants/regex'
 import { PATIENT_CONDITION_ENUM } from '@/enums/patients'
 import { SPECIALTIES_ENUM, UF_LIST, YES_OR_NO_TUPLE } from '@/enums/shared'
+import { USERS_ROLE_ENUM } from '@/enums/users'
 
 export const nameSchema = z
   .string()
@@ -17,6 +20,19 @@ export const nameSchema = z
   .regex(NAME_REGEX, 'Informe o nome e sobrenome')
 
 export const emailSchema = z.string().email('Insira um e-mail válido')
+
+export const passwordSchema = z
+  .string()
+  .min(1, 'Insira sua senha')
+  .min(
+    PASSWORD_MIN_LENGTH,
+    `Sua senha precisa conter ${PASSWORD_MIN_LENGTH} ou mais caracteres`,
+  )
+  .regex(PASSWORD_REGEX, 'Senha inválida')
+
+export const avatarSchema = z.string().url()
+
+export const userRoleSchema = z.enum(USERS_ROLE_ENUM)
 
 export const phoneSchema = z
   .string()

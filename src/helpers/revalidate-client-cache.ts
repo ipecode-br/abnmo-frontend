@@ -1,6 +1,11 @@
 import { queryClient } from '@/lib/tanstack-query'
 
-export async function revalidateClientCache(keys: string | string[]) {
+export function revalidateClientCache(keys: string | string[] | 'all') {
+  if (keys === 'all') {
+    queryClient.clear()
+    return
+  }
+
   if (Array.isArray(keys)) {
     for (const key of keys) {
       queryClient.invalidateQueries({ queryKey: [key] })

@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { Avatar } from '@/components/ui/avatar'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
+import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
@@ -38,6 +39,8 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
       }
 
       revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
+      revalidateClientCache('all')
+
       toast.success(response.message)
       router.push(ROUTES.auth.signIn)
     })
@@ -68,7 +71,7 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
         <MenuContent sideOffset={8} className='min-w-32'>
           <MenuItem onClick={() => router.push(ROUTES.dashboard.profile)}>
             <UserCircle2Icon />
-            Perfil
+            Meu perfil
           </MenuItem>
           <Divider className='my-1' />
           <MenuItem onClick={logout} disabled={isPending}>

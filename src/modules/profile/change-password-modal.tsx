@@ -1,13 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { RotateCcwKeyIcon } from 'lucide-react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
-import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -15,106 +16,108 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
+  DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { api } from '@/lib/api'
+import { passwordSchema } from '@/schemas'
 
-// TODO: create a shared schema for password change and new password forms
-const changePasswordSchema = z
+const changeUserPasswordSchema = z
   .object({
-    password: z
-      .string()
-      .min(1, 'Insira sua senha')
-      .min(8, 'Sua senha precisa conter 8 ou mais caracteres')
-      .regex(/^(?=.*[A-Z])(?=.*\d)/, 'Senha inválida'),
-    confirmPassword: z.string(),
-    currentPassword: z.string().min(1, 'Digite sua senha atual'),
+    password: z.string().min(1, 'Insira sua senha atual'),
+    new_password: passwordSchema,
+    confirm_password: z.string(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Suas senhas não coincidem',
-    path: ['confirmPassword'],
+  .refine((data) => data.new_password === data.confirm_password, {
+    message: 'Repita sua nova senha corretamente',
+    path: ['confirm_password'],
   })
 
-type ChangePasswordSchema = z.infer<typeof changePasswordSchema>
+type ChangeUserPasswordSchema = z.infer<typeof changeUserPasswordSchema>
 
-interface PasswordModalProps {
-  onOpenChange: (open: boolean) => void
+interface ChangeUserPasswordModalProps {
+  onClose: () => void
 }
 
-export function ChangePasswordModal({ onOpenChange }: PasswordModalProps) {
-  const methods = useForm<ChangePasswordSchema>({
-    resolver: zodResolver(changePasswordSchema),
-    defaultValues: { password: '', confirmPassword: '', currentPassword: '' },
+export function ChangeUserPasswordModal({
+  onClose,
+}: ChangeUserPasswordModalProps) {
+  const formMethods = useForm<ChangeUserPasswordSchema>({
+    resolver: zodResolver(changeUserPasswordSchema),
+    defaultValues: { password: '', new_password: '', confirm_password: '' },
     mode: 'onBlur',
   })
 
-  const isSubmitting = methods.formState.isSubmitting
-  const errorMessage = methods.formState.errors.root?.message
-  const success = false
+  async function submitForm({
+    password,
+    new_password,
+  }: ChangeUserPasswordSchema) {
+    const response = await api(`/change-password`, {
+      method: 'POST',
+      body: JSON.stringify({ password, new_password }),
+    })
 
-  async function onSubmit(data: ChangePasswordSchema) {
-    console.log('Dados enviados para troca de senha:', data)
-    onOpenChange(false)
+    if (!response.success) {
+      toast.error(response.message)
+      return
+    }
+
+    toast.success(response.message)
+    onClose()
   }
 
   return (
     <DialogContainer>
-      <DialogHeader>
+      <DialogHeader icon={<DialogIcon icon={RotateCcwKeyIcon} />}>
         <DialogTitle>Alterar senha</DialogTitle>
       </DialogHeader>
 
-      <FormProvider {...methods}>
-        <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
-          <DialogContent className='flex flex-col gap-8'>
+      <FormProvider {...formMethods}>
+        <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
+          <DialogContent>
             <FormField>
               <PasswordInput
-                name='currentPassword'
+                name='password'
                 label='Senha atual'
                 placeholder='Digite sua senha atual'
                 isRequired
               />
 
               <PasswordInput
-                name='password'
+                name='new_password'
                 label='Nova senha'
                 placeholder='Crie uma nova senha'
-                isRequired
                 showRequirements
+                isRequired
               />
 
               <PasswordInput
-                name='confirmPassword'
+                name='confirm_password'
                 label='Confirmar nova senha'
                 placeholder='Repita a nova senha'
                 isRequired
               />
             </FormField>
-
-            <DialogFooter>
-              <Button type='submit' loading={isSubmitting} className='flex-1'>
-                Aplicar alterações
-              </Button>
-              <DialogClose
-                className='flex-1'
-                disabled={methods.formState.isSubmitting}
-              >
-                Cancelar
-              </DialogClose>
-            </DialogFooter>
-
-            {success && (
-              <Alert variant='success' className='text-center'>
-                Senha atualizada com sucesso.
-              </Alert>
-            )}
-
-            {errorMessage && (
-              <Alert error className='text-center'>
-                {errorMessage}
-              </Alert>
-            )}
           </DialogContent>
         </FormContainer>
       </FormProvider>
+
+      <DialogFooter>
+        <Button
+          type='submit'
+          loading={formMethods.formState.isSubmitting}
+          onClick={formMethods.handleSubmit(submitForm)}
+          className='flex-1'
+        >
+          Alterar
+        </Button>
+        <DialogClose
+          disabled={formMethods.formState.isSubmitting}
+          className='flex-1'
+        >
+          Voltar
+        </DialogClose>
+      </DialogFooter>
     </DialogContainer>
   )
 }

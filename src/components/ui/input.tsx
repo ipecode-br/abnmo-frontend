@@ -4,7 +4,7 @@ import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 export const inputVariants = cva(
-  'bg-background outline-ring w-full shrink-0 rounded-lg border px-3 shadow-xs outline-offset-4 transition-colors read-only:focus-visible:ring-0 read-only:focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50',
+  'bg-background outline-ring w-full shrink-0 rounded-lg border px-3 shadow-xs outline-offset-4 transition-colors read-only:outline-none disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {

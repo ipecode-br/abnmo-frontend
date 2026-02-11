@@ -77,7 +77,7 @@ export function UsersTable({ users, loading }: Readonly<UsersTableProps>) {
                     '-'
                   )}
                 </TableCell>
-                <TableCell>{user.registration_number ?? '-'}</TableCell>
+                <TableCell>{user.registration_id ?? '-'}</TableCell>
                 <TableCell>
                   <Tag variant={status.variant} size='sm'>
                     {status.label}

@@ -53,6 +53,7 @@ export function Select({
   ...props
 }: Readonly<SelectProps>) {
   const selectedOption = options.find((option) => option.value === value)
+  const showIndicator = !props.disabled && !props.readOnly
 
   return (
     <BaseSelect.Root value={value} items={options} {...props}>
@@ -62,10 +63,13 @@ export function Select({
         <BaseSelect.Value>
           {() => (selectedOption ? selectedOption.label : placeholder)}
         </BaseSelect.Value>
-        <BaseSelect.Icon>
-          <ChevronsUpDownIcon className='text-disabled size-4.5 shrink-0' />
-        </BaseSelect.Icon>
+        {showIndicator && (
+          <BaseSelect.Icon>
+            <ChevronsUpDownIcon className='text-disabled size-4.5 shrink-0' />
+          </BaseSelect.Icon>
+        )}
       </BaseSelect.Trigger>
+
       <BaseSelect.Portal>
         <BaseSelect.Positioner
           align={align}
