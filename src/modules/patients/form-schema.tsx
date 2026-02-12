@@ -8,17 +8,20 @@ import {
   genderSchema,
   kinshipSchema,
   nameSchema,
+  patientNmoDiagnosticSchema,
   phoneSchema,
+  raceSchema,
   stateSchema,
   yesOrNoSchema,
 } from '@/schemas'
 
-export const patientsFormSchema = z
+export const patientFormSchema = z
   .object({
     name: nameSchema,
     date_of_birth: dateOfBirthSchema,
     cpf: cpfSchema,
     gender: genderSchema,
+    race: raceSchema,
     state: stateSchema,
     city: citySchema,
     phone: phoneSchema,
@@ -34,7 +37,7 @@ export const patientsFormSchema = z
       .string()
       .transform((data) => data?.trim())
       .nullable(),
-    has_nmo_diagnosis: yesOrNoSchema,
+    nmo_diagnosis: patientNmoDiagnosticSchema,
     supports: z
       .array(
         z.object({
@@ -76,4 +79,4 @@ export const patientsFormSchema = z
     },
   )
 
-export type PatientsFormSchema = z.infer<typeof patientsFormSchema>
+export type PatientFormSchema = z.infer<typeof patientFormSchema>

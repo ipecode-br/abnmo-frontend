@@ -8,7 +8,12 @@ import {
   PASSWORD_REGEX,
   PHONE_REGEX,
 } from '@/constants/regex'
-import { PATIENT_CONDITION_ENUM } from '@/enums/patients'
+import {
+  PATIENT_CONDITION_ENUM,
+  PATIENT_GENDERS_ENUM,
+  PATIENT_NMO_DIAGNOSTICS_ENUM,
+  PATIENT_RACES_ENUM,
+} from '@/enums/patients'
 import { SPECIALTIES_ENUM, UF_LIST, YES_OR_NO_TUPLE } from '@/enums/shared'
 import { USERS_ROLE_ENUM } from '@/enums/users'
 
@@ -39,7 +44,9 @@ export const phoneSchema = z
   .nonempty('Informe o telefone')
   .regex(PHONE_REGEX, 'Insira um número de telefone válido')
 
-export const genderSchema = z.string().nonempty('Informe o gênero')
+export const genderSchema = z.enum(PATIENT_GENDERS_ENUM)
+
+export const raceSchema = z.enum(PATIENT_RACES_ENUM)
 
 export const dateOfBirthSchema = z
   .string()
@@ -87,6 +94,10 @@ export const specialtySchema = z.enum(SPECIALTIES_ENUM, {
 
 export const patientConditionSchema = z.enum(PATIENT_CONDITION_ENUM, {
   message: 'O quadro é obrigatório',
+})
+
+export const patientNmoDiagnosticSchema = z.enum(PATIENT_NMO_DIAGNOSTICS_ENUM, {
+  message: 'Este campo é obrigatório',
 })
 
 export const professionalNameSchema = z

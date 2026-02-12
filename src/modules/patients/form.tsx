@@ -21,17 +21,22 @@ import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Divider } from '@/components/ui/divider'
-import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
-import { PATIENT_GENDER_OPTIONS } from '@/enums/patients'
+import {
+  PATIENT_GENDER_OPTIONS,
+  PATIENT_NMO_DIAGNOSTIC_OPTIONS,
+  PATIENT_RACE_OPTIONS,
+} from '@/enums/patients'
 import {
   BRAZILIAN_STATES_OPTIONS,
   type UF,
   YES_OR_NO_OPTIONS,
 } from '@/enums/shared'
+import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
+import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { useCities } from '@/hooks/cities'
 import { api } from '@/lib/api'
-import { queryClient } from '@/lib/tanstack-query'
 import type { Patient } from '@/types/patients.d.ts'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
@@ -40,7 +45,7 @@ import { removeNonNumbers } from '@/utils/sanitizers'
 import { ComboboxInput } from '../../components/form/combobox-input'
 import { Dialog } from '../../components/ui/dialog'
 import CancelPatientFormModal from './cancel-form-modal'
-import { type PatientsFormSchema, patientsFormSchema } from './form-schema'
+import { type PatientFormSchema, patientFormSchema } from './form-schema'
 
 type PatientFormMode = 'view' | 'edit' | 'create'
 
@@ -59,33 +64,34 @@ export function PatientForm({
 
   const router = useRouter()
 
-  const defaultValues: PatientsFormSchema = {
-    name: patient?.name ?? '',
-    gender: patient?.gender ?? '',
-    date_of_birth: patient?.date_of_birth ?? '',
-    city: patient?.city ?? '',
-    state: patient?.state ?? '',
-    phone: patient?.phone ? formatPhoneNumber(patient.phone) : '',
-    cpf: patient?.cpf ? formatCpfNumber(patient.cpf) : '',
-    email: patient?.email ?? '',
-    has_disability: patient?.has_disability ? 'yes' : 'no',
-    disability_desc: patient?.disability_desc ?? '',
-    need_legal_assistance: patient?.need_legal_assistance ? 'yes' : 'no',
-    take_medication: patient?.take_medication ? 'yes' : 'no',
-    medication_desc: patient?.medication_desc ?? '',
-    has_nmo_diagnosis: patient?.has_nmo_diagnosis ? 'yes' : 'no',
-    supports: patient?.supports?.map((support) => ({
-      ...support,
-      phone: formatPhoneNumber(support.phone),
-    })) ?? [{ name: '', phone: '', kinship: '' }],
-  }
-
-  const formMethods = useForm<PatientsFormSchema>({
-    resolver: zodResolver(patientsFormSchema),
-    defaultValues,
+  const formMethods = useForm<PatientFormSchema>({
+    resolver: zodResolver(patientFormSchema),
+    defaultValues: {
+      name: patient?.name || '',
+      gender: patient?.gender || '',
+      race: patient?.race || '',
+      date_of_birth: patient?.date_of_birth || '',
+      city: patient?.city || '',
+      state: patient?.state || '',
+      phone: patient?.phone ? formatPhoneNumber(patient.phone) : '',
+      cpf: patient?.cpf ? formatCpfNumber(patient.cpf) : '',
+      email: patient?.email || '',
+      has_disability: patient?.has_disability ? 'yes' : 'no',
+      disability_desc: patient?.disability_desc || '',
+      need_legal_assistance: patient?.need_legal_assistance ? 'yes' : 'no',
+      take_medication: patient?.take_medication ? 'yes' : 'no',
+      medication_desc: patient?.medication_desc || '',
+      nmo_diagnosis: patient?.nmo_diagnosis || '',
+      supports: patient?.supports?.map((support) => ({
+        ...support,
+        phone: formatPhoneNumber(support.phone),
+      })) ?? [{ name: '', phone: '', kinship: '' }],
+    } as unknown as PatientFormSchema,
     mode: 'onBlur',
   })
+
   const { clearErrors, setValue, watch, control } = formMethods
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'supports',
@@ -120,14 +126,14 @@ export function PatientForm({
     formMethods.reset()
   }
 
-  async function submitForm(data: PatientsFormSchema) {
+  async function submitForm(data: PatientFormSchema) {
     if (formState === 'edit') {
       // TODO: Implement update patient request
       console.log(data)
       return
     }
 
-    const patient = patientsFormSchema.safeParse(data)
+    const patient = patientFormSchema.safeParse(data)
 
     if (!patient.success) {
       toast.error(
@@ -153,7 +159,6 @@ export function PatientForm({
       need_legal_assistance: patient.data.need_legal_assistance === 'yes',
       take_medication: patient.data.take_medication === 'yes',
       medication_desc: patient.data.medication_desc ?? null,
-      has_nmo_diagnosis: patient.data.has_nmo_diagnosis === 'yes',
       supports,
     }
 
@@ -167,7 +172,8 @@ export function PatientForm({
       return
     }
 
-    queryClient.invalidateQueries({ queryKey: [QUERY_CACHE_KEYS.patients] })
+    revalidateClientCache([QUERY_CACHE_KEYS.patients.main])
+    revalidateServerCache(NEXT_CACHE_TAGS.statistics.totalPatients.main)
     toast.success(response.message)
     formMethods.reset()
 
@@ -177,7 +183,7 @@ export function PatientForm({
   return (
     <FormProvider {...formMethods}>
       <FormContainer
-        className='grid gap-x-4 sm:grid-cols-6'
+        className='grid gap-x-4 lg:grid-cols-6'
         onSubmit={formMethods.handleSubmit(submitForm)}
       >
         <TextInput
@@ -187,7 +193,7 @@ export function PatientForm({
           readOnly={isViewMode}
           isRequired={!isViewMode}
           placeholder='Insira o nome completo'
-          wrapperClassName='sm:col-span-2'
+          wrapperClassName='lg:col-span-4'
         />
         <DateInput
           name='date_of_birth'
@@ -195,8 +201,9 @@ export function PatientForm({
           navMode='dropdown'
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          wrapperClassName='sm:col-span-2'
+          wrapperClassName='lg:col-span-2'
         />
+
         <TextInput
           name='cpf'
           label='CPF'
@@ -205,38 +212,25 @@ export function PatientForm({
           readOnly={isViewMode}
           isRequired={!isViewMode}
           placeholder='000.000.000-00'
-          wrapperClassName='sm:col-span-2'
+          wrapperClassName='lg:col-span-2'
         />
-
         <SelectInput
           name='gender'
           label='Gênero'
           options={PATIENT_GENDER_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          placeholder='Selecione o gênero'
-          className='sm:col-span-2'
+          placeholder='Selecione'
+          className='lg:col-span-2'
         />
-
-        <ComboboxInput
-          name='state'
-          label='Estado'
-          options={BRAZILIAN_STATES_OPTIONS}
-          placeholder='Selecione o estado'
-          className='sm:col-span-2'
-          isRequired={!isViewMode}
-          onValueChange={handleSelectState}
-        />
-
-        <ComboboxInput
-          name='city'
-          label='Cidade'
-          options={cities}
+        <SelectInput
+          name='race'
+          label='Raça ou Cor'
+          options={PATIENT_RACE_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          disabled={!selectedUF}
-          placeholder='Selecione a cidade'
-          className='sm:col-span-2'
+          placeholder='Selecionar'
+          className='lg:col-span-2'
         />
 
         <TextInput
@@ -247,8 +241,28 @@ export function PatientForm({
           readOnly={isViewMode}
           isRequired={!isViewMode}
           placeholder='(00) 00000-0000'
-          wrapperClassName='sm:col-span-3'
+          wrapperClassName='lg:col-span-2'
         />
+        <ComboboxInput
+          name='state'
+          label='Estado'
+          options={BRAZILIAN_STATES_OPTIONS}
+          placeholder='Selecione o estado'
+          className='lg:col-span-2'
+          onValueChange={handleSelectState}
+          isRequired={!isViewMode}
+        />
+        <ComboboxInput
+          name='city'
+          label='Cidade'
+          options={cities}
+          readOnly={isViewMode}
+          isRequired={!isViewMode}
+          disabled={!selectedUF}
+          placeholder='Selecione a cidade'
+          className='lg:col-span-2'
+        />
+
         <TextInput
           name='email'
           label='E-mail'
@@ -256,10 +270,10 @@ export function PatientForm({
           readOnly={isViewMode}
           isRequired={!isViewMode}
           placeholder='Insira o e-mail'
-          wrapperClassName='sm:col-span-3'
+          wrapperClassName='lg:col-span-full'
         />
 
-        <Divider className='sm:col-span-6' />
+        <Divider className='lg:col-span-full' />
 
         <SelectInput
           name='has_disability'
@@ -267,13 +281,13 @@ export function PatientForm({
           options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          className='sm:col-span-2'
+          className='lg:col-span-2'
         />
         <TextInput
           name='disability_desc'
           label='Se sim, qual?'
           readOnly={isViewMode}
-          wrapperClassName='sm:col-span-4'
+          wrapperClassName='lg:col-span-4'
           disabled={formMethods.watch('has_disability') === 'no'}
         />
 
@@ -283,23 +297,23 @@ export function PatientForm({
           options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          className='sm:col-span-2'
+          className='lg:col-span-2'
         />
         <TextInput
           name='medication_desc'
           label='Se sim, qual?'
           readOnly={isViewMode}
-          wrapperClassName='sm:col-span-4'
+          wrapperClassName='lg:col-span-4'
           disabled={formMethods.watch('take_medication') === 'no'}
         />
 
         <SelectInput
-          name='has_nmo_diagnosis'
+          name='nmo_diagnosis'
           label='Possui diagnóstico de NMO?'
-          options={YES_OR_NO_OPTIONS}
+          options={PATIENT_NMO_DIAGNOSTIC_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          className='sm:col-span-3'
+          className='lg:col-span-3'
         />
         <SelectInput
           name='need_legal_assistance'
@@ -307,15 +321,15 @@ export function PatientForm({
           options={YES_OR_NO_OPTIONS}
           readOnly={isViewMode}
           isRequired={!isViewMode}
-          className='sm:col-span-3'
+          className='lg:col-span-3'
         />
 
         {(formState === 'create' || patientSupports.length >= 1) && (
-          <Divider className='sm:col-span-6' />
+          <Divider className='lg:col-span-full' />
         )}
 
         {patientSupports.length >= 1 && (
-          <div className='space-y-6 sm:col-span-6'>
+          <div className='space-y-6 lg:col-span-6'>
             <h1 className='text-xl font-medium'>Rede de apoio</h1>
             <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
               {fields.map((support, index) => (
@@ -325,16 +339,16 @@ export function PatientForm({
                     label='Nome completo'
                     maxLength={50}
                     readOnly={isViewMode}
-                    wrapperClassName='sm:col-span-3'
+                    wrapperClassName='lg:col-span-3'
                   />
                   <TextInput
                     name={`supports.${index}.kinship`}
                     label='Parentesco'
                     maxLength={50}
                     readOnly={isViewMode}
-                    wrapperClassName='sm:col-span-1'
+                    wrapperClassName='lg:col-span-1'
                   />
-                  <div className='flex gap-1 sm:col-span-2'>
+                  <div className='flex gap-1 lg:col-span-2'>
                     <TextInput
                       name={`supports.${index}.phone`}
                       label='Telefone (WhatsApp)'
@@ -366,7 +380,7 @@ export function PatientForm({
         )}
 
         {formState === 'create' && (
-          <div className='space-y-6 sm:col-span-6'>
+          <div className='space-y-6 lg:col-span-6'>
             <h1 className='text-xl font-medium'>Rede de apoio</h1>
             <div className='grid gap-x-4 gap-y-6 sm:grid-cols-6'>
               {fields.map((support, index) => (
@@ -377,7 +391,7 @@ export function PatientForm({
                     maxLength={50}
                     isRequired
                     placeholder='Insira o nome completo'
-                    wrapperClassName='sm:col-span-3'
+                    wrapperClassName='lg:col-span-3'
                   />
                   <TextInput
                     name={`supports.${index}.kinship`}
@@ -385,9 +399,9 @@ export function PatientForm({
                     maxLength={50}
                     isRequired
                     placeholder='Selecione o parentesco'
-                    wrapperClassName='sm:col-span-1'
+                    wrapperClassName='lg:col-span-1'
                   />
-                  <div className='flex items-end gap-1 sm:col-span-2'>
+                  <div className='flex items-end gap-1 lg:col-span-2'>
                     <TextInput
                       name={`supports.${index}.phone`}
                       label='Telefone (WhatsApp)'
@@ -420,7 +434,7 @@ export function PatientForm({
           </div>
         )}
 
-        <div className='mt-3 flex justify-end gap-2 sm:col-span-6'>
+        <div className='mt-3 flex justify-end gap-2 lg:col-span-6'>
           {isViewMode && (
             <Button
               type='button'
