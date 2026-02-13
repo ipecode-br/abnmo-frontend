@@ -70,6 +70,7 @@ export function SelectInput<T>({
               value={field.value}
               placeholder={placeholder}
               onValueChange={handleValueChange}
+              variant={fieldState.error && 'error'}
             />
             <FormMessage error={!!fieldState.error?.message}>
               {showMessage}

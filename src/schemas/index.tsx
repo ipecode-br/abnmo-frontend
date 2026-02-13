@@ -14,7 +14,11 @@ import {
   PATIENT_NMO_DIAGNOSTICS_ENUM,
   PATIENT_RACES_ENUM,
 } from '@/enums/patients'
-import { SPECIALTIES_ENUM, UF_LIST, YES_OR_NO_TUPLE } from '@/enums/shared'
+import {
+  BRAZILIAN_STATES_ENUM,
+  SPECIALTIES_ENUM,
+  YES_OR_NO_TUPLE,
+} from '@/enums/shared'
 import { USERS_ROLE_ENUM } from '@/enums/users'
 
 export const nameSchema = z
@@ -41,40 +45,41 @@ export const userRoleSchema = z.enum(USERS_ROLE_ENUM)
 
 export const phoneSchema = z
   .string()
-  .nonempty('Informe o telefone')
+  .nonempty('Insira o telefone')
   .regex(PHONE_REGEX, 'Insira um número de telefone válido')
 
-export const genderSchema = z.enum(PATIENT_GENDERS_ENUM)
+export const genderSchema = z.enum(PATIENT_GENDERS_ENUM, {
+  message: 'Selecione um gênero',
+})
 
-export const raceSchema = z.enum(PATIENT_RACES_ENUM)
+export const raceSchema = z.enum(PATIENT_RACES_ENUM, {
+  message: 'Selecione uma raça ou cor',
+})
 
 export const dateOfBirthSchema = z
   .string()
-  .datetime('Informe uma data válida')
+  .datetime('Insira uma data válida')
   .refine(
     (value) => {
       const date = new Date(value)
       return date >= new Date('1900-01-01') && date <= new Date()
     },
-    { message: 'Informe uma data válida' },
+    { message: 'Insira uma data válida' },
   )
 
-export const stateSchema = z
-  .string()
-  .nonempty('Informe o estado')
-  .refine((value) => value in UF_LIST, {
-    message: 'Selecione um estado válido',
-  })
+export const stateSchema = z.enum(BRAZILIAN_STATES_ENUM, {
+  message: 'Selecione o estado',
+})
 
 export const citySchema = z
   .string()
-  .nonempty('Informe a cidade')
-  .refine((input) => input.trim(), { message: 'Informe a cidade' })
+  .nonempty('Selecione a cidade')
+  .refine((input) => input.trim(), { message: 'Selecione a cidade' })
 
 export const cpfSchema = z
   .string()
-  .nonempty('Informe o CPF')
-  .regex(CPF_REGEX, 'Informe um CPF válido')
+  .nonempty('Insira o CPF')
+  .regex(CPF_REGEX, 'Insira um CPF válido')
 
 export const kinshipSchema = z
   .string()

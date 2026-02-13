@@ -19,6 +19,7 @@ export interface DatePickerProps
   value?: string | null
   onSelectDate?: (date: string) => void
   modal?: boolean
+  placeholder?: string
 }
 
 export function DatePicker({
@@ -29,6 +30,7 @@ export function DatePicker({
   onSelectDate,
   modal,
   startDate,
+  placeholder = 'Selecionar data',
   ...props
 }: Readonly<DatePickerProps>) {
   const [open, setOpen] = useState(false)
@@ -68,7 +70,7 @@ export function DatePicker({
         {date ? (
           formatDate(date, { dateStyle: 'short' })
         ) : (
-          <span className='text-disabled'>Selecionar</span>
+          <span className='text-disabled'>{placeholder}</span>
         )}
       </PopoverTrigger>
 

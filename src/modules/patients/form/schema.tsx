@@ -29,13 +29,13 @@ export const patientFormSchema = z
     has_disability: yesOrNoSchema,
     disability_desc: z
       .string()
-      .transform((data) => data?.trim())
+      .transform((data) => data.trim())
       .nullable(),
     need_legal_assistance: yesOrNoSchema,
     take_medication: yesOrNoSchema,
     medication_desc: z
       .string()
-      .transform((data) => data?.trim())
+      .transform((data) => data.trim())
       .nullable(),
     nmo_diagnosis: patientNmoDiagnosticSchema,
     supports: z
@@ -46,7 +46,7 @@ export const patientFormSchema = z
           phone: phoneSchema,
         }),
       )
-      .optional(),
+      .min(1),
   })
   .refine(
     (data) => {

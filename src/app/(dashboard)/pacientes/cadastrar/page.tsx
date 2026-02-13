@@ -1,22 +1,22 @@
-import { UserRoundPlusIcon } from 'lucide-react'
+import { UserPlus2Icon } from 'lucide-react'
 import type { Metadata } from 'next'
 
+import { SectionHeader, SectionHeaderTitle } from '@/components/section-header'
 import { PatientForm } from '@/modules/patients/form'
 
 export const metadata: Metadata = {
-  title: 'Cadastrar novo paciente',
+  title: 'Cadastrar paciente',
 }
 
 export default function Page() {
   return (
     <>
-      <div className='flex items-center gap-4'>
-        <span className='bg-border/50 rounded-lg p-2'>
-          <UserRoundPlusIcon className='text-primary size-5.5' />
-        </span>
-
-        <h1 className='text-xl font-medium'>Cadastrar novo paciente</h1>
-      </div>
+      <SectionHeader>
+        <SectionHeaderTitle
+          title='Cadastrar paciente'
+          icon={<UserPlus2Icon />}
+        />
+      </SectionHeader>
 
       <PatientForm mode='create' />
     </>

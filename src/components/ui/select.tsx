@@ -19,15 +19,20 @@ export type SelectOption = {
 }
 
 const selectTriggerVariants = cva(
-  'border-border bg-background data-[placeholder]:text-disabled outline-ring hover:bg-accent flex cursor-pointer items-center justify-between gap-2 rounded-lg border pr-2 pl-3 shadow-xs outline-offset-4 transition-colors disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
+  'bg-background data-[placeholder]:text-disabled hover:bg-accent flex cursor-pointer items-center gap-2 rounded-lg border pr-2 pl-3 text-left shadow-xs outline-offset-4 transition-colors disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
   {
     variants: {
+      variant: {
+        default: 'outline-ring border-border',
+        error: 'outline-error border-error',
+      },
       size: {
         default: 'h-10',
         sm: 'h-9',
       },
     },
     defaultVariants: {
+      variant: 'default',
       size: 'default',
     },
   },
@@ -50,6 +55,7 @@ export function Select({
   className,
   resetLabel,
   placeholder = 'Selecione uma opção',
+  variant,
   ...props
 }: Readonly<SelectProps>) {
   const selectedOption = options.find((option) => option.value === value)
@@ -58,9 +64,9 @@ export function Select({
   return (
     <BaseSelect.Root value={value} items={options} {...props}>
       <BaseSelect.Trigger
-        className={cn('w-full', selectTriggerVariants({ size, className }))}
+        className={selectTriggerVariants({ variant, size, className })}
       >
-        <BaseSelect.Value>
+        <BaseSelect.Value className='w-full truncate whitespace-nowrap'>
           {() => (selectedOption ? selectedOption.label : placeholder)}
         </BaseSelect.Value>
         {showIndicator && (

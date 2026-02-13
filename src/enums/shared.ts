@@ -48,6 +48,7 @@ export const UF_LIST = {
 }
 export type UF = keyof typeof UF_LIST
 export const BRAZILIAN_STATES_OPTIONS = convertObjectToOptions(UF_LIST)
+export const BRAZILIAN_STATES_ENUM = Object.keys(UF_LIST) as [UF]
 
 export const YES_OR_NO = {
   yes: 'Sim',

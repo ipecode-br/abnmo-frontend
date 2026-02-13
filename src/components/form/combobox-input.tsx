@@ -10,7 +10,7 @@ import { Label } from '../ui/label'
 import { FormMessage } from './form-message'
 import { RequiredInput } from './required-input'
 
-type ComboboxInputProps = Omit<
+type ComboboxInputProps<T> = Omit<
   ComboboxProps,
   'value' | 'onSelect' | 'variant'
 > & {
@@ -18,10 +18,10 @@ type ComboboxInputProps = Omit<
   message?: string
   className?: string
   isRequired?: boolean
-  onValueChange?: (value: string) => void
+  onValueChange?: (value: T) => void
 }
 
-export function ComboboxInput({
+export function ComboboxInput<T>({
   name,
   label,
   message,
@@ -29,7 +29,7 @@ export function ComboboxInput({
   className,
   onValueChange,
   ...props
-}: Readonly<ComboboxInputProps>) {
+}: Readonly<ComboboxInputProps<T>>) {
   const { control } = useFormContext()
 
   if (!control) {
@@ -55,7 +55,7 @@ export function ComboboxInput({
               variant={fieldState.error && 'error'}
               onSelect={(value) => {
                 field.onChange(value)
-                onValueChange?.(value)
+                onValueChange?.(value as T)
               }}
               {...props}
             />
