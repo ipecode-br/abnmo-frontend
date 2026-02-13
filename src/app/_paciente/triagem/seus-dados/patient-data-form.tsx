@@ -37,14 +37,14 @@ export function ScreeningPatientDataForm() {
       state: '',
       phone: '',
       cpf: '',
-    },
+    } as unknown as ScreeningPatientDataFormSchema,
     mode: 'onBlur',
   })
   const { clearErrors, setValue, watch, reset } = formMethods
   const UF = watch('state') as UF
   const cities = useCities(UF)
 
-  function handleSelectState(value: string) {
+  function handleSelectState(value: UF) {
     setValue('state', value)
     setValue('city', '')
     clearErrors('state')

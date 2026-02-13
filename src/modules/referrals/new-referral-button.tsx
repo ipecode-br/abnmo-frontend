@@ -8,7 +8,14 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import type { ButtonProps } from '../../components/ui/button'
 import { ReferralModal } from './referral-modal'
 
-export function NewReferralButton(props: Readonly<ButtonProps>) {
+interface NewReferralButtonProps extends ButtonProps {
+  patientId?: string
+}
+
+export function NewReferralButton({
+  patientId,
+  ...props
+}: Readonly<NewReferralButtonProps>) {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
@@ -18,7 +25,12 @@ export function NewReferralButton(props: Readonly<ButtonProps>) {
         Encaminhar
       </DialogTrigger>
 
-      {modalOpen && <ReferralModal onClose={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <ReferralModal
+          patientId={patientId}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </Dialog>
   )
 }

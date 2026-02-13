@@ -1,9 +1,13 @@
-import { UserRoundIcon } from 'lucide-react'
+import { User2Icon } from 'lucide-react'
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 
 import { getPatient } from '@/actions/patients/get-patient'
-import { ROUTES } from '@/constants/routes'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
+import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
 import { PatientForm } from '@/modules/patients/form'
 import { InactivatePatientButton } from '@/modules/patients/inactivate-button'
 import { NewReferralButton } from '@/modules/referrals/new-referral-button'
@@ -12,18 +16,12 @@ export const metadata: Metadata = {
   title: 'Informações do paciente',
 }
 
-interface PatientHistoryPageParams {
+interface PageParams {
   params: Promise<{ id: string }>
 }
 
-export default async function Page({
-  params,
-}: Readonly<PatientHistoryPageParams>) {
+export default async function Page({ params }: Readonly<PageParams>) {
   const patientId = (await params).id
-
-  if (!patientId) {
-    redirect(ROUTES.dashboard.patients.main)
-  }
 
   const patient = await getPatient(patientId)
 
@@ -35,19 +33,20 @@ export default async function Page({
 
   return (
     <>
-      <header className='mb-3 flex justify-between'>
-        <div className='flex items-center gap-4'>
-          <span className='bg-border/50 rounded-lg p-2'>
-            <UserRoundIcon className='text-primary size-5.5' />
-          </span>
-          <h1 className='text-xl font-medium'>Informações do paciente</h1>
-        </div>
+      <SectionHeader className='mb-3'>
+        <SectionHeaderTitle
+          title='Informações do paciente'
+          icon={<User2Icon />}
+        />
 
-        <div className='flex gap-2'>
-          {isPatientActive && <InactivatePatientButton patient={patient} />}
-          <NewReferralButton id={patient.id} />
-        </div>
-      </header>
+        {isPatientActive && (
+          <SectionHeaderActions>
+            <InactivatePatientButton patient={patient} size='sm' />
+            <NewReferralButton patientId={patient.id} size='sm' />
+            <NewAppointmentButton patientId={patient.id} size='sm' />
+          </SectionHeaderActions>
+        )}
+      </SectionHeader>
 
       <PatientForm patient={patient} mode='view' />
     </>
