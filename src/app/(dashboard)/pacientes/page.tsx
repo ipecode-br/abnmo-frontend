@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
-import { PatientsTable } from '@/modules/patients/table'
+import { PatientsList } from '@/modules/patients/list'
 
 export const metadata: Metadata = {
   title: 'Pacientes',
 }
 
 export default function Page() {
-  return <PatientsTable />
+  return <PatientsList />
 }

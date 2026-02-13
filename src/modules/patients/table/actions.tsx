@@ -17,10 +17,10 @@ import { ROUTES } from '@/constants/routes'
 import { AppointmentModal } from '@/modules/appointments/appointment-modal'
 import { InactivatePatientModal } from '@/modules/patients/inactivate-modal'
 import { ReferralModal } from '@/modules/referrals/referral-modal'
-import type { Patient } from '@/types/patients.d.ts'
+import type { PatientListItem } from '@/types/patients.d.ts'
 
 interface PatientsTableActionsProps {
-  patient: Patient
+  patient: PatientListItem
 }
 
 export function PatientsTableActions({ patient }: PatientsTableActionsProps) {

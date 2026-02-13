@@ -64,12 +64,7 @@ export function CancelReferralModal({
   return (
     <DialogContainer>
       <DialogHeader
-        icon={
-          <DialogIcon
-            icon={CircleXIcon}
-            className='text-error bg-error/10 border-none'
-          />
-        }
+        icon={<DialogIcon icon={CircleXIcon} variant='destructive' />}
       >
         <DialogTitle>Cancelar encaminhamento</DialogTitle>
       </DialogHeader>

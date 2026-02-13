@@ -70,12 +70,7 @@ export function InactivatePatientModal({
   return (
     <DialogContainer className='max-w-md'>
       <DialogHeader
-        icon={
-          <DialogIcon
-            icon={CircleXIcon}
-            className='text-error bg-error/10 border-none'
-          />
-        }
+        icon={<DialogIcon icon={CircleXIcon} variant='destructive' />}
       >
         <DialogTitle>Inativar {name}?</DialogTitle>
         <DialogDescription>Confirme a inativação do paciente</DialogDescription>

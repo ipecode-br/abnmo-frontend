@@ -55,7 +55,7 @@ export function AppointmentsTable({
           </TableRow>
         )}
 
-        {!loading &&
+        {!isEmpty &&
           appointments.map((appointment) => {
             const status = APPOINTMENT_STATUSES[appointment.status]
             const condition = PATIENT_CONDITIONS[appointment.condition]

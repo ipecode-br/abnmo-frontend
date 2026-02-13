@@ -42,10 +42,10 @@ import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { removeNonNumbers } from '@/utils/sanitizers'
 
-import { ComboboxInput } from '../../components/form/combobox-input'
-import { Dialog } from '../../components/ui/dialog'
-import CancelPatientFormModal from './cancel-form-modal'
-import { type PatientFormSchema, patientFormSchema } from './form-schema'
+import { ComboboxInput } from '../../../components/form/combobox-input'
+import { Dialog } from '../../../components/ui/dialog'
+import CancelPatientFormModal from './cancel-modal'
+import { type PatientFormSchema, patientFormSchema } from './schema'
 
 type PatientFormMode = 'view' | 'edit' | 'create'
 

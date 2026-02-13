@@ -1,15 +1,15 @@
 import { CircleAlertIcon } from 'lucide-react'
 
-import { Button } from '../../components/ui/button'
+import { Button } from '@/components/ui/button'
 import {
   DialogClose,
   DialogContainer,
-  DialogDescription,
+  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogIcon,
   DialogTitle,
-} from '../../components/ui/dialog'
+} from '@/components/ui/dialog'
 
 interface CancelPatientFormModalProps {
   onConfirm: () => void
@@ -21,18 +21,14 @@ export default function CancelPatientFormModal({
   return (
     <DialogContainer>
       <DialogHeader
-        icon={
-          <DialogIcon
-            icon={CircleAlertIcon}
-            className='bg-error/10 text-error'
-          />
-        }
+        icon={<DialogIcon icon={CircleAlertIcon} variant='destructive' />}
       >
-        <DialogTitle>Cancelar o cadastro do paciente?</DialogTitle>
-        <DialogDescription>
-          Esta ação é irreversível e todo o progresso será perdido.
-        </DialogDescription>
+        <DialogTitle>Cancelar cadastro</DialogTitle>
       </DialogHeader>
+      <DialogContent className='space-y-2'>
+        <p>Tem certeza que deseja cancelar o cadastro deste paciente?</p>
+        <p>Esta ação é irreversível e todo o progresso será perdido.</p>
+      </DialogContent>
       <DialogFooter>
         <Button className='flex-1' variant='destructive' onClick={onConfirm}>
           Cancelar cadastro

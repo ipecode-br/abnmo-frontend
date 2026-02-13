@@ -32,6 +32,11 @@ export type Patient = {
   supports?: PatientSupport[]
 }
 
+export type PatientListItem = Pick<
+  Patient,
+  'id' | 'name' | 'email' | 'phone' | 'avatar_url' | 'status' | 'created_at'
+>
+
 export type PatientDocument = {
   id: string
   name: string
