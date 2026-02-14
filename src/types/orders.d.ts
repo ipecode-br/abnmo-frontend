@@ -18,6 +18,13 @@ export type PatientAppointmentsOrderBy =
   | 'condition'
   | 'professional'
 
+export type PatientReferralsOrderBy =
+  | 'date'
+  | 'status'
+  | 'category'
+  | 'condition'
+  | 'professional'
+
 export type AppointmentsOrderBy =
   | 'date'
   | 'patient'

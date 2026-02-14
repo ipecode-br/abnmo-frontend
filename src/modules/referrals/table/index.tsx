@@ -1,4 +1,5 @@
 import { Avatar } from '@/components/ui/avatar'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -18,24 +19,30 @@ import type { Referral } from '@/types/referrals'
 import { formatDate } from '@/utils/formatters/format-date'
 
 import { ReferralsTableActions } from './actions'
-import { ReferralsTableSkeleton } from './skeleton'
+
+type HideReferralsColumns = 'name'
 
 interface ReferralsTableProps {
   referrals: Referral[]
+  hideColumns?: HideReferralsColumns[]
   loading?: boolean
 }
 
 export function ReferralsTable({
   referrals,
+  hideColumns = [],
   loading,
 }: Readonly<ReferralsTableProps>) {
+  const skeletons = Array.from({ length: 10 }).map((_, index) => index)
+
   const isEmpty = !loading && referrals.length <= 0
+  const showPatientName = !hideColumns.includes('name')
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className='w-64'>Paciente</TableHead>
+          {showPatientName && <TableHead className='w-64'>Paciente</TableHead>}
           <TableHead className='w-36'>Data</TableHead>
           <TableHead className='w-48'>Categoria</TableHead>
           <TableHead>Profissional</TableHead>
@@ -45,8 +52,6 @@ export function ReferralsTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {loading && <ReferralsTableSkeleton />}
-
         {isEmpty && (
           <TableRow>
             <TableEmptyCell colSpan={6}>
@@ -63,20 +68,22 @@ export function ReferralsTable({
 
             return (
               <TableRow key={referral.id}>
-                <TableCell>
-                  <TableLink
-                    className='w-64'
-                    href={ROUTES.dashboard.patients.details.info(
-                      referral.patient_id,
-                    )}
-                  >
-                    <Avatar
-                      className='size-9'
-                      src={referral.patient.avatar_url}
-                    />
-                    <span className='truncate'>{referral.patient.name}</span>
-                  </TableLink>
-                </TableCell>
+                {showPatientName && (
+                  <TableCell>
+                    <TableLink
+                      className='w-64'
+                      href={ROUTES.dashboard.patients.details.info(
+                        referral.patient_id,
+                      )}
+                    >
+                      <Avatar
+                        className='size-9'
+                        src={referral.patient.avatar_url}
+                      />
+                      <span className='truncate'>{referral.patient.name}</span>
+                    </TableLink>
+                  </TableCell>
+                )}
                 <TableCell>{formatDate(referral.date)}</TableCell>
                 <TableCell>
                   <Tag size='sm'>{SPECIALTIES[referral.category]}</Tag>
@@ -94,11 +101,45 @@ export function ReferralsTable({
                   </Tag>
                 </TableCell>
                 <TableCell className='text-center'>
-                  <ReferralsTableActions referral={referral} />
+                  {referral.status !== 'canceled' && (
+                    <ReferralsTableActions referral={referral} />
+                  )}
                 </TableCell>
               </TableRow>
             )
           })}
+
+        {loading &&
+          skeletons.map((skeleton) => (
+            <TableRow key={skeleton}>
+              {showPatientName && (
+                <TableCell>
+                  <div className='flex w-64 items-center gap-2'>
+                    <Skeleton className='size-9 rounded-full' />
+                    <Skeleton className='h-5 w-44 rounded-md' />
+                  </div>
+                </TableCell>
+              )}
+              <TableCell>
+                <Skeleton className='h-5 w-24 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-6 w-36 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-5 w-40 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-6 w-24 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-6 w-28 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='mx-auto size-8 rounded-md' />
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   )
