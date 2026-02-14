@@ -77,19 +77,17 @@ export function PatientAppointmentsList({
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.appointments.main, patientId, paramsQueryKey],
     queryFn: () =>
-      api<{ appointments: Appointment[]; total: number }>(
-        `/appointments/${patientId}`,
-        {
-          params: {
-            page,
-            category,
-            status,
-            startDate,
-            endDate,
-            ...orderByQuery,
-          },
+      api<{ appointments: Appointment[]; total: number }>(`/appointments`, {
+        params: {
+          patientId,
+          page,
+          category,
+          status,
+          startDate,
+          endDate,
+          ...orderByQuery,
         },
-      ),
+      }),
   })
 
   const appointments = response?.data?.appointments ?? []
