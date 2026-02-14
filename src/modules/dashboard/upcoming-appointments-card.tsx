@@ -53,7 +53,7 @@ export async function DashboardUpcomingAppointmentsCard() {
         </SectionHeaderActions>
       </SectionHeader>
 
-      <AppointmentsTable appointments={appointments} />
+      <AppointmentsTable appointments={appointments} hideColumns={['status']} />
     </Card>
   )
 }

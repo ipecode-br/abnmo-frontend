@@ -5,7 +5,7 @@ import { Loader2Icon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 const buttonVariants = cva(
-  'outline-ring flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap outline-offset-4 transition-colors disabled:pointer-events-none disabled:opacity-50 aria-readonly:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
+  'outline-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap outline-offset-4 transition-colors disabled:pointer-events-none disabled:opacity-50 aria-readonly:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
   {
     variants: {
       variant: {

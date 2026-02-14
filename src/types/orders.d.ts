@@ -11,6 +11,13 @@ export type InvitesOrderBy = 'email' | 'date'
 
 export type PatientsOrderBy = 'name' | 'email' | 'status' | 'date'
 
+export type PatientAppointmentsOrderBy =
+  | 'date'
+  | 'status'
+  | 'category'
+  | 'condition'
+  | 'professional'
+
 export type AppointmentsOrderBy =
   | 'date'
   | 'patient'

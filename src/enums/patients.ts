@@ -111,3 +111,21 @@ export const PATIENTS_ORDERS = {
 export type PatientsOrder = keyof typeof PATIENTS_ORDERS
 
 export const PATIENTS_ORDER_OPTIONS = convertObjectToOptions(PATIENTS_ORDERS)
+
+export const PATIENT_APPOINTMENTS_ORDER = {
+  date_asc: 'Data (Asc.)',
+  date_desc: 'Data (Desc.)',
+  status_asc: 'Status (Asc.)',
+  status_desc: 'Status (Desc.)',
+  category_asc: 'Categoria (Asc.)',
+  category_desc: 'Categoria (Desc.)',
+  condition_asc: 'Quadro geral (Asc.)',
+  condition_desc: 'Quadro geral (Desc.)',
+  professional_asc: 'Profissional (Asc.)',
+  professional_desc: 'Profissional (Desc.)',
+}
+export type PatientAppointmentsOrder = keyof typeof PATIENT_APPOINTMENTS_ORDER
+
+export const PATIENT_APPOINTMENTS_ORDER_OPTIONS = convertObjectToOptions(
+  PATIENT_APPOINTMENTS_ORDER,
+)

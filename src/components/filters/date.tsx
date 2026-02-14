@@ -42,6 +42,7 @@ export function FilterDate({
         <DatePicker
           size='sm'
           value={startDate}
+          placeholder='Selecionar'
           onSelectDate={handleSelectStartDate}
           allowFutureDates={allowFutureDates}
         />
@@ -51,6 +52,7 @@ export function FilterDate({
           size='sm'
           value={endDate}
           onSelectDate={handleSelectEndDate}
+          placeholder='Selecionar'
           startDate={startDate}
           disabled={!startDate}
           allowFutureDates={allowFutureDates}
