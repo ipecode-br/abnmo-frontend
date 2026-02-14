@@ -38,6 +38,16 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       name: 'Documentos',
       path: ROUTES.dashboard.patients.main,
     },
+    atendimentos: {
+      icon: ClipboardCheckIcon,
+      name: 'Atendimentos do paciente',
+      path: ROUTES.dashboard.patients.main,
+    },
+    encaminhamentos: {
+      icon: ClipboardPasteIcon,
+      name: 'Encaminhamentos do paciente',
+      path: ROUTES.dashboard.patients.main,
+    },
     cadastrar: {
       icon: UserRoundPlusIcon,
       name: 'Cadastrar novo paciente',
