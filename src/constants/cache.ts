@@ -14,6 +14,10 @@ export const NEXT_CACHE_TAGS = {
       main: 'total-appointments',
       query: (query: string) => `total-appointments/${query}`,
     },
+    totalAppointmentsByCategory: {
+      main: 'total-appointments-by-category',
+      query: (query: string) => `total-appointments-by-category/${query}`,
+    },
     totalPatients: {
       main: 'total-patients',
       query: (query: string) => `total-patients/${query}`,
@@ -29,6 +33,10 @@ export const NEXT_CACHE_TAGS = {
     totalReferrals: {
       main: 'total-referrals',
       query: (query: string) => `total-referrals/${query}`,
+    },
+    totalReferralsByCategory: {
+      main: 'total-referrals-by-category',
+      query: (query: string) => `total-referrals-by-category/${query}`,
     },
   },
 }

@@ -1,5 +1,6 @@
 import { User2Icon } from 'lucide-react'
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 import { getPatient } from '@/actions/patients/get-patient'
 import {
@@ -7,6 +8,7 @@ import {
   SectionHeaderActions,
   SectionHeaderTitle,
 } from '@/components/section-header'
+import { ROUTES } from '@/constants/routes'
 import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
 import { PatientForm } from '@/modules/patients/form'
 import { InactivatePatientButton } from '@/modules/patients/inactivate-button'
@@ -26,7 +28,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
   const patient = await getPatient(patientId)
 
   if (!patient) {
-    return <p>Paciente não encontrado</p>
+    redirect(ROUTES.dashboard.patients.main)
   }
 
   const isPatientActive = patient.status === 'active'

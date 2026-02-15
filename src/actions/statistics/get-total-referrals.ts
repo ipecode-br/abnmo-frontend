@@ -7,6 +7,7 @@ import { api } from '@/lib/api'
 
 type GetTotalReferralsParams = {
   period?: QueryPeriod
+  patientId?: string
 }
 
 interface GetTotalReferralsProps {

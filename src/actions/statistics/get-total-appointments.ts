@@ -7,6 +7,7 @@ import { api } from '@/lib/api'
 
 type GetTotalAppointmentsParams = {
   period?: QueryPeriod
+  patientId?: string
 }
 
 interface GetTotalAppointmentsProps {
