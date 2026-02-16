@@ -1,14 +1,14 @@
 'use server'
 
-import { revalidateTag } from 'next/cache'
+import { updateTag } from 'next/cache'
 
 export async function revalidateServerCache(tags: string | string[]) {
   if (Array.isArray(tags)) {
     for (const tag of tags) {
-      revalidateTag(tag)
+      updateTag(tag)
     }
     return
   }
 
-  revalidateTag(tags)
+  updateTag(tags)
 }
