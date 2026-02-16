@@ -80,18 +80,21 @@ interface DialogIconProps extends React.ComponentProps<'div'> {
   icon: LucideIcon
 }
 
-const dialogIconVariants = cva('border-border size-12 rounded-full p-2.5', {
-  variants: {
-    variant: {
-      default: 'text-foreground-soft border',
-      destructive: 'text-error bg-error/10',
-      success: 'text-success bg-success/10',
+const dialogIconVariants = cva(
+  'border-border size-12 overflow-visible rounded-full p-2.5',
+  {
+    variants: {
+      variant: {
+        default: 'text-foreground-soft border',
+        destructive: 'text-error bg-error/10',
+        success: 'text-success bg-success/10',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
     },
   },
-  defaultVariants: {
-    variant: 'default',
-  },
-})
+)
 
 type DialogIconComponentProps = DialogIconProps &
   VariantProps<typeof dialogIconVariants>

@@ -24,32 +24,32 @@ import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
 
-interface InactivatePatientModalProps {
+interface DeactivatePatientModalProps {
   id: string
   name: string
   onClose: () => void
 }
 
-export function InactivatePatientModal({
+export function DeactivatePatientModal({
   id,
   name,
   onClose,
-}: Readonly<InactivatePatientModalProps>) {
-  const inactivatePatientFormSchema = z.object({
+}: Readonly<DeactivatePatientModalProps>) {
+  const deactivatePatientFormSchema = z.object({
     name: z.string().refine((val) => val === name, {
       message: `Insira o nome do paciente corretamente: ${name}`,
     }),
   })
-  type InactivatePatientFormSchema = z.infer<typeof inactivatePatientFormSchema>
+  type DeactivatePatientFormSchema = z.infer<typeof deactivatePatientFormSchema>
 
-  const formMethods = useForm<InactivatePatientFormSchema>({
-    resolver: zodResolver(inactivatePatientFormSchema),
+  const formMethods = useForm<DeactivatePatientFormSchema>({
+    resolver: zodResolver(deactivatePatientFormSchema),
     defaultValues: { name: '' },
     mode: 'onSubmit',
   })
 
   async function submitForm() {
-    const response = await api(`/patients/${id}/inactivate`, {
+    const response = await api(`/patients/${id}/deactivate`, {
       method: 'PATCH',
     })
 

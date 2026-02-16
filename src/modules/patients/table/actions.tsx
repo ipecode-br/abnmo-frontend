@@ -15,7 +15,7 @@ import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { ROUTES } from '@/constants/routes'
 import { AppointmentModal } from '@/modules/appointments/appointment-modal'
-import { InactivatePatientModal } from '@/modules/patients/inactivate-modal'
+import { DeactivatePatientModal } from '@/modules/patients/deactivate-modal'
 import { ReferralModal } from '@/modules/referrals/referral-modal'
 import type { PatientListItem } from '@/types/patients.d.ts'
 
@@ -26,8 +26,7 @@ interface PatientsTableActionsProps {
 export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
   const [isReferralModalOpen, setReferralModalOpen] = useState(false)
   const [isAppointmentModalOpen, setAppointmentModalOpen] = useState(false)
-  const [isInactivateModalOpen, setInactivateModalOpen] = useState(false)
-
+  const [isDeactivateModalOpen, setDeactivateModalOpen] = useState(false)
   const router = useRouter()
 
   const isPatientActive = patient.status === 'active'
@@ -68,7 +67,7 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
               <Divider className='my-1' />
               <MenuItem
                 variant='destructive'
-                onClick={() => setInactivateModalOpen(true)}
+                onClick={() => setDeactivateModalOpen(true)}
               >
                 <XCircleIcon />
                 Inativar paciente
@@ -103,14 +102,14 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
             )}
           </Dialog>
           <Dialog
-            open={isInactivateModalOpen}
-            onOpenChange={setInactivateModalOpen}
+            open={isDeactivateModalOpen}
+            onOpenChange={setDeactivateModalOpen}
           >
-            {isInactivateModalOpen && (
-              <InactivatePatientModal
+            {isDeactivateModalOpen && (
+              <DeactivatePatientModal
                 id={patient.id}
                 name={patient.name}
-                onClose={() => setInactivateModalOpen(false)}
+                onClose={() => setDeactivateModalOpen(false)}
               />
             )}
           </Dialog>

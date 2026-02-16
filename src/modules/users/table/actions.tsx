@@ -32,7 +32,7 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
     active: {
       variant: 'destructive',
       icon: <XCircleIcon />,
-      label: 'Desativar',
+      label: 'Inativar',
     },
     inactive: {
       variant: 'success',

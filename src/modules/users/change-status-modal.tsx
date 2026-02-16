@@ -31,24 +31,24 @@ export function ChangeUserStatusModal({
 }: Readonly<ChangeUserStatusModalModalProps>) {
   const [isPending, startTransition] = useTransition()
 
-  const actionToPerfom = user.status === 'active' ? 'inactivate' : 'activate'
+  const actionToPerfom = user.status === 'active' ? 'deactivate' : 'activate'
 
-  const actionContent = {
-    inactivate: {
+  const actionsContent = {
+    deactivate: {
       icon: CircleXIcon,
-      action: 'Inativar',
+      label: 'Inativar',
       result: 'perderá o',
       variant: 'destructive',
     },
     activate: {
       icon: CircleCheckIcon,
-      action: 'Ativar',
+      label: 'Ativar',
       result: 'terá',
       variant: 'success',
     },
   } as const
 
-  const selectedAction = actionContent[actionToPerfom]
+  const action = actionsContent[actionToPerfom]
 
   async function changeUserStatus() {
     startTransition(async () => {
@@ -72,34 +72,27 @@ export function ChangeUserStatusModal({
   return (
     <DialogContainer>
       <DialogHeader
-        icon={
-          <DialogIcon
-            icon={selectedAction.icon}
-            variant={selectedAction.variant}
-          />
-        }
+        icon={<DialogIcon icon={action.icon} variant={action.variant} />}
       >
-        <DialogTitle>{selectedAction.action} usuário</DialogTitle>
+        <DialogTitle>{action.label} usuário</DialogTitle>
       </DialogHeader>
 
       <DialogContent className='space-y-2'>
         <p>
-          Você tem certeza que deseja {selectedAction.action.toLowerCase()} o
-          usuário <span className='font-semibold'>{user.name}</span>?
+          Você tem certeza que deseja {action.label.toLowerCase()} o usuário{' '}
+          <span className='font-semibold'>{user.name}</span>?
         </p>
-        <p>
-          Ao confirmar, este usuário {selectedAction.result} acesso ao sistema.
-        </p>
+        <p>Ao confirmar, este usuário {action.result} acesso ao sistema.</p>
       </DialogContent>
 
       <DialogFooter>
         <Button
           className='flex-1'
           loading={isPending}
-          variant={selectedAction.variant}
+          variant={action.variant}
           onClick={changeUserStatus}
         >
-          {selectedAction.action}
+          {action.label}
         </Button>
         <DialogClose className='flex-1' disabled={isPending}>
           Voltar
