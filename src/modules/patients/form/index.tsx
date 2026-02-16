@@ -165,6 +165,7 @@ export function PatientForm({
 
     if (patient) {
       revalidateServerCache(NEXT_CACHE_TAGS.patient(patient.id))
+      setAction('view')
     }
 
     if (isCreateForm) {
