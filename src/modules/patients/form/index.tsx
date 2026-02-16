@@ -10,10 +10,11 @@ import {
   UserPlus2Icon,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import React from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import type { z } from 'zod'
 
 import { ComboboxInput } from '@/components/form/combobox-input'
 import { DateInput } from '@/components/form/date-input'
@@ -46,13 +47,13 @@ import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { removeNonNumbers } from '@/utils/sanitizers'
 
 import CancelPatientFormModal from './cancel-modal'
-import { type PatientFormSchema, patientFormSchema } from './schema'
+import { getPatientFormSchema } from './schema'
 
-type Action = 'view' | 'edit' | 'create'
+type Mode = 'view' | 'edit' | 'create'
 
 interface PatientFormProps {
   patient?: Patient
-  mode?: Action
+  mode?: Mode
 }
 
 export function PatientForm({
@@ -60,14 +61,16 @@ export function PatientForm({
   mode = 'view',
 }: Readonly<PatientFormProps>) {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
-  const [action, setAction] = useState<Action>(mode)
-
+  const [action, setAction] = useState<Mode>(mode)
   const router = useRouter()
 
-  const patientSupports = patient?.supports?.map((support) => ({
-    ...support,
-    phone: formatPhoneNumber(support.phone),
-  })) ?? [{ name: '', phone: '', kinship: '' }]
+  const patientFormSchema = useMemo(
+    () => getPatientFormSchema(action),
+    [action],
+  )
+  type PatientFormSchema = z.infer<typeof patientFormSchema>
+
+  const isCreateForm = action === 'create'
 
   const formMethods = useForm<PatientFormSchema>({
     resolver: zodResolver(patientFormSchema),
@@ -87,7 +90,9 @@ export function PatientForm({
       medication_desc: patient?.medication_desc || '',
       nmo_diagnosis: patient?.nmo_diagnosis || '',
       need_legal_assistance: patient?.need_legal_assistance ? 'yes' : 'no',
-      supports: patientSupports,
+      supports: isCreateForm
+        ? [{ name: '', phone: '', kinship: '' }]
+        : undefined,
     } as unknown as PatientFormSchema,
     mode: 'onBlur',
   })
@@ -101,12 +106,12 @@ export function PatientForm({
   const cityOptions = useCities(selectedUF)
   const isViewMode = action === 'view'
 
-  const submitButtonContent = {
+  const submitButtons = {
     create: { icon: <UserPlus2Icon />, label: 'Cadastrar' },
     edit: { icon: <CircleCheckIcon />, label: 'Salvar' },
     view: null,
   }
-  const submitButton = submitButtonContent[action]
+  const submitButton = submitButtons[action]
 
   function handleSelectState(value: UF) {
     formMethods.setValue('state', value)
@@ -116,15 +121,15 @@ export function PatientForm({
   }
 
   function handleCancel() {
-    if (action === 'create') {
+    if (isCreateForm) {
       setIsCancelModalOpen(true)
       return
     }
-    setAction('view')
     formMethods.reset()
+    setAction('view')
   }
 
-  async function createPatient(data: PatientFormSchema) {
+  async function submitForm(data: PatientFormSchema) {
     const payload = {
       ...data,
       phone: removeNonNumbers(data.phone),
@@ -132,43 +137,40 @@ export function PatientForm({
       has_disability: data.has_disability === 'yes',
       need_legal_assistance: data.need_legal_assistance === 'yes',
       take_medication: data.take_medication === 'yes',
-      supports: data.supports.map((support) => ({
-        ...support,
-        phone: removeNonNumbers(support.phone),
-      })),
+      supports: isCreateForm
+        ? data.supports?.map((support) => ({
+            ...support,
+            phone: removeNonNumbers(support.phone),
+          }))
+        : undefined,
     }
 
-    return await api('/patients', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    })
-  }
+    const body = JSON.stringify(payload)
 
-  async function submitForm(data: PatientFormSchema) {
-    if (action === 'edit') {
-      // TODO: Implement update patient request
-      console.log(data)
-      return
-    }
-
-    const response = await createPatient(data)
+    const response = isCreateForm
+      ? await api('/patients', { method: 'POST', body })
+      : await api(`/patients/${patient?.id}`, { method: 'PUT', body })
 
     if (!response.success) {
       toast.error(response.message)
       return
     }
 
+    toast.success(response.message)
+
     revalidateClientCache([
       QUERY_CACHE_KEYS.patients.main,
       QUERY_CACHE_KEYS.patients.allOptions,
     ])
 
-    if (action === 'create') {
-      revalidateServerCache(NEXT_CACHE_TAGS.statistics.totalPatients.main)
+    if (patient) {
+      revalidateServerCache(NEXT_CACHE_TAGS.patient(patient.id))
     }
 
-    toast.success(response.message)
-    router.push(ROUTES.dashboard.patients.main)
+    if (isCreateForm) {
+      revalidateServerCache(NEXT_CACHE_TAGS.statistics.totalPatients.main)
+      router.push(ROUTES.dashboard.patients.main)
+    }
   }
 
   return (
@@ -323,74 +325,76 @@ export function PatientForm({
           />
         </FormField>
 
-        <Divider />
-
-        <section>
-          <h1 className='text-xl font-medium'>Rede de apoio</h1>
-          <div className='mt-6 space-y-6'>
-            {supportMethods.fields.map((support, index) => (
-              <fieldset
-                data-first={index === 0}
-                className='border-border flex items-start gap-4 max-lg:flex-col data-[first=false]:max-lg:border-t data-[first=false]:max-lg:pt-4'
-                key={support.id}
-              >
-                <TextInput
-                  name={`supports.${index}.name`}
-                  label='Nome completo'
-                  maxLength={64}
-                  placeholder='Insira o nome completo'
-                  wrapperClassName='flex-1'
-                  isRequired
-                />
-                <TextInput
-                  name={`supports.${index}.kinship`}
-                  label='Parentesco'
-                  maxLength={32}
-                  placeholder='Insira o parentesco'
-                  wrapperClassName='lg:w-44'
-                  isRequired
-                />
-                <TextInput
-                  name={`supports.${index}.phone`}
-                  label='Telefone (WhatsApp)'
-                  mask='phone'
-                  maxLength={15}
-                  placeholder='(00) 00000-0000'
-                  wrapperClassName={
-                    index === 0 && !isViewMode ? 'lg:w-58' : 'lg:w-44'
-                  }
-                  readOnly={isViewMode}
-                  isRequired
-                />
-                {index > 0 && !isViewMode && (
-                  <Button
-                    size='icon'
-                    type='button'
-                    variant='ghost'
-                    className='text-error max-lg:w-full max-lg:border lg:mt-7'
-                    onClick={() => supportMethods.remove(index)}
+        {isCreateForm && (
+          <>
+            <Divider />
+            <section>
+              <h2 className='text-xl font-medium'>Rede de apoio</h2>
+              <div className='mt-6 space-y-6'>
+                {supportMethods.fields.map((support, index) => (
+                  <fieldset
+                    data-first={index === 0}
+                    className='border-border flex items-start gap-4 max-lg:flex-col data-[first=false]:max-lg:border-t data-[first=false]:max-lg:pt-4'
+                    key={support.id}
                   >
-                    <Trash2Icon />
-                  </Button>
-                )}
-              </fieldset>
-            ))}
-            {action !== 'view' && (
-              <Button
-                type='button'
-                variant='outline'
-                onClick={() =>
-                  supportMethods.append({ name: '', kinship: '', phone: '' })
-                }
-              >
-                <PlusIcon /> Adicionar novo contato
-              </Button>
-            )}
-          </div>
-        </section>
+                    <TextInput
+                      name={`supports.${index}.name`}
+                      label='Nome completo'
+                      maxLength={64}
+                      placeholder='Insira o nome completo'
+                      wrapperClassName='flex-1'
+                      isRequired
+                    />
+                    <TextInput
+                      name={`supports.${index}.kinship`}
+                      label='Parentesco'
+                      maxLength={32}
+                      placeholder='Insira o parentesco'
+                      wrapperClassName='lg:w-44'
+                      isRequired
+                    />
+                    <TextInput
+                      name={`supports.${index}.phone`}
+                      label='Telefone (WhatsApp)'
+                      mask='phone'
+                      maxLength={15}
+                      placeholder='(00) 00000-0000'
+                      wrapperClassName={
+                        index === 0 && !isViewMode ? 'lg:w-58' : 'lg:w-44'
+                      }
+                      readOnly={isViewMode}
+                      isRequired
+                    />
+                    {index > 0 && !isViewMode && (
+                      <Button
+                        size='icon'
+                        type='button'
+                        variant='ghost'
+                        className='text-error max-lg:w-full max-lg:border lg:mt-7'
+                        onClick={() => supportMethods.remove(index)}
+                      >
+                        <Trash2Icon />
+                      </Button>
+                    )}
+                  </fieldset>
+                ))}
+                <Button
+                  size='sm'
+                  type='button'
+                  variant='outline'
+                  onClick={() =>
+                    supportMethods.append({ name: '', kinship: '', phone: '' })
+                  }
+                >
+                  <PlusIcon /> Adicionar contato
+                </Button>
+              </div>
+            </section>
+          </>
+        )}
 
-        <div className='mt-3 flex flex-row-reverse gap-2 max-lg:flex-col'>
-          {isViewMode && (
+        <div className='flex flex-row-reverse gap-2 max-lg:flex-col'>
+          {isViewMode && patient?.status === 'active' && (
             <Button
               type='button'
               variant='outline'
@@ -403,7 +407,7 @@ export function PatientForm({
           {!isViewMode && (
             <Button
               type='submit'
-              className='lg:w-48'
+              className='min-w-36'
               loading={formMethods.formState.isSubmitting}
             >
               {submitButton?.icon} {submitButton?.label}
@@ -424,7 +428,9 @@ export function PatientForm({
 
         <Dialog open={isCancelModalOpen} onOpenChange={setIsCancelModalOpen}>
           {isCancelModalOpen && (
-            <CancelPatientFormModal onConfirm={() => router.back()} />
+            <CancelPatientFormModal
+              onConfirm={() => router.push(ROUTES.dashboard.patients.main)}
+            />
           )}
         </Dialog>
       </FormContainer>
