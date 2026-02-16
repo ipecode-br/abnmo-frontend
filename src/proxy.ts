@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 import { ROUTES } from './constants/routes'
 
-export async function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const cookies = request.cookies
   const pathname = request.nextUrl.pathname
 

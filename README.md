@@ -7,7 +7,7 @@ O sistema otimiza o fluxo de atendimento com integração de dados em uma interf
 ## Tecnologias utilizadas
 
 - **Typescript**: Tipagem estática para maior segurança no desenvolvimento;
-- **Next.js 15**: Framework React para renderização híbrida e roteamento eficiente;
+- **Next.js 16**: Framework React para renderização híbrida e roteamento eficiente;
 - **Tailwind CSS**: Framework CSS utilitário;
 - **React Hook Form + Zod**: Gerenciamento de formulários com validação robusta.
 
@@ -15,30 +15,31 @@ O sistema otimiza o fluxo de atendimento com integração de dados em uma interf
 
 ### Pré-requisitos
 
-- Node.js (versão 18 ou superior)
-- npm
+- Node.js - versão 20.9.0 (LTS) ou superior
+- NPM (Node package manager)
+- Docker
 
-### Passos para Configuração
+### Instalação e configuração
 
-#### 1. Clone o repositório
+#### 1. Clone o repositório e instale as dependências
 
 ```bash
 git clone https://github.com/ipecode-br/abnmo-frontend
 cd abnmo-frontend
+npm install
 ```
 
-#### 2. Configure variáveis de ambiente
+#### 2. Configure as variáveis de ambiente
 
-Copie o arquivo de exemplo `env.sample` e renomoeie para `.env.local`. Ou crie um arquivo com o mesmo nome contendo as seguintes variáveis de ambiente:
-
-```
-NEXT_PUBLIC_API_URL=
-```
-
-#### 3. Instale dependências e inicie a aplicação
+Copie o arquivo de exemplo `env.sample` e renomeie para `.env.local` ou execute o comando:
 
 ```bash
-npm install
+cp env.sample .env.local
+```
+
+#### 3. Inicie a aplicação
+
+```bash
 npm run dev
 ```
 
