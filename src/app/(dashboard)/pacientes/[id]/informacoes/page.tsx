@@ -72,7 +72,9 @@ export default async function Page({ params }: Readonly<PageParams>) {
                   <Divider flexItem orientation='vertical' />
                   <span>{formatPhoneNumber(support.phone)}</span>
                 </div>
-                <PatientSupportCardActions patientSupport={support} />
+                {isPatientActive && (
+                  <PatientSupportCardActions patientSupport={support} />
+                )}
               </Card>
             ))}
           </div>
