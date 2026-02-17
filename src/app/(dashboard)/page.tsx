@@ -6,6 +6,8 @@ import { DashboardPatientsByGenderCard } from '@/modules/dashboard/patients-by-g
 import { DashboardSummaryCards } from '@/modules/dashboard/summary-cards'
 import { DashboardUpcomingAppointmentsCard } from '@/modules/dashboard/upcoming-appointments-card'
 
+export const dynamic = 'force-dynamic'
+
 export default function Page() {
   return (
     <div className='grid gap-6 sm:grid-cols-6'>

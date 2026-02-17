@@ -4,6 +4,8 @@ import { TotalAppointmentsCard } from '@/modules/appointments/total-appointments
 import { TotalAppointmentsByCategoryCard } from '@/modules/appointments/total-by-category-card'
 import { TotalAppointmentsByStateCard } from '@/modules/appointments/total-by-state-card'
 
+export const dynamic = 'force-dynamic'
+
 export default function Page() {
   return (
     <div className='grid gap-6 sm:grid-cols-2'>

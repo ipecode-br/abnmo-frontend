@@ -4,6 +4,8 @@ import { TotalReferralsByCategoryCard } from '@/modules/referrals/total-by-categ
 import { TotalReferralsByStateCard } from '@/modules/referrals/total-by-state-card'
 import { TotalReferralsCard } from '@/modules/referrals/total-referrals-card'
 
+export const dynamic = 'force-dynamic'
+
 export default function Page() {
   return (
     <div className='grid gap-6 sm:grid-cols-2'>
