@@ -1,14 +1,15 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
+import { COOKIES } from './constants/cookies'
 import { ROUTES } from './constants/routes'
 
 export function proxy(request: NextRequest) {
   const cookies = request.cookies
   const pathname = request.nextUrl.pathname
 
-  const accessToken = cookies.get('access_token')
-  const refreshToken = cookies.get('refresh_token')
+  const accessToken = cookies.get(COOKIES.accessToken)
+  const refreshToken = cookies.get(COOKIES.refreshToken)
   const isAuthRoute = pathname.startsWith('/conta')
 
   if (isAuthRoute && (accessToken || refreshToken)) {

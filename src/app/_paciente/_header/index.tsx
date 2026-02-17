@@ -3,7 +3,7 @@ import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { getCurrentUser } from '@/actions/users'
+import { getCurrentUser } from '@/actions/users/get-current-user'
 import { PatientHeaderAccessibilityDropdown } from '@/app/_paciente/_header/accessibility-dropdown'
 import { PatientHeaderUserDropdown } from '@/app/_paciente/_header/user-dropdown'
 import { Breadcrumbs } from '@/components/breadcrumbs'

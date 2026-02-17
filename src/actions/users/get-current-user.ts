@@ -2,16 +2,15 @@
 
 import { redirect } from 'next/navigation'
 
+import { DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS } from '@/config/cache'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import type { User } from '@/types/users.d.ts'
 
-import { getUserFromToken } from './token'
+import { getUserFromToken } from './get-user-from-token'
 
 export async function getCurrentUser() {
-  const REVALIDATE_IN_SECONDS = 3600
-
   const user = await getUserFromToken()
 
   if (!user?.id) return null
@@ -20,7 +19,7 @@ export async function getCurrentUser() {
     includeCookies: true,
     cache: 'force-cache',
     next: {
-      revalidate: REVALIDATE_IN_SECONDS,
+      revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
       tags: [NEXT_CACHE_TAGS.user(user.id)],
     },
   })

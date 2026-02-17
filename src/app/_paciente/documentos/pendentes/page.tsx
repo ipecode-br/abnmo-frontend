@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import React from 'react'
 
-import { getCurrentUser } from '@/actions/users'
+import { getCurrentUser } from '@/actions/users/get-current-user'
 import { PatientRequirementCard } from '@/modules/patients/cards/patient-requirement-card'
 import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 

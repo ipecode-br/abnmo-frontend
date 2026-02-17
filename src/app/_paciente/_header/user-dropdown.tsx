@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 
-import { getUserFromToken } from '@/actions/token'
+import { getUserFromToken } from '@/actions/users/get-user-from-token'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
 import { DropdownMenu } from '@/components/ui/dropdown'

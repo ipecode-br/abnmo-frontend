@@ -6,7 +6,7 @@ import {
   Users2Icon,
 } from 'lucide-react'
 
-import { getCurrentUser } from '@/actions/users'
+import { getCurrentUser } from '@/actions/users/get-current-user'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
 
