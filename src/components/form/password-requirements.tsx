@@ -1,6 +1,6 @@
 import { CheckIcon, DotIcon } from 'lucide-react'
 
-import { getPasswordRequirements } from '@/helpers/auth/get-password-requirement'
+import { getPasswordRequirements } from '@/helpers/get-password-requirement'
 import { cn } from '@/utils/class-name-merge'
 
 import { FormMessage } from './form-message'

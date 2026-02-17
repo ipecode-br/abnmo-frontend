@@ -6,11 +6,9 @@ import {
   TableEmptyCell,
   TableHead,
   TableHeader,
-  TableLink,
   TableRow,
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
-import { ROUTES } from '@/constants/routes'
 import { SPECIALTIES } from '@/enums/shared'
 import { USER_ROLES, USER_STATUSES } from '@/enums/users'
 import type { User } from '@/types/users'
@@ -58,13 +56,10 @@ export function UsersTable({ users, loading }: Readonly<UsersTableProps>) {
             return (
               <TableRow key={user.id}>
                 <TableCell>
-                  <TableLink
-                    className='w-64'
-                    href={ROUTES.dashboard.users.details(user.id)}
-                  >
+                  <div className='flex w-64 items-center gap-2'>
                     <Avatar className='size-9' src={user.avatar_url} />
                     <span className='truncate'>{user.name}</span>
-                  </TableLink>
+                  </div>
                 </TableCell>
                 <TableCell>{formatDate(user.created_at)}</TableCell>
                 <TableCell>

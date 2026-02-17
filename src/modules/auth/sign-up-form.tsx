@@ -19,14 +19,19 @@ import { ROUTES } from '@/constants/routes'
 import { SPECIALTIES_OPTIONS, type Specialty } from '@/enums/shared'
 import { type UserRole, USERS_ROLE_ENUM } from '@/enums/users'
 import { api } from '@/lib/api'
-import { nameSchema, passwordSchema, specialtySchema } from '@/schemas'
+import {
+  nameSchema,
+  passwordSchema,
+  specialtySchema,
+  userRegistrationId,
+} from '@/schemas'
 
 export const signUpFormSchema = z
   .object({
     role: z.enum(USERS_ROLE_ENUM),
     name: nameSchema,
     specialty: z.union([specialtySchema, z.literal('')]),
-    registration_id: z.string().max(32).optional(),
+    registration_id: userRegistrationId.optional(),
     password: passwordSchema,
     confirm_password: z.string(),
     consent: z.boolean(),

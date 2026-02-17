@@ -39,7 +39,7 @@ export function SignInForm() {
     password,
     keepLoggedIn,
   }: SignInFormSchema) {
-    const response = await api('/login', {
+    const response = await api<{ account_type: 'user' | 'patient' }>('/login', {
       method: 'POST',
       body: JSON.stringify({ email, password, keep_logged_in: keepLoggedIn }),
     })
@@ -49,7 +49,11 @@ export function SignInForm() {
       return
     }
 
-    router.push(true ? ROUTES.dashboard.main : ROUTES.patient.main)
+    router.push(
+      response.data?.account_type === 'user'
+        ? ROUTES.dashboard.main
+        : ROUTES.patient.main,
+    )
   }
 
   return (

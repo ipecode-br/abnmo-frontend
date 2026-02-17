@@ -4,19 +4,17 @@ import {
   CheckCircle2Icon,
   ClipboardPenIcon,
   EllipsisIcon,
-  UserSquare2Icon,
   XCircleIcon,
 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
-import { ROUTES } from '@/constants/routes'
 import type { User } from '@/types/users'
 
 import { ChangeUserStatusModal } from '../change-status-modal'
+import { UpdateUserModal } from '../update-modal'
 
 type UserModalMode = 'view' | 'edit' | 'status'
 
@@ -26,7 +24,6 @@ interface UsersTableActionsProps {
 
 export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
   const [modalOpen, setModalOpen] = useState<UserModalMode | null>(null)
-  const router = useRouter()
 
   const changingStatusData = {
     active: {
@@ -57,12 +54,12 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
             Editar
           </MenuItem>
 
-          <MenuItem
+          {/* <MenuItem
             onClick={() => router.push(ROUTES.dashboard.users.details(user.id))}
           >
             <UserSquare2Icon />
             Informações do usuário
-          </MenuItem>
+          </MenuItem> */}
 
           <Divider className='my-1' />
 
@@ -75,6 +72,15 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
           </MenuItem>
         </MenuContent>
       </Menu>
+
+      {modalOpen === 'edit' && (
+        <Dialog
+          open={modalOpen === 'edit'}
+          onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
+        >
+          <UpdateUserModal user={user} onClose={() => setModalOpen(null)} />
+        </Dialog>
+      )}
 
       {modalOpen === 'status' && (
         <Dialog

@@ -43,6 +43,8 @@ export const avatarSchema = z.string().url()
 
 export const userRoleSchema = z.enum(USERS_ROLE_ENUM)
 
+export const userRegistrationId = z.string().max(32)
+
 export const phoneSchema = z
   .string()
   .nonempty('Insira o telefone')
