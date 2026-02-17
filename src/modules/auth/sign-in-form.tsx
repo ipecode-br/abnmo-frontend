@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -11,7 +10,6 @@ import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
-import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -23,55 +21,40 @@ export const signInFormSchema = z.object({
   email: z.string().email('Insira um e-mail válido'),
   password: z.string().min(8, 'Sua senha deve conter 8 ou mais caracteres'),
   keepLoggedIn: z.boolean().optional(),
-  type: z.enum(['patient', 'user']),
 })
 export type SignInFormSchema = z.infer<typeof signInFormSchema>
 
 export function SignInForm() {
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const formMethods = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-      keepLoggedIn: false,
-      type: 'user',
-    },
+    defaultValues: { email: '', password: '', keepLoggedIn: false },
     mode: 'onBlur',
   })
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  async function signIn({
+  async function submitForm({
     email,
     password,
     keepLoggedIn,
-    type,
   }: SignInFormSchema) {
-    startTransition(async () => {
-      const response = await api('/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-          keep_logged_in: keepLoggedIn,
-          account_type: type,
-        }),
-      })
-
-      if (!response.success) {
-        formMethods.setError('root', { message: response.message })
-        return
-      }
-
-      router.push(type === 'user' ? ROUTES.dashboard.main : ROUTES.patient.main)
+    const response = await api('/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, keep_logged_in: keepLoggedIn }),
     })
+
+    if (!response.success) {
+      formMethods.setError('root', { message: response.message })
+      return
+    }
+
+    router.push(true ? ROUTES.dashboard.main : ROUTES.patient.main)
   }
 
   return (
     <FormProvider {...formMethods}>
-      <FormContainer onSubmit={formMethods.handleSubmit(signIn)}>
+      <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
         <FormField className='gap-4'>
           <TextInput
             name='email'
@@ -83,15 +66,6 @@ export function SignInForm() {
             name='password'
             label='Senha'
             placeholder='Digite sua senha'
-          />
-          <SelectInput
-            name='type'
-            label='Tipo de acesso'
-            options={[
-              { label: 'Paciente', value: 'patient' },
-              { label: 'Administração', value: 'user' },
-            ]}
-            className='sm:col-span-2'
           />
         </FormField>
 
@@ -106,7 +80,7 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button type='submit' loading={isPending}>
+        <Button type='submit' loading={formMethods.formState.isSubmitting}>
           Entrar
         </Button>
 

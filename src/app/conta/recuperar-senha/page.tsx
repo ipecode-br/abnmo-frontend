@@ -5,8 +5,7 @@ import { AuthCard } from '@/components/auth/auth-card'
 import { Divider } from '@/components/ui/divider'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
-
-import { RecoverForm } from './recover-form'
+import { RecoverPasswordForm } from '@/modules/auth/recover-password-form'
 
 export const metadata: Metadata = {
   title: 'Recuperar senha',
@@ -19,7 +18,7 @@ export default function Page() {
       title='Recuperar senha'
       description='Insira seu e-mail para recuperar sua senha'
     >
-      <RecoverForm />
+      <RecoverPasswordForm />
 
       <Divider />
 
