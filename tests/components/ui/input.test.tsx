@@ -12,7 +12,7 @@ describe('Input', () => {
     const inputElement = screen.getByRole('textbox')
     expect(inputElement).toBeInTheDocument()
     expect(inputElement).toHaveClass(
-      'w-full rounded-lg border px-3 shadow-xs transition-colors disabled:cursor-not-allowed disabled:opacity-50 border-border text-foreground',
+      'w-full rounded-lg border px-3 shadow-xs transition-colors disabled:pointer-events-none disabled:opacity-50 border-border text-foreground',
     )
   })
   it('should render an error Input', () => {
@@ -20,7 +20,7 @@ describe('Input', () => {
 
     const inputElement = screen.getByRole('textbox')
     expect(inputElement).toBeInTheDocument()
-    expect(inputElement).toHaveClass('border-error focus-visible:ring-error')
+    expect(inputElement).toHaveClass('border-error outline-error')
   })
   it('should render a default Input with icon', () => {
     render(<Input icon={Atom} />)
