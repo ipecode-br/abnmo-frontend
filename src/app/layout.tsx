@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 import { inter } from '@/lib/fonts'
+import { cn } from '@/utils/class-name-merge'
 
 import { Providers } from './providers'
 
@@ -20,7 +21,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='pt-BR'>
-      <body className={`${inter.variable} antialiased`}>
+      <body className={cn('overflow-x-hidden antialiased', inter.variable)}>
         <Providers>{children}</Providers>
       </body>
     </html>

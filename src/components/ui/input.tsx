@@ -4,12 +4,12 @@ import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 export const inputVariants = cva(
-  'ring-offset-background focus-visible:ring-ring bg-background h-10 w-full shrink-0 rounded-lg border px-3 shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none read-only:focus-visible:ring-0 read-only:focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50',
+  'bg-background outline-ring w-full shrink-0 rounded-lg border px-3 shadow-xs outline-offset-4 transition-colors read-only:outline-none disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         default: 'border-border text-foreground placeholder:text-disabled',
-        error: 'border-error focus-visible:ring-error',
+        error: 'border-error outline-error',
       },
       size: {
         default: 'h-10',
@@ -23,10 +23,7 @@ export const inputVariants = cva(
   },
 )
 
-export type InputProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'size'
-> &
+export type InputProps = Omit<React.ComponentProps<'input'>, 'size'> &
   VariantProps<typeof inputVariants> & {
     icon?: LucideIcon
   }

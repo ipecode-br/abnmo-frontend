@@ -20,11 +20,12 @@ export function DashboardCardChart({
   ...props
 }: Readonly<DashboardCardChartProps>) {
   const Icon = icon
+
   return (
     <Card className={cn('flex flex-col gap-3 p-6', className)} {...props}>
       <header className='flex items-center gap-2'>
-        <Icon className='size-5' />
-        <h3 className='text-lg font-medium'>{title}</h3>
+        <Icon className='text-disabled size-6' />
+        <h3 className='text-xl font-medium'>{title}</h3>
 
         {menu && <div className='ml-auto'>{menu}</div>}
       </header>

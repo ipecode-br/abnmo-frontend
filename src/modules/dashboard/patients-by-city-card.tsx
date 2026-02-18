@@ -9,12 +9,11 @@ import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { CHART_PIE_COLORS } from '@/constants/charts'
+import { type QueryPeriod } from '@/enums/queries'
 import { api } from '@/lib/api'
-import { type QueryPeriod } from '@/types/queries'
 
-export function PatientsByCityCard(
-  props: Readonly<React.ComponentProps<'div'>>,
-) {
+export function DashboardPatientsByCityCard() {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const limit = 6
@@ -27,7 +26,7 @@ export function PatientsByCityCard(
       api<{
         cities: { city: string; percentage: number }[]
         total: number
-      }>('/statistics/patients-by-city', {
+      }>('/statistics/patients/by-city', {
         params: { period, limit, withPercentage },
       }),
   })
@@ -35,25 +34,17 @@ export function PatientsByCityCard(
   const cities = response?.data?.cities ?? []
   const isEmpty = cities.length === 0 && !isLoading
 
-  const PIE_COLORS = [
-    '#E255F2',
-    '#DF1C41',
-    '#0F37E0',
-    '#008B62',
-    '#F17B2C',
-    '#F2AE40',
-  ]
-
   const data = cities.map((item, index) => ({
     label: item.city,
     value: Number(item.percentage),
-    color: PIE_COLORS[index],
+    color: CHART_PIE_COLORS[index],
   }))
 
   return (
     <DashboardCardChart
-      icon={ChartPieIcon}
       title='Cidades'
+      icon={ChartPieIcon}
+      className='sm:col-span-3'
       menu={
         <SelectPeriod
           period={period}
@@ -61,7 +52,6 @@ export function PatientsByCityCard(
           onSelect={(value) => setPeriod(value)}
         />
       }
-      {...props}
     >
       <div className='flex h-full min-h-44 items-center justify-center'>
         {isLoading && <Skeleton className='bg-border/75 size-full' />}

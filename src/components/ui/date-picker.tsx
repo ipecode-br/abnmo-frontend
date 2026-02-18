@@ -3,7 +3,7 @@
 import 'react-day-picker/style.css'
 
 import { CalendarDaysIcon } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -15,10 +15,11 @@ import { PopoverTrigger, type PopoverTriggerProps } from './popover/trigger'
 
 export interface DatePickerProps
   extends Omit<PopoverTriggerProps, 'value'>,
-    Pick<CalendarProps, 'allowFutureDates' | 'navMode'> {
-  value?: string
+    Pick<CalendarProps, 'allowFutureDates' | 'navMode' | 'startDate'> {
+  value?: string | null
   onSelectDate?: (date: string) => void
   modal?: boolean
+  placeholder?: string
 }
 
 export function DatePicker({
@@ -28,55 +29,47 @@ export function DatePicker({
   allowFutureDates,
   onSelectDate,
   modal,
+  startDate,
+  placeholder = 'Selecionar data',
   ...props
 }: Readonly<DatePickerProps>) {
   const [open, setOpen] = useState(false)
-  const [date, setDate] = useState(value ?? '')
 
   const handleCalendarSelect = useCallback(
     (selectedDate: Date | undefined) => {
-      if (!selectedDate) {
-        return
-      }
+      if (!selectedDate) return
 
-      if (onSelectDate) {
-        onSelectDate(selectedDate ? selectedDate.toISOString() : '')
-      }
-
-      setDate(selectedDate.toISOString())
+      onSelectDate?.(selectedDate.toISOString())
       setOpen(false)
     },
     [onSelectDate],
   )
-
-  useEffect(() => {
-    setDate(value ?? '')
-  }, [value])
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal={modal}>
       <PopoverTrigger
         variant='outline'
         className={cn(
-          '[&_svg]:text-disabled justify-start pl-3 font-normal [&_svg]:size-4.5',
+          '[&_svg]:text-disabled justify-start overflow-hidden pl-3 font-normal [&_svg]:size-4.5',
           className,
         )}
         {...props}
       >
         <CalendarDaysIcon />
-        {date ? (
-          formatDate(date, { dateStyle: 'short' })
+        {value ? (
+          formatDate(value, { dateStyle: 'short' })
         ) : (
-          <span className='text-disabled'>Selecione a data</span>
+          <span className='text-disabled'>{placeholder}</span>
         )}
       </PopoverTrigger>
 
       <PopoverContent>
         <Calendar
           navMode={navMode}
+          startDate={startDate}
           onSelect={handleCalendarSelect}
           allowFutureDates={allowFutureDates}
-          selected={date ? new Date(date) : undefined}
+          selected={value ? new Date(value) : undefined}
         />
       </PopoverContent>
     </Popover>

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import type { PatientRequirement } from '@/types/patient-requirements'
+import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 
 type PatientRequirementCardProps = {

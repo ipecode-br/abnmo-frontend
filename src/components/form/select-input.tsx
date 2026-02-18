@@ -64,12 +64,13 @@ export function SelectInput<T>({
             </Label>
             <Select
               modal={modal}
-              value={field.value}
               options={options}
+              readOnly={readOnly}
+              disabled={disabled}
+              value={field.value}
               placeholder={placeholder}
               onValueChange={handleValueChange}
-              disabled={disabled || readOnly}
-              readOnly={readOnly}
+              variant={fieldState.error && 'error'}
             />
             <FormMessage error={!!fieldState.error?.message}>
               {showMessage}

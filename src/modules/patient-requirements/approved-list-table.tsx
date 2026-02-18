@@ -1,15 +1,16 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { UserCheck2Icon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { ClipboardCheckIcon } from 'lucide-react'
 
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderInfo } from '@/components/data-table/header/info'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
 import { Pagination } from '@/components/pagination'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
 import { Avatar } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
 import {
@@ -22,44 +23,51 @@ import {
 } from '@/components/ui/table'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
-import { QUERY_PARAMS } from '@/constants/params'
-import { useParams } from '@/hooks/params'
-import { api } from '@/lib/api'
-import type { OrderMapping } from '@/types/order'
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import {
   PATIENT_REQUIREMENT_TYPES,
   PATIENT_REQUIREMENTS_ORDER_OPTIONS,
-  type PatientRequirement,
   type PatientRequirementsOrder,
-} from '@/types/patient-requirements'
+} from '@/enums/patient-requirements'
+import { useParams } from '@/hooks/params'
+import { api } from '@/lib/api'
+import type {
+  PatientRequirementsOrderBy,
+  QueryOrderMapping,
+} from '@/types/orders'
+import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 import { formatDate } from '@/utils/formatters/format-date'
 
 import { ApprovedPatientRequirementsListTableActions } from './approved-list-table-actions'
 import ApprovedPatientRequirementsListTableSkeleton from './approved-list-table-skeleton'
 
 export function ApprovedPatientRequirementsListTable() {
-  const [stableTotal, setStableTotal] = useState(0)
-  const { getParam } = useParams()
+  const { getParams } = useParams()
 
-  const page = getParam(QUERY_PARAMS.page)
-  const search = getParam(QUERY_PARAMS.search)
-  const orderBy = getParam(QUERY_PARAMS.orderBy)
+  const [page, search, orderBy] = getParams([
+    QUERY_PARAM_KEYS.page,
+    QUERY_PARAM_KEYS.search,
+    QUERY_PARAM_KEYS.orderBy,
+  ])
 
-  const ORDER_MAPPING: OrderMapping<PatientRequirementsOrder> = {
-    name_asc: { orderBy: 'name', order: 'ASC' },
-    name_desc: { orderBy: 'name', order: 'DESC' },
+  const ORDER_MAPPING: QueryOrderMapping<
+    PatientRequirementsOrder,
+    PatientRequirementsOrderBy
+  > = {
+    name_asc: { orderBy: 'patient', order: 'ASC' },
+    name_desc: { orderBy: 'patient', order: 'DESC' },
     date_asc: { orderBy: 'approved_at', order: 'ASC' },
     date_desc: { orderBy: 'approved_at', order: 'DESC' },
     type_asc: { orderBy: 'type', order: 'ASC' },
     type_desc: { orderBy: 'type', order: 'DESC' },
   }
 
-  const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
-    orderBy: 'name',
-    order: 'ASC',
-  }
+  const orderByQuery =
+    ORDER_MAPPING[orderBy as PatientRequirementsOrder] ??
+    ORDER_MAPPING['name_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.approvals.approved, search, page, orderByQuery],
     queryFn: () =>
       api<{ requirements: PatientRequirement[]; total: number }>(
@@ -69,32 +77,30 @@ export function ApprovedPatientRequirementsListTable() {
   })
 
   const requirements = response?.data?.requirements ?? []
-  const isEmpty = requirements.length === 0
-  const hasActiveFilters = !!search
+  const total = response?.data?.total ?? 0
 
-  useEffect(() => {
-    if (response?.data) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data])
+  const isEmpty = !isLoading && requirements.length <= 0
+  const hasActiveFilters = !!search
 
   return (
     <>
-      <DataTableHeader>
-        <DataTableHeaderInfo
-          icon={<UserCheck2Icon />}
-          total={stableTotal}
+      <SectionHeader>
+        <SectionHeaderTitle
           title='Aprovações'
+          icon={<ClipboardCheckIcon />}
+          total={total}
         />
-
-        <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar nome...' />
-          <DataTableHeaderOrderBy
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar nome...' className='w-56' />
+          <FilterSelect
+            param={QUERY_PARAM_KEYS.orderBy}
             options={PATIENT_REQUIREMENTS_ORDER_OPTIONS}
+            placeholder='Ordenar por'
+            resetLabel='Limpar ordem'
             className='w-52'
           />
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        </SectionHeaderActions>
+      </SectionHeader>
 
       <Card className='p-6'>
         <Table>
@@ -150,7 +156,7 @@ export function ApprovedPatientRequirementsListTable() {
         </Table>
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }

@@ -2,42 +2,42 @@ import type React from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 
-import { Button, type ButtonProps } from './button'
+import { Button } from './button'
 
-export type TabSelectButton = ButtonProps & {
-  label: string
-  isActive?: boolean
+type TabSelectOptions<T> = { label: string; value: T }
+
+interface TabSelectProps<T> {
+  value?: T | null
+  options: TabSelectOptions<T>[]
+  onSelect: (value: T) => void
+  className?: string
 }
 
-interface TabSelectProps extends React.ComponentProps<'div'> {
-  buttons: TabSelectButton[]
-}
-
-export function TabSelect({
-  buttons,
+export function TabSelect<T>({
+  value,
+  options,
   className,
+  onSelect,
   ...props
-}: Readonly<TabSelectProps>) {
+}: Readonly<TabSelectProps<T>>) {
   return (
     <div
       className={cn('bg-border/40 flex h-10 gap-1 rounded-lg p-1', className)}
       {...props}
     >
-      {buttons.map(({ label, isActive, className, ...buttonProps }) => (
-        <Button
-          key={label}
-          variant='ghost'
-          data-active={isActive}
-          className={cn(
-            'text-foreground-soft hover:bg-background hover:text-foreground h-auto min-h-auto flex-1 rounded-md hover:shadow',
-            'data-[active=true]:bg-background data-[active=true]:text-foreground data-[active=true]:pointer-events-none data-[active=true]:shadow',
-            className,
-          )}
-          {...buttonProps}
-        >
-          {label}
-        </Button>
-      ))}
+      {options.map((option) => {
+        return (
+          <Button
+            key={option.label}
+            variant='ghost'
+            data-active={value === option.value}
+            onClick={() => onSelect(option.value)}
+            className='text-foreground-soft hover:bg-background hover:text-foreground data-[active=true]:bg-background data-[active=true]:text-foreground h-auto min-h-auto flex-1 rounded-md hover:shadow data-[active=true]:pointer-events-none data-[active=true]:shadow'
+          >
+            {option.label}
+          </Button>
+        )
+      })}
     </div>
   )
 }

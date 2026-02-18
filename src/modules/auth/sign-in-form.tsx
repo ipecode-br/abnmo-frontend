@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -25,12 +24,7 @@ export const signInFormSchema = z.object({
 })
 export type SignInFormSchema = z.infer<typeof signInFormSchema>
 
-interface SignInFormProps {
-  type: 'patient' | 'user'
-}
-
-export function SignInForm({ type }: Readonly<SignInFormProps>) {
-  const [isPending, startTransition] = useTransition()
+export function SignInForm() {
   const router = useRouter()
 
   const formMethods = useForm<SignInFormSchema>({
@@ -40,31 +34,32 @@ export function SignInForm({ type }: Readonly<SignInFormProps>) {
   })
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  async function signIn({ email, password, keepLoggedIn }: SignInFormSchema) {
-    startTransition(async () => {
-      const response = await api('/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-          keep_logged_in: keepLoggedIn,
-          account_type: type,
-        }),
-      })
-
-      if (!response.success) {
-        formMethods.setError('root', { message: response.message })
-        return
-      }
-
-      router.push(type === 'user' ? ROUTES.dashboard.main : ROUTES.patient.main)
+  async function submitForm({
+    email,
+    password,
+    keepLoggedIn,
+  }: SignInFormSchema) {
+    const response = await api<{ account_type: 'user' | 'patient' }>('/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, keep_logged_in: keepLoggedIn }),
     })
+
+    if (!response.success) {
+      formMethods.setError('root', { message: response.message })
+      return
+    }
+
+    router.push(
+      response.data?.account_type === 'user'
+        ? ROUTES.dashboard.main
+        : ROUTES.patient.main,
+    )
   }
 
   return (
     <FormProvider {...formMethods}>
-      <FormContainer onSubmit={formMethods.handleSubmit(signIn)}>
-        <FormField>
+      <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
+        <FormField className='gap-4'>
           <TextInput
             name='email'
             label='E-mail'
@@ -78,7 +73,7 @@ export function SignInForm({ type }: Readonly<SignInFormProps>) {
           />
         </FormField>
 
-        <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[26rem]:flex-col'>
+        <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[28rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
@@ -89,7 +84,7 @@ export function SignInForm({ type }: Readonly<SignInFormProps>) {
           </NavLink>
         </div>
 
-        <Button type='submit' loading={isPending}>
+        <Button type='submit' loading={formMethods.formState.isSubmitting}>
           Entrar
         </Button>
 

@@ -9,7 +9,7 @@ import { DropdownMenuContent } from '@/components/ui/dropdown/content'
 import { DropdownMenuItem } from '@/components/ui/dropdown/item'
 import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
 import { ROUTES } from '@/constants/routes'
-import type { PatientRequirement } from '@/types/patient-requirements'
+import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 
 interface ApprovedPatientRequirementsListTableActionsProps {
   requirement: PatientRequirement

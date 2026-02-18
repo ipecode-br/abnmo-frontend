@@ -5,7 +5,7 @@ import { Loader2Icon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 aria-readonly:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
+  'outline-ring inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap outline-offset-4 transition-colors disabled:pointer-events-none disabled:opacity-50 aria-readonly:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-colors',
   {
     variants: {
       variant: {
@@ -13,11 +13,14 @@ const buttonVariants = cva(
           'bg-primary text-primary-foreground hover:bg-primary/80 shadow-xs',
         destructive:
           'bg-error text-primary-foreground hover:bg-error/80 shadow-xs',
+        success:
+          'bg-success text-primary-foreground hover:bg-success/80 shadow-xs',
         outline:
           'border-border hover:bg-accent text-accent-foreground bg-background border shadow-xs',
         muted: 'bg-background-soft text-accent-foreground hover:bg-border',
         ghost: 'text-accent-foreground hover:bg-accent bg-transparent',
-        error: 'border-error focus-visible:ring-error hover:bg-accent border',
+        error:
+          'border-error focus-visible:ring-error bg-background hover:bg-accent outline-error border',
       },
       size: {
         default: 'h-10 min-h-10 px-4 [&_svg]:size-5',

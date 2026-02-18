@@ -46,7 +46,10 @@ export function CheckboxInput({
               {...props}
               {...field}
             />
-            <Label htmlFor={name} className='font-normal'>
+            <Label
+              htmlFor={name}
+              className='font-normal peer-disabled:pointer-events-none hover:cursor-pointer'
+            >
               {label}
               {isRequired && <RequiredInput />}
             </Label>

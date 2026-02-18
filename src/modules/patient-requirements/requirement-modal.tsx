@@ -19,13 +19,13 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
-import { usePatientOptions } from '@/hooks/use-patient-otions'
-import { api } from '@/lib/api'
-import { queryClient } from '@/lib/tanstack-query'
 import {
   PATIENT_REQUIREMENT_TYPE_ENUM,
   PATIENT_REQUIREMENT_TYPE_OPTIONS,
-} from '@/types/patient-requirements'
+} from '@/enums/patient-requirements'
+import { usePatientOptions } from '@/hooks/use-patient-otions'
+import { api } from '@/lib/api'
+import { queryClient } from '@/lib/tanstack-query'
 
 const patientRequirementFormSchema = z.object({
   patient_id: z.string().uuid('Paciente é obrigatório'),
@@ -126,7 +126,7 @@ export function PatientRequirementModal({
           className='flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
-          Cancelar
+          Voltar
         </DialogClose>
       </DialogFooter>
     </DialogContainer>

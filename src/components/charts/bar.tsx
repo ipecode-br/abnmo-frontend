@@ -49,6 +49,8 @@ export function BarChart({
           axisLine={false}
           tickLine={false}
           tick={{ fontSize: '0.75rem', fill: 'var(--color-disabled)' }}
+          domain={[0, 'dataMax']}
+          allowDecimals={false}
         />
 
         <YAxis

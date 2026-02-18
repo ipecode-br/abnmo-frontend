@@ -1,3 +1,5 @@
+import Link, { type LinkProps } from 'next/link'
+
 import { cn } from '@/utils/class-name-merge'
 
 export function Table({
@@ -65,6 +67,21 @@ export function TableCell({
   )
 }
 
+export function TableEmptyCell({
+  className,
+  ...props
+}: Readonly<React.ComponentProps<'td'>>) {
+  return (
+    <td
+      className={cn(
+        'border-border rounded-b-lg border px-4 py-6 text-center',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 export function TableButton({
   className,
   ...props
@@ -72,10 +89,28 @@ export function TableButton({
   return (
     <button
       className={cn(
-        'focus-visible:ring-ring focus-visible:outline-background flex cursor-pointer items-center gap-2 rounded-lg focus-visible:ring-2 focus-visible:ring-offset-4',
+        'outline-ring flex cursor-pointer items-center gap-2 rounded-lg outline-offset-4',
         className,
       )}
       {...props}
     />
+  )
+}
+
+export function TableLink({
+  className,
+  children,
+  ...props
+}: Readonly<LinkProps & { className?: string; children: React.ReactNode }>) {
+  return (
+    <Link
+      className={cn(
+        'outline-ring flex cursor-pointer items-center gap-2 rounded-lg outline-offset-4',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </Link>
   )
 }

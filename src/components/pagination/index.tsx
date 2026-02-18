@@ -2,6 +2,7 @@
 
 import { ChevronFirstIcon, ChevronLastIcon } from 'lucide-react'
 
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useParams } from '@/hooks/params'
 
 import { PaginationButton } from './button'
@@ -28,7 +29,7 @@ export function Pagination({
     return null
   }
 
-  const currentPage = Number(getParam('page')) || 1
+  const currentPage = Number(getParam(QUERY_PARAM_KEYS.page)) || 1
   const totalPages = Math.ceil(totalItems / perPage)
   const lastPageItems = totalItems - (totalPages - 1) * perPage
 

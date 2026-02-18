@@ -1,6 +1,6 @@
 'use client'
 
-import { QUERY_PERIODS_OPTIONS, type QueryPeriod } from '@/types/queries'
+import { QUERY_PERIODS_OPTIONS, type QueryPeriod } from '@/enums/queries'
 
 import { Select, type SelectOption } from './ui/select'
 
@@ -26,10 +26,12 @@ export function SelectPeriod({
 
   return (
     <Select
+      size='sm'
+      align='end'
       value={period}
       options={options}
-      onValueChange={handleValueChange}
       disabled={disabled}
+      onValueChange={handleValueChange}
     />
   )
 }

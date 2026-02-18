@@ -1,5 +1,4 @@
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { NavProps, useDayPicker } from 'react-day-picker'
 
 import { Button } from '../button'
@@ -35,10 +34,10 @@ export function CalendarDropdownNav({
   nextMonth,
 }: Readonly<NavProps>) {
   const { months, goToMonth } = useDayPicker()
-  const { date: dateCurrent } = months[0]
+  const dateCurrent = months[0]?.date ?? new Date()
 
-  const [yearSelected, setYearSeleted] = useState<number>(currentYear)
-  const [monthSelected, setMonthSeleted] = useState<string>('')
+  const monthSelected = monthsOfYear[dateCurrent.getMonth()]
+  const yearSelected = dateCurrent.getFullYear()
 
   // Check if we're in a restricted mode (no nextMonth means we're at the limit)
   const isRestricted =
@@ -66,19 +65,12 @@ export function CalendarDropdownNav({
     value: String(year),
   }))
 
-  useEffect(() => {
-    if (!months.length) return
-
-    setMonthSeleted(monthsOfYear[dateCurrent.getMonth()])
-    setYearSeleted(dateCurrent.getFullYear())
-  }, [dateCurrent, months.length])
-
   return (
-    <div className='bg-background-soft flex items-center justify-center gap-1 rounded-lg p-1.5'>
+    <div className='bg-accent flex items-center justify-center gap-1 rounded-lg p-1.5'>
       <Button
         size='icon'
         variant='ghost'
-        className='size-7'
+        className='mr-auto size-8'
         onClick={onPreviousClick}
         disabled={!previousMonth}
       >
@@ -86,30 +78,31 @@ export function CalendarDropdownNav({
       </Button>
 
       <Select
+        size='sm'
+        placeholder='Mês'
         value={monthSelected}
+        options={monthOptions}
+        className='w-20'
         onValueChange={(value: string) => {
-          setMonthSeleted(value)
           goToMonth(new Date(yearSelected, monthsOfYear.indexOf(value)))
         }}
-        options={monthOptions}
-        className='h-8 w-16'
       />
 
       <Select
-        value={yearSelected.toString()}
-        onValueChange={(value: string) => {
-          const year = Number(value)
-          setYearSeleted(year)
-          goToMonth(new Date(year, monthsOfYear.indexOf(monthSelected)))
-        }}
+        size='sm'
+        placeholder='Ano'
         options={yearOptions}
-        className='h-8 w-18'
+        value={yearSelected.toString()}
+        className='w-22'
+        onValueChange={(value: string) => {
+          goToMonth(new Date(Number(value), dateCurrent.getMonth()))
+        }}
       />
 
       <Button
         size='icon'
         variant='ghost'
-        className='size-7 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-25'
+        className='ml-auto size-8'
         onClick={onNextClick}
         disabled={!nextMonth}
       >

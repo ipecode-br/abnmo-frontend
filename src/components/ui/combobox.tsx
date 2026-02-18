@@ -7,14 +7,13 @@ import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react'
 import { cn } from '@/utils/class-name-merge'
 
 export const comboboxInputVariants = cva(
-  'border-border bg-background h-10 w-full truncate overflow-hidden rounded-lg border pr-12 pl-3 shadow-xs outline-offset-2 outline-transparent transition-colors disabled:opacity-50 aria-[readonly]:focus-visible:outline-none',
+  'border-border bg-background h-10 w-full truncate overflow-hidden rounded-lg border pr-12 pl-3 shadow-xs outline-offset-4 outline-transparent transition-colors disabled:opacity-50 aria-[readonly]:focus-visible:outline-none',
   {
     variants: {
       variant: {
         default:
-          'border-border text-foreground placeholder:text-disabled focus-visible:outline-ring',
-        error:
-          'border-error focus-visible:ring-error focus-visible:outline-error',
+          'border-border text-foreground placeholder:text-disabled outline-ring',
+        error: 'border-error focus-visible:ring-error outline-error',
       },
     },
     defaultVariants: {

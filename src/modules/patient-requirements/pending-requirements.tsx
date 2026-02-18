@@ -2,29 +2,34 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { differenceInDays } from 'date-fns'
-import { Calendar, CircleAlert } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Calendar, CircleAlert, ClockArrowUpIcon } from 'lucide-react'
 
-import { DataTableHeader } from '@/components/data-table/header'
-import { DataTableHeaderActions } from '@/components/data-table/header/actions'
-import { DataTableHeaderOrderBy } from '@/components/data-table/header/order-by'
-import { DataTableHeaderSearch } from '@/components/data-table/header/search'
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
 import { Pagination } from '@/components/pagination'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
-import { QUERY_PARAMS } from '@/constants/params'
-import { getTimeDistanceToNow } from '@/helpers/get-time-distance-to-now'
-import { useParams } from '@/hooks/params'
-import { api } from '@/lib/api'
-import type { OrderMapping } from '@/types/order'
-import type { PatientRequirement } from '@/types/patient-requirements'
+import { QUERY_PARAM_KEYS } from '@/enums/params'
 import {
   PATIENT_REQUIREMENT_TYPES,
   PATIENT_REQUIREMENTS_ORDER_OPTIONS,
   type PatientRequirementsOrder,
-} from '@/types/patient-requirements'
+} from '@/enums/patient-requirements'
+import { getTimeDistanceToNow } from '@/helpers/get-time-distance-to-now'
+import { useParams } from '@/hooks/params'
+import { api } from '@/lib/api'
+import type {
+  PatientRequirementsOrderBy,
+  QueryOrderMapping,
+} from '@/types/orders'
+import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
 
@@ -32,29 +37,34 @@ import { AddPatientRequirementButton } from './add-patient-requirement-button'
 
 // TODO: add dropdown menu
 export function PendingPatientRequirements() {
-  const [stableTotal, setStableTotal] = useState(0)
-  const { getParam } = useParams()
+  const { getParams } = useParams()
 
   const perPage = 12
-  const page = getParam(QUERY_PARAMS.page)
-  const search = getParam(QUERY_PARAMS.search)
-  const orderBy = getParam(QUERY_PARAMS.orderBy)
 
-  const ORDER_MAPPING: OrderMapping<PatientRequirementsOrder> = {
-    name_asc: { orderBy: 'name', order: 'ASC' },
-    name_desc: { orderBy: 'name', order: 'DESC' },
+  const [page, search, orderBy] = getParams([
+    QUERY_PARAM_KEYS.page,
+    QUERY_PARAM_KEYS.search,
+    QUERY_PARAM_KEYS.orderBy,
+  ])
+
+  const ORDER_MAPPING: QueryOrderMapping<
+    PatientRequirementsOrder,
+    PatientRequirementsOrderBy
+  > = {
+    name_asc: { orderBy: 'patient', order: 'ASC' },
+    name_desc: { orderBy: 'patient', order: 'DESC' },
     date_asc: { orderBy: 'date', order: 'ASC' },
     date_desc: { orderBy: 'date', order: 'DESC' },
     type_asc: { orderBy: 'type', order: 'ASC' },
     type_desc: { orderBy: 'type', order: 'DESC' },
   }
 
-  const orderByQuery = ORDER_MAPPING[orderBy as PatientRequirementsOrder] ?? {
-    orderBy: 'date',
-    order: 'ASC',
-  }
+  const orderByQuery =
+    ORDER_MAPPING[orderBy as PatientRequirementsOrder] ??
+    ORDER_MAPPING['date_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.approvals.pending, search, page, orderByQuery],
     queryFn: () =>
       api<{ requirements: PatientRequirement[]; total: number }>(
@@ -72,27 +82,31 @@ export function PendingPatientRequirements() {
   })
 
   const requirements = response?.data?.requirements ?? []
+  const total = response?.data?.total ?? 0
+
   const isEmpty = requirements.length === 0
   const hasActiveFilters = !!search
 
-  useEffect(() => {
-    if (response?.data) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data])
-
   return (
     <>
-      <DataTableHeader>
-        <DataTableHeaderActions>
-          <DataTableHeaderSearch placeholder='Pesquisar nome...' />
-          <DataTableHeaderOrderBy
+      <SectionHeader>
+        <SectionHeaderTitle
+          title='Envios pendentes'
+          icon={<ClockArrowUpIcon />}
+          total={total}
+        />
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar nome...' className='w-56' />
+          <FilterSelect
+            param={QUERY_PARAM_KEYS.orderBy}
             options={PATIENT_REQUIREMENTS_ORDER_OPTIONS}
+            placeholder='Ordenar por'
+            resetLabel='Limpar ordem'
             className='w-52'
           />
           <AddPatientRequirementButton size='sm' />
-        </DataTableHeaderActions>
-      </DataTableHeader>
+        </SectionHeaderActions>
+      </SectionHeader>
 
       <Card className='grid gap-4 p-6 sm:grid-cols-2 xl:grid-cols-3'>
         {isLoading && <Skeleton quantity={12} className='h-40 rounded-xl' />}
@@ -158,7 +172,7 @@ export function PendingPatientRequirements() {
           })}
       </Card>
 
-      <Pagination perPage={perPage} totalItems={stableTotal} />
+      <Pagination perPage={perPage} totalItems={total} />
     </>
   )
 }
