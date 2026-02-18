@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { canUser } from '@/actions/auth'
+import { canUser } from '@/actions/auth/can-user'
 import { DashboardHeader } from '@/components/dashboard/header'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { DashboardWrapper } from '@/components/dashboard/wrapper'

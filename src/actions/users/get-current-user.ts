@@ -5,7 +5,6 @@ import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { api } from '@/lib/api'
 import type { User } from '@/types/users.d.ts'
 
-import { logout } from '../logout'
 import { getUserFromToken } from './get-user-from-token'
 
 export async function getCurrentUser() {
@@ -23,7 +22,7 @@ export async function getCurrentUser() {
   })
 
   if (!response.success) {
-    await logout()
+    return null
   }
 
   return response.data

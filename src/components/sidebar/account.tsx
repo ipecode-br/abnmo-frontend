@@ -3,7 +3,7 @@
 import { EllipsisVerticalIcon, LogOutIcon, UserCircle2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-import { logout } from '@/actions/logout'
+import { logout } from '@/actions/auth/logout'
 import { Avatar } from '@/components/ui/avatar'
 import { ROUTES } from '@/constants/routes'
 import { useSidebar } from '@/store/sidebar'

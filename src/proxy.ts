@@ -1,10 +1,12 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
+import { deleteCookie } from './actions/cookies'
+import { env } from './config/env'
 import { COOKIES } from './constants/cookies'
 import { ROUTES } from './constants/routes'
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const cookies = request.cookies
   const pathname = request.nextUrl.pathname
 
@@ -12,11 +14,40 @@ export function proxy(request: NextRequest) {
   const refreshToken = cookies.get(COOKIES.refreshToken)
   const isAuthRoute = pathname.startsWith('/conta')
 
-  if (isAuthRoute && (accessToken || refreshToken)) {
+  if (refreshToken && !accessToken) {
+    const url = new URL('/refresh-token', env.NEXT_PUBLIC_API_URL)
+
+    const response = await fetch(url, {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Cookie: `refresh_token=${refreshToken.value}`,
+      },
+    })
+
+    if (!response.ok) {
+      await deleteCookie(COOKIES.accessToken)
+      await deleteCookie(COOKIES.refreshToken)
+      return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
+    }
+
+    const setCookie = response.headers.get('set-cookie')
+    const nextResponse = NextResponse.redirect(request.nextUrl)
+
+    if (setCookie) {
+      nextResponse.headers.set('set-cookie', setCookie)
+    }
+
+    return nextResponse
+  }
+
+  if (isAuthRoute && accessToken) {
     return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
   }
 
-  if (!isAuthRoute && !accessToken) {
+  if (!isAuthRoute && !accessToken && !refreshToken) {
     return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
   }
 

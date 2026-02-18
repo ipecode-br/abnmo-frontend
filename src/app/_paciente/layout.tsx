@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { canUser } from '@/actions/auth'
+import { canUser } from '@/actions/auth/can-user'
 import { PatientHeader } from '@/app/_paciente/_header'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'

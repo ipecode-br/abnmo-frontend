@@ -3,7 +3,7 @@
 import { definePermissionsFor } from '@/lib/permissions'
 import type { Action, Subject } from '@/lib/permissions/schemas'
 
-import { getUserFromToken } from './users/get-user-from-token'
+import { getUserFromToken } from '../users/get-user-from-token'
 
 export async function canUser(action: Action, subject: Subject) {
   const user = await getUserFromToken()
