@@ -5,7 +5,6 @@ export const ROUTES = {
     forgotPassword: '/conta/recuperar-senha',
     resetPassword: '/conta/nova-senha',
     registerUser: '/conta/cadastrar/usuario',
-    signOut: '/api/sair',
   },
   patient: {
     main: '/paciente',

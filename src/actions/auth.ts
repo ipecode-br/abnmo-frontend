@@ -1,8 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
-
-import { ROUTES } from '@/constants/routes'
 import { definePermissionsFor } from '@/lib/permissions'
 import type { Action, Subject } from '@/lib/permissions/schemas'
 
@@ -12,7 +9,7 @@ export async function canUser(action: Action, subject: Subject) {
   const user = await getUserFromToken()
 
   if (!user || !user.role) {
-    redirect(ROUTES.auth.signOut)
+    return false
   }
 
   const { can } = definePermissionsFor(user.role)

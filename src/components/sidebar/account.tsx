@@ -2,15 +2,10 @@
 
 import { EllipsisVerticalIcon, LogOutIcon, UserCircle2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
-import { toast } from 'sonner'
 
+import { logout } from '@/actions/logout'
 import { Avatar } from '@/components/ui/avatar'
-import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
-import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
-import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
-import { api } from '@/lib/api'
 import { useSidebar } from '@/store/sidebar'
 import type { User } from '@/types/users.d.ts'
 
@@ -22,29 +17,8 @@ interface SidebarAccountProps {
 }
 
 export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
-  const [isPending, startTransition] = useTransition()
-
   const expanded = useSidebar((state) => state.expanded)
   const router = useRouter()
-
-  async function logout() {
-    startTransition(async () => {
-      if (!user?.id) return
-
-      const response = await api('/logout', { method: 'POST' })
-
-      if (!response.success) {
-        toast.error(response.message)
-        return
-      }
-
-      revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
-      revalidateClientCache('all')
-
-      toast.success(response.message)
-      router.push(ROUTES.auth.signIn)
-    })
-  }
 
   return (
     <div className='relative flex items-center gap-3'>
@@ -74,7 +48,7 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
             Meu perfil
           </MenuItem>
           <Divider className='my-1' />
-          <MenuItem onClick={logout} disabled={isPending}>
+          <MenuItem onClick={logout}>
             <LogOutIcon />
             Sair
           </MenuItem>

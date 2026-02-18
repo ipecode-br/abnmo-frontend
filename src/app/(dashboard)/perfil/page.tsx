@@ -1,9 +1,7 @@
-import { redirect } from 'next/navigation'
-
+import { logout } from '@/actions/logout'
 import { getCurrentUser } from '@/actions/users/get-current-user'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
-import { ROUTES } from '@/constants/routes'
 import { ChangeUserPasswordButton } from '@/modules/profile/change-password-button'
 import { UserProfileForm } from '@/modules/profile/profile-form'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -12,7 +10,7 @@ export default async function Page() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect(ROUTES.auth.signOut)
+    return await logout()
   }
 
   const showUpdatedDate = new Date(user.updated_at) >= new Date(user.created_at)
