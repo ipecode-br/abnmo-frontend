@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: Readonly<PageProps>) {
   const CARD_CONTENT = {
     valid: {
       title: 'Cadastrar conta',
-      description: 'Este convite expirou ou é inválido',
+      description: 'Insira seus dados para criar sua conta',
     },
     invalid: {
       title: 'Convite inválido',
