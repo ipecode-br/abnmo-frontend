@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -26,7 +25,6 @@ export const signInFormSchema = z.object({
 export type SignInFormSchema = z.infer<typeof signInFormSchema>
 
 export function SignInForm() {
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const formMethods = useForm<SignInFormSchema>({
@@ -41,30 +39,21 @@ export function SignInForm() {
     password,
     keepLoggedIn,
   }: SignInFormSchema) {
-    startTransition(async () => {
-      const response = await api<{ account_type: 'user' | 'patient' }>(
-        '/login',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            email,
-            password,
-            keep_logged_in: keepLoggedIn,
-          }),
-        },
-      )
-
-      if (!response.success) {
-        formMethods.setError('root', { message: response.message })
-        return
-      }
-
-      router.push(
-        response.data?.account_type === 'user'
-          ? ROUTES.dashboard.main
-          : ROUTES.patient.main,
-      )
+    const response = await api<{ account_type: 'user' | 'patient' }>('/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, keep_logged_in: keepLoggedIn }),
     })
+
+    if (!response.success) {
+      formMethods.setError('root', { message: response.message })
+      return
+    }
+
+    router.push(
+      response.data?.account_type === 'user'
+        ? ROUTES.dashboard.main
+        : ROUTES.patient.main,
+    )
   }
 
   return (
@@ -95,7 +84,7 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button type='submit' loading={isPending}>
+        <Button type='submit' loading={formMethods.formState.isSubmitting}>
           Entrar
         </Button>
 

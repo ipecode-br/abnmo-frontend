@@ -3,6 +3,7 @@
 import { EllipsisVerticalIcon, LogOutIcon, UserCircle2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
+import { toast } from 'sonner'
 
 import { Avatar } from '@/components/ui/avatar'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
@@ -30,11 +31,17 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
     startTransition(async () => {
       if (!user?.id) return
 
-      api('/logout', { method: 'POST' })
+      const response = await api('/logout', { method: 'POST' })
+
+      if (!response.success) {
+        toast.error(response.message)
+        return
+      }
 
       revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
       revalidateClientCache('all')
 
+      toast.success(response.message)
       router.push(ROUTES.auth.signIn)
     })
   }
