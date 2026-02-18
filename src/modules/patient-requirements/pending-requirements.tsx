@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { differenceInDays } from 'date-fns'
 import { Calendar, CircleAlert, ClockArrowUpIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 import { FilterSelect } from '@/components/filters/filter-select'
 import { SearchInput } from '@/components/filters/search-input'
@@ -38,11 +37,10 @@ import { AddPatientRequirementButton } from './add-patient-requirement-button'
 
 // TODO: add dropdown menu
 export function PendingPatientRequirements() {
-  const [stableTotal, setStableTotal] = useState(0)
-
   const { getParams } = useParams()
 
   const perPage = 12
+
   const [page, search, orderBy] = getParams([
     QUERY_PARAM_KEYS.page,
     QUERY_PARAM_KEYS.search,
@@ -83,14 +81,10 @@ export function PendingPatientRequirements() {
   })
 
   const requirements = response?.data?.requirements ?? []
+  const total = response?.data?.total ?? 0
+
   const isEmpty = requirements.length === 0
   const hasActiveFilters = !!search
-
-  useEffect(() => {
-    if (response?.data) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data])
 
   return (
     <>
@@ -98,7 +92,7 @@ export function PendingPatientRequirements() {
         <SectionHeaderTitle
           title='Envios pendentes'
           icon={<ClockArrowUpIcon />}
-          total={stableTotal}
+          total={total}
         />
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar nome...' className='w-56' />
@@ -177,7 +171,7 @@ export function PendingPatientRequirements() {
           })}
       </Card>
 
-      <Pagination perPage={perPage} totalItems={stableTotal} />
+      <Pagination perPage={perPage} totalItems={total} />
     </>
   )
 }

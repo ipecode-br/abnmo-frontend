@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { PlusIcon, Users2Icon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
 import { FilterContainer } from '@/components/filters/container'
@@ -34,8 +34,7 @@ import type { Patient } from '@/types/patients.d.ts'
 import { PatientsTable } from './table'
 
 export function PatientsList() {
-  const [showFilters, setShowFilters] = useState(false)
-  const [stableTotal, setStableTotal] = useState(0)
+  const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
 
   const [page, search, status, orderBy, startDate, endDate] = getParams([
@@ -72,19 +71,10 @@ export function PatientsList() {
   })
 
   const patients = response?.data?.patients ?? []
+  const total = response?.data?.total ?? 0
 
-  // Update stable total only when we have actual data to prevent pagination flickering
-  useEffect(() => {
-    if (response?.data?.total !== undefined) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data?.total])
-
-  useEffect(() => {
-    if (status || startDate || endDate) {
-      setShowFilters(true)
-    }
-  }, [status, startDate, endDate])
+  const hasActiveFilters = Boolean(status || startDate || endDate)
+  const showFilters = manualShowFilters || hasActiveFilters
 
   return (
     <>
@@ -92,7 +82,7 @@ export function PatientsList() {
         <SectionHeaderTitle
           title='Pacientes'
           icon={<Users2Icon />}
-          total={stableTotal}
+          total={total}
         />
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar' className='w-40' />
@@ -103,7 +93,9 @@ export function PatientsList() {
             resetLabel='Limpar ordem'
             className='w-40'
           />
-          <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
+          <ShowFilterButton
+            onClick={() => setManualShowFilters(!manualShowFilters)}
+          />
 
           <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
             <PlusIcon />
@@ -131,7 +123,7 @@ export function PatientsList() {
         <PatientsTable patients={patients} loading={isLoading} />
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }

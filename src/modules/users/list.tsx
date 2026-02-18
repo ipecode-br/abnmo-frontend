@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { HeartHandshakeIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
 import { FilterContainer } from '@/components/filters/container'
@@ -34,8 +34,7 @@ import { NewInviteButton } from './invites/new-invite-button'
 import { UsersTable } from './table'
 
 export function UsersList() {
-  const [showFilters, setShowFilters] = useState(false)
-  const [stableTotal, setStableTotal] = useState(0)
+  const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
 
   const [page, search, role, status, orderBy, startDate, endDate] = getParams([
@@ -79,19 +78,10 @@ export function UsersList() {
   })
 
   const users = response?.data?.users ?? []
+  const total = response?.data?.total ?? 0
 
-  // Update stable total only when we have actual data to prevent pagination flickering
-  useEffect(() => {
-    if (response?.data?.total !== undefined) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data?.total])
-
-  useEffect(() => {
-    if (status || role || startDate || endDate) {
-      setShowFilters(true)
-    }
-  }, [status, role, startDate, endDate])
+  const hasActiveFilters = Boolean(role || status || startDate || endDate)
+  const showFilters = manualShowFilters || hasActiveFilters
 
   return (
     <>
@@ -99,7 +89,7 @@ export function UsersList() {
         <SectionHeaderTitle
           title='Membros'
           icon={<HeartHandshakeIcon />}
-          total={stableTotal}
+          total={total}
         />
 
         <SectionHeaderActions>
@@ -111,7 +101,10 @@ export function UsersList() {
             resetLabel='Limpar ordem'
             className='w-44'
           />
-          <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
+          <ShowFilterButton
+            onClick={() => setManualShowFilters(!manualShowFilters)}
+          />
+
           <NewInviteButton size='sm' />
         </SectionHeaderActions>
       </SectionHeader>
@@ -143,7 +136,7 @@ export function UsersList() {
         <UsersTable users={users} loading={isLoading} />
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }

@@ -3,7 +3,7 @@
 import 'react-day-picker/style.css'
 
 import { CalendarDaysIcon } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -34,27 +34,16 @@ export function DatePicker({
   ...props
 }: Readonly<DatePickerProps>) {
   const [open, setOpen] = useState(false)
-  const [date, setDate] = useState(value ?? '')
 
   const handleCalendarSelect = useCallback(
     (selectedDate: Date | undefined) => {
-      if (!selectedDate) {
-        return
-      }
+      if (!selectedDate) return
 
-      if (onSelectDate) {
-        onSelectDate(selectedDate ? selectedDate.toISOString() : '')
-      }
-
-      setDate(selectedDate.toISOString())
+      onSelectDate?.(selectedDate.toISOString())
       setOpen(false)
     },
     [onSelectDate],
   )
-
-  useEffect(() => {
-    setDate(value ?? '')
-  }, [value])
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal={modal}>
@@ -67,8 +56,8 @@ export function DatePicker({
         {...props}
       >
         <CalendarDaysIcon />
-        {date ? (
-          formatDate(date, { dateStyle: 'short' })
+        {value ? (
+          formatDate(value, { dateStyle: 'short' })
         ) : (
           <span className='text-disabled'>{placeholder}</span>
         )}
@@ -80,7 +69,7 @@ export function DatePicker({
           startDate={startDate}
           onSelect={handleCalendarSelect}
           allowFutureDates={allowFutureDates}
-          selected={date ? new Date(date) : undefined}
+          selected={value ? new Date(value) : undefined}
         />
       </PopoverContent>
     </Popover>

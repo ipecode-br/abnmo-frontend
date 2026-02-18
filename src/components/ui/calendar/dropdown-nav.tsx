@@ -1,5 +1,4 @@
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { NavProps, useDayPicker } from 'react-day-picker'
 
 import { Button } from '../button'
@@ -35,10 +34,10 @@ export function CalendarDropdownNav({
   nextMonth,
 }: Readonly<NavProps>) {
   const { months, goToMonth } = useDayPicker()
-  const { date: dateCurrent } = months[0]
+  const dateCurrent = months[0]?.date ?? new Date()
 
-  const [yearSelected, setYearSeleted] = useState<number>(currentYear)
-  const [monthSelected, setMonthSeleted] = useState<string>('')
+  const monthSelected = monthsOfYear[dateCurrent.getMonth()]
+  const yearSelected = dateCurrent.getFullYear()
 
   // Check if we're in a restricted mode (no nextMonth means we're at the limit)
   const isRestricted =
@@ -66,13 +65,6 @@ export function CalendarDropdownNav({
     value: String(year),
   }))
 
-  useEffect(() => {
-    if (!months.length) return
-
-    setMonthSeleted(monthsOfYear[dateCurrent.getMonth()])
-    setYearSeleted(dateCurrent.getFullYear())
-  }, [dateCurrent, months.length])
-
   return (
     <div className='bg-accent flex items-center justify-center gap-1 rounded-lg p-1.5'>
       <Button
@@ -92,7 +84,6 @@ export function CalendarDropdownNav({
         options={monthOptions}
         className='w-20'
         onValueChange={(value: string) => {
-          setMonthSeleted(value)
           goToMonth(new Date(yearSelected, monthsOfYear.indexOf(value)))
         }}
       />
@@ -104,9 +95,7 @@ export function CalendarDropdownNav({
         value={yearSelected.toString()}
         className='w-22'
         onValueChange={(value: string) => {
-          const year = Number(value)
-          setYearSeleted(year)
-          goToMonth(new Date(year, monthsOfYear.indexOf(monthSelected)))
+          goToMonth(new Date(Number(value), dateCurrent.getMonth()))
         }}
       />
 

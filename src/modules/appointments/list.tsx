@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { ClipboardCheckIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
 import { FilterContainer } from '@/components/filters/container'
@@ -34,8 +34,7 @@ import { NewAppointmentButton } from './new-appointment-button'
 import { AppointmentsTable } from './table'
 
 export function AppointmentsList() {
-  const [showFilters, setShowFilters] = useState(false)
-  const [stableTotal, setStableTotal] = useState(0)
+  const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
 
   const [page, search, category, status, orderBy, startDate, endDate] =
@@ -71,6 +70,7 @@ export function AppointmentsList() {
     ORDER_MAPPING[orderBy as AppointmentsOrder] ?? ORDER_MAPPING['name_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.appointments.main, paramsQueryKey],
     queryFn: () =>
       api<{ appointments: Appointment[]; total: number }>('/appointments', {
@@ -87,19 +87,10 @@ export function AppointmentsList() {
   })
 
   const appointments = response?.data?.appointments ?? []
+  const total = response?.data?.total ?? 0
 
-  // Update stable total only when we have actual data to prevent pagination flickering
-  useEffect(() => {
-    if (response?.data?.total !== undefined) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data?.total])
-
-  useEffect(() => {
-    if (category || startDate || endDate) {
-      setShowFilters(true)
-    }
-  }, [category, startDate, endDate])
+  const hasActiveFilters = Boolean(category || status || startDate || endDate)
+  const showFilters = manualShowFilters || hasActiveFilters
 
   return (
     <>
@@ -107,7 +98,7 @@ export function AppointmentsList() {
         <SectionHeaderTitle
           title='Atendimentos'
           icon={<ClipboardCheckIcon />}
-          total={stableTotal}
+          total={total}
         />
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar' className='w-48' />
@@ -118,7 +109,9 @@ export function AppointmentsList() {
             resetLabel='Limpar ordem'
             className='w-52'
           />
-          <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
+          <ShowFilterButton
+            onClick={() => setManualShowFilters(!manualShowFilters)}
+          />
 
           <NewAppointmentButton size='sm' />
         </SectionHeaderActions>
@@ -151,7 +144,7 @@ export function AppointmentsList() {
         <AppointmentsTable appointments={appointments} loading={isLoading} />
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }

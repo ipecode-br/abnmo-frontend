@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { ClipboardCheckIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
 import { FilterContainer } from '@/components/filters/container'
@@ -41,8 +41,7 @@ interface PatientAppointmentsListProps {
 export function PatientAppointmentsList({
   patientId,
 }: Readonly<PatientAppointmentsListProps>) {
-  const [showFilters, setShowFilters] = useState(false)
-  const [stableTotal, setStableTotal] = useState(0)
+  const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
 
   const [page, category, status, orderBy, startDate, endDate] = getParams([
@@ -91,19 +90,10 @@ export function PatientAppointmentsList({
   })
 
   const appointments = response?.data?.appointments ?? []
+  const total = response?.data?.total ?? 0
 
-  // Update stable total only when we have actual data to prevent pagination flickering
-  useEffect(() => {
-    if (response?.data?.total !== undefined) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data?.total])
-
-  useEffect(() => {
-    if (category || startDate || endDate) {
-      setShowFilters(true)
-    }
-  }, [category, startDate, endDate])
+  const hasActiveFilters = Boolean(category || status || startDate || endDate)
+  const showFilters = manualShowFilters || hasActiveFilters
 
   return (
     <>
@@ -111,7 +101,7 @@ export function PatientAppointmentsList({
         <SectionHeaderTitle
           title='Atendimentos'
           icon={<ClipboardCheckIcon />}
-          total={stableTotal}
+          total={total}
         />
         <SectionHeaderActions>
           <FilterSelect
@@ -121,7 +111,9 @@ export function PatientAppointmentsList({
             resetLabel='Limpar ordem'
             className='w-52'
           />
-          <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
+          <ShowFilterButton
+            onClick={() => setManualShowFilters(!manualShowFilters)}
+          />
 
           <NewAppointmentButton patientId={patientId} size='sm' />
         </SectionHeaderActions>
@@ -158,7 +150,7 @@ export function PatientAppointmentsList({
         />
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }

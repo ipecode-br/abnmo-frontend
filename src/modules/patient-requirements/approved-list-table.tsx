@@ -2,7 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { ClipboardCheckIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 import { FilterSelect } from '@/components/filters/filter-select'
 import { SearchInput } from '@/components/filters/search-input'
@@ -43,7 +42,6 @@ import { ApprovedPatientRequirementsListTableActions } from './approved-list-tab
 import ApprovedPatientRequirementsListTableSkeleton from './approved-list-table-skeleton'
 
 export function ApprovedPatientRequirementsListTable() {
-  const [stableTotal, setStableTotal] = useState(0)
   const { getParams } = useParams()
 
   const [page, search, orderBy] = getParams([
@@ -78,14 +76,10 @@ export function ApprovedPatientRequirementsListTable() {
   })
 
   const requirements = response?.data?.requirements ?? []
-  const isEmpty = requirements.length === 0
-  const hasActiveFilters = !!search
+  const total = response?.data?.total ?? 0
 
-  useEffect(() => {
-    if (response?.data) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data])
+  const isEmpty = !isLoading && requirements.length <= 0
+  const hasActiveFilters = !!search
 
   return (
     <>
@@ -93,7 +87,7 @@ export function ApprovedPatientRequirementsListTable() {
         <SectionHeaderTitle
           title='Aprovações'
           icon={<ClipboardCheckIcon />}
-          total={stableTotal}
+          total={total}
         />
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar nome...' className='w-56' />
@@ -161,7 +155,7 @@ export function ApprovedPatientRequirementsListTable() {
         </Table>
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }

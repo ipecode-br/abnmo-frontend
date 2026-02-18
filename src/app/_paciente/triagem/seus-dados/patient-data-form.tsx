@@ -41,6 +41,7 @@ export function ScreeningPatientDataForm() {
     mode: 'onBlur',
   })
   const { clearErrors, setValue, watch, reset } = formMethods
+  // eslint-disable-next-line react-hooks/incompatible-library
   const UF = watch('state') as UF
   const cities = useCities(UF)
 

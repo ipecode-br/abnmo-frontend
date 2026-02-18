@@ -11,8 +11,7 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useMemo, useState } from 'react'
-import React from 'react'
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
+import { FormProvider, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 import type { z } from 'zod'
 
@@ -64,13 +63,14 @@ export function PatientForm({
   const [action, setAction] = useState<Mode>(mode)
   const router = useRouter()
 
+  const isCreateForm = action === 'create'
+  const isViewMode = action === 'view'
+
   const patientFormSchema = useMemo(
     () => getPatientFormSchema(action),
     [action],
   )
   type PatientFormSchema = z.infer<typeof patientFormSchema>
-
-  const isCreateForm = action === 'create'
 
   const formMethods = useForm<PatientFormSchema>({
     resolver: zodResolver(patientFormSchema),
@@ -102,9 +102,11 @@ export function PatientForm({
     name: 'supports',
   })
 
-  const selectedUF = formMethods.watch('state') as UF
+  const [selectedUF, hasDisability, takeMedication] = useWatch({
+    control: formMethods.control,
+    name: ['state', 'has_disability', 'take_medication'],
+  })
   const cityOptions = useCities(selectedUF)
-  const isViewMode = action === 'view'
 
   const submitButtons = {
     create: { icon: <UserPlus2Icon />, label: 'Cadastrar' },
@@ -288,7 +290,7 @@ export function PatientForm({
             maxLength={500}
             wrapperClassName='lg:col-span-2'
             readOnly={isViewMode}
-            disabled={formMethods.watch('has_disability') === 'no'}
+            disabled={hasDisability === 'no'}
           />
 
           <SelectInput
@@ -305,7 +307,7 @@ export function PatientForm({
             maxLength={500}
             wrapperClassName='lg:col-span-2'
             readOnly={isViewMode}
-            disabled={formMethods.watch('take_medication') === 'no'}
+            disabled={takeMedication === 'no'}
           />
 
           <SelectInput

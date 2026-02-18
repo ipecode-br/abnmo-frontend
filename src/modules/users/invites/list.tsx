@@ -2,7 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { MailPlusIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 import { FilterSelect } from '@/components/filters/filter-select'
 import { SearchInput } from '@/components/filters/search-input'
@@ -25,7 +24,6 @@ import { NewInviteButton } from './new-invite-button'
 import { UserInvitesTable } from './table'
 
 export function UserInvitesList() {
-  const [stableTotal, setStableTotal] = useState(0)
   const { getParams, paramsQueryKey } = useParams()
 
   const [page, search, orderBy, startDate, endDate] = getParams([
@@ -55,13 +53,7 @@ export function UserInvitesList() {
   })
 
   const invites = response?.data?.invites ?? []
-
-  // Update stable total only when we have actual data to prevent pagination flickering
-  useEffect(() => {
-    if (response?.data?.total !== undefined) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data?.total])
+  const total = response?.data?.total ?? 0
 
   return (
     <>
@@ -69,7 +61,7 @@ export function UserInvitesList() {
         <SectionHeaderTitle
           title='Convites'
           icon={<MailPlusIcon />}
-          total={stableTotal}
+          total={total}
         />
 
         <SectionHeaderActions>
@@ -89,7 +81,7 @@ export function UserInvitesList() {
         <UserInvitesTable invites={invites} loading={isLoading} />
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }

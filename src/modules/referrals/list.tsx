@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { ClipboardPasteIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
 import { FilterContainer } from '@/components/filters/container'
@@ -34,8 +34,7 @@ import { NewReferralButton } from './new-referral-button'
 import { ReferralsTable } from './table'
 
 export function ReferralsList() {
-  const [showFilters, setShowFilters] = useState(false)
-  const [stableTotal, setStableTotal] = useState(0)
+  const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
 
   const [page, search, category, status, orderBy, startDate, endDate] =
@@ -84,19 +83,10 @@ export function ReferralsList() {
   })
 
   const referrals = response?.data?.referrals ?? []
+  const total = response?.data?.total ?? 0
 
-  // Update stable total only when we have actual data to prevent pagination flickering
-  useEffect(() => {
-    if (response?.data?.total !== undefined) {
-      setStableTotal(response.data.total)
-    }
-  }, [response?.data?.total])
-
-  useEffect(() => {
-    if (category || startDate || endDate) {
-      setShowFilters(true)
-    }
-  }, [category, startDate, endDate])
+  const hasActiveFilters = Boolean(category || status || startDate || endDate)
+  const showFilters = manualShowFilters || hasActiveFilters
 
   return (
     <>
@@ -104,7 +94,7 @@ export function ReferralsList() {
         <SectionHeaderTitle
           title='Encaminhamentos'
           icon={<ClipboardPasteIcon />}
-          total={stableTotal}
+          total={total}
         />
         <SectionHeaderActions>
           <SearchInput placeholder='Pesquisar' className='w-48' />
@@ -115,7 +105,9 @@ export function ReferralsList() {
             resetLabel='Limpar ordem'
             className='w-52'
           />
-          <ShowFilterButton onClick={() => setShowFilters(!showFilters)} />
+          <ShowFilterButton
+            onClick={() => setManualShowFilters(!manualShowFilters)}
+          />
 
           <NewReferralButton size='sm' />
         </SectionHeaderActions>
@@ -148,7 +140,7 @@ export function ReferralsList() {
         <ReferralsTable referrals={referrals} loading={isLoading} />
       </Card>
 
-      <Pagination totalItems={stableTotal} />
+      <Pagination totalItems={total} />
     </>
   )
 }
