@@ -25,7 +25,6 @@ export async function getTotalReferralsByCategory({
       categories: Array<{ category: Specialty; total: number }>
       total: number
     }>('/statistics/referrals/by-category', {
-      includeCookies: true,
       cache: 'force-cache',
       params,
       next: {

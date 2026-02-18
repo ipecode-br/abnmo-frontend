@@ -23,7 +23,6 @@ export async function getTotalAppointments({
     const response = await api<{ total: number }>(
       '/statistics/appointments/total',
       {
-        includeCookies: true,
         cache: 'force-cache',
         params,
         next: {
@@ -41,7 +40,7 @@ export async function getTotalAppointments({
 
     return response.data
   } catch (error) {
-    console.error('Failed to fetch total appointments statistic:', error)
+    console.error('Failed to fetch total appointments:', error)
     return null
   }
 }

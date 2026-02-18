@@ -22,7 +22,6 @@ export async function getTotalPatientsWithReferrals({
     const response = await api<{ total: number }>(
       '/statistics/patients/with-referrals',
       {
-        includeCookies: true,
         cache: 'force-cache',
         params,
         next: {

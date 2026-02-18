@@ -32,8 +32,6 @@ export function PatientDocuments({
 
   function handleConfirmDelete(id: string) {
     if (!id) return
-
-    console.log(id)
   }
 
   return (

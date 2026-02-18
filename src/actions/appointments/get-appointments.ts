@@ -28,7 +28,6 @@ export async function getAppointments({
     const response = await api<{ appointments: Appointment[]; total: number }>(
       '/appointments',
       {
-        includeCookies: true,
         cache: 'force-cache',
         params,
         next: {
@@ -46,7 +45,7 @@ export async function getAppointments({
 
     return response.data
   } catch (error) {
-    console.error('Failed to fetch appointments:', error)
+    console.error('Failed to fetch appointments', error)
     return null
   }
 }

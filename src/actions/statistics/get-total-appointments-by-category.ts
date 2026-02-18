@@ -25,7 +25,6 @@ export async function getTotalAppointmentsByCategory({
       categories: Array<{ category: Specialty; total: number }>
       total: number
     }>('/statistics/appointments/by-category', {
-      includeCookies: true,
       cache: 'force-cache',
       params,
       next: {

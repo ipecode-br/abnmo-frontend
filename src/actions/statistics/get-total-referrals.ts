@@ -23,7 +23,6 @@ export async function getTotalReferrals({
     const response = await api<{ total: number }>(
       '/statistics/referrals/total',
       {
-        includeCookies: true,
         cache: 'force-cache',
         params,
         next: {
@@ -41,7 +40,7 @@ export async function getTotalReferrals({
 
     return response.data
   } catch (error) {
-    console.error('Failed to fetch total referrals statistic:', error)
+    console.error('Failed to fetch total referrals:', error)
     return null
   }
 }

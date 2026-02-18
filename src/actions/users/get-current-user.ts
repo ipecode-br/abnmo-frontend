@@ -13,7 +13,6 @@ export async function getCurrentUser() {
   if (!user) return null
 
   const response = await api<User>('/users/me', {
-    includeCookies: true,
     cache: 'force-cache',
     next: {
       revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,

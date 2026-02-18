@@ -22,7 +22,6 @@ export async function getTotalPatientsWithAppointments({
     const response = await api<{ total: number }>(
       '/statistics/patients/with-appointments',
       {
-        includeCookies: true,
         cache: 'force-cache',
         params,
         next: {

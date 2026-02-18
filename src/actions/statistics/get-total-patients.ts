@@ -24,7 +24,6 @@ export async function getTotalPatients({
     const response = await api<Record<Status, number>>(
       '/statistics/patients/total',
       {
-        includeCookies: true,
         cache: 'force-cache',
         params,
         next: {
@@ -42,7 +41,7 @@ export async function getTotalPatients({
 
     return response.data
   } catch (error) {
-    console.error('Failed to fetch patients statistics:', error)
+    console.error('Failed to fetch patients:', error)
     return null
   }
 }

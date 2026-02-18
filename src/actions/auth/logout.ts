@@ -17,7 +17,7 @@ export async function logout() {
   const user = await getUserFromToken()
 
   if (refreshToken) {
-    await api('/logout', { method: 'POST', includeCookies: true })
+    await api('/logout', { method: 'POST' })
     await deleteCookie(COOKIES.refreshToken)
     if (user?.id) {
       revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
