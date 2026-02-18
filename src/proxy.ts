@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-import { deleteCookie } from './actions/cookies'
 import { env } from './config/env'
 import { COOKIES } from './constants/cookies'
 import { ROUTES } from './constants/routes'
@@ -12,7 +11,7 @@ export async function proxy(request: NextRequest) {
 
   const accessToken = cookies.get(COOKIES.accessToken)
   const refreshToken = cookies.get(COOKIES.refreshToken)
-  const isAuthRoute = pathname.startsWith('/conta')
+  const isAuthRoute = pathname.startsWith('/conta/')
 
   if (refreshToken && !accessToken) {
     const url = new URL('/refresh-token', env.NEXT_PUBLIC_API_URL)
@@ -28,16 +27,19 @@ export async function proxy(request: NextRequest) {
     })
 
     if (!response.ok) {
-      await deleteCookie(COOKIES.accessToken)
-      await deleteCookie(COOKIES.refreshToken)
-      return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
+      const res = NextResponse.redirect(
+        new URL(ROUTES.auth.signIn, request.url),
+      )
+      res.cookies.delete(COOKIES.accessToken)
+      res.cookies.delete(COOKIES.refreshToken)
+      return res
     }
 
     const setCookie = response.headers.get('set-cookie')
-    const nextResponse = NextResponse.redirect(request.nextUrl)
+    const nextResponse = NextResponse.redirect(request.nextUrl.clone())
 
     if (setCookie) {
-      nextResponse.headers.set('set-cookie', setCookie)
+      nextResponse.headers.append('set-cookie', setCookie)
     }
 
     return nextResponse
@@ -58,12 +60,13 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
+     * - api (Next.js API routes)
      * - images (Public image route)
      * - 404 (404 error page)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - icon.png (favicon file)
      */
-    '/((?!images|404|_next/static|_next/image|icon.png|sitemap.xml|robots.txt|favicon.ico).*)',
+    '/((?!api|images|404|_next/static|_next/image|icon.png|sitemap.xml|robots.txt|favicon.ico).*)',
   ],
 }

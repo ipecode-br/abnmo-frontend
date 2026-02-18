@@ -12,7 +12,7 @@ export default async function Page() {
     return null
   }
 
-  const showUpdatedDate = new Date(user.updated_at) >= new Date(user.created_at)
+  const showUpdatedDate = new Date(user.updated_at) > new Date(user.created_at)
 
   return (
     <>
