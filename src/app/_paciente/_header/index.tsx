@@ -1,4 +1,3 @@
-import logo from '@images/brand/icon.svg'
 import { SettingsIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +7,7 @@ import { PatientHeaderAccessibilityDropdown } from '@/app/_paciente/_header/acce
 import { PatientHeaderUserDropdown } from '@/app/_paciente/_header/user-dropdown'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
+import { IMAGES } from '@/constants/images'
 import { ROUTES } from '@/constants/routes'
 
 import { PatientDocumentsTab } from '../_components/documents-tab'
@@ -24,7 +24,7 @@ export async function PatientHeader() {
           href={ROUTES.patient.main}
           className='focus-visible:ring-ring rounded-full focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none'
         >
-          <Image src={logo} alt='SVM' className='size-8' />
+          <Image src={IMAGES.icon} alt='SVM' className='size-8' />
         </Link>
 
         <Breadcrumbs />

@@ -1,4 +1,3 @@
-import image from '@images/brand/icon.svg'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -45,11 +44,7 @@ export default async function Page({ searchParams }: Readonly<PageProps>) {
   const content = isTokenValid ? CARD_CONTENT['valid'] : CARD_CONTENT['invalid']
 
   return (
-    <AuthCard
-      image={image}
-      title={content.title}
-      description={content.description}
-    >
+    <AuthCard title={content.title} description={content.description}>
       {isTokenValid ? (
         <SignUpForm token={token} role={tokenValue.role} />
       ) : (

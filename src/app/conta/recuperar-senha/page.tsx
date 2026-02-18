@@ -1,4 +1,3 @@
-import image from '@images/brand/icon.svg'
 import type { Metadata } from 'next'
 
 import { AuthCard } from '@/components/auth/auth-card'
@@ -14,7 +13,6 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <AuthCard
-      image={image}
       title='Recuperar senha'
       description='Insira seu e-mail para recuperar sua senha'
     >

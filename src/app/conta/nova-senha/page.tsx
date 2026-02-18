@@ -1,4 +1,3 @@
-import image from '@images/brand/icon.svg'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -24,7 +23,7 @@ export default async function Page({ searchParams }: Readonly<PageProps>) {
   }
 
   return (
-    <AuthCard image={image} title='Redefinir senha'>
+    <AuthCard title='Redefinir senha'>
       <ResetPasswordForm token={token} />
 
       <Divider />
