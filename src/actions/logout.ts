@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
+import { env } from '@/config/env'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { COOKIES } from '@/constants/cookies'
 import { ROUTES } from '@/constants/routes'
@@ -28,8 +29,16 @@ export async function logout() {
     }
   }
 
-  cookieStore.delete(COOKIES.accessToken)
-  cookieStore.delete(COOKIES.refreshToken)
+  cookieStore.delete({
+    name: COOKIES.accessToken,
+    path: '/',
+    domain: `.${env.NEXT_PUBLIC_DOMAIN}`,
+  })
+  cookieStore.delete({
+    name: COOKIES.refreshToken,
+    path: '/',
+    domain: `.${env.NEXT_PUBLIC_DOMAIN}`,
+  })
 
   revalidateClientCache('all')
 
