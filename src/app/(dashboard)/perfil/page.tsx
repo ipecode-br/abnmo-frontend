@@ -1,4 +1,3 @@
-import { logout } from '@/actions/logout'
 import { getCurrentUser } from '@/actions/users/get-current-user'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
@@ -10,7 +9,7 @@ export default async function Page() {
   const user = await getCurrentUser()
 
   if (!user) {
-    return await logout()
+    return null
   }
 
   const showUpdatedDate = new Date(user.updated_at) >= new Date(user.created_at)
