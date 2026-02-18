@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { User2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -85,7 +86,9 @@ interface SignUpFormProps {
 }
 
 export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+
   const formMethods = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     mode: 'onBlur',
@@ -107,30 +110,32 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
     specialty,
     registration_id,
   }: SignUpFormSchema) {
-    const payload: RegisterUserPayload = {
-      role,
-      name,
-      password,
-      invite_token: token,
-    }
+    startTransition(async () => {
+      const payload: RegisterUserPayload = {
+        role,
+        name,
+        password,
+        invite_token: token,
+      }
 
-    if (specialty && registration_id) {
-      payload.specialty = specialty
-      payload.registration_id = registration_id
-    }
+      if (specialty && registration_id) {
+        payload.specialty = specialty
+        payload.registration_id = registration_id
+      }
 
-    const response = await api('/register/user', {
-      method: 'POST',
-      body: JSON.stringify(payload),
+      const response = await api('/register/user', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.success) {
+        toast.error(response.message)
+        return
+      }
+
+      toast.success(response.message)
+      router.push(ROUTES.dashboard.main)
     })
-
-    if (!response.success) {
-      toast.error(response.message)
-      return
-    }
-
-    toast.success(response.message)
-    router.push(ROUTES.dashboard.main)
   }
 
   // TODO: add link to policies
@@ -188,7 +193,7 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
           }
         />
 
-        <Button type='submit' loading={formMethods.formState.isSubmitting}>
+        <Button type='submit' loading={isPending}>
           Cadastrar
         </Button>
       </FormContainer>
