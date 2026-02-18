@@ -22,12 +22,13 @@ interface BarChartProps {
   barColor?: string
 }
 
+// TODO: fix error when there is only one bar
 export function BarChart({
   data,
   barColor = 'var(--color-primary)',
 }: Readonly<BarChartProps>) {
   const maxLabelLength = Math.max(...data.map((item) => item.label.length))
-  const yAxisWidth = Math.max(80, Math.min(maxLabelLength * 6.5, 180))
+  const yAxisWidth = Math.max(80, maxLabelLength * 7)
 
   return (
     <ResponsiveContainer className='[&_svg]:outline-none'>
