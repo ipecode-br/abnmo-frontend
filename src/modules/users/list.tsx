@@ -62,6 +62,7 @@ export function UsersList() {
     ORDER_MAPPING[orderBy as UsersOrder] ?? ORDER_MAPPING['name_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.users.main, paramsQueryKey],
     queryFn: () =>
       api<{ users: User[]; total: number }>('/users', {

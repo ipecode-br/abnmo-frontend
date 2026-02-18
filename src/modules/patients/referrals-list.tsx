@@ -70,6 +70,7 @@ export function PatientReferralsList({
     ORDER_MAPPING[orderBy as PatientReferralsOrder] ?? ORDER_MAPPING['date_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.referrals.main, patientId, paramsQueryKey],
     queryFn: () =>
       api<{ referrals: Referral[]; total: number }>(`/referrals`, {

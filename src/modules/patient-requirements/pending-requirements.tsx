@@ -64,6 +64,7 @@ export function PendingPatientRequirements() {
     ORDER_MAPPING['date_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.approvals.pending, search, page, orderByQuery],
     queryFn: () =>
       api<{ requirements: PatientRequirement[]; total: number }>(

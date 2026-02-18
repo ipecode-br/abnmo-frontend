@@ -67,6 +67,7 @@ export function ApprovedPatientRequirementsListTable() {
     ORDER_MAPPING['name_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.approvals.approved, search, page, orderByQuery],
     queryFn: () =>
       api<{ requirements: PatientRequirement[]; total: number }>(

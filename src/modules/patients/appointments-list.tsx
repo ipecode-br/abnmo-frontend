@@ -74,6 +74,7 @@ export function PatientAppointmentsList({
     ORDER_MAPPING['date_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.appointments.main, patientId, paramsQueryKey],
     queryFn: () =>
       api<{ appointments: Appointment[]; total: number }>(`/appointments`, {

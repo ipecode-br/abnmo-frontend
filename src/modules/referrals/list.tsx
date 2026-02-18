@@ -67,6 +67,7 @@ export function ReferralsList() {
     ORDER_MAPPING[orderBy as ReferralsOrder] ?? ORDER_MAPPING['name_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.referrals.main, paramsQueryKey],
     queryFn: () =>
       api<{ referrals: Referral[]; total: number }>('/referrals', {

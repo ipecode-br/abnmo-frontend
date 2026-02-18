@@ -56,6 +56,7 @@ export function PatientsList() {
   }
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.patients.main, paramsQueryKey],
     queryFn: () =>
       api<{ patients: Patient[]; total: number }>('/patients', {

@@ -45,6 +45,7 @@ export function UserInvitesList() {
     ORDER_MAPPING[orderBy as InvitesOrder] ?? ORDER_MAPPING['email_asc']
 
   const { data: response, isLoading } = useQuery({
+    placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.users.invites, paramsQueryKey],
     queryFn: () =>
       api<{ invites: UserInvite[]; total: number }>('/users/invites', {
