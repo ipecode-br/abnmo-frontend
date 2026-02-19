@@ -13,7 +13,7 @@ interface ApiOptions extends RequestInit {
 
 export async function api<Data>(
   path: string,
-  { params, headers, ...options }: ApiOptions,
+  { params, headers, ...options }: ApiOptions = {},
 ): Promise<ApiResponse<Data>> {
   const isServerSide = typeof window === 'undefined'
 
