@@ -13,7 +13,10 @@ export default function Page() {
     <div className='grid gap-6 sm:grid-cols-6'>
       <Suspense
         fallback={
-          <Skeleton quantity={3} className='h-30 rounded-2xl sm:col-span-2' />
+          <Skeleton
+            quantity={3}
+            className='bg-border h-30 rounded-2xl sm:col-span-2'
+          />
         }
       >
         <DashboardSummaryCards />

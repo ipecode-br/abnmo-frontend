@@ -32,7 +32,7 @@ export function SummaryCard({
         {loading ? (
           <Skeleton className='size-10' />
         ) : (
-          <span className='text-4xl font-semibold'>{value}</span>
+          <span className='text-4xl leading-none font-semibold'>{value}</span>
         )}
 
         <div className='border-border text-primary rounded-full border p-2 [&_svg]:size-5'>
