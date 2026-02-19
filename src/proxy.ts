@@ -30,8 +30,16 @@ export async function proxy(request: NextRequest) {
       const res = NextResponse.redirect(
         new URL(ROUTES.auth.signIn, request.url),
       )
-      res.cookies.delete(COOKIES.accessToken)
-      res.cookies.delete(COOKIES.refreshToken)
+      res.cookies.delete({
+        name: COOKIES.accessToken,
+        path: '/',
+        domain: `.${env.NEXT_PUBLIC_DOMAIN}`,
+      })
+      res.cookies.delete({
+        name: COOKIES.refreshToken,
+        path: '/',
+        domain: `.${env.NEXT_PUBLIC_DOMAIN}`,
+      })
       return res
     }
 
