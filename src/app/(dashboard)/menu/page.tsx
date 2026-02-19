@@ -4,14 +4,13 @@ import {
   ClipboardPasteIcon,
   HeartHandshakeIcon,
   LayoutDashboardIcon,
-  LogOutIcon,
   MailPlusIcon,
   UserCircle2Icon,
   UserPlus2Icon,
   Users2Icon,
 } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
+import { SignOutButton } from '@/components/sign-out-button'
 import { NavButton } from '@/components/ui/nav-button'
 import { ROUTES } from '@/constants/routes'
 
@@ -36,10 +35,7 @@ export default async function Page() {
         </section>
       ))}
 
-      <Button className='mt-4 w-full'>
-        <LogOutIcon />
-        Sair
-      </Button>
+      <SignOutButton className='mt-4 w-full' />
     </div>
   )
 }
