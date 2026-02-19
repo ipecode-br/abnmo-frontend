@@ -35,9 +35,17 @@ export default async function Page() {
       <Divider />
 
       <span className='text-foreground-soft text-sm'>
-        Conta registrada em {formatDate(user.created_at)}.
+        Conta registrada em{' '}
+        {formatDate(user.created_at, {
+          dateStyle: 'short',
+          timeStyle: 'short',
+        })}
+        .
         {showUpdatedDate &&
-          ` Última atualização realizada em ${formatDate(user.updated_at)}.`}
+          ` Última atualização realizada em ${formatDate(user.updated_at, {
+            dateStyle: 'short',
+            timeStyle: 'short',
+          })}.`}
       </span>
     </>
   )
