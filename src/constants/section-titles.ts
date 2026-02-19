@@ -7,5 +7,6 @@ export const SECTION_TITLES = {
   equipe: 'Equipe',
   configuracoes: 'Configurações',
   perfil: 'Meu perfil',
+  menu: 'Menu',
 }
 export type SectionTitle = keyof typeof SECTION_TITLES

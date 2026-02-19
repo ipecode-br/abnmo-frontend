@@ -19,7 +19,7 @@ export function ReferralsPeriodTabSelect() {
       value={period}
       options={options}
       onSelect={(value) => setPeriod(value)}
-      className='col-span-full'
+      className='col-span-full max-sm:h-36 max-sm:flex-col'
     />
   )
 }

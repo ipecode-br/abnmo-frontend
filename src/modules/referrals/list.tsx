@@ -115,8 +115,8 @@ export function ReferralsList() {
       </SectionHeader>
 
       {showFilters && (
-        <section className='flex flex-wrap items-end gap-6'>
-          <FilterContainer title='Categoria' className='w-46'>
+        <section className='flex flex-wrap gap-4 max-lg:flex-col lg:items-end lg:gap-6'>
+          <FilterContainer title='Categoria' className='lg:w-46'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
@@ -124,7 +124,7 @@ export function ReferralsList() {
               resetLabel='Limpar categoria'
             />
           </FilterContainer>
-          <FilterContainer title='Status' className='w-46'>
+          <FilterContainer title='Status' className='lg:w-46'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={REFERRAL_STATUS_OPTIONS}

@@ -17,7 +17,7 @@ export function PopoverContent({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          'bg-popover text-foreground border-border data-[state=open]:animate-fade-in relative z-50 flex flex-col gap-1 overflow-hidden rounded-xl border p-2 shadow-md',
+          'bg-popover text-foreground border-border data-[state=open]:animate-fade-in relative z-40 flex flex-col gap-1 overflow-hidden rounded-xl border p-2 shadow-md',
           className,
         )}
         {...props}

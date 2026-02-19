@@ -57,15 +57,15 @@ export function DashboardPatientsByCityCard() {
         {isLoading && <Skeleton className='bg-border/75 size-full' />}
 
         {!isLoading && !isEmpty && (
-          <div className='flex size-full items-center gap-6 xl:gap-10'>
+          <div className='flex size-full items-center gap-6 max-lg:flex-col xl:gap-10'>
             <PieChart
               data={data}
               label='cidades'
               total={response?.data?.total}
-              className='size-40'
+              className='size-32 xl:size-40'
             />
 
-            <div className='divide-border min-w-0 flex-1 divide-y'>
+            <div className='divide-border w-full min-w-0 flex-1 divide-y'>
               {data.map((city) => {
                 return (
                   <div

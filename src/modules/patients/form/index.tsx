@@ -396,7 +396,7 @@ export function PatientForm({
           </>
         )}
 
-        <div className='flex flex-row-reverse gap-2 max-lg:flex-col'>
+        <div className='flex flex-row-reverse gap-2 max-lg:mt-4 max-lg:flex-col'>
           {isViewMode && patient?.status === 'active' && (
             <Button
               type='button'

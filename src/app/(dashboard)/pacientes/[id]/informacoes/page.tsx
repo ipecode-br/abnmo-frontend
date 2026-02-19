@@ -58,10 +58,10 @@ export default async function Page({ params }: Readonly<PageParams>) {
 
       <PatientForm patient={patient} mode='view' />
 
-      <section className='space-y-6'>
+      <section className='space-y-6 max-lg:mt-6'>
         <h2 className='text-xl font-medium'>Rede de apoio</h2>
         {patientSupports.length > 0 ? (
-          <div className='flex flex-wrap gap-4'>
+          <div className='flex flex-wrap gap-4 max-sm:flex-col'>
             {patientSupports.map((support) => (
               <Card key={support.id} className='relative p-6 pr-16'>
                 <h3 className='text-lg font-medium'>{support.name}</h3>

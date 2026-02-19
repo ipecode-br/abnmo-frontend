@@ -33,7 +33,10 @@ export function Breadcrumbs() {
   }
 
   return (
-    <nav className='flex items-center gap-2' aria-label='Breadcrumbs'>
+    <nav
+      className='flex items-center gap-2 max-lg:hidden'
+      aria-label='Breadcrumbs'
+    >
       {breadcrumbs.map((step, index) => {
         const isLastPathname = index === breadcrumbs.length - 1
         const Icon = step.icon
@@ -51,7 +54,7 @@ export function Breadcrumbs() {
                 href={step.path}
                 aria-disabled={isLastPathname}
                 className={cn(
-                  'text-disabled hover:text-primary focus text-sm font-medium aria-disabled:pointer-events-none',
+                  'text-disabled hover:text-primary text-sm font-medium aria-disabled:pointer-events-none',
                   isLastPathname && 'text-foreground',
                 )}
               >

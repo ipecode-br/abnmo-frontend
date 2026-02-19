@@ -106,8 +106,8 @@ export function PatientsList() {
       </SectionHeader>
 
       {showFilters && (
-        <section className='flex items-end gap-8'>
-          <FilterContainer title='Status' className='w-40'>
+        <section className='flex flex-wrap gap-4 max-lg:flex-col lg:items-end lg:gap-6'>
+          <FilterContainer title='Status' className='lg:w-40'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={PATIENT_STATUS_OPTIONS}

@@ -30,7 +30,7 @@ export function SummaryCard({
     >
       <div className='flex items-center justify-between'>
         {loading ? (
-          <Skeleton className='size-10' />
+          <Skeleton className='h-9 w-10' />
         ) : (
           <span className='text-4xl leading-none font-semibold'>{value}</span>
         )}

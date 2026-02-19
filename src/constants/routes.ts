@@ -21,6 +21,7 @@ export const ROUTES = {
   },
   dashboard: {
     main: '/',
+    menu: '/menu',
     patients: {
       main: '/pacientes',
       new: '/pacientes/cadastrar',

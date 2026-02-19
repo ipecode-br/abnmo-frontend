@@ -18,7 +18,7 @@ const buttonVariants = cva(
         outline:
           'border-border hover:bg-accent text-accent-foreground bg-background border shadow-xs',
         muted: 'bg-background-soft text-accent-foreground hover:bg-border',
-        ghost: 'text-accent-foreground hover:bg-accent bg-transparent',
+        ghost: 'text-foreground-soft hover:bg-accent bg-transparent',
         error:
           'border-error focus-visible:ring-error bg-background hover:bg-accent outline-error border',
       },

@@ -95,12 +95,12 @@ export function Pagination({
   const pageButtons = generatePageButtons()
 
   return (
-    <div className='text-foreground-soft grid grid-cols-[10rem_1fr_10rem] items-center gap-2'>
+    <div className='text-foreground-soft flex flex-wrap items-center justify-between gap-4 max-md:flex-col'>
       <div>
         Exibindo {getCurrentItems()} {totalItems > 1 ? 'itens' : 'item'}
       </div>
 
-      <div className='flex justify-center gap-2'>
+      <div className='flex flex-wrap justify-center gap-2'>
         {showFirstAndLastArrowButtons && (
           <PaginationButton
             variant='ghost'

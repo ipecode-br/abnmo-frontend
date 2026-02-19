@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic'
 
 export default function Page() {
   return (
-    <div className='grid gap-6 sm:grid-cols-6'>
+    <div className='grid gap-4 sm:grid-cols-6 lg:gap-6'>
       <Suspense
         fallback={
           <Skeleton

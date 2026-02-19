@@ -29,15 +29,13 @@ export function AppointmentsTableActions({
   appointment,
 }: Readonly<AppointmentsTableActionsProps>) {
   const [modalOpen, setModalOpen] = useState<AppointmentModalMode | null>(null)
-
   const router = useRouter()
 
   return (
     <>
       <Menu>
-        <MenuTrigger size='icon' variant='ghost' className='size-8'>
+        <MenuTrigger size='icon_sm' variant='ghost' aria-label='Abrir ações'>
           <EllipsisIcon />
-          <span className='sr-only'>Ações</span>
         </MenuTrigger>
 
         <MenuContent align='end'>

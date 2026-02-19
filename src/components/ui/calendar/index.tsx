@@ -73,7 +73,7 @@ export function Calendar({
         },
       }}
       components={{
-        Nav: navMode !== 'step' ? CalendarStepNav : CalendarDropdownNav,
+        Nav: navMode === 'step' ? CalendarStepNav : CalendarDropdownNav,
       }}
       {...props}
     />

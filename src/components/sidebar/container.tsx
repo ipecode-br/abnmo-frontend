@@ -15,12 +15,13 @@ export function SidebarContainer({
   const toogleSidebar = useSidebar((state) => state.toogleSidebar)
 
   return (
-    <div className='bg-background fixed z-10'>
+    <div className='bg-background relative max-lg:hidden'>
       <aside
+        data-expanded={expanded}
         className={cn(
-          'border-border flex h-screen shrink-0 flex-col gap-8 overflow-x-hidden overflow-y-auto border-r py-6 transition-all duration-500',
+          'border-border flex h-svh w-18 shrink-0 flex-col gap-8 overflow-x-hidden overflow-y-auto border-r px-4 py-6 transition-all duration-500',
+          'data-[expanded=true]:w-64 data-[expanded=true]:px-6',
           className,
-          expanded ? 'w-64 px-6' : 'w-18 px-4',
         )}
         {...props}
       />

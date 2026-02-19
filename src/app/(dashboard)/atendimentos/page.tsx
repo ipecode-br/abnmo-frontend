@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export default function Page() {
   return (
-    <div className='grid gap-6 sm:grid-cols-2'>
+    <div className='grid gap-4 sm:grid-cols-2 lg:gap-6'>
       <AppointmentsPeriodTabSelect />
 
       <TotalAppointmentsCard />

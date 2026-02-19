@@ -113,7 +113,7 @@ export function DialogTitle({
 }: Readonly<React.ComponentProps<'h2'>>) {
   return (
     <BaseDialog.Title
-      className={cn('text-xl font-medium', className)}
+      className={cn('text-xl leading-tight font-medium', className)}
       {...props}
     />
   )

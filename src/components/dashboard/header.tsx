@@ -1,26 +1,47 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { ChevronLeftIcon } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Divider } from '@/components/ui/divider'
 import { SECTION_TITLES, type SectionTitle } from '@/constants/section-titles'
 
-export function DashboardHeader() {
-  const pathnames = usePathname().split('/')
+import { Button } from '../ui/button'
 
-  const section = pathnames[1] as SectionTitle
+// TODO: implement utility buttons
+export function DashboardHeader() {
+  const router = useRouter()
+  const pathnames = usePathname().split('/').filter(Boolean)
+
+  const section = pathnames[0] as SectionTitle
   const sectionTitle = SECTION_TITLES[section || 'default']
 
-  const showBreadcrumbs = !!pathnames[2]
+  const showBreadcrumbs = !!pathnames[0]
+  const showBackButton = pathnames.length > 0
 
   return (
-    <header className='border-border flex items-center gap-4 border-b px-8 py-4'>
+    <header className='border-border flex h-16 shrink-0 items-center gap-4 border-b px-8'>
+      {showBackButton && (
+        <Button
+          size='icon_sm'
+          variant='ghost'
+          aria-label='Voltar'
+          className='-ml-2 [&_svg]:size-6'
+          onClick={() => router.back()}
+        >
+          <ChevronLeftIcon />
+        </Button>
+      )}
       <h1 className='text-xl font-medium'>{sectionTitle}</h1>
 
       {showBreadcrumbs && (
         <>
-          <Divider orientation='vertical' height='h-5' />
+          <Divider
+            orientation='vertical'
+            height='h-5'
+            className='max-lg:hidden'
+          />
           <Breadcrumbs />
         </>
       )}

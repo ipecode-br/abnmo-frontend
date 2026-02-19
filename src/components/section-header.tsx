@@ -8,7 +8,10 @@ export function SectionHeader({
 }: Readonly<React.ComponentProps<'header'>>) {
   return (
     <header
-      className={cn('flex flex-wrap items-center gap-4', className)}
+      className={cn(
+        'flex flex-wrap gap-4 max-lg:flex-col lg:items-center',
+        className,
+      )}
       {...props}
     />
   )
@@ -73,6 +76,9 @@ export function SectionHeaderActions({
   ...props
 }: Readonly<React.ComponentProps<'div'>>) {
   return (
-    <div className={cn('ml-auto flex flex-wrap gap-2', className)} {...props} />
+    <div
+      className={cn('flex flex-1 flex-wrap justify-end gap-2', className)}
+      {...props}
+    />
   )
 }

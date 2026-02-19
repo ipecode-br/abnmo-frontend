@@ -21,7 +21,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='pt-BR'>
-      <body className={cn('overflow-x-hidden antialiased', inter.variable)}>
+      <body className={cn('antialiased', inter.variable)}>
         <Providers>{children}</Providers>
       </body>
     </html>
