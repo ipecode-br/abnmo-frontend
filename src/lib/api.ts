@@ -1,5 +1,8 @@
+import { redirect } from 'next/navigation'
+
 import { getAllCookies } from '@/actions/cookies'
 import { env } from '@/config/env'
+import { ROUTES } from '@/constants/routes'
 
 type ApiResponse<Data> = {
   success: boolean
@@ -43,9 +46,22 @@ export async function api<Data>(
       ...options,
     })
 
+    if (response.status === 401 && isServerSide) {
+      redirect(ROUTES.auth.clearSession)
+    }
+
+    if (response.status === 401 && !isServerSide) {
+      window.location.href = ROUTES.auth.clearSession
+    }
+
     return await response.json()
   } catch (error) {
+    if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
+      throw error
+    }
+
     console.error('API request error:', error)
+
     return {
       success: false,
       message: 'Não foi possível se conectar ao servidor.',

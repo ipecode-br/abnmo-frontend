@@ -19,28 +19,23 @@ export async function getTotalAppointments({
   params,
   cacheKey,
 }: GetTotalAppointmentsProps = {}) {
-  try {
-    const response = await api<{ total: number }>(
-      '/statistics/appointments/total',
-      {
-        cache: 'force-cache',
-        params,
-        next: {
-          revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
-          tags: cacheKey
-            ? [NEXT_CACHE_TAGS.statistics.totalAppointments.main, cacheKey]
-            : [NEXT_CACHE_TAGS.statistics.totalAppointments.main],
-        },
+  const response = await api<{ total: number }>(
+    '/statistics/appointments/total',
+    {
+      cache: 'force-cache',
+      params,
+      next: {
+        revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
+        tags: cacheKey
+          ? [NEXT_CACHE_TAGS.statistics.totalAppointments.main, cacheKey]
+          : [NEXT_CACHE_TAGS.statistics.totalAppointments.main],
       },
-    )
+    },
+  )
 
-    if (!response.data) {
-      return null
-    }
-
-    return response.data
-  } catch (error) {
-    console.error('Failed to fetch total appointments:', error)
+  if (!response.data) {
     return null
   }
+
+  return response.data
 }

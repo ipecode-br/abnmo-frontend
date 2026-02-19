@@ -18,31 +18,26 @@ export async function getTotalPatientsWithReferrals({
   params,
   cacheKey,
 }: GetTotalPatientsWithReferralsProps = {}) {
-  try {
-    const response = await api<{ total: number }>(
-      '/statistics/patients/with-referrals',
-      {
-        cache: 'force-cache',
-        params,
-        next: {
-          revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
-          tags: cacheKey
-            ? [
-                NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,
-                cacheKey,
-              ]
-            : [NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main],
-        },
+  const response = await api<{ total: number }>(
+    '/statistics/patients/with-referrals',
+    {
+      cache: 'force-cache',
+      params,
+      next: {
+        revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
+        tags: cacheKey
+          ? [
+              NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,
+              cacheKey,
+            ]
+          : [NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main],
       },
-    )
+    },
+  )
 
-    if (!response.data) {
-      return null
-    }
-
-    return response.data
-  } catch (error) {
-    console.error('Failed to fetch total patients with referrals:', error)
+  if (!response.data) {
     return null
   }
+
+  return response.data
 }

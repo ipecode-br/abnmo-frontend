@@ -20,28 +20,23 @@ export async function getTotalReferralsByCategory({
   params,
   cacheKey,
 }: GetTotalReferralsByCategoryProps = {}) {
-  try {
-    const response = await api<{
-      categories: Array<{ category: Specialty; total: number }>
-      total: number
-    }>('/statistics/referrals/by-category', {
-      cache: 'force-cache',
-      params,
-      next: {
-        revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
-        tags: cacheKey
-          ? [NEXT_CACHE_TAGS.statistics.totalReferralsByCategory.main, cacheKey]
-          : [NEXT_CACHE_TAGS.statistics.totalReferralsByCategory.main],
-      },
-    })
+  const response = await api<{
+    categories: Array<{ category: Specialty; total: number }>
+    total: number
+  }>('/statistics/referrals/by-category', {
+    cache: 'force-cache',
+    params,
+    next: {
+      revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
+      tags: cacheKey
+        ? [NEXT_CACHE_TAGS.statistics.totalReferralsByCategory.main, cacheKey]
+        : [NEXT_CACHE_TAGS.statistics.totalReferralsByCategory.main],
+    },
+  })
 
-    if (!response.data) {
-      return null
-    }
-
-    return response.data
-  } catch (error) {
-    console.error('Failed to fetch total referrals by category:', error)
+  if (!response.data) {
     return null
   }
+
+  return response.data
 }

@@ -19,28 +19,20 @@ export async function getTotalReferrals({
   params,
   cacheKey,
 }: GetTotalReferralsProps = {}) {
-  try {
-    const response = await api<{ total: number }>(
-      '/statistics/referrals/total',
-      {
-        cache: 'force-cache',
-        params,
-        next: {
-          revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
-          tags: cacheKey
-            ? [NEXT_CACHE_TAGS.statistics.totalReferrals.main, cacheKey]
-            : [NEXT_CACHE_TAGS.statistics.totalReferrals.main],
-        },
-      },
-    )
+  const response = await api<{ total: number }>('/statistics/referrals/total', {
+    cache: 'force-cache',
+    params,
+    next: {
+      revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
+      tags: cacheKey
+        ? [NEXT_CACHE_TAGS.statistics.totalReferrals.main, cacheKey]
+        : [NEXT_CACHE_TAGS.statistics.totalReferrals.main],
+    },
+  })
 
-    if (!response.data) {
-      return null
-    }
-
-    return response.data
-  } catch (error) {
-    console.error('Failed to fetch total referrals:', error)
+  if (!response.data) {
     return null
   }
+
+  return response.data
 }

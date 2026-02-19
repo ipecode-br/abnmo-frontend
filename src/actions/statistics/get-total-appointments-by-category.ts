@@ -20,31 +20,26 @@ export async function getTotalAppointmentsByCategory({
   params,
   cacheKey,
 }: GetTotalAppointmentsByCategoryProps = {}) {
-  try {
-    const response = await api<{
-      categories: Array<{ category: Specialty; total: number }>
-      total: number
-    }>('/statistics/appointments/by-category', {
-      cache: 'force-cache',
-      params,
-      next: {
-        revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
-        tags: cacheKey
-          ? [
-              NEXT_CACHE_TAGS.statistics.totalAppointmentsByCategory.main,
-              cacheKey,
-            ]
-          : [NEXT_CACHE_TAGS.statistics.totalAppointmentsByCategory.main],
-      },
-    })
+  const response = await api<{
+    categories: Array<{ category: Specialty; total: number }>
+    total: number
+  }>('/statistics/appointments/by-category', {
+    cache: 'force-cache',
+    params,
+    next: {
+      revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
+      tags: cacheKey
+        ? [
+            NEXT_CACHE_TAGS.statistics.totalAppointmentsByCategory.main,
+            cacheKey,
+          ]
+        : [NEXT_CACHE_TAGS.statistics.totalAppointmentsByCategory.main],
+    },
+  })
 
-    if (!response.data) {
-      return null
-    }
-
-    return response.data
-  } catch (error) {
-    console.error('Failed to fetch total appointments by category:', error)
+  if (!response.data) {
     return null
   }
+
+  return response.data
 }

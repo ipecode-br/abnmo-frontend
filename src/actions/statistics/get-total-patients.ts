@@ -20,28 +20,23 @@ export async function getTotalPatients({
   params,
   cacheKey,
 }: GetTotalPatientsProps = {}) {
-  try {
-    const response = await api<Record<Status, number>>(
-      '/statistics/patients/total',
-      {
-        cache: 'force-cache',
-        params,
-        next: {
-          revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
-          tags: cacheKey
-            ? [NEXT_CACHE_TAGS.statistics.totalPatients.main, cacheKey]
-            : [NEXT_CACHE_TAGS.statistics.totalPatients.main],
-        },
+  const response = await api<Record<Status, number>>(
+    '/statistics/patients/total',
+    {
+      cache: 'force-cache',
+      params,
+      next: {
+        revalidate: DEFAULT_NEXT_CACHE_REVALIDATE_IN_SECONDS,
+        tags: cacheKey
+          ? [NEXT_CACHE_TAGS.statistics.totalPatients.main, cacheKey]
+          : [NEXT_CACHE_TAGS.statistics.totalPatients.main],
       },
-    )
+    },
+  )
 
-    if (!response.data) {
-      return null
-    }
-
-    return response.data
-  } catch (error) {
-    console.error('Failed to fetch patients:', error)
+  if (!response.data) {
     return null
   }
+
+  return response.data
 }
