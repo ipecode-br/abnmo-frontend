@@ -46,13 +46,19 @@ export async function api<Data>(
       ...options,
     })
 
-    const isAuthEndpoint = url.pathname === '/login'
+    const preventClearSession = [
+      '/login',
+      '/register/patient',
+      '/register/user',
+      '/recover-password',
+      '/reset-password',
+    ].includes(url.pathname)
 
-    if (response.status === 401 && isServerSide && !isAuthEndpoint) {
+    if (response.status === 401 && isServerSide && !preventClearSession) {
       redirect(ROUTES.auth.clearSession)
     }
 
-    if (response.status === 401 && !isServerSide && !isAuthEndpoint) {
+    if (response.status === 401 && !isServerSide && !preventClearSession) {
       window.location.href = ROUTES.auth.clearSession
     }
 
