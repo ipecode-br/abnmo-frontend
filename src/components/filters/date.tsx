@@ -1,6 +1,6 @@
 'use client'
 
-import { FilterContainer } from '@/components/filters/container'
+import { FilterItem } from '@/components/filters/item'
 import { DatePicker } from '@/components/ui/date-picker'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useParams } from '@/hooks/params'
@@ -38,7 +38,7 @@ export function FilterDate({
 
   return (
     <div className={cn('grid grid-cols-2 gap-2 lg:w-74', className)} {...props}>
-      <FilterContainer title='Data inicial'>
+      <FilterItem title='Data inicial'>
         <DatePicker
           size='sm'
           value={startDate}
@@ -46,8 +46,8 @@ export function FilterDate({
           onSelectDate={handleSelectStartDate}
           allowFutureDates={allowFutureDates}
         />
-      </FilterContainer>
-      <FilterContainer title='Data final'>
+      </FilterItem>
+      <FilterItem title='Data final'>
         <DatePicker
           size='sm'
           value={endDate}
@@ -57,7 +57,7 @@ export function FilterDate({
           disabled={!startDate}
           allowFutureDates={allowFutureDates}
         />
-      </FilterContainer>
+      </FilterItem>
     </div>
   )
 }

@@ -1,19 +1,16 @@
 import { cn } from '@/utils/class-name-merge'
 
-export interface FilterContainerProps extends React.ComponentProps<'div'> {
-  title: string
-}
-
 export function FilterContainer({
-  title,
   className,
-  children,
   ...props
-}: Readonly<FilterContainerProps>) {
+}: Readonly<React.ComponentProps<'section'>>) {
   return (
-    <div className={cn('flex flex-col gap-1', className)} {...props}>
-      <label className='text-sm font-medium'>{title}</label>
-      {children}
-    </div>
+    <section
+      className={cn(
+        'flex flex-wrap gap-4 max-lg:flex-col lg:items-end lg:gap-6',
+        className,
+      )}
+      {...props}
+    />
   )
 }

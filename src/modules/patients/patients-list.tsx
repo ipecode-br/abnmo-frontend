@@ -8,6 +8,7 @@ import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
 import { FilterContainer } from '@/components/filters/container'
 import { FilterDate } from '@/components/filters/date'
 import { FilterSelect } from '@/components/filters/filter-select'
+import { FilterItem } from '@/components/filters/item'
 import { SearchInput } from '@/components/filters/search-input'
 import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
@@ -111,18 +112,18 @@ export function PatientsList() {
       </SectionHeader>
 
       {showFilters && (
-        <section className='flex flex-wrap gap-4 max-lg:flex-col lg:items-end lg:gap-6'>
-          <FilterContainer title='Status' className='lg:w-40'>
+        <FilterContainer>
+          <FilterItem title='Status' className='lg:w-40'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={PATIENT_STATUS_OPTIONS}
               placeholder='Todos'
               resetLabel='Limpar status'
             />
-          </FilterContainer>
+          </FilterItem>
           <FilterDate />
           <ClearFiltersButton />
-        </section>
+        </FilterContainer>
       )}
 
       <Card className='p-6'>

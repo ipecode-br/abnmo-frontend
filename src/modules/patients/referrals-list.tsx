@@ -8,6 +8,7 @@ import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
 import { FilterContainer } from '@/components/filters/container'
 import { FilterDate } from '@/components/filters/date'
 import { FilterSelect } from '@/components/filters/filter-select'
+import { FilterItem } from '@/components/filters/item'
 import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
 import {
@@ -122,26 +123,26 @@ export function PatientReferralsList({
       </SectionHeader>
 
       {showFilters && (
-        <section className='flex flex-wrap gap-4 max-lg:flex-col lg:items-end lg:gap-6'>
-          <FilterContainer title='Categoria' className='lg:w-46'>
+        <FilterContainer>
+          <FilterItem title='Categoria' className='lg:w-46'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
               placeholder='Todas'
               resetLabel='Limpar categoria'
             />
-          </FilterContainer>
-          <FilterContainer title='Status' className='lg:w-46'>
+          </FilterItem>
+          <FilterItem title='Status' className='lg:w-46'>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={REFERRAL_STATUS_OPTIONS}
               placeholder='Todos'
               resetLabel='Limpar status'
             />
-          </FilterContainer>
+          </FilterItem>
           <FilterDate allowFutureDates />
           <ClearFiltersButton />
-        </section>
+        </FilterContainer>
       )}
 
       <Card className='p-6'>
