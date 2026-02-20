@@ -25,6 +25,7 @@ import { QUERY_PARAM_KEYS } from '@/enums/params'
 import type { PatientAppointmentsOrder } from '@/enums/patients'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
 import { AppointmentsTable } from '@/modules/appointments/table'
@@ -43,6 +44,7 @@ export function PatientAppointmentsList({
 }: Readonly<PatientAppointmentsListProps>) {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
+  const { canUser } = usePermissions()
 
   const [page, category, status, orderBy, startDate, endDate] = getParams([
     QUERY_PARAM_KEYS.page,
@@ -95,6 +97,7 @@ export function PatientAppointmentsList({
 
   const hasActiveFilters = Boolean(category || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
+  const canCreateAppointment = canUser('create', 'Appointments')
 
   return (
     <>
@@ -116,7 +119,9 @@ export function PatientAppointmentsList({
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          <NewAppointmentButton patientId={patientId} size='sm' />
+          {canCreateAppointment && (
+            <NewAppointmentButton patientId={patientId} size='sm' />
+          )}
         </SectionHeaderActions>
       </SectionHeader>
 

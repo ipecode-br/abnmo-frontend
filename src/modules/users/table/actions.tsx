@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
+import { usePermissions } from '@/hooks/use-permissions'
 import type { User } from '@/types/users'
 
 import { ChangeUserStatusModal } from '../change-status-modal'
@@ -24,6 +25,10 @@ interface UsersTableActionsProps {
 
 export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
   const [modalOpen, setModalOpen] = useState<UserModalMode | null>(null)
+  const { canUser } = usePermissions()
+
+  const canUpdateUser = canUser('update', 'Users')
+  const canDeleteUser = canUser('delete', 'Users')
 
   const changingStatusData = {
     active: {
@@ -40,6 +45,10 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
 
   const statusButton = changingStatusData[user.status]
 
+  if (!canUpdateUser && !canDeleteUser) {
+    return null
+  }
+
   return (
     <>
       <Menu>
@@ -48,10 +57,12 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
         </MenuTrigger>
 
         <MenuContent align='end'>
-          <MenuItem onClick={() => setModalOpen('edit')}>
-            <ClipboardPenIcon />
-            Editar
-          </MenuItem>
+          {canUpdateUser && (
+            <MenuItem onClick={() => setModalOpen('edit')}>
+              <ClipboardPenIcon />
+              Editar
+            </MenuItem>
+          )}
 
           {/* <MenuItem
             onClick={() => router.push(ROUTES.dashboard.users.details(user.id))}
@@ -60,19 +71,22 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
             Informações do usuário
           </MenuItem> */}
 
-          <Divider className='my-1' />
-
-          <MenuItem
-            variant={statusButton.variant}
-            onClick={() => setModalOpen('status')}
-          >
-            {statusButton.icon}
-            {statusButton.label}
-          </MenuItem>
+          {canDeleteUser && (
+            <>
+              <Divider className='my-1' />
+              <MenuItem
+                variant={statusButton.variant}
+                onClick={() => setModalOpen('status')}
+              >
+                {statusButton.icon}
+                {statusButton.label}
+              </MenuItem>
+            </>
+          )}
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && (
+      {modalOpen === 'edit' && canUpdateUser && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -81,7 +95,7 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
         </Dialog>
       )}
 
-      {modalOpen === 'status' && (
+      {modalOpen === 'status' && canDeleteUser && (
         <Dialog
           open={modalOpen === 'status'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}

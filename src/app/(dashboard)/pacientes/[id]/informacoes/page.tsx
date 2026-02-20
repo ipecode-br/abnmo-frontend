@@ -2,6 +2,7 @@ import { User2Icon } from 'lucide-react'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
+import { canUser } from '@/actions/auth/can-user'
 import { getPatient } from '@/actions/patients/get-patient'
 import {
   SectionHeader,
@@ -30,7 +31,19 @@ interface PageParams {
 export default async function Page({ params }: Readonly<PageParams>) {
   const patientId = (await params).id
 
-  const patient = await getPatient(patientId)
+  const [
+    patient,
+    canDeactivatePatient,
+    canCreateReferral,
+    canCreateAppointment,
+    canCreatePatientSupport,
+  ] = await Promise.all([
+    getPatient(patientId),
+    canUser('delete', 'Patients'),
+    canUser('create', 'Referrals'),
+    canUser('create', 'Appointments'),
+    canUser('create', 'PatientSupports'),
+  ])
 
   if (!patient) {
     redirect(ROUTES.dashboard.patients.main)
@@ -49,9 +62,15 @@ export default async function Page({ params }: Readonly<PageParams>) {
 
         {isPatientActive && (
           <SectionHeaderActions>
-            <DeactivatePatientButton patient={patient} size='sm' />
-            <NewReferralButton patientId={patient.id} size='sm' />
-            <NewAppointmentButton patientId={patient.id} size='sm' />
+            {canDeactivatePatient && (
+              <DeactivatePatientButton patient={patient} size='sm' />
+            )}
+            {canCreateReferral && (
+              <NewReferralButton patientId={patient.id} size='sm' />
+            )}
+            {canCreateAppointment && (
+              <NewAppointmentButton patientId={patient.id} size='sm' />
+            )}
           </SectionHeaderActions>
         )}
       </SectionHeader>
@@ -84,7 +103,9 @@ export default async function Page({ params }: Readonly<PageParams>) {
           </p>
         )}
 
-        {isPatientActive && <NewPatientSupportButton patientId={patientId} />}
+        {isPatientActive && canCreatePatientSupport && (
+          <NewPatientSupportButton patientId={patientId} />
+        )}
       </section>
     </>
   )

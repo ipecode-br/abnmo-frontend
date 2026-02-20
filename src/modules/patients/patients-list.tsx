@@ -27,6 +27,7 @@ import {
   type PatientsOrder,
 } from '@/enums/patients'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { PatientsOrderBy, QueryOrderMapping } from '@/types/orders'
 import type { Patient } from '@/types/patients.d.ts'
@@ -36,6 +37,7 @@ import { PatientsTable } from './table'
 export function PatientsList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
+  const { canUser } = usePermissions()
 
   const [page, search, status, orderBy, startDate, endDate] = getParams([
     QUERY_PARAM_KEYS.page,
@@ -76,6 +78,7 @@ export function PatientsList() {
 
   const hasActiveFilters = Boolean(status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
+  const canCreatePatient = canUser('create', 'Patients')
 
   return (
     <>
@@ -98,10 +101,12 @@ export function PatientsList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
-            <PlusIcon />
-            Cadastrar
-          </NavButton>
+          {canCreatePatient && (
+            <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
+              <PlusIcon />
+              Cadastrar
+            </NavButton>
+          )}
         </SectionHeaderActions>
       </SectionHeader>
 

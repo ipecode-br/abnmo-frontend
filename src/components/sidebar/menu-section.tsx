@@ -3,20 +3,25 @@
 import { usePathname } from 'next/navigation'
 
 import { NavButton } from '@/components/ui/nav-button'
-import { useSidebar } from '@/store/sidebar'
+import { useSidebarStore } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
 interface SidebarMenuSectionProps {
   sections: Array<{
     id: string
-    links: Array<{ label: string; icon: React.ReactNode; path: string }>
+    buttons: Array<{
+      label: string
+      icon: React.ReactNode
+      path: string
+      show: boolean
+    }>
   }>
 }
 
 export function SidebarMenuSection({
   sections,
 }: Readonly<SidebarMenuSectionProps>) {
-  const expanded = useSidebar((state) => state.expanded)
+  const expanded = useSidebarStore((state) => state.expanded)
   const pathname = usePathname()
 
   return (
@@ -24,13 +29,15 @@ export function SidebarMenuSection({
       {sections.map((section) => (
         <section key={section.id} className='transition-all'>
           <nav className='flex flex-col gap-2'>
-            {section.links.map((link) => {
-              const isActive = link.path === pathname
+            {section.buttons.map((button) => {
+              if (!button.show) return null
+
+              const isActive = button.path === pathname
               return (
                 <NavButton
-                  key={link.label}
+                  key={button.label}
                   variant='ghost'
-                  href={link.path}
+                  href={button.path}
                   data-visible={expanded}
                   data-active={isActive}
                   className={cn(
@@ -39,12 +46,12 @@ export function SidebarMenuSection({
                     'data-[active=true]:bg-background-soft data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary data-[active=true]:pointer-events-none data-[active=true]:size-10',
                   )}
                 >
-                  {link.icon}
+                  {button.icon}
                   <span
                     data-visible={expanded}
                     className='opacity-0 transition-opacity duration-200 data-[visible=true]:opacity-100 data-[visible=true]:delay-150'
                   >
-                    {link.label}
+                    {button.label}
                   </span>
                 </NavButton>
               )

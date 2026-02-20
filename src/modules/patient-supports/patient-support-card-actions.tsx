@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
+import { usePermissions } from '@/hooks/use-permissions'
 import type { PatientSupport } from '@/types/patient-support'
 
 import { DeletePatientSupportModal } from './delete-patient-support-modal'
@@ -20,8 +21,18 @@ interface PatientSupportCardActionsProps {
 export function PatientSupportCardActions({
   patientSupport,
 }: Readonly<PatientSupportCardActionsProps>) {
-  const [isModalOpen, setIsModalOpen] =
-    useState<PatientSupportModalMode | null>(null)
+  const [modalOpen, setModalOpen] = useState<PatientSupportModalMode | null>(
+    null,
+  )
+
+  const { canUser } = usePermissions()
+
+  const canUpdatePatientSupport = canUser('update', 'PatientSupports')
+  const canDeletePatientSupport = canUser('delete', 'PatientSupports')
+
+  if (!canUpdatePatientSupport && !canDeletePatientSupport) {
+    return null
+  }
 
   return (
     <>
@@ -36,44 +47,49 @@ export function PatientSupportCardActions({
         </MenuTrigger>
 
         <MenuContent side='top'>
-          <MenuItem onClick={() => setIsModalOpen('edit')}>
-            <ClipboardPenIcon />
-            Editar
-          </MenuItem>
+          {canUpdatePatientSupport && (
+            <MenuItem onClick={() => setModalOpen('edit')}>
+              <ClipboardPenIcon />
+              Editar
+            </MenuItem>
+          )}
 
-          <Divider className='my-1' />
-
-          <MenuItem
-            variant='destructive'
-            onClick={() => setIsModalOpen('delete')}
-          >
-            <XCircleIcon />
-            Excluir
-          </MenuItem>
+          {canDeletePatientSupport && (
+            <>
+              <Divider className='my-1' />
+              <MenuItem
+                variant='destructive'
+                onClick={() => setModalOpen('delete')}
+              >
+                <XCircleIcon />
+                Excluir
+              </MenuItem>
+            </>
+          )}
         </MenuContent>
       </Menu>
 
-      {isModalOpen === 'edit' && (
+      {modalOpen === 'edit' && canUpdatePatientSupport && (
         <Dialog
-          open={isModalOpen === 'edit'}
-          onOpenChange={(open) => setIsModalOpen(open ? 'edit' : null)}
+          open={modalOpen === 'edit'}
+          onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
         >
           <PatientSupportModal
             mode='edit'
             patientSupport={patientSupport}
-            onClose={() => setIsModalOpen(null)}
+            onClose={() => setModalOpen(null)}
           />
         </Dialog>
       )}
 
-      {isModalOpen === 'delete' && (
+      {modalOpen === 'delete' && canDeletePatientSupport && (
         <Dialog
-          open={isModalOpen === 'delete'}
-          onOpenChange={(open) => setIsModalOpen(open ? 'delete' : null)}
+          open={modalOpen === 'delete'}
+          onOpenChange={(open) => setModalOpen(open ? 'delete' : null)}
         >
           <DeletePatientSupportModal
             patientSupport={patientSupport}
-            onClose={() => setIsModalOpen(null)}
+            onClose={() => setModalOpen(null)}
           />
         </Dialog>
       )}

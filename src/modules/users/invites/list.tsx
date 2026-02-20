@@ -16,6 +16,7 @@ import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { INVITES_ORDER_OPTIONS, type InvitesOrder } from '@/enums/invites'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { InvitesOrderBy, QueryOrderMapping } from '@/types/orders'
 import type { UserInvite } from '@/types/users'
@@ -25,6 +26,7 @@ import { UserInvitesTable } from './table'
 
 export function UserInvitesList() {
   const { getParams, paramsQueryKey } = useParams()
+  const { canUser } = usePermissions()
 
   const [page, search, orderBy, startDate, endDate] = getParams([
     QUERY_PARAM_KEYS.page,
@@ -56,6 +58,8 @@ export function UserInvitesList() {
   const invites = response?.data?.invites ?? []
   const total = response?.data?.total ?? 0
 
+  const canCreateInvite = canUser('create', 'Invites')
+
   return (
     <>
       <SectionHeader>
@@ -74,7 +78,8 @@ export function UserInvitesList() {
             resetLabel='Limpar ordem'
             className='w-40'
           />
-          <NewInviteButton size='sm' />
+
+          {canCreateInvite && <NewInviteButton size='sm' />}
         </SectionHeaderActions>
       </SectionHeader>
 

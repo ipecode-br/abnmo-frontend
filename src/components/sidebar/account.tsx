@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { logout } from '@/actions/auth/logout'
 import { Avatar } from '@/components/ui/avatar'
 import { ROUTES } from '@/constants/routes'
-import { useSidebar } from '@/store/sidebar'
+import { useSidebarStore } from '@/store/sidebar'
 import type { User } from '@/types/users.d.ts'
 
 import { Divider } from '../ui/divider'
@@ -17,7 +17,7 @@ interface SidebarAccountProps {
 }
 
 export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
-  const expanded = useSidebar((state) => state.expanded)
+  const expanded = useSidebarStore((state) => state.expanded)
   const router = useRouter()
 
   return (

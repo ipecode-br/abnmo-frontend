@@ -4,6 +4,7 @@ import {
   getAppointments,
   type GetAppointmentsParams,
 } from '@/actions/appointments/get-appointments'
+import { canUser } from '@/actions/auth/can-user'
 import {
   SectionHeader,
   SectionHeaderActions,
@@ -26,10 +27,13 @@ export async function DashboardUpcomingAppointmentsCard() {
     limit: 5,
   }
 
-  const response = await getAppointments({
-    cacheKey: NEXT_CACHE_TAGS.appointments.query(JSON.stringify(params)),
-    params,
-  })
+  const [canCreateAppointment, response] = await Promise.all([
+    canUser('create', 'Appointments'),
+    getAppointments({
+      cacheKey: NEXT_CACHE_TAGS.appointments.query(JSON.stringify(params)),
+      params,
+    }),
+  ])
 
   const appointments = response?.appointments ?? []
 
@@ -49,7 +53,7 @@ export async function DashboardUpcomingAppointmentsCard() {
             Ver todos
           </NavButton>
 
-          <NewAppointmentButton size='sm' />
+          {canCreateAppointment && <NewAppointmentButton size='sm' />}
         </SectionHeaderActions>
       </SectionHeader>
 

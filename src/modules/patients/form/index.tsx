@@ -39,6 +39,7 @@ import {
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { useCities } from '@/hooks/cities'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { Patient } from '@/types/patients.d.ts'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
@@ -61,8 +62,10 @@ export function PatientForm({
 }: Readonly<PatientFormProps>) {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
   const [action, setAction] = useState<Mode>(mode)
+  const { canUser } = usePermissions()
   const router = useRouter()
 
+  const canUpdatePatient = canUser('update', 'Patients')
   const isCreateForm = action === 'create'
   const isViewMode = action === 'view'
 
@@ -397,7 +400,7 @@ export function PatientForm({
         )}
 
         <div className='flex flex-row-reverse gap-2 max-lg:mt-4 max-lg:flex-col'>
-          {isViewMode && patient?.status === 'active' && (
+          {isViewMode && patient?.status === 'active' && canUpdatePatient && (
             <Button
               type='button'
               variant='outline'

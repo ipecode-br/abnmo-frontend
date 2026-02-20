@@ -26,6 +26,7 @@ import {
   type UsersOrder,
 } from '@/enums/users'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { QueryOrderMapping, UsersOrderBy } from '@/types/orders'
 import type { User } from '@/types/users'
@@ -36,6 +37,7 @@ import { UsersTable } from './table'
 export function UsersList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
+  const { canUser } = usePermissions()
 
   const [page, search, role, status, orderBy, startDate, endDate] = getParams([
     QUERY_PARAM_KEYS.page,
@@ -83,6 +85,7 @@ export function UsersList() {
 
   const hasActiveFilters = Boolean(role || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
+  const canCreatInvite = canUser('create', 'Invites')
 
   return (
     <>
@@ -106,7 +109,7 @@ export function UsersList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          <NewInviteButton size='sm' />
+          {canCreatInvite && <NewInviteButton size='sm' />}
         </SectionHeaderActions>
       </SectionHeader>
 

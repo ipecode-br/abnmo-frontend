@@ -14,6 +14,7 @@ import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { ROUTES } from '@/constants/routes'
+import { usePermissions } from '@/hooks/use-permissions'
 import type { Referral } from '@/types/referrals'
 
 import { CancelReferralModal } from '../cancel-referral-modal'
@@ -29,10 +30,13 @@ export function ReferralsTableActions({
   referral,
 }: Readonly<ReferralsTableActionsProps>) {
   const [modalOpen, setModalOpen] = useState<ReferralModalMode | null>(null)
-
+  const { canUser } = usePermissions()
   const router = useRouter()
 
-  const canEdit = referral.status !== 'canceled'
+  const allowEdit = referral.status !== 'canceled'
+  const allowCancel = !['completed', 'canceled'].includes(referral.status)
+  const canUpdateReferral = canUser('update', 'Referrals')
+  const canCancelReferral = canUser('delete', 'Referrals')
 
   return (
     <>
@@ -42,7 +46,7 @@ export function ReferralsTableActions({
         </MenuTrigger>
 
         <MenuContent align='end'>
-          {canEdit && (
+          {allowEdit && canUpdateReferral && (
             <MenuItem onClick={() => setModalOpen('edit')}>
               <ClipboardPenIcon />
               Editar
@@ -69,10 +73,9 @@ export function ReferralsTableActions({
             Histórico do paciente
           </MenuItem>
 
-          {canEdit && (
+          {allowCancel && canCancelReferral && (
             <>
               <Divider className='my-1' />
-
               <MenuItem
                 variant='destructive'
                 onClick={() => setModalOpen('cancel')}
@@ -85,7 +88,7 @@ export function ReferralsTableActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && canEdit && (
+      {modalOpen === 'edit' && allowEdit && canUpdateReferral && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -97,7 +100,7 @@ export function ReferralsTableActions({
         </Dialog>
       )}
 
-      {modalOpen === 'cancel' && canEdit && (
+      {modalOpen === 'cancel' && allowCancel && canCancelReferral && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

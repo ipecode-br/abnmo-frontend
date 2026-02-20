@@ -4,15 +4,15 @@ import { ChevronRightIcon } from 'lucide-react'
 import type React from 'react'
 
 import { Button } from '@/components/ui/button'
-import { useSidebar } from '@/store/sidebar'
+import { useSidebarStore } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
 export function SidebarContainer({
   className,
   ...props
 }: Readonly<React.ComponentProps<'aside'>>) {
-  const expanded = useSidebar((state) => state.expanded)
-  const toogleSidebar = useSidebar((state) => state.toogleSidebar)
+  const expanded = useSidebarStore((state) => state.expanded)
+  const toogleSidebar = useSidebarStore((state) => state.toogleSidebar)
 
   return (
     <div className='bg-background relative max-lg:hidden'>

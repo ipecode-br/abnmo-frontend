@@ -14,6 +14,7 @@ import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { ROUTES } from '@/constants/routes'
+import { usePermissions } from '@/hooks/use-permissions'
 import type { Appointment } from '@/types/appointments'
 
 import { AppointmentModal } from '../appointment-modal'
@@ -29,7 +30,13 @@ export function AppointmentsTableActions({
   appointment,
 }: Readonly<AppointmentsTableActionsProps>) {
   const [modalOpen, setModalOpen] = useState<AppointmentModalMode | null>(null)
+  const { canUser } = usePermissions()
   const router = useRouter()
+
+  const allowEdit = appointment.status !== 'canceled'
+  const allowCancel = !['completed', 'canceled'].includes(appointment.status)
+  const canUpdateAppointment = canUser('update', 'Appointments')
+  const canCancelAppointment = canUser('delete', 'Appointments')
 
   return (
     <>
@@ -39,10 +46,12 @@ export function AppointmentsTableActions({
         </MenuTrigger>
 
         <MenuContent align='end'>
-          <MenuItem onClick={() => setModalOpen('edit')}>
-            <ClipboardPenIcon />
-            Editar
-          </MenuItem>
+          {allowEdit && canUpdateAppointment && (
+            <MenuItem onClick={() => setModalOpen('edit')}>
+              <ClipboardPenIcon />
+              Editar
+            </MenuItem>
+          )}
           <MenuItem
             onClick={() =>
               router.push(
@@ -66,19 +75,22 @@ export function AppointmentsTableActions({
             Histórico do paciente
           </MenuItem>
 
-          <Divider className='my-1' />
-
-          <MenuItem
-            variant='destructive'
-            onClick={() => setModalOpen('cancel')}
-          >
-            <XCircleIcon />
-            Cancelar
-          </MenuItem>
+          {allowCancel && canCancelAppointment && (
+            <>
+              <Divider className='my-1' />
+              <MenuItem
+                variant='destructive'
+                onClick={() => setModalOpen('cancel')}
+              >
+                <XCircleIcon />
+                Cancelar
+              </MenuItem>
+            </>
+          )}
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && (
+      {modalOpen === 'edit' && allowEdit && canUpdateAppointment && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -90,7 +102,7 @@ export function AppointmentsTableActions({
         </Dialog>
       )}
 
-      {modalOpen === 'cancel' && (
+      {modalOpen === 'cancel' && allowCancel && canCancelAppointment && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

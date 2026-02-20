@@ -26,6 +26,7 @@ import {
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { Appointment } from '@/types/appointments'
 import type { AppointmentsOrderBy, QueryOrderMapping } from '@/types/orders'
@@ -36,6 +37,7 @@ import { AppointmentsTable } from './table'
 export function AppointmentsList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
+  const { canUser } = usePermissions()
 
   const [page, search, category, status, orderBy, startDate, endDate] =
     getParams([
@@ -91,6 +93,7 @@ export function AppointmentsList() {
 
   const hasActiveFilters = Boolean(category || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
+  const canCreateAppointment = canUser('create', 'Appointments')
 
   return (
     <>
@@ -113,7 +116,7 @@ export function AppointmentsList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          <NewAppointmentButton size='sm' />
+          {canCreateAppointment && <NewAppointmentButton size='sm' />}
         </SectionHeaderActions>
       </SectionHeader>
 

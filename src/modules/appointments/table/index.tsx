@@ -106,9 +106,7 @@ export function AppointmentsTable({
                   </TableCell>
                 )}
                 <TableCell className='text-center'>
-                  {appointment.status !== 'canceled' && (
-                    <AppointmentsTableActions appointment={appointment} />
-                  )}
+                  <AppointmentsTableActions appointment={appointment} />
                 </TableCell>
               </TableRow>
             )

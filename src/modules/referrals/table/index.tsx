@@ -101,9 +101,7 @@ export function ReferralsTable({
                   </Tag>
                 </TableCell>
                 <TableCell className='text-center'>
-                  {referral.status !== 'canceled' && (
-                    <ReferralsTableActions referral={referral} />
-                  )}
+                  <ReferralsTableActions referral={referral} />
                 </TableCell>
               </TableRow>
             )

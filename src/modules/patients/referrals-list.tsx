@@ -25,6 +25,7 @@ import {
 } from '@/enums/referrals'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import { NewReferralButton } from '@/modules/referrals/new-referral-button'
 import { ReferralsTable } from '@/modules/referrals/table'
@@ -40,6 +41,7 @@ export function PatientReferralsList({
 }: Readonly<PatientReferralsListProps>) {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
+  const { canUser } = usePermissions()
 
   const [page, category, status, orderBy, startDate, endDate] = getParams([
     QUERY_PARAM_KEYS.page,
@@ -91,6 +93,7 @@ export function PatientReferralsList({
 
   const hasActiveFilters = Boolean(category || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
+  const canCreateReferral = canUser('create', 'Referrals')
 
   return (
     <>
@@ -112,7 +115,9 @@ export function PatientReferralsList({
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          <NewReferralButton patientId={patientId} size='sm' />
+          {canCreateReferral && (
+            <NewReferralButton patientId={patientId} size='sm' />
+          )}
         </SectionHeaderActions>
       </SectionHeader>
 

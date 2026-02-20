@@ -26,6 +26,7 @@ import {
 } from '@/enums/referrals'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { QueryOrderMapping, ReferralsOrderBy } from '@/types/orders'
 import type { Referral } from '@/types/referrals'
@@ -36,6 +37,7 @@ import { ReferralsTable } from './table'
 export function ReferralsList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, paramsQueryKey } = useParams()
+  const { canUser } = usePermissions()
 
   const [page, search, category, status, orderBy, startDate, endDate] =
     getParams([
@@ -88,6 +90,7 @@ export function ReferralsList() {
 
   const hasActiveFilters = Boolean(category || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
+  const canCreateReferral = canUser('create', 'Referrals')
 
   return (
     <>
@@ -110,7 +113,7 @@ export function ReferralsList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          <NewReferralButton size='sm' />
+          {canCreateReferral && <NewReferralButton size='sm' />}
         </SectionHeaderActions>
       </SectionHeader>
 

@@ -3,7 +3,6 @@
 import {
   ClipboardCheckIcon,
   ClipboardPasteIcon,
-  HeartHandshakeIcon,
   LayoutDashboardIcon,
   MenuIcon,
   Users2Icon,
