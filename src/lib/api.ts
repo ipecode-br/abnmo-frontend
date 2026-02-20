@@ -54,12 +54,12 @@ export async function api<Data>(
       '/reset-password',
     ].includes(url.pathname)
 
-    if (response.status === 401 && isServerSide && !preventClearSession) {
-      redirect(ROUTES.auth.clearSession)
-    }
-
-    if (response.status === 401 && !isServerSide && !preventClearSession) {
-      window.location.href = ROUTES.auth.clearSession
+    if (response.status === 401 && !preventClearSession) {
+      if (isServerSide) {
+        redirect(ROUTES.auth.clearSession)
+      } else {
+        window.location.href = ROUTES.auth.clearSession
+      }
     }
 
     return await response.json()
