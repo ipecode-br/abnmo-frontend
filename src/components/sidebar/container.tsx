@@ -12,7 +12,7 @@ export function SidebarContainer({
   ...props
 }: Readonly<React.ComponentProps<'aside'>>) {
   const expanded = useSidebarStore((state) => state.expanded)
-  const toogleSidebar = useSidebarStore((state) => state.toogleSidebar)
+  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar)
 
   return (
     <div className='bg-background relative max-lg:hidden'>
@@ -30,7 +30,7 @@ export function SidebarContainer({
         size='icon'
         variant='outline'
         data-expanded={expanded}
-        onClick={toogleSidebar}
+        onClick={toggleSidebar}
         className='text-disabled hover:text-foreground-soft absolute top-20 -right-4 z-10 size-8 rounded-full transition-all delay-75 duration-300 data-[expanded=true]:rotate-180 [&_svg]:size-5'
       >
         <ChevronRightIcon />

@@ -1,17 +1,25 @@
 import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface SidebarState {
   expanded: boolean
-  toogleSidebar: () => void
+  toggleSidebar: () => void
 }
 
-export const useSidebarStore = create<SidebarState>((set, get) => {
-  return {
-    expanded: true,
+export const useSidebarStore = create<SidebarState>()(
+  persist(
+    (set, get) => ({
+      expanded: true,
 
-    toogleSidebar() {
-      const { expanded } = get()
-      set({ expanded: !expanded })
+      toggleSidebar() {
+        const { expanded } = get()
+        set({ expanded: !expanded })
+      },
+    }),
+
+    {
+      name: 'sidebar_expanded',
+      storage: createJSONStorage(() => localStorage),
     },
-  }
-})
+  ),
+)
