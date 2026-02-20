@@ -5,7 +5,7 @@ interface SidebarState {
   toogleSidebar: () => void
 }
 
-export const useSidebar = create<SidebarState>((set, get) => {
+export const useSidebarStore = create<SidebarState>((set, get) => {
   return {
     expanded: true,
 

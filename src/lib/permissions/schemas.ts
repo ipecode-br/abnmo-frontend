@@ -2,9 +2,9 @@ import { z } from 'zod'
 
 export const roleSchema = z.union([
   z.literal('admin'),
+  z.literal('manager'),
   z.literal('nurse'),
   z.literal('specialist'),
-  z.literal('manager'),
   z.literal('patient'),
 ])
 export type Role = z.infer<typeof roleSchema>
@@ -24,7 +24,10 @@ export const subjectSchema = z.union([
   z.literal('PatientDashboard'),
   z.literal('Patients'),
   z.literal('Appointments'),
+  z.literal('Referrals'),
+  z.literal('PatientSupports'),
   z.literal('Statistics'),
   z.literal('Users'),
+  z.literal('Invites'),
 ])
 export type Subject = z.infer<typeof subjectSchema>
