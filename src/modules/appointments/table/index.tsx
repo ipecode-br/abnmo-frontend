@@ -1,4 +1,11 @@
+'use client'
+
+import { EyeIcon } from 'lucide-react'
+import { useState } from 'react'
+
 import { Avatar } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Dialog } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
@@ -18,6 +25,7 @@ import { SPECIALTIES } from '@/enums/shared'
 import type { Appointment } from '@/types/appointments'
 import { formatDate } from '@/utils/formatters/format-date'
 
+import { ViewAppointmentModal } from '../view-appointment-modal'
 import { AppointmentsTableActions } from './actions'
 
 type HideAppointmentsColumns = 'name' | 'status'
@@ -33,6 +41,10 @@ export function AppointmentsTable({
   hideColumns = [],
   loading,
 }: Readonly<AppointmentsTableProps>) {
+  const [viewAppointment, setViewAppointment] = useState<Appointment | null>(
+    null,
+  )
+
   const skeletons = Array.from({ length: 10 }).map((_, index) => index)
 
   const isEmpty = !loading && appointments.length <= 0
@@ -43,6 +55,7 @@ export function AppointmentsTable({
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead className='w-16'>Ver</TableHead>
           {showPatientName && <TableHead className='w-64'>Paciente</TableHead>}
           <TableHead className='w-36'>Data</TableHead>
           <TableHead className='w-48'>Categoria</TableHead>
@@ -69,6 +82,16 @@ export function AppointmentsTable({
 
             return (
               <TableRow key={appointment.id}>
+                <TableCell>
+                  <Button
+                    size='icon_sm'
+                    variant='ghost'
+                    aria-label='Ver detalhes do atendimento'
+                    onClick={() => setViewAppointment(appointment)}
+                  >
+                    <EyeIcon />
+                  </Button>
+                </TableCell>
                 {showPatientName && (
                   <TableCell>
                     <TableLink
@@ -115,6 +138,9 @@ export function AppointmentsTable({
         {loading &&
           skeletons.map((skeleton) => (
             <TableRow key={skeleton}>
+              <TableCell>
+                <Skeleton className='size-9' />
+              </TableCell>
               {showPatientName && (
                 <TableCell>
                   <div className='flex w-64 items-center gap-2'>
@@ -141,11 +167,20 @@ export function AppointmentsTable({
                 </TableCell>
               )}
               <TableCell>
-                <Skeleton className='mx-auto size-8 rounded-md' />
+                <Skeleton className='mx-auto size-9' />
               </TableCell>
             </TableRow>
           ))}
       </TableBody>
+
+      {viewAppointment && (
+        <Dialog
+          open={!!viewAppointment}
+          onOpenChange={() => setViewAppointment(null)}
+        >
+          <ViewAppointmentModal appointment={viewAppointment} />
+        </Dialog>
+      )}
     </Table>
   )
 }
