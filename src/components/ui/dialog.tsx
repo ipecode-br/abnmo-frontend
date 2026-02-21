@@ -124,7 +124,7 @@ export function DialogDescription({
   ...props
 }: Readonly<React.ComponentProps<'p'>>) {
   return (
-    <BaseDialog.Title
+    <BaseDialog.Description
       className={cn('text-foreground-soft', className)}
       {...props}
     />
@@ -136,10 +136,28 @@ export function DialogContent({
   ...props
 }: Readonly<React.ComponentProps<'div'>>) {
   return (
-    <footer
-      className={cn('flex-1 overflow-y-auto p-5', className)}
-      {...props}
-    />
+    <div className={cn('flex-1 overflow-y-auto p-5', className)} {...props} />
+  )
+}
+
+interface DialogDetailFieldProps extends React.ComponentProps<'div'> {
+  label: string
+  value?: string | number
+}
+
+export function DialogDetailField({
+  label,
+  className,
+  children,
+  ...props
+}: Readonly<DialogDetailFieldProps>) {
+  const isChildrenString = typeof children === 'string'
+
+  return (
+    <div className={cn('flex flex-col gap-1', className)} {...props}>
+      <p className='text-foreground-soft font-medium'>{label}</p>
+      {isChildrenString ? <p className='text-lg'>{children}</p> : children}
+    </div>
   )
 }
 
