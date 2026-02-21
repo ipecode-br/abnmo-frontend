@@ -35,7 +35,7 @@ export function ViewAppointmentModal({
   return (
     <DialogContainer className='max-w-xl'>
       <DialogHeader icon={<DialogIcon icon={ClipboardCheckIcon} />}>
-        <DialogTitle>Detalhes do encaminhamento</DialogTitle>
+        <DialogTitle>Detalhes do atendimento</DialogTitle>
       </DialogHeader>
 
       <DialogContent className='grid gap-6 sm:grid-cols-9'>
