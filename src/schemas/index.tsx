@@ -23,6 +23,7 @@ import { USERS_ROLE_ENUM } from '@/enums/users'
 
 export const nameSchema = z
   .string()
+  .trim()
   .min(1, 'Insira o nome completo')
   .min(3, 'O nome deve conter mais de 3 caracteres')
   .regex(NON_SPECIAL_CHAR_REGEX, 'Números e caracteres especiais são inválidos')
@@ -32,6 +33,7 @@ export const emailSchema = z.string().email('Insira um e-mail válido')
 
 export const passwordSchema = z
   .string()
+  .trim()
   .min(1, 'Insira sua senha')
   .min(
     PASSWORD_MIN_LENGTH,
@@ -43,7 +45,7 @@ export const avatarSchema = z.string().url()
 
 export const userRoleSchema = z.enum(USERS_ROLE_ENUM)
 
-export const userRegistrationId = z.string().max(32)
+export const userRegistrationId = z.string().trim().max(32)
 
 export const phoneSchema = z
   .string()
@@ -76,7 +78,7 @@ export const stateSchema = z.enum(BRAZILIAN_STATES_ENUM, {
 export const citySchema = z
   .string()
   .nonempty('Selecione a cidade')
-  .refine((input) => input.trim(), { message: 'Selecione a cidade' })
+  .refine((value) => value, { message: 'Selecione a cidade' })
 
 export const cpfSchema = z
   .string()
@@ -85,6 +87,7 @@ export const cpfSchema = z
 
 export const kinshipSchema = z
   .string()
+  .trim()
   .min(1, 'Insira o parentesco')
   .min(3, 'O parentesco deve conter mais de 3 caracteres')
   .regex(NON_SPECIAL_CHAR_REGEX, 'Números e caracteres especiais são inválidos')
@@ -96,7 +99,7 @@ export const yesOrNoSchema = z.enum(YES_OR_NO_TUPLE, {
 export const dateSchema = z.string().datetime('A data é obrigatória')
 
 export const specialtySchema = z.enum(SPECIALTIES_ENUM, {
-  message: 'Categoria é obrigatório',
+  message: 'Categoria é obrigatória',
 })
 
 export const patientConditionSchema = z.enum(PATIENT_CONDITION_ENUM, {
@@ -110,4 +113,4 @@ export const patientNmoDiagnosticSchema = z.enum(PATIENT_NMO_DIAGNOSTICS_ENUM, {
 export const professionalNameSchema = z
   .string()
   .nullable()
-  .transform((value) => (!value ? null : value))
+  .transform((value) => (!value ? null : value.trim()))

@@ -28,27 +28,40 @@ import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import {
   dateSchema,
   patientConditionSchema,
   professionalNameSchema,
   specialtySchema,
+  userRoleSchema,
 } from '@/schemas'
 import type { Appointment } from '@/types/appointments'
 
-const appointmentFormSchema = z.object({
-  patient_id: z.string().uuid('Paciente é obrigatório'),
-  date: dateSchema,
-  category: specialtySchema,
-  condition: patientConditionSchema,
-  annotation: z
-    .string()
-    .max(500)
-    .nullable()
-    .transform((value) => (!value ? null : value)),
-  professional_name: professionalNameSchema,
-})
+const appointmentFormSchema = z
+  .object({
+    role: userRoleSchema,
+    patient_id: z.string().uuid('Paciente é obrigatório'),
+    date: dateSchema,
+    category: specialtySchema.optional(),
+    condition: patientConditionSchema,
+    professional_name: professionalNameSchema,
+    annotation: z
+      .string()
+      .max(500)
+      .nullable()
+      .transform((value) => (!value ? null : value.trim())),
+  })
+  .superRefine((data, ctx) => {
+    if (data.role !== 'specialist' && !data.category) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Categoria é obrigatória',
+        path: ['category'],
+      })
+    }
+  })
 type AppointmentFormSchema = z.infer<typeof appointmentFormSchema>
 
 interface AppointmentModalProps {
@@ -63,44 +76,54 @@ export function AppointmentModal({
   onClose,
 }: Readonly<AppointmentModalProps>) {
   const { patientOptions } = usePatientOptions()
+  const { user } = usePermissions()
 
-  const isEditMode = !!appointment
+  const isCreateMode = !!patientId || !appointment
+  const isUserSpecialist = user?.role === 'specialist'
 
   const formMethods = useForm<AppointmentFormSchema>({
     resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
+      role: user?.role,
       patient_id: patientId ?? (appointment?.patient_id || ''),
       date: appointment?.date || '',
-      category: appointment?.category || '',
       condition: appointment?.condition || '',
-      annotation: appointment?.annotation || '',
+      category: isUserSpecialist ? undefined : appointment?.category || '',
       professional_name: appointment?.professional_name || '',
-    } as unknown as AppointmentFormSchema,
+      annotation: appointment?.annotation || '',
+    } as AppointmentFormSchema,
     mode: 'onBlur',
   })
 
-  function createAppointment(data: AppointmentFormSchema) {
-    return api('/appointments', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-  }
-
-  function updateAppointment({
+  async function submitForm({
+    patient_id,
     date,
+    category,
     condition,
+    professional_name,
     annotation,
   }: AppointmentFormSchema) {
-    return api(`/appointments/${appointment?.id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ date, condition, annotation }),
-    })
-  }
+    const payload: Partial<AppointmentFormSchema> = {
+      date,
+      condition,
+      annotation,
+    }
 
-  async function submitForm(data: AppointmentFormSchema) {
-    const response = isEditMode
-      ? await updateAppointment(data)
-      : await createAppointment(data)
+    if (isCreateMode) {
+      payload.patient_id = patient_id
+      payload.category = isUserSpecialist ? undefined : category
+      payload.professional_name = professional_name
+    }
+
+    const response = isCreateMode
+      ? await api('/appointments', {
+          method: 'POST',
+          body: JSON.stringify(payload),
+        })
+      : await api(`/appointments/${appointment?.id}`, {
+          method: 'PUT',
+          body: JSON.stringify(payload),
+        })
 
     if (!response.success) {
       toast.error(response.message)
@@ -114,7 +137,7 @@ export function AppointmentModal({
       QUERY_CACHE_KEYS.statistics.totalAppointments,
     ])
     revalidateServerCache([
-      NEXT_CACHE_TAGS.patient(data.patient_id),
+      NEXT_CACHE_TAGS.patient(patient_id),
       NEXT_CACHE_TAGS.appointments.main,
       NEXT_CACHE_TAGS.statistics.totalAppointments.main,
       NEXT_CACHE_TAGS.statistics.totalPatientsWithAppointments.main,
@@ -128,7 +151,7 @@ export function AppointmentModal({
     <DialogContainer className='max-w-xl'>
       <DialogHeader icon={<DialogIcon icon={SmilePlusIcon} />}>
         <DialogTitle>
-          {isEditMode ? 'Atualizar atendimento' : 'Novo atendimento'}
+          {isCreateMode ? 'Novo atendimento' : 'Atualizar atendimento'}
         </DialogTitle>
       </DialogHeader>
 
@@ -144,22 +167,15 @@ export function AppointmentModal({
               options={patientOptions}
               className='sm:col-span-full'
               placeholder='Selecione um paciente'
-              readOnly={isEditMode || !!patientId}
+              readOnly={!isCreateMode || !!appointment}
               isRequired
             />
             <DateInput
               name='date'
               label='Data do atendimento'
+              placeholder='Selecione uma data'
               wrapperClassName='sm:col-span-1'
               allowFutureDates
-              isRequired
-            />
-            <SelectInput
-              name='category'
-              label='Categoria'
-              options={SPECIALTIES_OPTIONS}
-              className='sm:col-span-1'
-              readOnly={isEditMode}
               isRequired
             />
             <SelectInput
@@ -169,12 +185,27 @@ export function AppointmentModal({
               className='sm:col-span-1'
               isRequired
             />
-            <TextInput
-              name='professional_name'
-              label='Profissional responsável'
-              wrapperClassName='sm:col-span-1'
-              readOnly={isEditMode}
-            />
+
+            {!isUserSpecialist && (
+              <>
+                <SelectInput
+                  name='category'
+                  label='Categoria'
+                  options={SPECIALTIES_OPTIONS}
+                  className='sm:col-span-1'
+                  readOnly={!isCreateMode}
+                  isRequired
+                />
+                <TextInput
+                  name='professional_name'
+                  label='Profissional responsável'
+                  placeholder='Insira o nome'
+                  wrapperClassName='sm:col-span-1'
+                  readOnly={!isCreateMode}
+                />
+              </>
+            )}
+
             <TextareaInput
               rows={8}
               maxLength={500}
@@ -193,7 +224,7 @@ export function AppointmentModal({
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
-          {isEditMode ? 'Atualizar' : 'Cadastrar'}
+          {isCreateMode ? 'Cadastrar' : 'Atualizar'}
         </Button>
         <DialogClose
           className='flex-1'

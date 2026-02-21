@@ -28,27 +28,40 @@ import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import {
   dateSchema,
   patientConditionSchema,
   professionalNameSchema,
   specialtySchema,
+  userRoleSchema,
 } from '@/schemas'
 import type { Referral } from '@/types/referrals'
 
-const referralFormSchema = z.object({
-  patient_id: z.string().uuid('Paciente é obrigatório'),
-  date: dateSchema,
-  category: specialtySchema,
-  condition: patientConditionSchema,
-  annotation: z
-    .string()
-    .max(2000)
-    .nullable()
-    .transform((value) => (!value ? null : value)),
-  professional_name: professionalNameSchema,
-})
+const referralFormSchema = z
+  .object({
+    role: userRoleSchema,
+    patient_id: z.string().uuid('Paciente é obrigatório'),
+    date: dateSchema,
+    category: specialtySchema.optional(),
+    condition: patientConditionSchema,
+    professional_name: professionalNameSchema,
+    annotation: z
+      .string()
+      .max(500)
+      .nullable()
+      .transform((value) => (!value ? null : value.trim())),
+  })
+  .superRefine((data, ctx) => {
+    if (data.role !== 'specialist' && !data.category) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Categoria é obrigatória',
+        path: ['category'],
+      })
+    }
+  })
 type ReferralFormSchema = z.infer<typeof referralFormSchema>
 
 interface ReferralModalProps {
@@ -61,42 +74,56 @@ export function ReferralModal({
   patientId,
   referral,
   onClose,
-}: ReferralModalProps) {
+}: Readonly<ReferralModalProps>) {
   const { patientOptions } = usePatientOptions()
+  const { user } = usePermissions()
 
-  const isEditMode = !!referral
+  const isCreateMode = !!patientId || !referral
+  const isUserSpecialist = user?.role === 'specialist'
 
   const formMethods = useForm<ReferralFormSchema>({
     resolver: zodResolver(referralFormSchema),
     defaultValues: {
+      role: user?.role,
       patient_id: patientId ?? (referral?.patient_id || ''),
       date: referral?.date || '',
-      category: referral?.category || '',
       condition: referral?.condition || '',
-      annotation: referral?.annotation || '',
+      category: isUserSpecialist ? undefined : referral?.category || '',
       professional_name: referral?.professional_name || '',
-    } as unknown as ReferralFormSchema,
+      annotation: referral?.annotation || '',
+    } as ReferralFormSchema,
     mode: 'onBlur',
   })
 
-  function createReferral(data: ReferralFormSchema) {
-    return api('/referrals', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-  }
+  async function submitForm({
+    patient_id,
+    date,
+    category,
+    condition,
+    professional_name,
+    annotation,
+  }: ReferralFormSchema) {
+    const payload: Partial<ReferralFormSchema> = {
+      date,
+      condition,
+      annotation,
+    }
 
-  function updateReferral({ date, condition, annotation }: ReferralFormSchema) {
-    return api(`/referrals/${referral?.id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ date, condition, annotation }),
-    })
-  }
+    if (isCreateMode) {
+      payload.patient_id = patient_id
+      payload.category = isUserSpecialist ? undefined : category
+      payload.professional_name = professional_name
+    }
 
-  async function submitForm(data: ReferralFormSchema) {
-    const response = isEditMode
-      ? await updateReferral(data)
-      : await createReferral(data)
+    const response = isCreateMode
+      ? await api('/referrals', {
+          method: 'POST',
+          body: JSON.stringify(payload),
+        })
+      : await api(`/referrals/${referral?.id}`, {
+          method: 'PUT',
+          body: JSON.stringify(payload),
+        })
 
     if (!response.success) {
       toast.error(response.message)
@@ -110,7 +137,7 @@ export function ReferralModal({
       QUERY_CACHE_KEYS.statistics.totalReferrals,
     ])
     revalidateServerCache([
-      NEXT_CACHE_TAGS.patient(data.patient_id),
+      NEXT_CACHE_TAGS.patient(patient_id),
       NEXT_CACHE_TAGS.referrals.main,
       NEXT_CACHE_TAGS.statistics.totalReferrals.main,
       NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,
@@ -124,7 +151,7 @@ export function ReferralModal({
     <DialogContainer className='max-w-xl'>
       <DialogHeader icon={<DialogIcon icon={SmilePlusIcon} />}>
         <DialogTitle>
-          {isEditMode ? 'Atualizar encaminhamento' : 'Encaminhar paciente'}
+          {isCreateMode ? 'Novo encaminhamento' : 'Atualizar encaminhamento'}
         </DialogTitle>
       </DialogHeader>
 
@@ -140,22 +167,15 @@ export function ReferralModal({
               options={patientOptions}
               className='sm:col-span-full'
               placeholder='Selecione um paciente'
-              readOnly={isEditMode || !!patientId}
+              readOnly={!isCreateMode || !!referral}
               isRequired
             />
             <DateInput
               name='date'
               label='Data do encaminhamento'
+              placeholder='Selecione uma data'
               wrapperClassName='sm:col-span-1'
               allowFutureDates
-              isRequired
-            />
-            <SelectInput
-              name='category'
-              label='Categoria'
-              options={SPECIALTIES_OPTIONS}
-              className='sm:col-span-1'
-              readOnly={isEditMode}
               isRequired
             />
             <SelectInput
@@ -165,15 +185,30 @@ export function ReferralModal({
               className='sm:col-span-1'
               isRequired
             />
-            <TextInput
-              name='professional_name'
-              label='Profissional responsável'
-              wrapperClassName='sm:col-span-1'
-              readOnly={isEditMode}
-            />
+
+            {!isUserSpecialist && (
+              <>
+                <SelectInput
+                  name='category'
+                  label='Categoria'
+                  options={SPECIALTIES_OPTIONS}
+                  className='sm:col-span-1'
+                  readOnly={!isCreateMode}
+                  isRequired
+                />
+                <TextInput
+                  name='professional_name'
+                  label='Profissional responsável'
+                  placeholder='Insira o nome'
+                  wrapperClassName='sm:col-span-1'
+                  readOnly={!isCreateMode}
+                />
+              </>
+            )}
+
             <TextareaInput
               rows={8}
-              maxLength={2000}
+              maxLength={500}
               name='annotation'
               label='Observações'
               placeholder='Insira observações sobre o paciente'
@@ -189,7 +224,7 @@ export function ReferralModal({
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
-          {isEditMode ? 'Atualizar' : 'Cadastrar'}
+          {isCreateMode ? 'Cadastrar' : 'Atualizar'}
         </Button>
         <DialogClose
           className='flex-1'

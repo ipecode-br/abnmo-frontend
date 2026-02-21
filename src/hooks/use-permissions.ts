@@ -6,14 +6,16 @@ import { useStore } from 'zustand'
 import { PermissionsContext } from '@/lib/permissions/provider'
 
 /**
- * Hook to check user permissions on the client side
+ * Hook to check user permissions and access current user on the client side
  *
  * @example
- * const { canUser } = usePermissions()
+ * const { user, canUser } = usePermissions()
  *
  * if (canUser('update', 'Patients')) {
  *   // Show edit button
  * }
+ *
+ * console.log(user) // Access current user
  */
 export function usePermissions() {
   const store = useContext(PermissionsContext)
@@ -22,7 +24,8 @@ export function usePermissions() {
     throw new Error('Missing PermissionsProvider')
   }
 
+  const user = useStore(store, (state) => state.user)
   const canUser = useStore(store, (state) => state.can)
 
-  return { canUser }
+  return { user, canUser }
 }
