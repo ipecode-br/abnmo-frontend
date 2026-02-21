@@ -1,4 +1,9 @@
+import { EyeIcon } from 'lucide-react'
+import { useState } from 'react'
+
 import { Avatar } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Dialog } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
@@ -18,6 +23,7 @@ import { SPECIALTIES } from '@/enums/shared'
 import type { Referral } from '@/types/referrals'
 import { formatDate } from '@/utils/formatters/format-date'
 
+import { ViewReferralModal } from '../view-referral-modal'
 import { ReferralsTableActions } from './actions'
 
 type HideReferralsColumns = 'name'
@@ -33,6 +39,8 @@ export function ReferralsTable({
   hideColumns = [],
   loading,
 }: Readonly<ReferralsTableProps>) {
+  const [viewReferral, setViewReferral] = useState<Referral | null>(null)
+
   const skeletons = Array.from({ length: 10 }).map((_, index) => index)
 
   const isEmpty = !loading && referrals.length <= 0
@@ -42,6 +50,7 @@ export function ReferralsTable({
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead className='w-16'>Ver</TableHead>
           {showPatientName && <TableHead className='w-64'>Paciente</TableHead>}
           <TableHead className='w-36'>Data</TableHead>
           <TableHead className='w-48'>Categoria</TableHead>
@@ -68,6 +77,16 @@ export function ReferralsTable({
 
             return (
               <TableRow key={referral.id}>
+                <TableCell>
+                  <Button
+                    size='icon_sm'
+                    variant='ghost'
+                    aria-label='Ver detalhes do encaminhamento'
+                    onClick={() => setViewReferral(referral)}
+                  >
+                    <EyeIcon />
+                  </Button>
+                </TableCell>
                 {showPatientName && (
                   <TableCell>
                     <TableLink
@@ -139,6 +158,15 @@ export function ReferralsTable({
             </TableRow>
           ))}
       </TableBody>
+
+      {viewReferral && (
+        <Dialog
+          open={!!viewReferral}
+          onOpenChange={() => setViewReferral(null)}
+        >
+          <ViewReferralModal referral={viewReferral} />
+        </Dialog>
+      )}
     </Table>
   )
 }
