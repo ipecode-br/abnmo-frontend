@@ -19,7 +19,7 @@ export default function ApprovedPatientRequirementsListTableSkeleton() {
             <Skeleton className='h-5 w-24 rounded-md' />
           </TableCell>
           <TableCell className='text-center'>
-            <Skeleton className='mx-auto size-8 rounded-lg' />
+            <Skeleton className='mx-auto size-9' />
           </TableCell>
         </TableRow>
       ))}

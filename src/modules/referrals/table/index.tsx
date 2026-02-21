@@ -134,7 +134,7 @@ export function ReferralsTable({
                 <Skeleton className='h-6 w-28 rounded-md' />
               </TableCell>
               <TableCell>
-                <Skeleton className='mx-auto size-8 rounded-md' />
+                <Skeleton className='mx-auto size-9' />
               </TableCell>
             </TableRow>
           ))}

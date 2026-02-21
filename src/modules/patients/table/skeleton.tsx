@@ -25,7 +25,7 @@ export default function PatientsTableSkeleton() {
         <Skeleton className='h-5 w-24 rounded-md' />
       </TableCell>
       <TableCell>
-        <Skeleton className='mx-auto size-8 rounded-md' />
+        <Skeleton className='mx-auto size-9' />
       </TableCell>
     </TableRow>
   ))

@@ -28,7 +28,7 @@ export function UsersTableSkeleton() {
         <Skeleton className='h-6 w-16 rounded-md' />
       </TableCell>
       <TableCell>
-        <Skeleton className='mx-auto size-8 rounded-md' />
+        <Skeleton className='mx-auto size-9' />
       </TableCell>
     </TableRow>
   ))
