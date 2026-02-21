@@ -15,8 +15,8 @@ const tagVariants = cva(
         success: 'bg-success/10 text-success border-success/25',
       },
       size: {
-        default: 'rounded-lg px-3 py-1.5 text-sm leading-none [&_svg]:size-5',
-        sm: 'rounded-md px-2 py-1.25 text-sm leading-none [&_svg]:size-4',
+        default: 'min-h-8 rounded-lg px-3 py-1.5 leading-none [&_svg]:size-4.5',
+        sm: 'min-h-7 rounded-md px-2 py-1.25 text-sm leading-none [&_svg]:size-4',
       },
     },
     defaultVariants: {
