@@ -63,7 +63,7 @@ export function ReferralsTable({
       <TableBody>
         {isEmpty && (
           <TableRow>
-            <TableEmptyCell colSpan={6}>
+            <TableEmptyCell colSpan={8}>
               Nenhum encaminhamento registrado
             </TableEmptyCell>
           </TableRow>

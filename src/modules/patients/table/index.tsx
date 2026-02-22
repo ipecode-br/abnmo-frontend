@@ -1,6 +1,7 @@
 'use client'
 
 import { Avatar } from '@/components/ui/avatar'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -19,7 +20,6 @@ import { formatDate } from '@/utils/formatters/format-date'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 import { PatientsTableActions } from './actions'
-import PatientsTableSkeleton from './skeleton'
 
 interface PatientsTableProps {
   patients: PatientListItem[]
@@ -30,6 +30,8 @@ export function PatientsTable({
   patients,
   loading,
 }: Readonly<PatientsTableProps>) {
+  const skeletons = Array.from({ length: 10 }).map((_, index) => index)
+
   const isEmpty = !loading && patients.length <= 0
 
   return (
@@ -48,8 +50,6 @@ export function PatientsTable({
       </TableHeader>
 
       <TableBody>
-        {loading && <PatientsTableSkeleton />}
-
         {isEmpty && (
           <TableRow>
             <TableEmptyCell colSpan={6}>
@@ -86,6 +86,33 @@ export function PatientsTable({
               </TableRow>
             )
           })}
+
+        {loading &&
+          skeletons.map((skeleton) => (
+            <TableRow key={skeleton}>
+              <TableCell>
+                <div className='flex items-center gap-2'>
+                  <Skeleton className='size-9 rounded-full' />
+                  <Skeleton className='h-5 w-48 rounded-md' />
+                </div>
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-5 w-32 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-5 w-56 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-6 w-18 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-5 w-24 rounded-md' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='mx-auto size-9' />
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   )

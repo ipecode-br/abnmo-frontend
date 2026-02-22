@@ -68,7 +68,7 @@ export function AppointmentsTable({
       <TableBody>
         {isEmpty && (
           <TableRow>
-            <TableEmptyCell colSpan={7}>
+            <TableEmptyCell colSpan={8}>
               Nenhum atendimento registrado
             </TableEmptyCell>
           </TableRow>
