@@ -62,20 +62,18 @@ export function BarChart({
           width={yAxisWidth}
           axisLine={{ stroke: 'var(--color-border)', strokeWidth: 1 }}
           tick={(props) => {
-            const { x = 0, y = 0, payload } = props
-
+            const { x, y, payload } = props
             return (
-              <g transform={`translate(${x},${y})`}>
-                <text
-                  dy={4}
-                  textAnchor='end'
-                  fontSize='0.75rem'
-                  style={{ whiteSpace: 'nowrap' }}
-                  fill='var(--color-foreground-soft)'
-                >
-                  {payload?.value}
-                </text>
-              </g>
+              <text
+                x={x || 0}
+                y={y || 0}
+                dy='0.32em'
+                textAnchor='end'
+                fontSize='0.75rem'
+                fill='var(--color-foreground-soft)'
+              >
+                {payload.value}
+              </text>
             )
           }}
         />
