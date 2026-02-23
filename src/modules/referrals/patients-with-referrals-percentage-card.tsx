@@ -10,11 +10,11 @@ export async function PatientsWithReferralsPercentageCard() {
     getTotalPatientsWithReferrals(),
   ])
 
-  const totalPatientsValue = totalPatients?.total ?? 0
-  const totalPatientsWithReferralsValue = totalPatientsWithReferrals?.total ?? 0
+  const totalPatientsValue = totalPatients?.total || 0
+  const totalPatientsWithReferralsValue = totalPatientsWithReferrals?.total || 0
 
   const totalPatientsWithReferralsPercentage =
-    (totalPatientsWithReferralsValue / totalPatientsValue) * 100
+    (totalPatientsWithReferralsValue / totalPatientsValue) * 100 || 0
 
   return (
     <SummaryCard
