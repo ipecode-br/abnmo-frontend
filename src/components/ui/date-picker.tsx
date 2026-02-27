@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
+import { parseDateOnly } from '@/utils/parse-date-only'
 
 import { Calendar, type CalendarProps } from './calendar'
 import { Popover } from './popover'
@@ -69,7 +70,7 @@ export function DatePicker({
           startDate={startDate}
           onSelect={handleCalendarSelect}
           allowFutureDates={allowFutureDates}
-          selected={value ? new Date(value) : undefined}
+          selected={value ? parseDateOnly(value) : undefined}
         />
       </PopoverContent>
     </Popover>
