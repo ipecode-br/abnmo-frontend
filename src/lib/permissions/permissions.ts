@@ -28,8 +28,12 @@ export const permissions: RolePermissions = {
       subject: ['PatientSupports'],
     },
     {
-      action: ['view', 'create', 'update', 'delete'],
-      subject: ['Users', 'Invites'],
+      action: ['view'],
+      subject: ['Users'],
+    },
+    {
+      action: ['manage'],
+      subject: ['Invites'],
     },
     {
       action: 'view',
