@@ -59,7 +59,7 @@ export function Select({
   ...props
 }: Readonly<SelectProps>) {
   const selectedOption = options.find((option) => option.value === value)
-  const showIndicator = !props.disabled && !props.readOnly
+  const hideIndicator = props.disabled || props.readOnly
 
   return (
     <BaseSelect.Root value={value} items={options} {...props}>
@@ -69,11 +69,12 @@ export function Select({
         <BaseSelect.Value className='w-full truncate whitespace-nowrap'>
           {() => (selectedOption ? selectedOption.label : placeholder)}
         </BaseSelect.Value>
-        {showIndicator && (
-          <BaseSelect.Icon>
-            <ChevronsUpDownIcon className='text-disabled size-4.5 shrink-0' />
-          </BaseSelect.Icon>
-        )}
+        <BaseSelect.Icon
+          data-hide={hideIndicator}
+          className='data-[hide=opacity-50'
+        >
+          <ChevronsUpDownIcon className='text-disabled size-4.5 shrink-0' />
+        </BaseSelect.Icon>
       </BaseSelect.Trigger>
 
       <BaseSelect.Portal>
