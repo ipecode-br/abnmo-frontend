@@ -44,6 +44,7 @@ import { api } from '@/lib/api'
 import type { Patient } from '@/types/patients.d.ts'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
+import { parseDateOnly } from '@/utils/parse-date-only'
 import { removeNonNumbers } from '@/utils/sanitizers'
 
 import CancelPatientFormModal from './cancel-modal'
@@ -79,7 +80,9 @@ export function PatientForm({
     resolver: zodResolver(patientFormSchema),
     defaultValues: {
       name: patient?.name || '',
-      date_of_birth: patient?.date_of_birth || '',
+      date_of_birth: patient?.date_of_birth
+        ? parseDateOnly(patient.date_of_birth).toISOString()
+        : '',
       cpf: patient?.cpf ? formatCpfNumber(patient.cpf) : '',
       gender: patient?.gender || '',
       race: patient?.race || '',

@@ -70,7 +70,7 @@ export function DatePicker({
           startDate={startDate}
           onSelect={handleCalendarSelect}
           allowFutureDates={allowFutureDates}
-          selected={value ? parseDateOnly(value) : undefined}
+          selected={value ? new Date(value) : undefined}
         />
       </PopoverContent>
     </Popover>
