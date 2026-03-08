@@ -50,7 +50,7 @@ export function CancelReferralModal({
         QUERY_CACHE_KEYS.statistics.totalReferrals,
       ])
       revalidateServerCache([
-        NEXT_CACHE_TAGS.patient(referral.patient_id),
+        NEXT_CACHE_TAGS.patient(referral.patientId),
         NEXT_CACHE_TAGS.referrals.main,
         NEXT_CACHE_TAGS.statistics.totalReferrals.main,
         NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,

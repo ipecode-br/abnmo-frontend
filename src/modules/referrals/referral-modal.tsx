@@ -42,11 +42,11 @@ import type { Referral } from '@/types/referrals'
 const referralFormSchema = z
   .object({
     role: userRoleSchema,
-    patient_id: z.string().uuid('Paciente é obrigatório'),
+    patientId: z.string().uuid('Paciente é obrigatório'),
     date: dateSchema,
     category: specialtySchema.optional(),
     condition: patientConditionSchema,
-    professional_name: professionalNameSchema,
+    professionalName: professionalNameSchema,
     annotation: z
       .string()
       .max(500)
@@ -85,22 +85,22 @@ export function ReferralModal({
     resolver: zodResolver(referralFormSchema),
     defaultValues: {
       role: user?.role,
-      patient_id: patientId ?? (referral?.patient_id || ''),
+      patientId: patientId ?? (referral?.patientId || ''),
       date: referral?.date || '',
       condition: referral?.condition || '',
       category: isUserSpecialist ? undefined : referral?.category || '',
-      professional_name: referral?.professional_name || '',
+      professionalName: referral?.professionalName || '',
       annotation: referral?.annotation || '',
     } as ReferralFormSchema,
     mode: 'onBlur',
   })
 
   async function submitForm({
-    patient_id,
+    patientId,
     date,
     category,
     condition,
-    professional_name,
+    professionalName,
     annotation,
   }: ReferralFormSchema) {
     const payload: Partial<ReferralFormSchema> = {
@@ -110,9 +110,9 @@ export function ReferralModal({
     }
 
     if (isCreateMode) {
-      payload.patient_id = patient_id
+      payload.patientId = patientId
       payload.category = isUserSpecialist ? undefined : category
-      payload.professional_name = professional_name
+      payload.professionalName = professionalName
     }
 
     const response = isCreateMode
@@ -137,7 +137,7 @@ export function ReferralModal({
       QUERY_CACHE_KEYS.statistics.totalReferrals,
     ])
     revalidateServerCache([
-      NEXT_CACHE_TAGS.patient(patient_id),
+      NEXT_CACHE_TAGS.patient(patientId),
       NEXT_CACHE_TAGS.referrals.main,
       NEXT_CACHE_TAGS.statistics.totalReferrals.main,
       NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,
@@ -162,7 +162,7 @@ export function ReferralModal({
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
             <ComboboxInput
-              name='patient_id'
+              name='patientId'
               label='Paciente'
               options={patientOptions}
               className='sm:col-span-full'
@@ -197,7 +197,7 @@ export function ReferralModal({
                   isRequired
                 />
                 <TextInput
-                  name='professional_name'
+                  name='professionalName'
                   label='Profissional responsável'
                   placeholder='Insira o nome'
                   wrapperClassName='sm:col-span-1'

@@ -80,8 +80,8 @@ export function PatientForm({
     resolver: zodResolver(patientFormSchema),
     defaultValues: {
       name: patient?.name || '',
-      date_of_birth: patient?.date_of_birth
-        ? parseDateOnly(patient.date_of_birth).toISOString()
+      dateOfBirth: patient?.dateOfBirth
+        ? parseDateOnly(patient.dateOfBirth).toISOString()
         : '',
       cpf: patient?.cpf ? formatCpfNumber(patient.cpf) : '',
       gender: patient?.gender || '',
@@ -90,12 +90,12 @@ export function PatientForm({
       state: patient?.state || '',
       city: patient?.city || '',
       email: patient?.email || '',
-      has_disability: patient?.has_disability ? 'yes' : 'no',
-      disability_desc: patient?.disability_desc || '',
-      take_medication: patient?.take_medication ? 'yes' : 'no',
-      medication_desc: patient?.medication_desc || '',
-      nmo_diagnosis: patient?.nmo_diagnosis || '',
-      need_legal_assistance: patient?.need_legal_assistance ? 'yes' : 'no',
+      hasDisability: patient?.hasDisability ? 'yes' : 'no',
+      disabilityDesc: patient?.disabilityDesc || '',
+      takeMedication: patient?.takeMedication ? 'yes' : 'no',
+      medicationDesc: patient?.medicationDesc || '',
+      nmoDiagnosis: patient?.nmoDiagnosis || '',
+      needLegalAssistance: patient?.needLegalAssistance ? 'yes' : 'no',
       supports: isCreateForm
         ? [{ name: '', phone: '', kinship: '' }]
         : undefined,
@@ -110,7 +110,7 @@ export function PatientForm({
 
   const [selectedUF, hasDisability, takeMedication] = useWatch({
     control: formMethods.control,
-    name: ['state', 'has_disability', 'take_medication'],
+    name: ['state', 'hasDisability', 'takeMedication'],
   })
   const cityOptions = useCities(selectedUF)
 
@@ -142,9 +142,9 @@ export function PatientForm({
       ...data,
       phone: removeNonNumbers(data.phone),
       cpf: removeNonNumbers(data.cpf),
-      has_disability: data.has_disability === 'yes',
-      need_legal_assistance: data.need_legal_assistance === 'yes',
-      take_medication: data.take_medication === 'yes',
+      hasDisability: data.hasDisability === 'yes',
+      needLegalAssistance: data.needLegalAssistance === 'yes',
+      takeMedication: data.takeMedication === 'yes',
       supports: isCreateForm
         ? data.supports?.map((support) => ({
             ...support,
@@ -196,7 +196,7 @@ export function PatientForm({
             readOnly={isViewMode}
           />
           <DateInput
-            name='date_of_birth'
+            name='dateOfBirth'
             label='Data de nascimento'
             navMode='dropdown'
             placeholder='Selecione a data'
@@ -282,7 +282,7 @@ export function PatientForm({
 
         <FormField className='grid gap-4 lg:grid-cols-3'>
           <SelectInput
-            name='has_disability'
+            name='hasDisability'
             label='Possui alguma deficiência?'
             options={YES_OR_NO_OPTIONS}
             placeholder='Teste'
@@ -291,7 +291,7 @@ export function PatientForm({
             readOnly={isViewMode}
           />
           <TextInput
-            name='disability_desc'
+            name='disabilityDesc'
             label='Se sim, qual?'
             maxLength={500}
             wrapperClassName='lg:col-span-2'
@@ -300,7 +300,7 @@ export function PatientForm({
           />
 
           <SelectInput
-            name='take_medication'
+            name='takeMedication'
             label='Usa medicamento regularmente?'
             options={YES_OR_NO_OPTIONS}
             isRequired={!isViewMode}
@@ -308,7 +308,7 @@ export function PatientForm({
             readOnly={isViewMode}
           />
           <TextInput
-            name='medication_desc'
+            name='medicationDesc'
             label='Se sim, qual?'
             maxLength={500}
             wrapperClassName='lg:col-span-2'
@@ -317,7 +317,7 @@ export function PatientForm({
           />
 
           <SelectInput
-            name='nmo_diagnosis'
+            name='nmoDiagnosis'
             label='Possui diagnóstico de NMO?'
             options={PATIENT_NMO_DIAGNOSTIC_OPTIONS}
             className='lg:col-span-2'
@@ -325,7 +325,7 @@ export function PatientForm({
             readOnly={isViewMode}
           />
           <SelectInput
-            name='need_legal_assistance'
+            name='needLegalAssistance'
             label='Precisa de assistência legal?'
             options={YES_OR_NO_OPTIONS}
             className='lg:col-span-1'

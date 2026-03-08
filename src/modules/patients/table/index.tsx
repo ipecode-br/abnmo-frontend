@@ -68,7 +68,7 @@ export function PatientsTable({
                     className='w-64'
                     href={ROUTES.dashboard.patients.details.info(patient.id)}
                   >
-                    <Avatar className='size-9' src={patient.avatar_url} />
+                    <Avatar className='size-9' src={patient.avatarUrl} />
                     <span className='truncate'>{patient.name}</span>
                   </TableLink>
                 </TableCell>
@@ -79,7 +79,7 @@ export function PatientsTable({
                     {status.label}
                   </Tag>
                 </TableCell>
-                <TableCell>{formatDate(patient.created_at)}</TableCell>
+                <TableCell>{formatDate(patient.createdAt)}</TableCell>
                 <TableCell className='text-center'>
                   <PatientsTableActions patient={patient} />
                 </TableCell>

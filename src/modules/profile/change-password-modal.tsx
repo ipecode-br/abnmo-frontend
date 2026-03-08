@@ -25,12 +25,12 @@ import { passwordSchema } from '@/schemas'
 const changeUserPasswordSchema = z
   .object({
     password: z.string().min(1, 'Insira sua senha atual'),
-    new_password: passwordSchema,
-    confirm_password: z.string(),
+    newPassword: passwordSchema,
+    confirmPassword: z.string(),
   })
-  .refine((data) => data.new_password === data.confirm_password, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: 'Repita sua nova senha corretamente',
-    path: ['confirm_password'],
+    path: ['confirmPassword'],
   })
 
 type ChangeUserPasswordSchema = z.infer<typeof changeUserPasswordSchema>
@@ -44,17 +44,17 @@ export function ChangeUserPasswordModal({
 }: ChangeUserPasswordModalProps) {
   const formMethods = useForm<ChangeUserPasswordSchema>({
     resolver: zodResolver(changeUserPasswordSchema),
-    defaultValues: { password: '', new_password: '', confirm_password: '' },
+    defaultValues: { password: '', newPassword: '', confirmPassword: '' },
     mode: 'onBlur',
   })
 
   async function submitForm({
     password,
-    new_password,
+    newPassword,
   }: ChangeUserPasswordSchema) {
     const response = await api(`/change-password`, {
       method: 'POST',
-      body: JSON.stringify({ password, new_password }),
+      body: JSON.stringify({ password, newPassword }),
     })
 
     if (!response.success) {
@@ -84,7 +84,7 @@ export function ChangeUserPasswordModal({
               />
 
               <PasswordInput
-                name='new_password'
+                name='newPassword'
                 label='Nova senha'
                 placeholder='Crie uma nova senha'
                 showRequirements
@@ -92,7 +92,7 @@ export function ChangeUserPasswordModal({
               />
 
               <PasswordInput
-                name='confirm_password'
+                name='confirmPassword'
                 label='Confirmar nova senha'
                 placeholder='Repita a nova senha'
                 isRequired

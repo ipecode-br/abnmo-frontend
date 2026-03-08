@@ -7,7 +7,6 @@ import { useCallback, useState } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
-import { parseDateOnly } from '@/utils/parse-date-only'
 
 import { Calendar, type CalendarProps } from './calendar'
 import { Popover } from './popover'

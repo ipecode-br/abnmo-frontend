@@ -17,12 +17,12 @@ import { passwordSchema } from '@/schemas'
 export const resetPasswordFormSchema = z
   .object({
     password: passwordSchema,
-    confirm_password: z.string(),
-    reset_token: z.string(),
+    confirmPassword: z.string(),
+    resetToken: z.string(),
   })
-  .refine((data) => data.password === data.confirm_password, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: 'Suas senhas não coincidem',
-    path: ['confirm_password'],
+    path: ['confirmPassword'],
   })
 export type ResetPasswordFormSchema = z.infer<typeof resetPasswordFormSchema>
 
@@ -35,17 +35,14 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
 
   const formMethods = useForm<ResetPasswordFormSchema>({
     resolver: zodResolver(resetPasswordFormSchema),
-    defaultValues: { password: '', confirm_password: '', reset_token: token },
+    defaultValues: { password: '', confirmPassword: '', resetToken: token },
     mode: 'onBlur',
   })
 
-  async function submitForm({
-    password,
-    reset_token,
-  }: ResetPasswordFormSchema) {
+  async function submitForm({ password, resetToken }: ResetPasswordFormSchema) {
     const response = await api('/reset-password', {
       method: 'POST',
-      body: JSON.stringify({ password, reset_token }),
+      body: JSON.stringify({ password, resetToken }),
     })
 
     if (!response.success) {
@@ -69,7 +66,7 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
             isRequired
           />
           <PasswordInput
-            name='confirm_password'
+            name='confirmPassword'
             label='Confirmar senha'
             placeholder='Repita sua senha'
             isRequired

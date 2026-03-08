@@ -32,7 +32,7 @@ export function ScreeningPatientDataForm() {
     defaultValues: {
       name: '',
       gender: '',
-      date_of_birth: '',
+      dateOfBirth: '',
       city: '',
       state: '',
       phone: '',
@@ -88,7 +88,7 @@ export function ScreeningPatientDataForm() {
           isRequired
         />
         <DateInput
-          name='date_of_birth'
+          name='dateOfBirth'
           label='Data de nascimento'
           navMode='dropdown'
           isRequired

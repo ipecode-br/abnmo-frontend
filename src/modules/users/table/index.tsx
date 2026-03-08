@@ -57,11 +57,11 @@ export function UsersTable({ users, loading }: Readonly<UsersTableProps>) {
               <TableRow key={user.id}>
                 <TableCell>
                   <div className='flex w-64 items-center gap-2'>
-                    <Avatar className='size-9' src={user.avatar_url} />
+                    <Avatar className='size-9' src={user.avatarUrl} />
                     <span className='truncate'>{user.name}</span>
                   </div>
                 </TableCell>
-                <TableCell>{formatDate(user.created_at)}</TableCell>
+                <TableCell>{formatDate(user.createdAt)}</TableCell>
                 <TableCell>
                   <Tag size='sm'>{USER_ROLES[user.role]}</Tag>
                 </TableCell>
@@ -72,7 +72,7 @@ export function UsersTable({ users, loading }: Readonly<UsersTableProps>) {
                     '-'
                   )}
                 </TableCell>
-                <TableCell>{user.registration_id ?? '-'}</TableCell>
+                <TableCell>{user.registrationId ?? '-'}</TableCell>
                 <TableCell>
                   <Tag variant={status.variant} size='sm'>
                     {status.label}

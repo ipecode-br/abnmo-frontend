@@ -4,46 +4,46 @@ import { yesOrNoSchema } from '@/schemas'
 
 export const screeningMedicalReportFormSchema = z
   .object({
-    has_disability: yesOrNoSchema,
-    disability_desc: z
+    hasDisability: yesOrNoSchema,
+    disabilityDesc: z
       .string()
       .transform((data) => data?.trim())
       .nullable(),
-    need_legal_assistance: yesOrNoSchema,
-    take_medication: yesOrNoSchema,
-    medication_desc: z
+    needLegalAssistance: yesOrNoSchema,
+    takeMedication: yesOrNoSchema,
+    medicationDesc: z
       .string()
       .transform((data) => data?.trim())
       .nullable(),
-    has_nmo_diagnosis: yesOrNoSchema,
+    hasNmoDiagnosis: yesOrNoSchema,
   })
   .refine(
     (data) => {
-      if (data.has_disability === 'yes' && !data.disability_desc) {
+      if (data.hasDisability === 'yes' && !data.disabilityDesc) {
         return false
       }
-      if (data.has_disability === 'no') {
-        data.disability_desc = null
+      if (data.hasDisability === 'no') {
+        data.disabilityDesc = null
       }
       return true
     },
     {
-      path: ['disability_desc'],
+      path: ['disabilityDesc'],
       message: 'Descrição da deficiência é obrigatória',
     },
   )
   .refine(
     (data) => {
-      if (data.take_medication === 'yes' && !data.medication_desc) {
+      if (data.takeMedication === 'yes' && !data.medicationDesc) {
         return false
       }
-      if (data.take_medication === 'no') {
-        data.medication_desc = null
+      if (data.takeMedication === 'no') {
+        data.medicationDesc = null
       }
       return true
     },
     {
-      path: ['medication_desc'],
+      path: ['medicationDesc'],
       message: 'Descrição do medicamento é obrigatória',
     },
   )
@@ -53,9 +53,9 @@ export type ScreeningMedicalReportFormSchema = z.infer<
 >
 
 export const screeningMedicalReportFormDefaultValues = {
-  has_disability: '',
-  disability_desc: '',
-  take_medication: '',
-  medication_desc: '',
-  has_nmo_diagnosis: '',
+  hasDisability: '',
+  disabilityDesc: '',
+  takeMedication: '',
+  medicationDesc: '',
+  hasNmoDiagnosis: '',
 } as unknown as ScreeningMedicalReportFormSchema

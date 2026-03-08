@@ -92,12 +92,12 @@ export function ReferralsTable({
                     <TableLink
                       className='w-64'
                       href={ROUTES.dashboard.patients.details.info(
-                        referral.patient_id,
+                        referral.patientId,
                       )}
                     >
                       <Avatar
                         className='size-9'
-                        src={referral.patient.avatar_url}
+                        src={referral.patient.avatarUrl}
                       />
                       <span className='truncate'>{referral.patient.name}</span>
                     </TableLink>
@@ -107,7 +107,7 @@ export function ReferralsTable({
                 <TableCell>
                   <Tag size='sm'>{SPECIALTIES[referral.category]}</Tag>
                 </TableCell>
-                <TableCell>{referral.professional_name ?? '-'}</TableCell>
+                <TableCell>{referral.professionalName ?? '-'}</TableCell>
                 <TableCell>
                   <Tag variant={condition.variant} size='sm'>
                     <Icon />

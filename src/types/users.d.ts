@@ -6,17 +6,17 @@ export type User = {
   name: string
   email: string
   role: UserRole
-  avatar_url: string | null
+  avatarUrl: string | null
   status: UserStatus
   specialty: Specialty | null
-  registration_id: string | null
-  updated_at: string
-  created_at: string
+  registrationId: string | null
+  updatedAt: string
+  createdAt: string
 }
 
 export type UserInvite = {
   id: string
   email: string
-  expires_at: string
-  created_at: string
+  expiresAt: string
+  createdAt: string
 }

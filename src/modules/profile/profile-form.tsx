@@ -23,7 +23,7 @@ export const userProfileFormSchema = z.object({
   email: emailSchema,
   role: userRoleSchema,
   specialty: specialtySchema.nullable(),
-  registration_id: z.string().max(32).nullable(),
+  registrationId: z.string().max(32).nullable(),
 })
 export type UserProfileFormSchema = z.infer<typeof userProfileFormSchema>
 
@@ -39,7 +39,7 @@ export function UserProfileForm({ user }: Readonly<UserProfileFormProps>) {
       email: user.email,
       role: user.role,
       specialty: user.specialty || '',
-      registration_id: user.registration_id || '',
+      registrationId: user.registrationId || '',
     } as UserProfileFormSchema,
     mode: 'onBlur',
   })
@@ -69,7 +69,7 @@ export function UserProfileForm({ user }: Readonly<UserProfileFormProps>) {
                 readOnly
               />
               <TextInput
-                name='registration_id'
+                name='registrationId'
                 label='Registro profissional'
                 readOnly
               />

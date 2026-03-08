@@ -19,7 +19,7 @@ export const getPatientFormSchema = (mode: 'create' | 'edit' | 'view') =>
   z
     .object({
       name: nameSchema,
-      date_of_birth: dateOfBirthSchema,
+      dateOfBirth: dateOfBirthSchema,
       cpf: cpfSchema,
       gender: genderSchema,
       race: raceSchema,
@@ -27,18 +27,18 @@ export const getPatientFormSchema = (mode: 'create' | 'edit' | 'view') =>
       city: citySchema,
       phone: phoneSchema,
       email: emailSchema,
-      has_disability: yesOrNoSchema,
-      disability_desc: z
+      hasDisability: yesOrNoSchema,
+      disabilityDesc: z
         .string()
         .transform((data) => data.trim())
         .nullable(),
-      need_legal_assistance: yesOrNoSchema,
-      take_medication: yesOrNoSchema,
-      medication_desc: z
+      needLegalAssistance: yesOrNoSchema,
+      takeMedication: yesOrNoSchema,
+      medicationDesc: z
         .string()
         .transform((data) => data.trim())
         .nullable(),
-      nmo_diagnosis: patientNmoDiagnosticSchema,
+      nmoDiagnosis: patientNmoDiagnosticSchema,
       supports: z
         .array(
           z.object({
@@ -60,25 +60,25 @@ export const getPatientFormSchema = (mode: 'create' | 'edit' | 'view') =>
         }
       }
 
-      if (data.has_disability === 'yes' && !data.disability_desc) {
+      if (data.hasDisability === 'yes' && !data.disabilityDesc) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ['disability_desc'],
+          path: ['disabilityDesc'],
           message: 'Descrição da deficiência é obrigatória',
         })
       }
-      if (data.has_disability === 'no') {
-        data.disability_desc = null
+      if (data.hasDisability === 'no') {
+        data.disabilityDesc = null
       }
 
-      if (data.take_medication === 'yes' && !data.medication_desc) {
+      if (data.takeMedication === 'yes' && !data.medicationDesc) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ['medication_desc'],
+          path: ['medicationDesc'],
           message: 'Descrição do medicamento é obrigatória',
         })
       }
-      if (data.take_medication === 'no') {
-        data.medication_desc = null
+      if (data.takeMedication === 'no') {
+        data.medicationDesc = null
       }
     })

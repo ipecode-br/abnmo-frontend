@@ -46,5 +46,5 @@ export type PatientRequirementsOrderBy =
   | 'status'
   | 'type'
   | 'date'
-  | 'approved_at'
-  | 'submitted_at'
+  | 'approvedAt'
+  | 'submittedAt'

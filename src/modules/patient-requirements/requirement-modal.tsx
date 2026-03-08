@@ -28,7 +28,7 @@ import { api } from '@/lib/api'
 import { queryClient } from '@/lib/tanstack-query'
 
 const patientRequirementFormSchema = z.object({
-  patient_id: z.string().uuid('Paciente é obrigatório'),
+  patientId: z.string().uuid('Paciente é obrigatório'),
   type: z.enum(PATIENT_REQUIREMENT_TYPE_ENUM),
   description: z
     .string()
@@ -50,7 +50,7 @@ export function PatientRequirementModal({
   const formMethods = useForm<PatientRequirementFormSchema>({
     resolver: zodResolver(patientRequirementFormSchema),
     defaultValues: {
-      patient_id: '',
+      patientId: '',
       type: '',
       description: '',
     } as unknown as PatientRequirementFormSchema,
@@ -89,7 +89,7 @@ export function PatientRequirementModal({
         <FormProvider {...formMethods}>
           <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
             <ComboboxInput
-              name='patient_id'
+              name='patientId'
               label='Paciente'
               placeholder='Selecione um paciente'
               options={patientOptions}
