@@ -50,8 +50,8 @@ export function UnderReviewPatientRequirements() {
   > = {
     name_asc: { orderBy: 'patient', order: 'ASC' },
     name_desc: { orderBy: 'patient', order: 'DESC' },
-    date_asc: { orderBy: 'submitted_at', order: 'ASC' },
-    date_desc: { orderBy: 'submitted_at', order: 'DESC' },
+    date_asc: { orderBy: 'submittedAt', order: 'ASC' },
+    date_desc: { orderBy: 'submittedAt', order: 'DESC' },
     type_asc: { orderBy: 'type', order: 'ASC' },
     type_desc: { orderBy: 'type', order: 'DESC' },
   }
@@ -128,8 +128,7 @@ export function UnderReviewPatientRequirements() {
               <div className='text-foreground-soft flex items-center gap-1'>
                 <CircleAlertIcon className='text-success size-4.5' />
                 <span>
-                  Recebido{' '}
-                  {getTimeDistanceToNow(requirement.submitted_at ?? '')}
+                  Recebido {getTimeDistanceToNow(requirement.submittedAt ?? '')}
                 </span>
               </div>
 

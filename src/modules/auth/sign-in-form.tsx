@@ -36,22 +36,11 @@ export function SignInForm() {
   })
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  async function submitForm({
-    email,
-    password,
-    keepLoggedIn,
-  }: SignInFormSchema) {
+  async function submitForm(data: SignInFormSchema) {
     startTransition(async () => {
-      const response = await api<{ account_type: 'user' | 'patient' }>(
+      const response = await api<{ accountType: 'user' | 'patient' }>(
         '/login',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            email,
-            password,
-            keep_logged_in: keepLoggedIn,
-          }),
-        },
+        { method: 'POST', body: JSON.stringify(data) },
       )
 
       if (!response.success) {
@@ -60,7 +49,7 @@ export function SignInForm() {
       }
 
       router.push(
-        response.data?.account_type === 'user'
+        response.data?.accountType === 'user'
           ? ROUTES.dashboard.main
           : ROUTES.patient.main,
       )

@@ -62,7 +62,7 @@ export function PatientDocuments({
                 </NavLink>
 
                 <span className='ml-auto text-sm'>
-                  {formatDate(doc.created_at)}
+                  {formatDate(doc.createdAt)}
                 </span>
 
                 <span className='min-w-24 text-right text-sm'>{doc.size}</span>

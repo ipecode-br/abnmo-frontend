@@ -30,7 +30,7 @@ export function ViewReferralModal({
   const ConditionIcon = condition.icon
 
   const showUpdatedDate =
-    new Date(referral.updated_at) > new Date(referral.created_at)
+    new Date(referral.updatedAt) > new Date(referral.createdAt)
 
   return (
     <DialogContainer className='max-w-xl'>
@@ -41,7 +41,7 @@ export function ViewReferralModal({
       <DialogContent className='grid gap-6 sm:grid-cols-9'>
         <DialogDetailField label='Paciente' className='sm:col-span-full'>
           <div className='flex items-center gap-3'>
-            <Avatar className='size-12' src={referral.patient.avatar_url} />
+            <Avatar className='size-12' src={referral.patient.avatarUrl} />
             <span className='text-lg font-medium'>{referral.patient.name}</span>
           </div>
         </DialogDetailField>
@@ -64,7 +64,7 @@ export function ViewReferralModal({
           label='Profissional responsável'
           className='sm:col-span-5'
         >
-          {referral.professional_name ?? '-'}
+          {referral.professionalName ?? '-'}
         </DialogDetailField>
 
         {referral.annotation && (
@@ -80,12 +80,12 @@ export function ViewReferralModal({
         </DialogDetailField>
 
         <DialogDetailField label='Criado em' className='sm:col-span-3'>
-          {formatDate(referral.created_at)}
+          {formatDate(referral.createdAt)}
         </DialogDetailField>
 
         {showUpdatedDate && (
           <DialogDetailField label='Atualizado em' className='sm:col-span-3'>
-            {formatDate(referral.updated_at)}
+            {formatDate(referral.updatedAt)}
           </DialogDetailField>
         )}
       </DialogContent>

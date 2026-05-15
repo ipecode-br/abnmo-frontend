@@ -97,12 +97,12 @@ export function AppointmentsTable({
                     <TableLink
                       className='w-64'
                       href={ROUTES.dashboard.patients.details.info(
-                        appointment.patient_id,
+                        appointment.patientId,
                       )}
                     >
                       <Avatar
                         className='size-9'
-                        src={appointment.patient.avatar_url}
+                        src={appointment.patient.avatarUrl}
                       />
                       <span className='truncate'>
                         {appointment.patient.name}
@@ -114,7 +114,7 @@ export function AppointmentsTable({
                 <TableCell>
                   <Tag size='sm'>{SPECIALTIES[appointment.category]}</Tag>
                 </TableCell>
-                <TableCell>{appointment.professional_name ?? '-'}</TableCell>
+                <TableCell>{appointment.professionalName ?? '-'}</TableCell>
                 <TableCell>
                   <Tag variant={condition.variant} size='sm'>
                     <Icon />

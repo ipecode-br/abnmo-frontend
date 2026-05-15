@@ -123,7 +123,7 @@ export function PendingPatientRequirements() {
           requirements.map((requirement) => {
             const pendingDays = differenceInDays(
               new Date(),
-              new Date(requirement.created_at),
+              new Date(requirement.createdAt),
             )
 
             const severityVariant = () => {
@@ -151,9 +151,7 @@ export function PendingPatientRequirements() {
 
                 <div className='text-foreground-soft flex items-center gap-1'>
                   <Calendar className='text-disabled size-4.5' />
-                  <span>
-                    Solicitado em {formatDate(requirement.created_at)}
-                  </span>
+                  <span>Solicitado em {formatDate(requirement.createdAt)}</span>
                 </div>
 
                 <div
@@ -165,7 +163,7 @@ export function PendingPatientRequirements() {
                   )}
                 >
                   <CircleAlert className='size-4.5' />
-                  <p>Pendente {getTimeDistanceToNow(requirement.created_at)}</p>
+                  <p>Pendente {getTimeDistanceToNow(requirement.createdAt)}</p>
                 </div>
               </Card>
             )

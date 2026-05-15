@@ -39,7 +39,7 @@ const updateUserFormSchema = z
     email: emailSchema,
     role: userRoleSchema,
     specialty: specialtySchema.nullable().optional(),
-    registration_id: userRegistrationId.nullable().optional(),
+    registrationId: userRegistrationId.nullable().optional(),
   })
   .refine(
     (data) => {
@@ -53,12 +53,12 @@ const updateUserFormSchema = z
   )
   .refine(
     (data) => {
-      if (data.role === 'specialist') return data.registration_id
+      if (data.role === 'specialist') return data.registrationId
       return true
     },
     {
       message: 'Registro profissional é obrigatório',
-      path: ['registration_id'],
+      path: ['registrationId'],
     },
   )
 
@@ -81,7 +81,7 @@ export function UpdateUserModal({
       email: user.email,
       role: user.role,
       specialty: user.specialty || null,
-      registration_id: user.registration_id || null,
+      registrationId: user.registrationId || null,
     },
   })
 
@@ -90,14 +90,14 @@ export function UpdateUserModal({
   async function submitForm({
     name,
     specialty,
-    registration_id,
+    registrationId,
   }: UpdateUserFormSchema) {
     const response = await api(`/users/${user.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         name: name,
         specialty: isSpecialist ? specialty : null,
-        registration_id: isSpecialist ? registration_id : null,
+        registrationId: isSpecialist ? registrationId : null,
       }),
     })
 
@@ -151,7 +151,7 @@ export function UpdateUserModal({
                 />
 
                 <TextInput
-                  name='registration_id'
+                  name='registrationId'
                   label='Registro profissional'
                   maxLength={32}
                   placeholder='Insira o número do registro'

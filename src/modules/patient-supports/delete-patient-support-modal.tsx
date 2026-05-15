@@ -41,7 +41,7 @@ export function DeletePatientSupportModal({
         return
       }
 
-      revalidateServerCache(NEXT_CACHE_TAGS.patient(patientSupport.patient_id))
+      revalidateServerCache(NEXT_CACHE_TAGS.patient(patientSupport.patientId))
 
       toast.success(response.message)
       onClose()

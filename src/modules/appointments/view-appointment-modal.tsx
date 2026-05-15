@@ -30,7 +30,7 @@ export function ViewAppointmentModal({
   const ConditionIcon = condition.icon
 
   const showUpdatedDate =
-    new Date(appointment.updated_at) > new Date(appointment.created_at)
+    new Date(appointment.updatedAt) > new Date(appointment.createdAt)
 
   return (
     <DialogContainer className='max-w-xl'>
@@ -41,7 +41,7 @@ export function ViewAppointmentModal({
       <DialogContent className='grid gap-6 sm:grid-cols-9'>
         <DialogDetailField label='Paciente' className='sm:col-span-full'>
           <div className='flex items-center gap-3'>
-            <Avatar className='size-12' src={appointment.patient.avatar_url} />
+            <Avatar className='size-12' src={appointment.patient.avatarUrl} />
             <span className='text-lg font-medium'>
               {appointment.patient.name}
             </span>
@@ -66,7 +66,7 @@ export function ViewAppointmentModal({
           label='Profissional responsável'
           className='sm:col-span-5'
         >
-          {appointment.professional_name ?? '-'}
+          {appointment.professionalName ?? '-'}
         </DialogDetailField>
 
         {appointment.annotation && (
@@ -82,12 +82,12 @@ export function ViewAppointmentModal({
         </DialogDetailField>
 
         <DialogDetailField label='Criado em' className='sm:col-span-3'>
-          {formatDate(appointment.created_at)}
+          {formatDate(appointment.createdAt)}
         </DialogDetailField>
 
         {showUpdatedDate && (
           <DialogDetailField label='Atualizado em' className='sm:col-span-3'>
-            {formatDate(appointment.updated_at)}
+            {formatDate(appointment.updatedAt)}
           </DialogDetailField>
         )}
       </DialogContent>

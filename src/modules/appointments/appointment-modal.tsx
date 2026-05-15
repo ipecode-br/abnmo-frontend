@@ -42,11 +42,11 @@ import type { Appointment } from '@/types/appointments'
 const appointmentFormSchema = z
   .object({
     role: userRoleSchema,
-    patient_id: z.string().uuid('Paciente é obrigatório'),
+    patientId: z.string().uuid('Paciente é obrigatório'),
     date: dateSchema,
     category: specialtySchema.optional(),
     condition: patientConditionSchema,
-    professional_name: professionalNameSchema,
+    professionalName: professionalNameSchema,
     annotation: z
       .string()
       .max(500)
@@ -85,22 +85,22 @@ export function AppointmentModal({
     resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
       role: user?.role,
-      patient_id: patientId ?? (appointment?.patient_id || ''),
+      patientId: patientId ?? (appointment?.patientId || ''),
       date: appointment?.date || '',
       condition: appointment?.condition || '',
       category: isUserSpecialist ? undefined : appointment?.category || '',
-      professional_name: appointment?.professional_name || '',
+      professionalName: appointment?.professionalName || '',
       annotation: appointment?.annotation || '',
     } as AppointmentFormSchema,
     mode: 'onBlur',
   })
 
   async function submitForm({
-    patient_id,
+    patientId,
     date,
     category,
     condition,
-    professional_name,
+    professionalName,
     annotation,
   }: AppointmentFormSchema) {
     const payload: Partial<AppointmentFormSchema> = {
@@ -110,9 +110,9 @@ export function AppointmentModal({
     }
 
     if (isCreateMode) {
-      payload.patient_id = patient_id
+      payload.patientId = patientId
       payload.category = isUserSpecialist ? undefined : category
-      payload.professional_name = professional_name
+      payload.professionalName = professionalName
     }
 
     const response = isCreateMode
@@ -137,7 +137,7 @@ export function AppointmentModal({
       QUERY_CACHE_KEYS.statistics.totalAppointments,
     ])
     revalidateServerCache([
-      NEXT_CACHE_TAGS.patient(patient_id),
+      NEXT_CACHE_TAGS.patient(patientId),
       NEXT_CACHE_TAGS.appointments.main,
       NEXT_CACHE_TAGS.statistics.totalAppointments.main,
       NEXT_CACHE_TAGS.statistics.totalPatientsWithAppointments.main,
@@ -162,7 +162,7 @@ export function AppointmentModal({
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
             <ComboboxInput
-              name='patient_id'
+              name='patientId'
               label='Paciente'
               options={patientOptions}
               className='sm:col-span-full'
@@ -197,7 +197,7 @@ export function AppointmentModal({
                   isRequired
                 />
                 <TextInput
-                  name='professional_name'
+                  name='professionalName'
                   label='Profissional responsável'
                   placeholder='Insira o nome'
                   wrapperClassName='sm:col-span-1'

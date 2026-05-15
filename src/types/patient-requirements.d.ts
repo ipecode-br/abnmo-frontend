@@ -8,12 +8,12 @@ export type PatientRequirement = {
   type: PatientRequirementType
   status: PatientRequirementStatus
   description: string | null
-  submitted_at: string | null
-  approved_at: string | null
-  created_at: string
+  submittedAt: string | null
+  approvedAt: string | null
+  createdAt: string
   patient: {
     id: string
     name: string
-    avatar_url: string | null
+    avatarUrl: string | null
   }
 }

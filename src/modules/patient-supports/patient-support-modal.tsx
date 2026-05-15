@@ -48,7 +48,7 @@ export function PatientSupportModal({
   patientSupport,
   onClose,
 }: Readonly<PatientSupportModalProps>) {
-  const ensurePatientId = patientId || patientSupport?.patient_id || ''
+  const ensurePatientId = patientId || patientSupport?.patientId || ''
 
   const formMethods = useForm<PatientSupportFormSchema>({
     resolver: zodResolver(patientSupportFormSchema),

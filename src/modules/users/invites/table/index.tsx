@@ -48,14 +48,14 @@ export function UserInvitesTable({
 
         {!isEmpty &&
           invites.map((invite) => {
-            const isExpired = new Date() > new Date(invite.expires_at)
+            const isExpired = new Date() > new Date(invite.expiresAt)
             return (
               <TableRow key={invite.id}>
                 <TableCell>
                   <span className='truncate'>{invite.email}</span>
                 </TableCell>
                 <TableCell>
-                  {formatDate(invite.created_at, {
+                  {formatDate(invite.createdAt, {
                     dateStyle: 'short',
                     timeStyle: 'short',
                   })}
@@ -66,7 +66,7 @@ export function UserInvitesTable({
                       Expirado
                     </Tag>
                   ) : (
-                    formatDate(invite.expires_at, {
+                    formatDate(invite.expiresAt, {
                       dateStyle: 'short',
                       timeStyle: 'short',
                     })

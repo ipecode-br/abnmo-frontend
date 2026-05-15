@@ -12,12 +12,12 @@ export default async function Page() {
     return null
   }
 
-  const showUpdatedDate = new Date(user.updated_at) > new Date(user.created_at)
+  const showUpdatedDate = new Date(user.updatedAt) > new Date(user.createdAt)
 
   return (
     <>
       <div className='flex items-center gap-4'>
-        <Avatar src={user.avatar_url} className='size-16' />
+        <Avatar src={user.avatarUrl} className='size-16' />
         <div>
           <p className='text-xl font-semibold'>{user.name}</p>
           <span className='text-foreground-soft text-sm'>{user.email}</span>
@@ -36,13 +36,13 @@ export default async function Page() {
 
       <span className='text-foreground-soft text-sm'>
         Conta registrada em{' '}
-        {formatDate(user.created_at, {
+        {formatDate(user.createdAt, {
           dateStyle: 'short',
           timeStyle: 'short',
         })}
         .
         {showUpdatedDate &&
-          ` Última atualização realizada em ${formatDate(user.updated_at, {
+          ` Última atualização realizada em ${formatDate(user.updatedAt, {
             dateStyle: 'short',
             timeStyle: 'short',
           })}.`}

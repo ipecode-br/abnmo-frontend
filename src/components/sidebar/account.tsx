@@ -22,7 +22,7 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
 
   return (
     <div className='relative flex items-center gap-3'>
-      <Avatar src={user?.avatar_url} />
+      <Avatar src={user?.avatarUrl} />
 
       <div
         data-visible={expanded}

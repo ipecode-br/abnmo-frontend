@@ -76,12 +76,12 @@ export function useScreening({ storageKey }: Readonly<UseScreeningProps>) {
       ...patient.data,
       phone: removeNonNumbers(patient.data.phone),
       cpf: removeNonNumbers(patient.data.cpf),
-      has_disability: medicalReport.data.has_disability === 'yes',
-      disability_desc: medicalReport.data.disability_desc ?? null,
-      need_legal_assistance: medicalReport.data.need_legal_assistance === 'yes',
-      take_medication: medicalReport.data.take_medication === 'yes',
-      medication_desc: medicalReport.data.medication_desc ?? null,
-      has_nmo_diagnosis: medicalReport.data.has_nmo_diagnosis === 'yes',
+      hasDisability: medicalReport.data.hasDisability === 'yes',
+      disabilityDesc: medicalReport.data.disabilityDesc ?? null,
+      needLegalAssistance: medicalReport.data.needLegalAssistance === 'yes',
+      takeMedication: medicalReport.data.takeMedication === 'yes',
+      medicationDesc: medicalReport.data.medicationDesc ?? null,
+      hasNmoDiagnosis: medicalReport.data.hasNmoDiagnosis === 'yes',
       supports,
     }
 

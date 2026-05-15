@@ -56,7 +56,7 @@ export function PatientHeaderUserDropdown({
         className='rounded-full pl-1'
         indicator
       >
-        <Avatar src={user.avatar_url} className='size-8 [&_svg]:size-4' />
+        <Avatar src={user.avatarUrl} className='size-8 [&_svg]:size-4' />
         {firstName}
       </DropdownMenuTrigger>
 

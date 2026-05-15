@@ -20,10 +20,10 @@ export default async function Page() {
     type: 'screening',
     status: 'pending',
     description: null,
-    created_at: '2024-10-20',
-    submitted_at: null,
-    approved_at: null,
-    patient: { id: '2', name: 'Paciente Exemplo', avatar_url: null },
+    createdAt: '2024-10-20',
+    submittedAt: null,
+    approvedAt: null,
+    patient: { id: '2', name: 'Paciente Exemplo', avatarUrl: null },
   }
 
   return (

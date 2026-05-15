@@ -12,35 +12,35 @@ export type Patient = {
   id: string
   name: string
   email: string
-  avatar_url: string | null
+  avatarUrl: string | null
   gender: PatientGender
   race: PatientRace
-  date_of_birth: string
+  dateOfBirth: string
   phone: string
   status: PatientStatus
   cpf: string
   state: UF
   city: string
-  has_disability: boolean
-  disability_desc: string | null
-  need_legal_assistance: boolean
-  take_medication: boolean
-  medication_desc: string | null
-  nmo_diagnosis: PatientNmoDiagnostic
-  created_at: string
-  updated_at: string
+  hasDisability: boolean
+  disabilityDesc: string | null
+  needLegalAssistance: boolean
+  takeMedication: boolean
+  medicationDesc: string | null
+  nmoDiagnosis: PatientNmoDiagnostic
+  createdAt: string
+  updatedAt: string
   supports?: PatientSupport[]
 }
 
 export type PatientListItem = Pick<
   Patient,
-  'id' | 'name' | 'email' | 'phone' | 'avatar_url' | 'status' | 'created_at'
+  'id' | 'name' | 'email' | 'phone' | 'avatarUrl' | 'status' | 'createdAt'
 >
 
 export type PatientDocument = {
   id: string
   name: string
   url: string
-  created_at: string
+  createdAt: string
   size: string
 }

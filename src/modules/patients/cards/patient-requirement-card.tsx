@@ -17,7 +17,7 @@ export function PatientRequirementCard({
       <div className='flex flex-col gap-1 p-4'>
         <h3 className='text-foreground text-lg font-medium'>Laudo médico</h3>
         <p className='text-foreground-soft text-sm'>
-          Solicitado em: {formatDate(requirement.created_at)}
+          Solicitado em: {formatDate(requirement.createdAt)}
         </p>
 
         <Button size='sm' className='mt-3 w-full'>

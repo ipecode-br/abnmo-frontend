@@ -55,7 +55,7 @@ export function AppointmentsTableActions({
           <MenuItem
             onClick={() =>
               router.push(
-                ROUTES.dashboard.patients.details.info(appointment.patient_id),
+                ROUTES.dashboard.patients.details.info(appointment.patientId),
               )
             }
           >
@@ -66,7 +66,7 @@ export function AppointmentsTableActions({
             onClick={() =>
               router.push(
                 ROUTES.dashboard.patients.details.history(
-                  appointment.patient_id,
+                  appointment.patientId,
                 ),
               )
             }

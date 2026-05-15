@@ -56,8 +56,8 @@ export function ApprovedPatientRequirementsListTable() {
   > = {
     name_asc: { orderBy: 'patient', order: 'ASC' },
     name_desc: { orderBy: 'patient', order: 'DESC' },
-    date_asc: { orderBy: 'approved_at', order: 'ASC' },
-    date_desc: { orderBy: 'approved_at', order: 'DESC' },
+    date_asc: { orderBy: 'approvedAt', order: 'ASC' },
+    date_desc: { orderBy: 'approvedAt', order: 'DESC' },
     type_asc: { orderBy: 'type', order: 'ASC' },
     type_desc: { orderBy: 'type', order: 'DESC' },
   }
@@ -134,12 +134,12 @@ export function ApprovedPatientRequirementsListTable() {
                   <TableCell className='flex items-center gap-2'>
                     <Avatar
                       className='size-9'
-                      src={requirement.patient.avatar_url}
+                      src={requirement.patient.avatarUrl}
                     />
                     <span className='truncate'>{requirement.patient.name}</span>
                   </TableCell>
                   <TableCell>
-                    {formatDate(requirement.approved_at ?? '-')}
+                    {formatDate(requirement.approvedAt ?? '-')}
                   </TableCell>
                   <TableCell>
                     <Tag>{PATIENT_REQUIREMENT_TYPES[requirement.type]}</Tag>

@@ -50,7 +50,7 @@ export function CancelAppointmentModal({
         QUERY_CACHE_KEYS.statistics.totalAppointmentsByState,
       ])
       revalidateServerCache([
-        NEXT_CACHE_TAGS.patient(appointment.patient_id),
+        NEXT_CACHE_TAGS.patient(appointment.patientId),
         NEXT_CACHE_TAGS.appointments.main,
         NEXT_CACHE_TAGS.statistics.totalAppointments.main,
         NEXT_CACHE_TAGS.statistics.totalPatientsWithAppointments.main,

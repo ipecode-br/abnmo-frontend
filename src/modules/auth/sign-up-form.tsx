@@ -32,13 +32,13 @@ export const signUpFormSchema = z
     role: z.enum(USERS_ROLE_ENUM),
     name: nameSchema,
     specialty: z.union([specialtySchema, z.literal('')]),
-    registration_id: userRegistrationId.optional(),
+    registrationId: userRegistrationId.optional(),
     password: passwordSchema,
-    confirm_password: z.string(),
+    confirmPassword: z.string(),
     consent: z.boolean(),
   })
   .superRefine((data, ctx) => {
-    if (data.password !== data.confirm_password) {
+    if (data.password !== data.confirmPassword) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['confirm_password'],
@@ -60,10 +60,10 @@ export const signUpFormSchema = z
           message: 'Especialidade é obrigatória',
         })
       }
-      if (!data.registration_id) {
+      if (!data.registrationId) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ['registration_id'],
+          path: ['registrationId'],
           message: 'Registro profissional é obrigatório',
         })
       }
@@ -75,9 +75,9 @@ type RegisterUserPayload = {
   role: UserRole
   name: string
   password: string
-  invite_token: string
+  inviteToken: string
   specialty?: Specialty
-  registration_id?: string
+  registrationId?: string
 }
 
 interface SignUpFormProps {
@@ -96,9 +96,9 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
       role,
       name: '',
       specialty: '',
-      registration_id: '',
+      registrationId: '',
       password: '',
-      confirm_password: '',
+      confirmPassword: '',
       consent: false,
     } as unknown as SignUpFormSchema,
   })
@@ -108,19 +108,19 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
     name,
     password,
     specialty,
-    registration_id,
+    registrationId,
   }: SignUpFormSchema) {
     startTransition(async () => {
       const payload: RegisterUserPayload = {
         role,
         name,
         password,
-        invite_token: token,
+        inviteToken: token,
       }
 
-      if (specialty && registration_id) {
+      if (specialty && registrationId) {
         payload.specialty = specialty
-        payload.registration_id = registration_id
+        payload.registrationId = registrationId
       }
 
       const response = await api('/register/user', {
@@ -161,7 +161,7 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
                 isRequired
               />
               <TextInput
-                name='registration_id'
+                name='registrationId'
                 label='Registro profissional'
                 placeholder='Insira seu registro profissional'
                 isRequired
@@ -176,7 +176,7 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
             isRequired
           />
           <PasswordInput
-            name='confirm_password'
+            name='confirmPassword'
             label='Confirmar senha'
             placeholder='Repita sua senha'
             isRequired

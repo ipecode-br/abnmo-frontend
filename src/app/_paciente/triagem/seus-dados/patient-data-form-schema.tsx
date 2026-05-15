@@ -13,7 +13,7 @@ import {
 export const screeningPatientDataFormSchema = z.object({
   name: nameSchema,
   gender: genderSchema,
-  date_of_birth: dateOfBirthSchema,
+  dateOfBirth: dateOfBirthSchema,
   state: stateSchema,
   city: citySchema,
   phone: phoneSchema,
