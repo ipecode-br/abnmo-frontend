@@ -24,7 +24,12 @@ export async function logout() {
     }
   }
 
-  await deleteCookie(COOKIES.accessToken)
+  Promise.all([
+    deleteCookie(COOKIES.accessToken),
+    deleteCookie(COOKIES.cdnKeyPairId),
+    deleteCookie(COOKIES.cdnPolicy),
+    deleteCookie(COOKIES.cdnSignature),
+  ])
 
   revalidateClientCache('all')
 
