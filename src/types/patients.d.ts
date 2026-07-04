@@ -1,35 +1,44 @@
 import type {
   PatientGender,
-  PatientNmoDiagnostic,
   PatientRace,
   PatientStatus,
 } from '@/enums/patients'
 import type { UF } from '@/enums/shared'
 
-import type { PatientSupport } from './patient-support'
+type SupportContact = {
+  name: string
+  kinship: string
+  phone: string
+}
 
 export type Patient = {
   id: string
   name: string
   email: string
+  phone: string
+  cpf: string
+  susId: string
+  status: PatientStatus
   avatarUrl: string | null
+  updatedAt: string
+  createdAt: string
+  supportContacts: SupportContact[]
+  dateOfBirth: string
   gender: PatientGender
   race: PatientRace
-  dateOfBirth: string
-  phone: string
-  status: PatientStatus
-  cpf: string
-  state: UF
-  city: string
-  hasDisability: boolean
-  disabilityDesc: string | null
-  needLegalAssistance: boolean
-  takeMedication: boolean
-  medicationDesc: string | null
-  nmoDiagnosis: PatientNmoDiagnostic
-  createdAt: string
-  updatedAt: string
-  supports?: PatientSupport[]
+  maritalStatus: string
+  addressCep: string
+  addressState: UF
+  addressCity: string
+  addressStreet: string
+  addressNumber: string
+  diagnosis: string
+  nmoMedications: []
+  generalMedications: []
+  hasVisualAlteration: boolean
+  usesVisualCane: boolean
+  usesWheelchair: boolean
+  hasMotorSequelae: boolean
 }
 
 export type PatientListItem = Pick<

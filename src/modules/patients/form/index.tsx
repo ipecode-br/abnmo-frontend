@@ -87,15 +87,7 @@ export function PatientForm({
       gender: patient?.gender || '',
       race: patient?.race || '',
       phone: patient?.phone ? formatPhoneNumber(patient.phone) : '',
-      state: patient?.state || '',
-      city: patient?.city || '',
       email: patient?.email || '',
-      hasDisability: patient?.hasDisability ? 'yes' : 'no',
-      disabilityDesc: patient?.disabilityDesc || '',
-      takeMedication: patient?.takeMedication ? 'yes' : 'no',
-      medicationDesc: patient?.medicationDesc || '',
-      nmoDiagnosis: patient?.nmoDiagnosis || '',
-      needLegalAssistance: patient?.needLegalAssistance ? 'yes' : 'no',
       supports: isCreateForm
         ? [{ name: '', phone: '', kinship: '' }]
         : undefined,

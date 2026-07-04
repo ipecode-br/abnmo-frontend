@@ -14,7 +14,6 @@ import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
 import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
 import { NewPatientSupportButton } from '@/modules/patient-supports/new-patient-support-button'
-import { PatientSupportCardActions } from '@/modules/patient-supports/patient-support-card-actions'
 import { DeactivatePatientButton } from '@/modules/patients/deactivate-button'
 import { PatientForm } from '@/modules/patients/form'
 import { NewReferralButton } from '@/modules/referrals/new-referral-button'
@@ -49,7 +48,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
     redirect(ROUTES.dashboard.patients.main)
   }
 
-  const patientSupports = patient.supports ?? []
+  const patientSupports = patient.supportContacts ?? []
   const isPatientActive = patient.status === 'active'
 
   return (
@@ -81,8 +80,8 @@ export default async function Page({ params }: Readonly<PageParams>) {
         <h2 className='text-xl font-medium'>Rede de apoio</h2>
         {patientSupports.length > 0 ? (
           <div className='flex flex-wrap gap-4 max-sm:flex-col'>
-            {patientSupports.map((support) => (
-              <Card key={support.id} className='relative p-6 pr-16'>
+            {patientSupports.map((support, index) => (
+              <Card key={index} className='p-6'>
                 <h3 className='text-lg font-medium'>{support.name}</h3>
                 <div className='mt-1 flex gap-3'>
                   <span className='text-foreground-soft'>
@@ -91,9 +90,6 @@ export default async function Page({ params }: Readonly<PageParams>) {
                   <Divider flexItem orientation='vertical' />
                   <span>{formatPhoneNumber(support.phone)}</span>
                 </div>
-                {isPatientActive && (
-                  <PatientSupportCardActions patientSupport={support} />
-                )}
               </Card>
             ))}
           </div>

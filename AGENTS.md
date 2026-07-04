@@ -14,7 +14,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **State**: Zustand (global) + TanStack Query (server state)
 - **UI**: Radix UI primitives + `class-variance-authority` variants, `lucide-react` icons
 - **Forms**: React Hook Form + Zod
-- **Test**: Jest + Testing Library
+- **Test**: Jest + Testing Library (currently broken — env vars missing in `.env.local`, skip `npm test` for now)
 - **Lint**: ESLint 9 flat config (`eslint-config-next/core-web-vitals` + `typescript-eslint` + `simple-import-sort` + Prettier)
 
 ## Setup
@@ -61,7 +61,7 @@ src/
   schemas/          Zod schemas
   types/            Global TS types
   utils/            Pure utilities (cn, formatters, sanitizers)
-  proxy.ts          Dead code — not wired as middleware
+  proxy.ts          Next.js 16 proxy — checks session cookie for route protection
 tests/
   components/       Test files mirror src/components structure
   utils/            (empty)

@@ -52,6 +52,12 @@ export const PATIENT_STATUSES = {
     icon: CircleXIcon,
     color: '[&_svg]:text-error',
   },
+  pending: {
+    variant: 'default',
+    label: 'Pendente',
+    icon: AlertTriangleIcon,
+    color: '[&_svg]:text-warning',
+  },
 } as const
 export type PatientStatus = keyof typeof PATIENT_STATUSES
 
