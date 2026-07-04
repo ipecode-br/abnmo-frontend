@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { DashboardPatientsByCityCard } from '@/modules/dashboard/patients-by-city-card'
 import { DashboardPatientsByGenderCard } from '@/modules/dashboard/patients-by-gender-card'
+import { DashboardPatientsByStateCard } from '@/modules/dashboard/patients-by-state-card'
 import { DashboardSummaryCards } from '@/modules/dashboard/summary-cards'
 import { DashboardUpcomingAppointmentsCard } from '@/modules/dashboard/upcoming-appointments-card'
 
@@ -23,7 +23,7 @@ export default function Page() {
       </Suspense>
 
       <DashboardPatientsByGenderCard />
-      <DashboardPatientsByCityCard />
+      <DashboardPatientsByStateCard />
 
       <DashboardUpcomingAppointmentsCard />
     </div>

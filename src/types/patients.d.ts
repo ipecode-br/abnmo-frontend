@@ -3,7 +3,7 @@ import type {
   PatientRace,
   PatientStatus,
 } from '@/enums/patients'
-import type { UF } from '@/enums/shared'
+import type { BrazilState } from '@/enums/shared'
 
 type SupportContact = {
   name: string
@@ -28,7 +28,7 @@ export type Patient = {
   race: PatientRace
   maritalStatus: string
   addressCep: string
-  addressState: UF
+  addressState: BrazilState
   addressCity: string
   addressStreet: string
   addressNumber: string

@@ -11,38 +11,39 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { CHART_PIE_COLORS } from '@/constants/charts'
 import { type QueryPeriod } from '@/enums/queries'
+import { BRAZIL_STATES, BrazilState } from '@/enums/shared'
 import { api } from '@/lib/api'
 
-export function DashboardPatientsByCityCard() {
+export function DashboardPatientsByStateCard() {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const limit = 6
   const withPercentage = true
-  const queries = [period, limit, withPercentage]
+  const params = [period, limit, withPercentage]
 
   const { data: response, isLoading } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByCity, queries],
+    queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByCity, params],
     queryFn: () =>
       api<{
-        cities: { city: string; percentage: number }[]
+        states: { state: BrazilState; percentage: number }[]
         total: number
-      }>('/statistics/patients/by-city', {
+      }>('/statistics/patients/by-state', {
         params: { period, limit, withPercentage },
       }),
   })
 
-  const cities = response?.data?.cities ?? []
-  const isEmpty = cities.length === 0 && !isLoading
+  const states = response?.data?.states ?? []
+  const isEmpty = states.length === 0 && !isLoading
 
-  const data = cities.map((item, index) => ({
-    label: item.city,
+  const data = states.map((item, index) => ({
+    label: BRAZIL_STATES[item.state],
     value: Number(item.percentage),
     color: CHART_PIE_COLORS[index],
   }))
 
   return (
     <DashboardCardChart
-      title='Cidades'
+      title='Estados'
       icon={ChartPieIcon}
       className='sm:col-span-3'
       menu={
@@ -60,7 +61,7 @@ export function DashboardPatientsByCityCard() {
           <div className='flex size-full items-center gap-6 max-lg:flex-col xl:gap-10'>
             <PieChart
               data={data}
-              label='cidades'
+              label='estados'
               total={response?.data?.total}
               className='size-32 xl:size-40'
             />

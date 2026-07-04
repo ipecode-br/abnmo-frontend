@@ -10,18 +10,16 @@ export async function PatientsWithAppointmentsPercentageCard() {
     getTotalPatientsWithAppointments(),
   ])
 
-  const totalPatientsValue = totalPatients?.total || 0
-  const totalPatientsWithAppointmentsValue =
-    totalPatientsWithAppointments?.total || 0
-
-  const totalPatientsWithAppointmentsPercentage =
-    (totalPatientsWithAppointmentsValue / totalPatientsValue) * 100 || 0
+  const patientsValue = totalPatients?.total || 0
+  const appointmentsValue = totalPatientsWithAppointments?.total || 0
+  const percentageCalc = (appointmentsValue / patientsValue) * 100 || 0
+  const percentage = Math.max(0, Math.min(100, percentageCalc))
 
   return (
     <SummaryCard
       icon={UserCheck2Icon}
       label='Pacientes atendidos'
-      value={`${totalPatientsWithAppointmentsPercentage.toFixed(1)}%`}
+      value={`${percentage.toFixed(1)}%`}
       className='sm:col-span-1'
     />
   )

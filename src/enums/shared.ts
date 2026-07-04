@@ -17,7 +17,7 @@ export type Specialty = keyof typeof SPECIALTIES
 export const SPECIALTIES_OPTIONS = convertObjectToOptions(SPECIALTIES)
 export const SPECIALTIES_ENUM = Object.keys(SPECIALTIES) as [Specialty]
 
-export const UF_LIST = {
+export const BRAZIL_STATES = {
   AC: 'Acre',
   AP: 'Amapá',
   AL: 'Alagoas',
@@ -45,10 +45,10 @@ export const UF_LIST = {
   SP: 'São Paulo',
   SE: 'Sergipe',
   TO: 'Tocantins',
-}
-export type UF = keyof typeof UF_LIST
-export const BRAZILIAN_STATES_OPTIONS = convertObjectToOptions(UF_LIST)
-export const BRAZILIAN_STATES_ENUM = Object.keys(UF_LIST) as [UF]
+} as const
+export type BrazilState = keyof typeof BRAZIL_STATES
+export const BRAZIL_STATES_OPTIONS = convertObjectToOptions(BRAZIL_STATES)
+export const BRAZIL_STATES_ENUM = Object.keys(BRAZIL_STATES) as [BrazilState]
 
 export const YES_OR_NO = {
   yes: 'Sim',

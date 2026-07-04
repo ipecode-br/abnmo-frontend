@@ -8,7 +8,7 @@ import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { CHART_PIE_COLORS } from '@/constants/charts'
-import { type UF, UF_LIST } from '@/enums/shared'
+import { BRAZIL_STATES, type BrazilState } from '@/enums/shared'
 import { api } from '@/lib/api'
 import { usePeriodStore } from '@/store/period'
 
@@ -23,7 +23,7 @@ export function TotalAppointmentsByStateCard() {
     queryKey: [QUERY_CACHE_KEYS.statistics.totalAppointmentsByState, queries],
     queryFn: () =>
       api<{
-        states: Array<{ state: UF; total: number; percentage: number }>
+        states: Array<{ state: BrazilState; total: number; percentage: number }>
         total: number
       }>('/statistics/patients/with-appointments/by-state', {
         params: { period, limit, withPercentage },
@@ -34,7 +34,7 @@ export function TotalAppointmentsByStateCard() {
   const isEmpty = states.length === 0 && !isLoading
 
   const data = states.map((item, index) => ({
-    label: UF_LIST[item.state],
+    label: BRAZIL_STATES[item.state],
     value: Number(item.percentage),
     color: CHART_PIE_COLORS[index],
   }))

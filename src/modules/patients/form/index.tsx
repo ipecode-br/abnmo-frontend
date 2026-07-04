@@ -32,8 +32,8 @@ import {
   PATIENT_RACE_OPTIONS,
 } from '@/enums/patients'
 import {
-  BRAZILIAN_STATES_OPTIONS,
-  type UF,
+  BRAZIL_STATES_OPTIONS,
+  type BrazilState,
   YES_OR_NO_OPTIONS,
 } from '@/enums/shared'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
@@ -113,7 +113,7 @@ export function PatientForm({
   }
   const submitButton = submitButtons[action]
 
-  function handleSelectState(value: UF) {
+  function handleSelectState(value: BrazilState) {
     formMethods.setValue('state', value)
     formMethods.setValue('city', '')
     formMethods.clearErrors('state')
@@ -222,7 +222,7 @@ export function PatientForm({
           <ComboboxInput
             name='state'
             label='Estado'
-            options={BRAZILIAN_STATES_OPTIONS}
+            options={BRAZIL_STATES_OPTIONS}
             onValueChange={handleSelectState}
             placeholder='Selecione o estado'
             className='lg:col-span-2'

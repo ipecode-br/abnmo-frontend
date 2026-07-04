@@ -15,7 +15,7 @@ import {
   PATIENT_RACES_ENUM,
 } from '@/enums/patients'
 import {
-  BRAZILIAN_STATES_ENUM,
+  BRAZIL_STATES_ENUM,
   SPECIALTIES_ENUM,
   YES_OR_NO_TUPLE,
 } from '@/enums/shared'
@@ -71,7 +71,7 @@ export const dateOfBirthSchema = z
     { message: 'Insira uma data válida' },
   )
 
-export const stateSchema = z.enum(BRAZILIAN_STATES_ENUM, {
+export const stateSchema = z.enum(BRAZIL_STATES_ENUM, {
   message: 'Selecione o estado',
 })
 

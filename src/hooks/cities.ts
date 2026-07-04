@@ -4,9 +4,9 @@ import { useMemo } from 'react'
 
 import type { SelectOption } from '@/components/ui/select'
 import { CITIES_BY_UF } from '@/constants/cities'
-import type { UF } from '@/enums/shared'
+import type { BrazilState } from '@/enums/shared'
 
-export function useCities(uf: UF) {
+export function useCities(uf: BrazilState) {
   const cities = useMemo<SelectOption[]>(() => {
     if (!uf || !(uf in CITIES_BY_UF)) {
       return []

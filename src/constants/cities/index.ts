@@ -1,3 +1,5 @@
+import { BrazilState } from '@/enums/shared'
+
 import AC from './json/AC.json'
 import AL from './json/AL.json'
 import AM from './json/AM.json'
@@ -26,7 +28,7 @@ import SE from './json/SE.json'
 import SP from './json/SP.json'
 import TO from './json/TO.json'
 
-export const CITIES_BY_UF = {
+export const CITIES_BY_UF: Record<BrazilState, string[]> = {
   AC,
   AL,
   AM,
@@ -55,4 +57,3 @@ export const CITIES_BY_UF = {
   SP,
   TO,
 }
-export type UFCode = keyof typeof CITIES_BY_UF

@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
 import { PATIENT_GENDER_OPTIONS } from '@/enums/patients'
-import { BRAZILIAN_STATES_OPTIONS, type UF } from '@/enums/shared'
+import { BRAZIL_STATES_OPTIONS, type BrazilState } from '@/enums/shared'
 import { useCities } from '@/hooks/cities'
 
 import { useScreening } from '../hooks'
@@ -42,10 +42,10 @@ export function ScreeningPatientDataForm() {
   })
   const { clearErrors, setValue, watch, reset } = formMethods
   // eslint-disable-next-line react-hooks/incompatible-library
-  const UF = watch('state') as UF
+  const UF = watch('state') as BrazilState
   const cities = useCities(UF)
 
-  function handleSelectState(value: UF) {
+  function handleSelectState(value: BrazilState) {
     setValue('state', value)
     setValue('city', '')
     clearErrors('state')
@@ -97,7 +97,7 @@ export function ScreeningPatientDataForm() {
         <ComboboxInput
           name='state'
           label='Estado'
-          options={BRAZILIAN_STATES_OPTIONS}
+          options={BRAZIL_STATES_OPTIONS}
           placeholder='Selecione seu estado'
           onValueChange={handleSelectState}
           isRequired
