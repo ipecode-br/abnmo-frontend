@@ -31,7 +31,8 @@ export function ChangeUserStatusModal({
 }: Readonly<ChangeUserStatusModalModalProps>) {
   const [isPending, startTransition] = useTransition()
 
-  const actionToPerfom = user.status === 'active' ? 'deactivate' : 'activate'
+  const showDeactivate = user.status === 'pending' || user.status === 'active'
+  const actionToPerfom = showDeactivate ? 'deactivate' : 'activate'
 
   const actionsContent = {
     deactivate: {

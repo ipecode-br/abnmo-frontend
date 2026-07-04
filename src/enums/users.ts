@@ -12,6 +12,7 @@ export const USERS_ROLE_ENUM = Object.keys(USER_ROLES) as [UserRole]
 export const USER_STATUSES = {
   active: { variant: 'success', label: 'Ativo' },
   inactive: { variant: 'error', label: 'Inativo' },
+  pending: { variant: 'default', label: 'Pendente' },
 } as const
 export type UserStatus = keyof typeof USER_STATUSES
 

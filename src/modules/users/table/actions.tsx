@@ -43,7 +43,8 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
     },
   } as const
 
-  const statusButton = changingStatusData[user.status]
+  const statusButton =
+    changingStatusData[user.status === 'pending' ? 'active' : user.status]
 
   if (!canUpdateUser && !canDeleteUser) {
     return null
