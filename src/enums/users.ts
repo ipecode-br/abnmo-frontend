@@ -2,9 +2,8 @@ import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 export const USER_ROLES = {
   admin: 'Administração',
-  nurse: 'Enfermagem',
+  member: 'Membro',
   specialist: 'Especialista',
-  manager: 'Gestão',
 }
 export type UserRole = keyof typeof USER_ROLES
 export const USERS_ROLE_OPTIONS = convertObjectToOptions(USER_ROLES)

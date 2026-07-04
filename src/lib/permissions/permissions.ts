@@ -10,7 +10,7 @@ type RolePermissions = Record<Role, Permission[]>
 export const permissions: RolePermissions = {
   admin: [{ action: 'manage', subject: 'all' }],
 
-  manager: [
+  member: [
     {
       action: ['view', 'create', 'update', 'delete'],
       subject: ['Patients'],
@@ -34,29 +34,6 @@ export const permissions: RolePermissions = {
     {
       action: ['manage'],
       subject: ['Invites'],
-    },
-    {
-      action: 'view',
-      subject: ['Dashboard', 'Statistics'],
-    },
-  ],
-
-  nurse: [
-    {
-      action: ['view', 'create', 'update'],
-      subject: ['Patients'],
-    },
-    {
-      action: ['view', 'create', 'update', 'delete'],
-      subject: ['Appointments'],
-    },
-    {
-      action: ['view', 'create', 'update', 'delete'],
-      subject: ['Referrals'],
-    },
-    {
-      action: ['view', 'create', 'update', 'delete'],
-      subject: ['PatientSupports'],
     },
     {
       action: 'view',

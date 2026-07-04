@@ -1,6 +1,5 @@
 export const COOKIES = {
-  accessToken: 'access_token',
-  refreshToken: 'refresh_token',
+  session: 'session',
   cdnKeyPairId: 'CloudFront-Key-Pair-Id',
   cdnPolicy: 'CloudFront-Policy',
   cdnSignature: 'CloudFront-Signature',

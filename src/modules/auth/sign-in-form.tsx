@@ -38,10 +38,10 @@ export function SignInForm() {
 
   async function submitForm(data: SignInFormSchema) {
     startTransition(async () => {
-      const response = await api<{ accountType: 'user' | 'patient' }>(
-        '/login',
-        { method: 'POST', body: JSON.stringify(data) },
-      )
+      const response = await api<{ role: string }>('/login', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
 
       if (!response.success) {
         formMethods.setError('root', { message: response.message })
@@ -49,9 +49,9 @@ export function SignInForm() {
       }
 
       router.push(
-        response.data?.accountType === 'user'
-          ? ROUTES.dashboard.main
-          : ROUTES.patient.main,
+        response.data?.role === 'patient'
+          ? ROUTES.patient.main
+          : ROUTES.dashboard.main,
       )
     })
   }

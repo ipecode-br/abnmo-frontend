@@ -1,4 +1,5 @@
 export const NEXT_CACHE_TAGS = {
+  currentUser: 'current-user',
   user: (id: string) => `user/${id}`,
   patient: (id: string) => `patient/${id}`,
   appointments: {

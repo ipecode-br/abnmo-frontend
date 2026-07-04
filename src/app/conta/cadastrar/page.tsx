@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: Readonly<PageProps>) {
   const tokenValue = await extractTokenData<{
     email: string
     role: UserRole
-  }>({ token })
+  }>(token)
 
   const CARD_CONTENT = {
     valid: {

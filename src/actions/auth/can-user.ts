@@ -3,7 +3,7 @@
 import { definePermissionsFor } from '@/lib/permissions'
 import type { Action, Subject } from '@/lib/permissions/schemas'
 
-import { getUserFromToken } from '../users/get-user-from-token'
+import { getCurrentUser } from '../users/get-current-user'
 
 /**
  * Action to check user permissions on the server side
@@ -12,7 +12,7 @@ import { getUserFromToken } from '../users/get-user-from-token'
  * const canUpdatePatients = await canUser('update', 'Patients'
  */
 export async function canUser(action: Action, subject: Subject) {
-  const user = await getUserFromToken()
+  const user = await getCurrentUser()
 
   if (!user || !user.role) {
     return false

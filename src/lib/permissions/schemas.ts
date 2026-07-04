@@ -2,8 +2,7 @@ import { z } from 'zod'
 
 export const roleSchema = z.union([
   z.literal('admin'),
-  z.literal('manager'),
-  z.literal('nurse'),
+  z.literal('member'),
   z.literal('specialist'),
   z.literal('patient'),
 ])

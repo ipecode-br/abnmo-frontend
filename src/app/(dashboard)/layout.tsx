@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import { canUser } from '@/actions/auth/can-user'
-import { getUserFromToken } from '@/actions/users/get-user-from-token'
+import { getCurrentUser } from '@/actions/users/get-current-user'
 import { BottomBar } from '@/components/bottom-bar'
 import { DashboardHeader } from '@/components/dashboard/header'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
@@ -13,7 +13,7 @@ export default async function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const [user, canAccess] = await Promise.all([
-    getUserFromToken(),
+    getCurrentUser(),
     canUser('view', 'Dashboard'),
   ])
 
