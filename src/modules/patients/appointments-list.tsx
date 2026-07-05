@@ -44,7 +44,7 @@ export function PatientAppointmentsList({
   patientId,
 }: Readonly<PatientAppointmentsListProps>) {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
   const [page, category, status, orderBy, startDate, endDate] = getParams([
@@ -78,7 +78,7 @@ export function PatientAppointmentsList({
 
   const { data: response, isLoading } = useQuery({
     placeholderData: (previousData) => previousData,
-    queryKey: [QUERY_CACHE_KEYS.appointments.main, patientId, paramsQueryKey],
+    queryKey: [QUERY_CACHE_KEYS.appointments.main, patientId, currentParams],
     queryFn: () =>
       api<{ appointments: Appointment[]; total: number }>(`/appointments`, {
         params: {

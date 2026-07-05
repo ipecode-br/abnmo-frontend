@@ -41,7 +41,7 @@ export function PatientReferralsList({
   patientId,
 }: Readonly<PatientReferralsListProps>) {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams: paramsQueryKey } = useParams()
   const { canUser } = usePermissions()
 
   const [page, category, status, orderBy, startDate, endDate] = getParams([

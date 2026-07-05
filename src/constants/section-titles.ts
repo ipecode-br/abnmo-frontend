@@ -4,6 +4,7 @@ export const SECTION_TITLES = {
   atendimentos: 'Atendimentos',
   encaminhamentos: 'Encaminhamentos',
   aprovacoes: 'Aprovações',
+  catalogacao: 'Catalogação',
   equipe: 'Equipe',
   configuracoes: 'Configurações',
   perfil: 'Meu perfil',

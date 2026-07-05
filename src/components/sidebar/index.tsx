@@ -1,5 +1,6 @@
 import {
   ClipboardCheckIcon,
+  ClipboardListIcon,
   ClipboardPasteIcon,
   HeartHandshakeIcon,
   LayoutDashboardIcon,
@@ -17,9 +18,10 @@ import { SidebarHeader } from './header'
 import { SidebarMenuSection } from './menu-section'
 
 export async function DashboardSidebar() {
-  const [user, canViewUsers] = await Promise.all([
+  const [user, canViewUsers, canViewSurveys] = await Promise.all([
     getCurrentUser(),
     canUser('view', 'Users'),
+    canUser('view', 'Surveys'),
   ])
 
   const SECTIONS = [
@@ -31,6 +33,12 @@ export async function DashboardSidebar() {
           icon: <LayoutDashboardIcon />,
           path: ROUTES.dashboard.main,
           show: true,
+        },
+        {
+          label: 'Catalogação',
+          icon: <ClipboardListIcon />,
+          path: ROUTES.dashboard.surveys.main,
+          show: canViewSurveys,
         },
         {
           label: 'Pacientes',

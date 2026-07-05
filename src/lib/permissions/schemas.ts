@@ -28,5 +28,6 @@ export const subjectSchema = z.union([
   z.literal('Statistics'),
   z.literal('Users'),
   z.literal('Invites'),
+  z.literal('Surveys'),
 ])
 export type Subject = z.infer<typeof subjectSchema>

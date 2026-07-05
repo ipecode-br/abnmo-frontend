@@ -52,6 +52,9 @@ export const ROUTES = {
       details: (id: string) => `/equipe/membro/${id}`,
       invites: '/equipe/convites',
     },
+    surveys: {
+      main: '/catalogacao',
+    },
     settings: {
       main: '/configuracoes',
       fontSize: '/configuracoes/fontes',

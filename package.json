@@ -11,8 +11,9 @@
     "start": "next start",
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
-    "lint:eslint:check": "eslint . && tsc --noEmit",
+    "lint:eslint:check": "eslint .",
     "lint:tsc": "tsc --noEmit",
+    "validate": "eslint . && tsc --noEmit",
     "prepare": "husky"
   },
   "dependencies": {

@@ -37,7 +37,7 @@ import { ReferralsTable } from './table'
 
 export function ReferralsList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams: paramsQueryKey } = useParams()
   const { canUser } = usePermissions()
 
   const [page, search, category, status, orderBy, startDate, endDate] =

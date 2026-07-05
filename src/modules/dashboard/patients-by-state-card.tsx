@@ -22,7 +22,7 @@ export function DashboardPatientsByStateCard() {
   const params = [period, limit, withPercentage]
 
   const { data: response, isLoading } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByCity, params],
+    queryKey: [QUERY_CACHE_KEYS.dashboard.patientsByState, params],
     queryFn: () =>
       api<{
         states: { state: BrazilState; percentage: number }[]

@@ -12,6 +12,10 @@ export const permissions: RolePermissions = {
 
   member: [
     {
+      action: 'manage',
+      subject: ['Surveys'],
+    },
+    {
       action: ['view', 'create', 'update', 'delete'],
       subject: ['Patients'],
     },

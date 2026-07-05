@@ -37,7 +37,7 @@ import { AppointmentsTable } from './table'
 
 export function AppointmentsList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams: paramsQueryKey } = useParams()
   const { canUser } = usePermissions()
 
   const [page, search, category, status, orderBy, startDate, endDate] =

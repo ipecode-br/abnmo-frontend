@@ -36,7 +36,7 @@ import { UsersTable } from './table'
 
 export function UsersList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams: paramsQueryKey } = useParams()
   const { canUser } = usePermissions()
 
   const [page, search, role, status, orderBy, startDate, endDate] = getParams([

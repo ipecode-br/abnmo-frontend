@@ -1,5 +1,4 @@
 export const NEXT_CACHE_TAGS = {
-  currentUser: 'current-user',
   user: (id: string) => `user/${id}`,
   patient: (id: string) => `patient/${id}`,
   appointments: {
@@ -43,9 +42,13 @@ export const NEXT_CACHE_TAGS = {
 }
 
 export const QUERY_CACHE_KEYS = {
+  surveys: {
+    submissions: 'surveys-submissions',
+    total: 'surveys-submissions-total',
+  },
   dashboard: {
     patientsByGender: 'dashboard-patients-by-gender',
-    patientsByCity: 'dashboard-patients-by-city',
+    patientsByState: 'dashboard-patients-by-state',
   },
   users: {
     main: 'users',

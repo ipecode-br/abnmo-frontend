@@ -17,6 +17,13 @@ import { ROUTES } from '../routes'
 import type { Breadcrumbs } from '.'
 
 export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
+  catalogacao: {
+    catalogacao: {
+      icon: ClipboardListIcon,
+      name: 'Catalogação',
+      path: ROUTES.dashboard.surveys.main,
+    },
+  },
   pacientes: {
     pacientes: {
       icon: Users2Icon,

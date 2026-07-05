@@ -25,7 +25,7 @@ import { NewInviteButton } from './new-invite-button'
 import { UserInvitesTable } from './table'
 
 export function UserInvitesList() {
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
   const [page, search, orderBy, startDate, endDate] = getParams([
@@ -48,7 +48,7 @@ export function UserInvitesList() {
 
   const { data: response, isLoading } = useQuery({
     placeholderData: (previousData) => previousData,
-    queryKey: [QUERY_CACHE_KEYS.users.invites, paramsQueryKey],
+    queryKey: [QUERY_CACHE_KEYS.users.invites, currentParams],
     queryFn: () =>
       api<{ invites: UserInvite[]; total: number }>('/users/invites', {
         params: { page, search, startDate, endDate, ...orderByQuery },
