@@ -4,8 +4,14 @@ import { useQuery } from '@tanstack/react-query'
 import { ClipboardListIcon } from 'lucide-react'
 import React from 'react'
 
+import { FilterSelect } from '@/components/filters/filter-select'
+import { SearchInput } from '@/components/filters/search-input'
 import { Pagination } from '@/components/pagination'
-import { SectionHeader, SectionHeaderTitle } from '@/components/section-header'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
 import { Card } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -13,7 +19,7 @@ import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
-import { SURVEY_STATUSES } from '@/enums/surveys'
+import { SURVEY_STATUS_OPTIONS, SURVEY_STATUSES } from '@/enums/surveys'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
 import type { Survey } from '@/types/surveys'
@@ -23,14 +29,18 @@ import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 export function SurveysList() {
   const { getParams, currentParams } = useParams()
 
-  const [page] = getParams([QUERY_PARAM_KEYS.page])
+  const [page, search, status] = getParams([
+    QUERY_PARAM_KEYS.page,
+    QUERY_PARAM_KEYS.search,
+    QUERY_PARAM_KEYS.status,
+  ])
   const perPage = 20
 
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.surveys.main, perPage, currentParams],
     queryFn: () =>
       api<{ surveys: Survey[]; total: number }>('/surveys', {
-        params: { page, perPage },
+        params: { search, status, page, perPage },
       }),
   })
 
@@ -47,6 +57,18 @@ export function SurveysList() {
           icon={<ClipboardListIcon />}
           total={total}
         />
+
+        <SectionHeaderActions>
+          <SearchInput placeholder='Pesquisar' className='w-full sm:w-48' />
+          <FilterSelect
+            align='end'
+            placeholder='Status'
+            resetLabel='Limpar status'
+            className='w-full sm:w-40'
+            param={QUERY_PARAM_KEYS.status}
+            options={SURVEY_STATUS_OPTIONS}
+          />
+        </SectionHeaderActions>
       </SectionHeader>
 
       <Card className='flex flex-col gap-4 p-6 md:gap-3'>

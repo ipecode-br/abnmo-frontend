@@ -36,7 +36,7 @@ import { UsersTable } from './table'
 
 export function UsersList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, currentParams: paramsQueryKey } = useParams()
+  const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
   const [page, search, role, status, orderBy, startDate, endDate] = getParams([
@@ -65,7 +65,7 @@ export function UsersList() {
 
   const { data: response, isLoading } = useQuery({
     placeholderData: (previousData) => previousData,
-    queryKey: [QUERY_CACHE_KEYS.users.main, paramsQueryKey],
+    queryKey: [QUERY_CACHE_KEYS.users.main, currentParams],
     queryFn: () =>
       api<{ users: User[]; total: number }>('/users', {
         params: {

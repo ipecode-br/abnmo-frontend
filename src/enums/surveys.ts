@@ -12,3 +12,7 @@ export const SURVEY_STATUSES = {
   completed: { variant: 'success', label: 'Concluído' },
 } as const
 export type SurveyStatus = keyof typeof SURVEY_STATUSES
+
+export const SURVEY_STATUS_OPTIONS = Object.entries(SURVEY_STATUSES).map(
+  ([key, status]) => ({ label: status.label, value: key }),
+)
