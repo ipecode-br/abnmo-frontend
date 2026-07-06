@@ -22,6 +22,10 @@ export const ROUTES = {
   dashboard: {
     main: '/',
     menu: '/menu',
+    surveys: {
+      main: '/catalogacao',
+      all: '/catalogacao/todas',
+    },
     patients: {
       main: '/pacientes',
       new: '/pacientes/cadastrar',
@@ -52,9 +56,7 @@ export const ROUTES = {
       details: (id: string) => `/equipe/membro/${id}`,
       invites: '/equipe/convites',
     },
-    surveys: {
-      main: '/catalogacao',
-    },
+
     settings: {
       main: '/configuracoes',
       fontSize: '/configuracoes/fontes',

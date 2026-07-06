@@ -5,7 +5,17 @@ type TabButton = {
   path: string | ((param: string) => string)
 }
 
-export const SECTION_TAB_BUTTONS: Record<string, Array<TabButton>> = {
+export const SECTION_TABS: Record<string, Array<TabButton>> = {
+  catalogacao: [
+    {
+      title: 'Visão geral',
+      path: ROUTES.dashboard.surveys.main,
+    },
+    {
+      title: 'Todas',
+      path: ROUTES.dashboard.surveys.all,
+    },
+  ],
   pacientes: [
     {
       title: 'Informações',
@@ -74,4 +84,4 @@ export const SECTION_TAB_BUTTONS: Record<string, Array<TabButton>> = {
     },
   ],
 }
-export type SectionTabButton = keyof typeof SECTION_TAB_BUTTONS
+export type SectionTab = keyof typeof SECTION_TABS

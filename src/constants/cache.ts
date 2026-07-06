@@ -43,6 +43,7 @@ export const NEXT_CACHE_TAGS = {
 
 export const QUERY_CACHE_KEYS = {
   surveys: {
+    main: 'surveys',
     submissions: 'surveys-submissions',
     total: 'surveys-submissions-total',
   },

@@ -53,7 +53,7 @@ export function PendingSurveysList() {
   }
 
   const submissions = response?.data?.submissions ?? []
-  const totalPending = response?.data?.total ?? 0
+  const total = response?.data?.total ?? 0
 
   const isEmpty = !isLoading && submissions.length <= 0
 
@@ -61,9 +61,9 @@ export function PendingSurveysList() {
     <>
       <SectionHeader>
         <SectionHeaderTitle
-          title='pendentes'
+          title='Pendentes'
           icon={<ClipboardListIcon />}
-          total={totalPending}
+          total={total}
         />
       </SectionHeader>
 
@@ -101,21 +101,19 @@ export function PendingSurveysList() {
               <Divider className='my-1' />
 
               <div className='flex flex-wrap items-start justify-between gap-x-12 gap-y-6'>
-                <div className='flex flex-col gap-1'>
-                  {submission.document && (
-                    <div className='flex items-center gap-2'>
-                      <FileTextIcon className='text-foreground/50 size-5 transition-colors' />
-                      <a
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        href={submission.document.url}
-                        className='peer hover:text-primary font-medium underline underline-offset-3'
-                      >
-                        {submission.document.name}
-                      </a>
-                    </div>
-                  )}
-                </div>
+                {submission.document && (
+                  <div className='flex items-center gap-2'>
+                    <FileTextIcon className='text-foreground/50 size-5 transition-colors' />
+                    <a
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      href={submission.document.url}
+                      className='hover:text-primary font-medium underline underline-offset-3'
+                    >
+                      {submission.document.name}
+                    </a>
+                  </div>
+                )}
 
                 <div className='flex items-center gap-4 max-md:flex-1'>
                   <Button
@@ -149,7 +147,7 @@ export function PendingSurveysList() {
           ))}
       </div>
 
-      <Pagination totalItems={totalPending} />
+      <Pagination totalItems={total} />
 
       {modalMode === 'approve' && selectedSubmission && (
         <Dialog
