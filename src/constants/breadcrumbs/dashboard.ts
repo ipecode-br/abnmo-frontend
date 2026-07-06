@@ -4,6 +4,7 @@ import {
   ClipboardListIcon,
   ClipboardPasteIcon,
   ClockArrowUpIcon,
+  FileUserIcon,
   HistoryIcon,
   LayoutListIcon,
   MailPlusIcon,
@@ -28,6 +29,11 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       icon: LayoutListIcon,
       name: 'Todas',
       path: ROUTES.dashboard.surveys.all,
+    },
+    detalhes: {
+      icon: FileUserIcon,
+      name: 'Detalhes da catalogação',
+      path: ROUTES.dashboard.surveys.main,
     },
   },
   pacientes: {

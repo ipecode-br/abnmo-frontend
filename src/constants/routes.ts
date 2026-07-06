@@ -25,6 +25,7 @@ export const ROUTES = {
     surveys: {
       main: '/catalogacao',
       all: '/catalogacao/todas',
+      details: (id: string) => `/catalogacao/detalhes/${id}`,
     },
     patients: {
       main: '/pacientes',

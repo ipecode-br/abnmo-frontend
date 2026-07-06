@@ -11,6 +11,7 @@ import { Divider } from '@/components/ui/divider'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
+import { ROUTES } from '@/constants/routes'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { SURVEY_STATUSES } from '@/enums/surveys'
 import { useParams } from '@/hooks/params'
@@ -64,9 +65,12 @@ export function SurveysList() {
               <React.Fragment key={survey.id}>
                 {index !== 0 && <Divider />}
                 <div className='text-foreground-soft flex gap-x-4 gap-y-2 max-md:flex-col md:items-center'>
-                  <h3 className='text-foreground truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'>
+                  <a
+                    href={ROUTES.dashboard.surveys.details(survey.id)}
+                    className='text-foreground hover:text-primary truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'
+                  >
                     {survey.name}
-                  </h3>
+                  </a>
 
                   <div className='flex flex-1 flex-wrap gap-1'>
                     <span className='w-36'>
