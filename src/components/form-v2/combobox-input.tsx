@@ -31,9 +31,7 @@ export function ComboboxInput({
               {...props}
             />
             {description && <FormMessage>{description}</FormMessage>}
-            {errorMessage && (
-              <FormMessage variant='error'>{errorMessage}</FormMessage>
-            )}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
           </>
         )
       }}

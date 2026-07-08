@@ -66,7 +66,7 @@ export function Select({
           {() => (selectedOption ? selectedOption.label : placeholder)}
         </BaseSelect.Value>
         <BaseSelect.Icon aria-readonly={true}>
-          <ChevronsUpDownIcon className='size-4' />
+          <ChevronsUpDownIcon className='size-4.5' />
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
 
@@ -103,7 +103,7 @@ export function Select({
                   </BaseSelect.ItemText>
 
                   <BaseSelect.ItemIndicator>
-                    <CheckIcon className='text-primary relative left-1.5 size-4' />
+                    <CheckIcon className='text-primary relative left-1.5 size-4.5' />
                   </BaseSelect.ItemIndicator>
                 </BaseSelect.Item>
               ))}

@@ -6,7 +6,7 @@ import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 import { FormMessage } from '../form/form-message'
-import { Input, InputProps } from '../ui/input'
+import { Input, InputProps } from '../ui-v2/input'
 
 type InputMaskType = 'phone' | 'cpf' | 'cep' | 'number'
 
@@ -61,9 +61,7 @@ export function TextInput({
               {...props}
             />
             {description && <FormMessage>{description}</FormMessage>}
-            {errorMessage && (
-              <FormMessage variant='error'>{errorMessage}</FormMessage>
-            )}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
           </>
         )
       }}

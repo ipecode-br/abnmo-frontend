@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { FormMessage } from '../form/form-message'
-import { Textarea, TextareaProps } from '../ui/textarea'
+import { Textarea, TextareaProps } from '../ui-v2/textarea'
 
 interface TextareaInputProps extends TextareaProps {
   name: string
@@ -32,9 +32,7 @@ export function TextareaInput({
               {...props}
             />
             {description && <FormMessage>{description}</FormMessage>}
-            {errorMessage && (
-              <FormMessage variant='error'>{errorMessage}</FormMessage>
-            )}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
           </>
         )
       }}

@@ -21,6 +21,29 @@ import {
 } from '@/enums/shared'
 import { USERS_ROLE_ENUM } from '@/enums/users'
 
+export function getNullableStringSchema(maxLength = 5000) {
+  return z
+    .string()
+    .max(maxLength)
+    .nullable()
+    .transform((value) => {
+      const trimmedValue = value?.trim()
+      return !!trimmedValue ? trimmedValue : null
+    })
+}
+
+export const specialtySchema = z.enum(SPECIALTIES_ENUM, {
+  message: 'Categoria é obrigatória',
+})
+
+export const patientConditionSchema = z.enum(PATIENT_CONDITION_ENUM, {
+  message: 'O quadro é obrigatório',
+})
+
+export const professionalNameSchema = getNullableStringSchema()
+
+// TODO: review outdated or unused schemas below
+
 export const nameSchema = z
   .string()
   .trim()
@@ -98,19 +121,6 @@ export const yesOrNoSchema = z.enum(YES_OR_NO_ENUM, {
 
 export const dateSchema = z.string().datetime('A data é obrigatória')
 
-export const specialtySchema = z.enum(SPECIALTIES_ENUM, {
-  message: 'Categoria é obrigatória',
-})
-
-export const patientConditionSchema = z.enum(PATIENT_CONDITION_ENUM, {
-  message: 'O quadro é obrigatório',
-})
-
 export const patientNmoDiagnosticSchema = z.enum(PATIENT_NMO_DIAGNOSTICS_ENUM, {
   message: 'Este campo é obrigatório',
 })
-
-export const professionalNameSchema = z
-  .string()
-  .nullable()
-  .transform((value) => (!value ? null : value.trim()))

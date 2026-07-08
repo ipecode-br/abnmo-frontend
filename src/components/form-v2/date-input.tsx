@@ -28,9 +28,7 @@ export function DateInput({ name, description, ...props }: DateInputProps) {
               {...props}
             />
             {description && <FormMessage>{description}</FormMessage>}
-            {errorMessage && (
-              <FormMessage variant='error'>{errorMessage}</FormMessage>
-            )}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
           </>
         )
       }}

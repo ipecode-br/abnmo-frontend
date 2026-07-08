@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { FormMessage } from '../form/form-message'
-import { Select, SelectProps } from '../ui/select'
+import { Select, SelectProps } from '../ui-v2/select'
 
 interface SelectInputProps extends Omit<SelectProps, 'id'> {
   name: string
@@ -28,9 +28,7 @@ export function SelectInput({ name, description, ...props }: SelectInputProps) {
               {...props}
             />
             {description && <FormMessage>{description}</FormMessage>}
-            {errorMessage && (
-              <FormMessage variant='error'>{errorMessage}</FormMessage>
-            )}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
           </>
         )
       }}
