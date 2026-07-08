@@ -13,7 +13,6 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
-import { Divider } from '@/components/ui/divider'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
@@ -70,7 +69,7 @@ export function SurveysList() {
         </SectionHeaderActions>
       </SectionHeader>
 
-      <Card className='flex flex-col p-6'>
+      <Card className='md:p-6'>
         {isLoading && <Skeleton quantity={perPage} className='h-10 w-full' />}
 
         {isEmpty && (
@@ -79,40 +78,46 @@ export function SurveysList() {
           </p>
         )}
 
-        {!isEmpty &&
-          surveys.map((survey, index) => {
-            const status = SURVEY_STATUSES[survey.status]
-            return (
-              <React.Fragment key={survey.id}>
-                {index !== 0 && <Divider />}
-                <div className='text-foreground-soft hover:bg-accent flex gap-x-4 gap-y-2 px-2 py-3 max-md:flex-col md:items-center'>
-                  <a
-                    href={ROUTES.dashboard.surveys.details(survey.id)}
-                    className='text-foreground hover:text-primary truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'
-                  >
-                    {survey.name}
-                  </a>
+        {!isEmpty && (
+          <div className='divide-border divide-y'>
+            <div className='text-foreground-soft bg-accent/75 border-border hidden items-center gap-4 rounded-t-lg border p-3 md:flex'>
+              <span className='md:w-48 lg:w-56'>Nome completo</span>
+              <span className='flex-1'>E-mail</span>
+              <span className='w-24'>Status</span>
+              <span className='w-24'>Data</span>
+            </div>
+            {surveys.map((survey) => {
+              const status = SURVEY_STATUSES[survey.status]
+              return (
+                <React.Fragment key={survey.id}>
+                  <div className='text-foreground-soft md:hover:bg-accent flex gap-x-4 gap-y-2 py-4 max-md:flex-wrap md:items-center md:p-3'>
+                    <a
+                      href={ROUTES.dashboard.surveys.details(survey.id)}
+                      className='text-foreground hover:text-primary w-full truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'
+                    >
+                      {survey.name}
+                    </a>
 
-                  <div className='flex flex-1 flex-wrap gap-1'>
-                    <span className='flex-1 whitespace-nowrap md:truncate'>
+                    <span className='w-full whitespace-nowrap md:flex-1 md:truncate'>
                       {survey.email}
                     </span>
-                  </div>
 
-                  <div className='flex items-center justify-between gap-2'>
-                    <Tag variant={status.variant} size='sm'>
+                    <Tag
+                      size='sm'
+                      variant={status.variant}
+                      className='w-24 justify-center'
+                    >
                       {status.label}
                     </Tag>
-                    <span className='w-24 text-right'>
-                      {formatDate(survey.createdAt, {
-                        dateStyle: 'short',
-                      })}
+                    <span className='w-24 max-md:ml-auto'>
+                      {formatDate(survey.createdAt, { dateStyle: 'short' })}
                     </span>
                   </div>
-                </div>
-              </React.Fragment>
-            )
-          })}
+                </React.Fragment>
+              )
+            })}
+          </div>
+        )}
       </Card>
 
       <Pagination totalItems={total} perPage={perPage} />
