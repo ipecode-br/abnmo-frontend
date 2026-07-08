@@ -16,7 +16,7 @@ const formMessageVariants = cva('mt-1 flex items-center gap-1.5 text-sm', {
 })
 
 interface FormMessageProps
-  extends React.HTMLAttributes<HTMLParagraphElement>,
+  extends React.ComponentProps<'div'>,
     VariantProps<typeof formMessageVariants> {
   error?: boolean
 }
@@ -31,7 +31,7 @@ export function FormMessage({
   if (!children) return null
 
   return (
-    <p
+    <div
       className={cn(
         formMessageVariants({ variant: error ? 'error' : variant, className }),
       )}
@@ -39,6 +39,6 @@ export function FormMessage({
     >
       {error && <AlertCircleIcon className='size-4 shrink-0' />}
       {children}
-    </p>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Dialog as BaseDialog } from '@base-ui-components/react/dialog'
+import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { type LucideIcon, XIcon } from 'lucide-react'
 
@@ -9,21 +9,22 @@ import { buttonVariants } from './button'
 interface DialogProps extends React.ComponentProps<typeof BaseDialog.Root> {
   children: React.ReactNode
 }
-export function Dialog({ children, ...props }: Readonly<DialogProps>) {
+export function Dialog({ children, ...props }: DialogProps) {
   return <BaseDialog.Root {...props}>{children}</BaseDialog.Root>
 }
 
-type DialogTriggerProps = React.ComponentProps<typeof BaseDialog.Trigger> &
-  VariantProps<typeof buttonVariants>
+interface DialogTriggerProps
+  extends React.ComponentProps<typeof BaseDialog.Trigger>,
+    VariantProps<typeof buttonVariants> {}
 export function DialogTrigger({
   variant,
   size,
   className,
   ...props
-}: Readonly<DialogTriggerProps>) {
+}: DialogTriggerProps) {
   return (
     <BaseDialog.Trigger
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={buttonVariants({ variant, size, className })}
       {...props}
     />
   )
@@ -33,23 +34,23 @@ export function DialogContainer({
   className,
   children,
   ...props
-}: Readonly<React.ComponentProps<typeof BaseDialog.Popup>>) {
+}: React.ComponentProps<typeof BaseDialog.Popup>) {
   return (
     <BaseDialog.Portal>
-      <BaseDialog.Backdrop className='fixed inset-0 z-20 min-h-dvh bg-black/60 backdrop-blur transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 supports-[-webkit-touch-callout:none]:absolute' />
+      <BaseDialog.Backdrop className='fixed inset-0 z-20 min-h-dvh bg-black/60 backdrop-blur transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-[-webkit-touch-callout:none]:absolute' />
       <BaseDialog.Popup
         className={cn(
           'bg-background divide-border fixed top-1/2 left-1/2 z-30 flex max-h-[90vh] w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 flex-col divide-y rounded-2xl shadow-lg',
-          'transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
+          'transition-all duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
           className,
         )}
         {...props}
       >
         <BaseDialog.Close
-          title='Fechar'
+          aria-label='Fechar'
           className={cn(
-            buttonVariants({ variant: 'ghost', size: 'icon_sm' }),
-            'absolute top-2 right-2 border-none',
+            buttonVariants({ variant: 'ghost' }),
+            'text-foreground-soft absolute top-2 right-2 size-10 border-none [&_svg]:size-6',
           )}
         >
           <XIcon />
@@ -110,7 +111,7 @@ export function DialogIcon({
 export function DialogTitle({
   className,
   ...props
-}: Readonly<React.ComponentProps<'h2'>>) {
+}: React.ComponentProps<'h2'>) {
   return (
     <BaseDialog.Title
       className={cn('text-xl leading-tight font-medium', className)}
@@ -122,7 +123,7 @@ export function DialogTitle({
 export function DialogDescription({
   className,
   ...props
-}: Readonly<React.ComponentProps<'p'>>) {
+}: React.ComponentProps<'p'>) {
   return (
     <BaseDialog.Description
       className={cn('text-foreground-soft', className)}
@@ -134,9 +135,15 @@ export function DialogDescription({
 export function DialogContent({
   className,
   ...props
-}: Readonly<React.ComponentProps<'div'>>) {
+}: React.ComponentProps<'div'>) {
   return (
-    <div className={cn('flex-1 overflow-y-auto p-5', className)} {...props} />
+    <div
+      className={cn(
+        'flex flex-1 flex-col gap-2 overflow-y-auto p-5',
+        className,
+      )}
+      {...props}
+    />
   )
 }
 
@@ -164,7 +171,7 @@ export function DialogDetailField({
 export function DialogFooter({
   className,
   ...props
-}: Readonly<React.ComponentProps<'footer'>>) {
+}: React.ComponentProps<'footer'>) {
   return (
     <footer
       className={cn('flex flex-col gap-2 p-5 md:flex-row-reverse', className)}
@@ -173,17 +180,18 @@ export function DialogFooter({
   )
 }
 
-type DialogCloseProps = React.ComponentProps<typeof BaseDialog.Close> &
-  VariantProps<typeof buttonVariants>
+interface DialogCloseProps
+  extends React.ComponentProps<typeof BaseDialog.Close>,
+    VariantProps<typeof buttonVariants> {}
 export function DialogClose({
   variant = 'outline',
   size,
   className,
   ...props
-}: Readonly<DialogCloseProps>) {
+}: DialogCloseProps) {
   return (
     <BaseDialog.Close
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={buttonVariants({ variant, size, className })}
       {...props}
     />
   )

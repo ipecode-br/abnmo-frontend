@@ -66,10 +66,15 @@
   padding-inline: 2rem;
 }
 
+.root {
+  isolation: isolate;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-inter);
+  position: relative;
 }
 
 strong {
@@ -77,7 +82,7 @@ strong {
 }
 
 ::-webkit-scrollbar {
-  @apply bg-background-soft h-4 w-4;
+  @apply bg-background-soft size-4;
 }
 
 ::-webkit-scrollbar-thumb {
