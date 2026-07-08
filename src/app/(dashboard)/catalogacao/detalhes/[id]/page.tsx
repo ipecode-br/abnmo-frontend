@@ -57,6 +57,7 @@ import {
   VISUAL_ASSISTIVE_TECHNOLOGIES,
   WALKING_DISTANCES,
 } from '@/enums/surveys'
+import { SendSurveySignatureReminderButton } from '@/modules/surveys/send-reminder-button'
 import {
   SurveyCardContent,
   SurveyCardItem,
@@ -96,6 +97,8 @@ export default async function Page({ params }: Readonly<PageParams>) {
   const patient = survey.user
 
   const showUpdatedAt = new Date(survey.updatedAt) > new Date(survey.createdAt)
+  const showReminderButton =
+    survey.status === 'pending_signature' && survey.signatureId
 
   function renderValueOrNotProvided(value?: string | number | null): string {
     return value === undefined || value === null
@@ -112,17 +115,30 @@ export default async function Page({ params }: Readonly<PageParams>) {
 
   return (
     <>
-      <header className='space-y-2'>
-        <div className='flex items-center justify-between gap-4'>
-          <h3 className='text-2xl font-medium md:text-4xl'>{patient.name}</h3>
-          <NavButton
-            href={ROUTES.dashboard.patients.details.info(patient.id)}
-            variant='outline'
-            size='sm'
-          >
-            <EyeIcon />
-            Ver paciente
-          </NavButton>
+      <header className='space-y-4'>
+        <div className='flex flex-wrap justify-between gap-4 max-md:flex-col md:items-center'>
+          <h3 className='text-2xl font-medium md:text-3xl lg:text-4xl'>
+            {patient.name}
+          </h3>
+
+          <div className='flex flex-wrap gap-4'>
+            {showReminderButton && (
+              <SendSurveySignatureReminderButton
+                id={survey.signatureId!}
+                className='flex-1 md:w-44'
+                size='sm'
+              />
+            )}
+            <NavButton
+              href={ROUTES.dashboard.patients.details.info(patient.id)}
+              className='max-md:flex-1'
+              variant='outline'
+              size='sm'
+            >
+              <EyeIcon />
+              Ver paciente
+            </NavButton>
+          </div>
         </div>
         <div className='flex flex-wrap items-center gap-4'>
           <Tag variant={surveyStatus.variant} size='sm'>

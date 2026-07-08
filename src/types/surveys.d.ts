@@ -89,6 +89,7 @@ export type Survey = {
   user: SurveyUser
   id: string
   status: SurveyStatus
+  signatureId: string | null
   dateOfBirth: string
   gender: Gender
   race: Race
