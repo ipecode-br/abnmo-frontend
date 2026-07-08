@@ -103,7 +103,7 @@ export function DeclineSurveySubmissionModal({
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           variant='destructive'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
@@ -111,7 +111,7 @@ export function DeclineSurveySubmissionModal({
           Recusar
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

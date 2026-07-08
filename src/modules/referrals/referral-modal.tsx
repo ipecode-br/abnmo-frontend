@@ -6,12 +6,12 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { ComboboxInput } from '@/components/form/combobox-input'
-import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
-import { SelectInput } from '@/components/form/select-input'
-import { TextInput } from '@/components/form/text-input'
-import { TextareaInput } from '@/components/form/textarea-input'
+import { ComboboxInput } from '@/components/form-v2/combobox-input'
+import { DateInput } from '@/components/form-v2/date-input'
+import { SelectInput } from '@/components/form-v2/select-input'
+import { TextInput } from '@/components/form-v2/text-input'
+import { TextareaInput } from '@/components/form-v2/textarea-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -22,6 +22,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { PATIENT_CONDITION_OPTIONS } from '@/enums/patients'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
@@ -31,27 +32,35 @@ import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import {
-  dateSchema,
+  getNullableStringSchema,
   patientConditionSchema,
   professionalNameSchema,
   specialtySchema,
   userRoleSchema,
 } from '@/schemas'
 import type { Referral } from '@/types/referrals'
+import { parseDate } from '@/utils/parsers/parse-date'
+import { validateDate } from '@/utils/validators/validate-date'
+
+const TODAY = new Date()
+const MAX_REFERRAL_YEAR = TODAY.getFullYear() + 1
+const MAX_ANNOTATION_LENGTH = 500
 
 const referralFormSchema = z
   .object({
     role: userRoleSchema,
     patientId: z.string().uuid('Paciente é obrigatório'),
-    date: dateSchema,
+    date: z
+      .string()
+      .min(1, 'A data é obrigatória')
+      .refine(
+        (value) => validateDate(value, { endYear: MAX_REFERRAL_YEAR }),
+        'Insira uma data válida',
+      ),
     category: specialtySchema.optional(),
     condition: patientConditionSchema,
     professionalName: professionalNameSchema,
-    annotation: z
-      .string()
-      .max(500)
-      .nullable()
-      .transform((value) => (!value ? null : value.trim())),
+    annotation: getNullableStringSchema(MAX_ANNOTATION_LENGTH),
   })
   .superRefine((data, ctx) => {
     if (data.role !== 'specialist' && !data.category) {
@@ -103,21 +112,26 @@ export function ReferralModal({
     professionalName,
     annotation,
   }: ReferralFormSchema) {
-    const body: Partial<ReferralFormSchema> = {
-      date,
+    const payload: Partial<ReferralFormSchema> = {
       condition,
       annotation,
     }
 
     if (isCreateMode) {
-      body.patientId = patientId
-      body.category = isUserSpecialist ? undefined : category
-      body.professionalName = professionalName
+      payload.patientId = patientId
+      payload.category = isUserSpecialist ? undefined : category
+      payload.professionalName = professionalName
     }
 
     const response = isCreateMode
-      ? await api('/referrals', { method: 'POST', body })
-      : await api(`/referrals/${referral?.id}`, { method: 'PUT', body })
+      ? await api('/referrals', {
+          body: { ...payload, date: parseDate(date) },
+          method: 'POST',
+        })
+      : await api(`/referrals/${referral?.id}`, {
+          body: { ...payload, date: parseDate(date) },
+          method: 'PUT',
+        })
 
     if (!response.success) {
       toast.error(response.message)
@@ -155,73 +169,77 @@ export function ReferralModal({
             className='grid gap-4 sm:grid-cols-2'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
-            <ComboboxInput
-              name='patientId'
-              label='Paciente'
-              options={patientOptions}
-              className='sm:col-span-full'
-              placeholder='Selecione um paciente'
-              readOnly={!isCreateMode || !!referral}
-              isRequired
-            />
-            <DateInput
-              name='date'
-              label='Data do encaminhamento'
-              placeholder='Selecione uma data'
-              wrapperClassName='sm:col-span-1'
-              allowFutureDates
-              isRequired
-            />
-            <SelectInput
-              name='condition'
-              label='Quadro geral'
-              options={PATIENT_CONDITION_OPTIONS}
-              className='sm:col-span-1'
-              isRequired
-            />
+            <LabelWrapper className='col-span-full'>
+              <Label isRequired>Paciente</Label>
+              <ComboboxInput
+                name='patientId'
+                options={patientOptions}
+                placeholder='Selecione um paciente'
+                readOnly={!isCreateMode || !!referral}
+              />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Data do encaminhamento</Label>
+              <DateInput
+                name='date'
+                allowFutureDates
+                startYear={TODAY.getFullYear() - 4}
+                endYear={MAX_REFERRAL_YEAR}
+              />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Quadro geral</Label>
+              <SelectInput
+                name='condition'
+                options={PATIENT_CONDITION_OPTIONS}
+              />
+            </LabelWrapper>
 
             {!isUserSpecialist && (
               <>
-                <SelectInput
-                  name='category'
-                  label='Categoria'
-                  options={SPECIALTIES_OPTIONS}
-                  className='sm:col-span-1'
-                  readOnly={!isCreateMode}
-                  isRequired
-                />
-                <TextInput
-                  name='professionalName'
-                  label='Profissional responsável'
-                  placeholder='Insira o nome'
-                  wrapperClassName='sm:col-span-1'
-                  readOnly={!isCreateMode}
-                />
+                <LabelWrapper>
+                  <Label isRequired>Categoria</Label>
+                  <SelectInput
+                    name='category'
+                    readOnly={!isCreateMode}
+                    options={SPECIALTIES_OPTIONS}
+                  />
+                </LabelWrapper>
+                <LabelWrapper>
+                  <Label>Profissional responsável</Label>
+                  <TextInput
+                    name='professionalName'
+                    readOnly={!isCreateMode}
+                    placeholder='Insira o nome'
+                  />
+                </LabelWrapper>
               </>
             )}
 
-            <TextareaInput
-              rows={8}
-              maxLength={500}
-              name='annotation'
-              label='Observações'
-              placeholder='Insira observações sobre o paciente'
-              wrapperClassName='sm:col-span-full'
-            />
+            <LabelWrapper className='col-span-full'>
+              <Label>Observações</Label>
+              <TextareaInput
+                rows={9}
+                showCounter
+                maxLength={500}
+                name='annotation'
+                placeholder='Insira observações sobre o paciente'
+              />
+            </LabelWrapper>
           </FormContainer>
         </FormProvider>
       </DialogContent>
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
           {isCreateMode ? 'Cadastrar' : 'Atualizar'}
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

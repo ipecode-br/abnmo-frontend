@@ -72,14 +72,14 @@ export function ApproveSurveySubmissionModal({
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={isApproving}
           onClick={approve}
           variant='success'
         >
           Aprovar
         </Button>
-        <DialogClose className='flex-1' disabled={isApproving}>
+        <DialogClose className='md:flex-1' disabled={isApproving}>
           Voltar
         </DialogClose>
       </DialogFooter>

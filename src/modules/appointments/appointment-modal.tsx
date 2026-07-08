@@ -170,7 +170,7 @@ export function AppointmentModal({
             className='grid gap-4 sm:grid-cols-2'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
-            <LabelWrapper className='sm:col-span-full'>
+            <LabelWrapper className='col-span-full'>
               <Label isRequired>Paciente</Label>
               <ComboboxInput
                 name='patientId'
@@ -217,7 +217,7 @@ export function AppointmentModal({
               </>
             )}
 
-            <LabelWrapper className='sm:col-span-full'>
+            <LabelWrapper className='col-span-full'>
               <Label>Observações</Label>
               <TextareaInput
                 rows={9}
@@ -233,14 +233,14 @@ export function AppointmentModal({
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
           {isCreateMode ? 'Cadastrar' : 'Atualizar'}
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

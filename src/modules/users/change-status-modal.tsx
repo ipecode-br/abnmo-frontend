@@ -88,14 +88,14 @@ export function ChangeUserStatusModal({
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={isPending}
           variant={action.variant}
           onClick={changeUserStatus}
         >
           {action.label}
         </Button>
-        <DialogClose className='flex-1' disabled={isPending}>
+        <DialogClose className='md:flex-1' disabled={isPending}>
           Voltar
         </DialogClose>
       </DialogFooter>

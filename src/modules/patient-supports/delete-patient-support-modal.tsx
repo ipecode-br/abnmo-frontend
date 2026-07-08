@@ -64,14 +64,14 @@ export function DeletePatientSupportModal({
       </DialogContent>
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={isPending}
           variant='destructive'
           onClick={deletePatientSupport}
         >
           Excluir contato
         </Button>
-        <DialogClose className='flex-1' disabled={isPending}>
+        <DialogClose className='md:flex-1' disabled={isPending}>
           Voltar
         </DialogClose>
       </DialogFooter>

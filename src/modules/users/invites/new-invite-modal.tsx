@@ -82,14 +82,14 @@ export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
           Enviar
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

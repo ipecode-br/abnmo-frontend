@@ -105,15 +105,15 @@ export function ChangeUserPasswordModal({
       <DialogFooter>
         <Button
           type='submit'
+          className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
-          className='flex-1'
         >
           Alterar
         </Button>
         <DialogClose
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
-          className='flex-1'
         >
           Voltar
         </DialogClose>

@@ -87,13 +87,15 @@ export function PatientDocuments({
 
                       <DialogFooter>
                         <Button
-                          className='flex-1'
+                          className='md:flex-1'
                           variant='destructive'
                           onClick={() => handleConfirmDelete(doc.id)}
                         >
                           Excluir documento
                         </Button>
-                        <DialogClose className='flex-1'>Cancelar</DialogClose>
+                        <DialogClose className='md:flex-1'>
+                          Cancelar
+                        </DialogClose>
                       </DialogFooter>
                     </DialogContainer>
                   </Dialog>
