@@ -34,11 +34,10 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
 
       <Menu>
         <MenuTrigger
-          size='icon_sm'
           variant='ghost'
           data-visible={expanded}
           aria-label='Abrir menu'
-          className='absolute right-0 ml-auto opacity-0 transition-opacity duration-500 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
+          className='absolute right-0 ml-auto size-8 opacity-0 transition-opacity duration-500 data-[visible=true]:opacity-100 data-[visible=true]:delay-200'
         >
           <EllipsisVerticalIcon className='text-foreground-soft' />
         </MenuTrigger>

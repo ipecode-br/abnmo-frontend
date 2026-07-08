@@ -33,9 +33,8 @@ export async function PatientHeader() {
           <PatientHeaderAccessibilityDropdown />
 
           <Button
-            size='icon'
             variant='muted'
-            className='rounded-full'
+            className='size-10 rounded-full'
             aria-label='Configurações'
           >
             <SettingsIcon />

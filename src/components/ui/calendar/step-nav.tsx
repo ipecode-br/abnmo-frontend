@@ -15,7 +15,6 @@ export function CalendarStepNav(props: Readonly<NavProps>) {
   return (
     <div className='bg-accent flex items-center justify-between rounded-lg p-1.5'>
       <Button
-        size='icon_sm'
         variant='outline'
         onClick={onPreviousClick}
         disabled={!previousMonth}
@@ -25,12 +24,7 @@ export function CalendarStepNav(props: Readonly<NavProps>) {
 
       <span className='font-medium capitalize'>{label}</span>
 
-      <Button
-        size='icon_sm'
-        variant='outline'
-        onClick={onNextClick}
-        disabled={!nextMonth}
-      >
+      <Button variant='outline' onClick={onNextClick} disabled={!nextMonth}>
         <ChevronRightIcon />
       </Button>
     </div>

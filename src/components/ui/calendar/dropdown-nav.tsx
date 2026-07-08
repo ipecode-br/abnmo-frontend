@@ -68,7 +68,6 @@ export function CalendarDropdownNav({
   return (
     <div className='bg-accent flex items-center justify-center gap-1 rounded-lg p-1.5'>
       <Button
-        size='icon'
         variant='ghost'
         className='mr-auto size-8'
         onClick={onPreviousClick}
@@ -100,7 +99,6 @@ export function CalendarDropdownNav({
       />
 
       <Button
-        size='icon'
         variant='ghost'
         className='ml-auto size-8'
         onClick={onNextClick}

@@ -30,7 +30,7 @@ import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { usePatientOptions } from '@/hooks/use-patient-otions'
 import { usePermissions } from '@/hooks/use-permissions'
-import { api } from '@/lib/api-v2'
+import { api } from '@/lib/api'
 import {
   getNullableStringSchema,
   patientConditionSchema,

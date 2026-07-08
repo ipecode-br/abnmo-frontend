@@ -57,10 +57,10 @@ export function PatientRequirementModal({
     mode: 'onBlur',
   })
 
-  async function submitForm(data: PatientRequirementFormSchema) {
+  async function submitForm(body: PatientRequirementFormSchema) {
     const response = await api('/patient-requirements', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body,
     })
 
     if (!response.success) {

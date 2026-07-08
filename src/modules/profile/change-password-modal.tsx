@@ -54,7 +54,7 @@ export function ChangeUserPasswordModal({
   }: ChangeUserPasswordSchema) {
     const response = await api(`/change-password`, {
       method: 'POST',
-      body: JSON.stringify({ password, newPassword }),
+      body: { password, newPassword },
     })
 
     if (!response.success) {

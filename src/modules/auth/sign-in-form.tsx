@@ -36,11 +36,11 @@ export function SignInForm() {
   })
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  async function submitForm(data: SignInFormSchema) {
+  async function submitForm(body: SignInFormSchema) {
     startTransition(async () => {
       const response = await api<{ role: string }>('/login', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: body,
       })
 
       if (!response.success) {

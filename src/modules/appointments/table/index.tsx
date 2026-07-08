@@ -84,8 +84,8 @@ export function AppointmentsTable({
               <TableRow key={appointment.id}>
                 <TableCell>
                   <Button
-                    size='icon_sm'
                     variant='ghost'
+                    className='size-8'
                     aria-label='Ver detalhes do atendimento'
                     onClick={() => setViewAppointment(appointment)}
                   >

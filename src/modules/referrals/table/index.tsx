@@ -79,8 +79,8 @@ export function ReferralsTable({
               <TableRow key={referral.id}>
                 <TableCell>
                   <Button
-                    size='icon_sm'
                     variant='ghost'
+                    className='size-8'
                     aria-label='Ver detalhes do encaminhamento'
                     onClick={() => setViewReferral(referral)}
                   >

@@ -10,13 +10,14 @@ type ApiResponse<Data> = {
   data?: Data
 }
 
-interface ApiOptions extends RequestInit {
+interface ApiOptions extends Omit<RequestInit, 'body'> {
   params?: Record<string, string | number | boolean | undefined | null>
+  body?: Record<string, unknown>
 }
 
 export async function api<Data>(
   path: string,
-  { params, headers, ...options }: ApiOptions = {},
+  { params, headers, body, ...options }: ApiOptions = {},
 ): Promise<ApiResponse<Data>> {
   const isServerSide = typeof window === 'undefined'
 
@@ -43,6 +44,7 @@ export async function api<Data>(
         Accept: 'application/json',
         ...headers,
       },
+      body: body ? JSON.stringify(body) : undefined,
       ...options,
     })
 

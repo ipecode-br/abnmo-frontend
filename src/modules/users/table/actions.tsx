@@ -53,7 +53,11 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
   return (
     <>
       <Menu>
-        <MenuTrigger size='icon_sm' variant='ghost' aria-label='Abrir ações'>
+        <MenuTrigger
+          variant='ghost'
+          className='size-8'
+          aria-label='Abrir ações'
+        >
           <EllipsisIcon />
         </MenuTrigger>
 

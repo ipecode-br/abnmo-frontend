@@ -15,7 +15,6 @@ export function PaginationButton({
   return (
     <div>
       <Button
-        size='xs'
         variant={active ? 'default' : 'outline'}
         disabled={disabled || active}
         className={cn(

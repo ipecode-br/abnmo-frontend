@@ -36,7 +36,7 @@ export function RecoverPasswordForm() {
 
     const response = await api('/recover-password', {
       method: 'POST',
-      body: JSON.stringify({ email }),
+      body: { email },
     })
 
     if (!response.success) {

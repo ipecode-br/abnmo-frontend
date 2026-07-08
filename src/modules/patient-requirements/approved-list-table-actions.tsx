@@ -26,7 +26,7 @@ export function ApprovedPatientRequirementsListTableActions({
   return (
     <>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setDropdownOpen}>
-        <DropdownMenuTrigger size='icon' variant='ghost' className='size-8'>
+        <DropdownMenuTrigger variant='ghost' className='size-8'>
           <EllipsisIcon />
         </DropdownMenuTrigger>
 

@@ -111,7 +111,7 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
     registrationId,
   }: SignUpFormSchema) {
     startTransition(async () => {
-      const payload: RegisterUserPayload = {
+      const body: RegisterUserPayload = {
         role,
         name,
         password,
@@ -119,14 +119,11 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
       }
 
       if (specialty && registrationId) {
-        payload.specialty = specialty
-        payload.registrationId = registrationId
+        body.specialty = specialty
+        body.registrationId = registrationId
       }
 
-      const response = await api('/register/user', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      })
+      const response = await api('/register/user', { method: 'POST', body })
 
       if (!response.success) {
         toast.error(response.message)

@@ -118,11 +118,7 @@ export function TableActions() {
   return (
     <>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setDropdownOpen}>
-        <DropdownMenuTrigger
-          size='icon'
-          variant='ghost'
-          ref={dropdownTriggerRef}
-        >
+        <DropdownMenuTrigger variant='ghost' ref={dropdownTriggerRef}>
           <EllipsisIcon />
         </DropdownMenuTrigger>
 

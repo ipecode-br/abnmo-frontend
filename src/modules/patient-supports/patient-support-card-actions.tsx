@@ -37,11 +37,7 @@ export function PatientSupportCardActions({
   return (
     <>
       <Menu>
-        <MenuTrigger
-          size='icon_sm'
-          variant='ghost'
-          className='absolute top-5 right-4 size-8'
-        >
+        <MenuTrigger variant='ghost' className='absolute top-5 right-4 size-8'>
           <EllipsisIcon />
           <span className='sr-only'>Ações</span>
         </MenuTrigger>

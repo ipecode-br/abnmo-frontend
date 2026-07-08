@@ -41,11 +41,8 @@ export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
     mode: 'onBlur',
   })
 
-  async function submitForm(data: UserInviteFormSchema) {
-    const response = await api('/users/invites', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
+  async function submitForm(body: UserInviteFormSchema) {
+    const response = await api('/users/invites', { method: 'POST', body: body })
 
     if (!response.success) {
       toast.error(response.message)

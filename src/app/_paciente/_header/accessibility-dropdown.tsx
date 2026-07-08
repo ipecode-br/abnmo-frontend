@@ -12,9 +12,8 @@ export function PatientHeaderAccessibilityDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger
         variant='muted'
-        size='icon'
-        className='rounded-full [&_svg]:size-5'
         indicator={false}
+        className='size-10 rounded-full [&_svg]:size-5'
       >
         <AccessibilityIcon />
       </DropdownMenuTrigger>

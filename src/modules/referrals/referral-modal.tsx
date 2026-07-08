@@ -103,27 +103,21 @@ export function ReferralModal({
     professionalName,
     annotation,
   }: ReferralFormSchema) {
-    const payload: Partial<ReferralFormSchema> = {
+    const body: Partial<ReferralFormSchema> = {
       date,
       condition,
       annotation,
     }
 
     if (isCreateMode) {
-      payload.patientId = patientId
-      payload.category = isUserSpecialist ? undefined : category
-      payload.professionalName = professionalName
+      body.patientId = patientId
+      body.category = isUserSpecialist ? undefined : category
+      body.professionalName = professionalName
     }
 
     const response = isCreateMode
-      ? await api('/referrals', {
-          method: 'POST',
-          body: JSON.stringify(payload),
-        })
-      : await api(`/referrals/${referral?.id}`, {
-          method: 'PUT',
-          body: JSON.stringify(payload),
-        })
+      ? await api('/referrals', { method: 'POST', body })
+      : await api(`/referrals/${referral?.id}`, { method: 'PUT', body })
 
     if (!response.success) {
       toast.error(response.message)

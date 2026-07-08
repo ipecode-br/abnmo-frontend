@@ -42,7 +42,7 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
   async function submitForm({ password, resetToken }: ResetPasswordFormSchema) {
     const response = await api('/reset-password', {
       method: 'POST',
-      body: JSON.stringify({ password, resetToken }),
+      body: { password, resetToken },
     })
 
     if (!response.success) {

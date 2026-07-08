@@ -58,21 +58,7 @@ describe('NavButton', () => {
     expect(smallButtonElement).toHaveClass('rounded-lg')
     expect(smallButtonElement).toHaveClass('px-4')
   })
-  it('should render an icon NavButton with icon size', () => {
-    const buttonText = 'icon'
-    render(
-      <NavButton href='/' size='icon'>
-        {buttonText}
-      </NavButton>,
-    )
 
-    const iconButtonElement = screen.getByText(buttonText)
-    expect(iconButtonElement).toBeInTheDocument()
-
-    expect(iconButtonElement).toHaveAttribute('href', '/')
-
-    expect(iconButtonElement).toHaveClass('size-10')
-  })
   it('should render NavButton with custom class', () => {
     const buttonText = 'custom'
     render(

@@ -128,7 +128,7 @@ export function PatientForm({
   }
 
   async function submitForm(data: PatientFormSchema) {
-    const payload = {
+    const body = {
       ...data,
       phone: removeNonNumbers(data.phone),
       cpf: removeNonNumbers(data.cpf),
@@ -142,8 +142,6 @@ export function PatientForm({
           }))
         : undefined,
     }
-
-    const body = JSON.stringify(payload)
 
     const response = isCreateForm
       ? await api('/patients', { method: 'POST', body })
@@ -366,10 +364,9 @@ export function PatientForm({
                     />
                     {index > 0 && !isViewMode && (
                       <Button
-                        size='icon'
                         type='button'
                         variant='ghost'
-                        className='text-error max-lg:w-full max-lg:border lg:mt-7'
+                        className='text-error size-10 max-lg:w-full max-lg:border lg:mt-7'
                         onClick={() => supportMethods.remove(index)}
                       >
                         <Trash2Icon />

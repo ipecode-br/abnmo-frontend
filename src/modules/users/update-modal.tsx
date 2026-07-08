@@ -94,11 +94,11 @@ export function UpdateUserModal({
   }: UpdateUserFormSchema) {
     const response = await api(`/users/${user.id}`, {
       method: 'PUT',
-      body: JSON.stringify({
+      body: {
         name: name,
         specialty: isSpecialist ? specialty : null,
         registrationId: isSpecialist ? registrationId : null,
-      }),
+      },
     })
 
     if (!response.success) {

@@ -228,7 +228,7 @@ const formMethods = useForm<SignInFormSchema>({
 async function signIn({ email, password, rememberMe }: SignInFormSchema) {
   const response = await api('/login', {
     method: 'POST',
-    body: JSON.stringify({ email, password, rememberMe }),
+    body: { email, password, rememberMe },
   })
 
   if (!response.success) {

@@ -19,19 +19,19 @@ export function SearchInput({
   placeholder,
   className,
 }: Readonly<SearchInputProps>) {
-  const queryParam = QUERY_PARAM_KEYS.search
+  const searchParam = QUERY_PARAM_KEYS.search
   const pageParam = QUERY_PARAM_KEYS.page
 
   const { getParam, updateParams } = useParams()
-  const searchQuery = getParam(queryParam) || ''
+  const searchQuery = getParam(searchParam) || ''
 
   const [query, setQuery] = useState(searchQuery)
   const debouncedQuery = useDebounce(query)
 
   useEffect(() => {
     updateParams({
-      set: [{ key: queryParam, value: debouncedQuery }],
-      remove: !debouncedQuery ? [queryParam, pageParam] : [pageParam],
+      set: [{ key: searchParam, value: debouncedQuery }],
+      remove: !debouncedQuery ? [searchParam, pageParam] : [pageParam],
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery])
@@ -54,7 +54,6 @@ export function SearchInput({
 
       {query && (
         <Button
-          size='icon'
           variant='ghost'
           title='Limpar pesquisa'
           className='absolute top-1 right-1 size-7 rounded-md [&_svg]:size-4'

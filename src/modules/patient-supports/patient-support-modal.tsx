@@ -67,11 +67,11 @@ export function PatientSupportModal({
     kinship,
     phone,
   }: PatientSupportFormSchema) {
-    const body = JSON.stringify({
+    const body = {
       name,
       kinship,
       phone: removeNonNumbers(phone),
-    })
+    }
 
     const response =
       mode === 'create'

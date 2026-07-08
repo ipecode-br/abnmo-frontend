@@ -20,12 +20,11 @@ export function BottomBar() {
     <nav className='bg-background border-border flex h-16 w-full items-center justify-evenly border-t lg:hidden'>
       {BOTTOM_BAR_BUTTONS.map((button) => (
         <NavButton
-          size='icon'
           variant='ghost'
           key={button.path}
           href={button.path}
           data-active={button.path === pathname}
-          className='data-[active=true]:text-primary data-[active=true]:bg-background-soft [&_svg]:size-6'
+          className='data-[active=true]:text-primary data-[active=true]:bg-background-soft size-10 [&_svg]:size-6'
         >
           {button.icon}
         </NavButton>
