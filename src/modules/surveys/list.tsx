@@ -22,9 +22,8 @@ import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { SURVEY_STATUS_OPTIONS, SURVEY_STATUSES } from '@/enums/surveys'
 import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
-import type { Survey } from '@/types/surveys'
+import type { SurveyListItem } from '@/types/surveys'
 import { formatDate } from '@/utils/formatters/format-date'
-import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 export function SurveysList() {
   const { getParams, currentParams } = useParams()
@@ -39,7 +38,7 @@ export function SurveysList() {
   const { data: response, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.surveys.main, perPage, currentParams],
     queryFn: () =>
-      api<{ surveys: Survey[]; total: number }>('/surveys', {
+      api<{ surveys: SurveyListItem[]; total: number }>('/surveys', {
         params: { search, status, page, perPage },
       }),
   })
@@ -71,7 +70,7 @@ export function SurveysList() {
         </SectionHeaderActions>
       </SectionHeader>
 
-      <Card className='flex flex-col gap-4 p-6 md:gap-3'>
+      <Card className='flex flex-col p-6'>
         {isLoading && <Skeleton quantity={perPage} className='h-10 w-full' />}
 
         {isEmpty && (
@@ -86,7 +85,7 @@ export function SurveysList() {
             return (
               <React.Fragment key={survey.id}>
                 {index !== 0 && <Divider />}
-                <div className='text-foreground-soft flex gap-x-4 gap-y-2 max-md:flex-col md:items-center'>
+                <div className='text-foreground-soft hover:bg-accent flex gap-x-4 gap-y-2 px-2 py-3 max-md:flex-col md:items-center'>
                   <a
                     href={ROUTES.dashboard.surveys.details(survey.id)}
                     className='text-foreground hover:text-primary truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'
@@ -95,9 +94,6 @@ export function SurveysList() {
                   </a>
 
                   <div className='flex flex-1 flex-wrap gap-1'>
-                    <span className='w-36'>
-                      {formatPhoneNumber(survey.phone)}
-                    </span>
                     <span className='flex-1 whitespace-nowrap md:truncate'>
                       {survey.email}
                     </span>

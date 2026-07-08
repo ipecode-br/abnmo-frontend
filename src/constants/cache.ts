@@ -1,6 +1,8 @@
 export const NEXT_CACHE_TAGS = {
   user: (id: string) => `user/${id}`,
   patient: (id: string) => `patient/${id}`,
+  surveySubmission: (id: string) => `survey-submission/${id}`,
+  survey: (id: string) => `survey/${id}`,
   appointments: {
     main: 'appointments',
     query: (query: string) => `appointments/${query}`,

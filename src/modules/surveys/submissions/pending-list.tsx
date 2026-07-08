@@ -39,7 +39,7 @@ export function PendingSurveysList() {
     queryKey: [QUERY_CACHE_KEYS.surveys.submissions, status, currentParams],
     queryFn: () =>
       api<{ submissions: SurveySubmission[]; total: number }>(
-        '/surveys/submissions',
+        '/survey-submissions',
         { params: { status, page } },
       ),
   })

@@ -10,14 +10,14 @@ import {
 } from '@/constants/regex'
 import {
   PATIENT_CONDITION_ENUM,
-  PATIENT_GENDERS_ENUM,
   PATIENT_NMO_DIAGNOSTICS_ENUM,
-  PATIENT_RACES_ENUM,
 } from '@/enums/patients'
 import {
   BRAZIL_STATES_ENUM,
+  GENDERS_ENUM,
+  RACES_ENUM,
   SPECIALTIES_ENUM,
-  YES_OR_NO_TUPLE,
+  YES_OR_NO_ENUM,
 } from '@/enums/shared'
 import { USERS_ROLE_ENUM } from '@/enums/users'
 
@@ -52,11 +52,11 @@ export const phoneSchema = z
   .nonempty('Insira o telefone')
   .regex(PHONE_REGEX, 'Insira um número de telefone válido')
 
-export const genderSchema = z.enum(PATIENT_GENDERS_ENUM, {
+export const genderSchema = z.enum(GENDERS_ENUM, {
   message: 'Selecione um gênero',
 })
 
-export const raceSchema = z.enum(PATIENT_RACES_ENUM, {
+export const raceSchema = z.enum(RACES_ENUM, {
   message: 'Selecione uma raça ou cor',
 })
 
@@ -92,7 +92,7 @@ export const kinshipSchema = z
   .min(3, 'O parentesco deve conter mais de 3 caracteres')
   .regex(NON_SPECIAL_CHAR_REGEX, 'Números e caracteres especiais são inválidos')
 
-export const yesOrNoSchema = z.enum(YES_OR_NO_TUPLE, {
+export const yesOrNoSchema = z.enum(YES_OR_NO_ENUM, {
   message: 'Selecione "Sim" ou "Não"',
 })
 

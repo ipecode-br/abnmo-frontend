@@ -12,8 +12,11 @@ import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_STORAGE_KEYS } from '@/constants/storage-keys'
-import { PATIENT_GENDER_OPTIONS } from '@/enums/patients'
-import { BRAZIL_STATES_OPTIONS, type BrazilState } from '@/enums/shared'
+import {
+  BRAZIL_STATE_OPTIONS,
+  type BrazilState,
+  GENDER_OPTIONS,
+} from '@/enums/shared'
 import { useCities } from '@/hooks/cities'
 
 import { useScreening } from '../hooks'
@@ -83,7 +86,7 @@ export function ScreeningPatientDataForm() {
         <SelectInput
           name='gender'
           label='Gênero'
-          options={PATIENT_GENDER_OPTIONS}
+          options={GENDER_OPTIONS}
           placeholder='Selecione seu gênero'
           isRequired
         />
@@ -97,7 +100,7 @@ export function ScreeningPatientDataForm() {
         <ComboboxInput
           name='state'
           label='Estado'
-          options={BRAZIL_STATES_OPTIONS}
+          options={BRAZIL_STATE_OPTIONS}
           placeholder='Selecione seu estado'
           onValueChange={handleSelectState}
           isRequired

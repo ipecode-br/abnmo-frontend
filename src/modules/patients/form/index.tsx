@@ -26,14 +26,12 @@ import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
+import { PATIENT_NMO_DIAGNOSTIC_OPTIONS } from '@/enums/patients'
 import {
-  PATIENT_GENDER_OPTIONS,
-  PATIENT_NMO_DIAGNOSTIC_OPTIONS,
-  PATIENT_RACE_OPTIONS,
-} from '@/enums/patients'
-import {
-  BRAZIL_STATES_OPTIONS,
+  BRAZIL_STATE_OPTIONS,
   type BrazilState,
+  GENDER_OPTIONS,
+  RACE_OPTIONS,
   YES_OR_NO_OPTIONS,
 } from '@/enums/shared'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
@@ -222,7 +220,7 @@ export function PatientForm({
           <ComboboxInput
             name='state'
             label='Estado'
-            options={BRAZIL_STATES_OPTIONS}
+            options={BRAZIL_STATE_OPTIONS}
             onValueChange={handleSelectState}
             placeholder='Selecione o estado'
             className='lg:col-span-2'
@@ -243,7 +241,7 @@ export function PatientForm({
           <SelectInput
             name='gender'
             label='Gênero'
-            options={PATIENT_GENDER_OPTIONS}
+            options={GENDER_OPTIONS}
             placeholder='Selecione o gênero'
             className='lg:col-span-2'
             isRequired={!isViewMode}
@@ -252,7 +250,7 @@ export function PatientForm({
           <SelectInput
             name='race'
             label='Raça ou Cor'
-            options={PATIENT_RACE_OPTIONS}
+            options={RACE_OPTIONS}
             placeholder='Selecione a raça ou cor'
             className='lg:col-span-2'
             isRequired={!isViewMode}

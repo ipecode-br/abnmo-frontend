@@ -48,7 +48,6 @@ export async function api<Data>(
 
     const preventClearSession = [
       '/login',
-      '/register/patient',
       '/register/user',
       '/recover-password',
       '/reset-password',
