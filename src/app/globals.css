@@ -31,6 +31,9 @@
 
   --inset-shadow-md: inset 0 1px 6px rgba(0, 0, 0, 0.1);
 
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair-display);
+
   /* Animations */
 
   --animate-fade-in: fade-in 150ms ease-in-out;

@@ -59,6 +59,7 @@ export function Calendar({
       }}
       {...dateRestrictions}
       classNames={{
+        months: '',
         month_caption: 'hidden',
         outside: 'text-foreground/40',
         weekday: 'font-medium text-disabled pt-4 pb-1 border-b border-border',

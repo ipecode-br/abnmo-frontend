@@ -17,10 +17,7 @@ export function PaginationButton({
       <Button
         variant={active ? 'default' : 'outline'}
         disabled={disabled || active}
-        className={cn(
-          'min-w-8 disabled:opacity-100 max-md:h-9 max-md:min-w-10 max-md:text-base',
-          className,
-        )}
+        className={cn('h-8 min-w-8 px-3 disabled:opacity-100', className)}
         {...props}
       />
     </div>

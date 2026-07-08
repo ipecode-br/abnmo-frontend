@@ -35,9 +35,9 @@ export function CalendarNav({
   })
 
   return (
-    <div className='bg-accent/50 flex items-center justify-center gap-1 rounded-lg p-1.5'>
+    <div className='bg-accent flex items-center justify-center gap-1 rounded-lg p-1.5'>
       <Button
-        variant='ghost'
+        variant='muted'
         className='text-foreground-soft mr-auto size-8 [&_svg]:size-6'
         onClick={onPreviousClick}
         disabled={!previousMonth}
@@ -69,7 +69,7 @@ export function CalendarNav({
       />
 
       <Button
-        variant='ghost'
+        variant='muted'
         className='text-foreground-soft ml-auto size-8 [&_svg]:size-6'
         onClick={onNextClick}
         disabled={!nextMonth}
