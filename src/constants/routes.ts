@@ -9,11 +9,6 @@ export const ROUTES = {
   },
   patient: {
     main: '/paciente',
-    screening: {
-      patientData: '/paciente/triagem/seus-dados',
-      medicalReport: '/paciente/triagem/laudo-medico',
-      supportNetwork: '/paciente/triagem/rede-de-apoio',
-    },
     documents: {
       pending: '/paciente/documentos/pendentes',
       sent: '/paciente/documentos/enviados',
