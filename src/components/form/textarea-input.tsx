@@ -1,14 +1,18 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { FormMessage } from '../form/form-message'
-import { Select, SelectProps } from '../ui-v2/select'
+import { Textarea, TextareaProps } from '../ui-v2/textarea'
+import { FormMessage } from './form-message'
 
-interface SelectInputProps extends Omit<SelectProps, 'id'> {
+interface TextareaInputProps extends TextareaProps {
   name: string
   description?: string
 }
 
-export function SelectInput({ name, description, ...props }: SelectInputProps) {
+export function TextareaInput({
+  name,
+  description,
+  ...props
+}: TextareaInputProps) {
   const { control } = useFormContext()
 
   return (
@@ -20,10 +24,10 @@ export function SelectInput({ name, description, ...props }: SelectInputProps) {
 
         return (
           <>
-            <Select
+            <Textarea
               {...field}
               id={name}
-              onValueChange={field.onChange}
+              name={name}
               variant={!!errorMessage ? 'error' : 'default'}
               {...props}
             />

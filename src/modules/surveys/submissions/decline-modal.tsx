@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextareaInput } from '@/components/form-v2/textarea-input'
+import { TextareaInput } from '@/components/form/textarea-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,

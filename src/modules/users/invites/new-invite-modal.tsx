@@ -8,8 +8,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { SelectInput } from '@/components/form-v2/select-input'
-import { TextInput } from '@/components/form-v2/text-input'
+import { SelectInput } from '@/components/form/select-input'
+import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,

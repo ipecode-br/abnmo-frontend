@@ -7,12 +7,12 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { ComboboxInput } from '@/components/form/combobox-input'
+import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
-import { ComboboxInput } from '@/components/form-v2/combobox-input'
-import { DateInput } from '@/components/form-v2/date-input'
-import { SelectInput } from '@/components/form-v2/select-input'
-import { TextInput } from '@/components/form-v2/text-input'
-import { TextareaInput } from '@/components/form-v2/textarea-input'
+import { SelectInput } from '@/components/form/select-input'
+import { TextInput } from '@/components/form/text-input'
+import { TextareaInput } from '@/components/form/textarea-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,

@@ -1,19 +1,14 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { FormMessage } from '../form/form-message'
-import { Checkbox, CheckboxProps } from '../ui-v2/checkbox'
+import { Select, SelectProps } from '../ui-v2/select'
+import { FormMessage } from './form-message'
 
-interface CheckboxInputProps extends CheckboxProps {
+interface SelectInputProps extends Omit<SelectProps, 'id'> {
   name: string
-  label: string
   description?: string
 }
 
-export function CheckboxInput({
-  name,
-  description,
-  ...props
-}: CheckboxInputProps) {
+export function SelectInput({ name, description, ...props }: SelectInputProps) {
   const { control } = useFormContext()
 
   return (
@@ -25,12 +20,13 @@ export function CheckboxInput({
 
         return (
           <>
-            <Checkbox
-              checked={field.value}
-              onCheckedChange={field.onChange}
+            <Select
+              {...field}
+              id={name}
+              onValueChange={field.onChange}
+              variant={!!errorMessage ? 'error' : 'default'}
               {...props}
             />
-
             {description && <FormMessage>{description}</FormMessage>}
             {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
           </>

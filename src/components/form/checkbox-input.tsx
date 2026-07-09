@@ -1,15 +1,19 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { FormMessage } from '../form/form-message'
-import { DatePicker, DatePickerProps } from '../ui-v2/date-picker'
+import { Checkbox, CheckboxProps } from '../ui-v2/checkbox'
+import { FormMessage } from './form-message'
 
-interface DateInputProps
-  extends Omit<DatePickerProps, 'id' | 'value' | 'onChange'> {
+interface CheckboxInputProps extends CheckboxProps {
   name: string
+  label: string
   description?: string
 }
 
-export function DateInput({ name, description, ...props }: DateInputProps) {
+export function CheckboxInput({
+  name,
+  description,
+  ...props
+}: CheckboxInputProps) {
   const { control } = useFormContext()
 
   return (
@@ -21,12 +25,12 @@ export function DateInput({ name, description, ...props }: DateInputProps) {
 
         return (
           <>
-            <DatePicker
-              id={name}
-              error={!!errorMessage}
-              {...field}
+            <Checkbox
+              checked={field.value}
+              onCheckedChange={field.onChange}
               {...props}
             />
+
             {description && <FormMessage>{description}</FormMessage>}
             {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
           </>

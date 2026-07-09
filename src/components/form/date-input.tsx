@@ -1,19 +1,15 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { FormMessage } from '../form/form-message'
-import { Combobox, ComboboxProps } from '../ui-v2/combobox'
+import { DatePicker, DatePickerProps } from '../ui-v2/date-picker'
+import { FormMessage } from './form-message'
 
-interface ComboboxInputProps extends Omit<ComboboxProps, 'value' | 'onChange'> {
+interface DateInputProps
+  extends Omit<DatePickerProps, 'id' | 'value' | 'onChange'> {
   name: string
   description?: string
-  onChange?: ComboboxProps['onChange']
 }
 
-export function ComboboxInput({
-  name,
-  description,
-  ...props
-}: ComboboxInputProps) {
+export function DateInput({ name, description, ...props }: DateInputProps) {
   const { control } = useFormContext()
 
   return (
@@ -25,8 +21,9 @@ export function ComboboxInput({
 
         return (
           <>
-            <Combobox
-              variant={!!errorMessage ? 'error' : 'default'}
+            <DatePicker
+              id={name}
+              error={!!errorMessage}
               {...field}
               {...props}
             />

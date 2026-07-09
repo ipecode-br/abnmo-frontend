@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextInput } from '@/components/form-v2/text-input'
+import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Label, LabelWrapper } from '@/components/ui-v2/label'

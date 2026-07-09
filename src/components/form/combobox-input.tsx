@@ -1,18 +1,19 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { FormMessage } from '../form/form-message'
-import { Textarea, TextareaProps } from '../ui-v2/textarea'
+import { Combobox, ComboboxProps } from '../ui-v2/combobox'
+import { FormMessage } from './form-message'
 
-interface TextareaInputProps extends TextareaProps {
+interface ComboboxInputProps extends Omit<ComboboxProps, 'value' | 'onChange'> {
   name: string
   description?: string
+  onChange?: ComboboxProps['onChange']
 }
 
-export function TextareaInput({
+export function ComboboxInput({
   name,
   description,
   ...props
-}: TextareaInputProps) {
+}: ComboboxInputProps) {
   const { control } = useFormContext()
 
   return (
@@ -24,11 +25,9 @@ export function TextareaInput({
 
         return (
           <>
-            <Textarea
-              {...field}
-              id={name}
-              name={name}
+            <Combobox
               variant={!!errorMessage ? 'error' : 'default'}
+              {...field}
               {...props}
             />
             {description && <FormMessage>{description}</FormMessage>}
