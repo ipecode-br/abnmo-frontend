@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextareaInput } from '@/components/form/textarea-input'
+import { TextareaInput } from '@/components/form-v2/textarea-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -18,6 +18,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { api } from '@/lib/api'
@@ -87,14 +88,15 @@ export function DeclineSurveySubmissionModal({
               ?
             </p>
 
-            <TextareaInput
-              rows={6}
-              name='reason'
-              label='Motivo'
-              wrapperClassName='my-2'
-              maxLength={MAX_REASON_LENGTH}
-              placeholder='Insira o motivo da recusa'
-            />
+            <LabelWrapper className='my-2'>
+              <Label isRequired>Motivo</Label>
+              <TextareaInput
+                rows={6}
+                name='reason'
+                maxLength={MAX_REASON_LENGTH}
+                placeholder='Insira o motivo da recusa'
+              />
+            </LabelWrapper>
 
             <p>Ao confirmar, este paciente será notificado.</p>
           </FormContainer>

@@ -6,8 +6,8 @@ import { z } from 'zod'
 
 import { ComboboxInput } from '@/components/form/combobox-input'
 import { FormContainer } from '@/components/form/form-container'
-import { TextareaInput } from '@/components/form/textarea-input'
 import { SelectInput } from '@/components/form-v2/select-input'
+import { TextareaInput } from '@/components/form-v2/textarea-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -105,13 +105,15 @@ export function PatientRequirementModal({
               />
             </LabelWrapper>
 
-            <TextareaInput
-              rows={6}
-              maxLength={500}
-              name='description'
-              label='Descrição (opcional)'
-              placeholder='Adicione detalhes sobre a solicitação...'
-            />
+            <LabelWrapper>
+              <Label>Descrição</Label>
+              <TextareaInput
+                rows={6}
+                maxLength={500}
+                name='description'
+                placeholder='Adicione detalhes sobre a solicitação'
+              />
+            </LabelWrapper>
           </FormContainer>
         </FormProvider>
       </DialogContent>
