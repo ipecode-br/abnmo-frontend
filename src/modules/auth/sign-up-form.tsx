@@ -7,13 +7,12 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { PasswordInput } from '@/components/form/password-input'
+import { CheckboxInput } from '@/components/form-v2/checkbox-input'
 import { SelectInput } from '@/components/form-v2/select-input'
 import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
-import { NavLink } from '@/components/ui/nav-link'
 import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { ROUTES } from '@/constants/routes'
 import { SPECIALTIES_OPTIONS, type Specialty } from '@/enums/shared'
@@ -176,12 +175,7 @@ export function SignUpForm({
 
         <CheckboxInput
           name='consent'
-          label={
-            <span className='text-xs'>
-              Li e concordo com os <NavLink href='#'>Termos de Uso</NavLink> e{' '}
-              <NavLink href='#'>Política de Privacidade</NavLink>
-            </span>
-          }
+          label='Li e concordo com os Termos de Uso e Políticas de Privacidade'
         />
 
         <Button type='submit' loading={isPending}>
