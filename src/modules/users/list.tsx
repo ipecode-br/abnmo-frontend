@@ -30,6 +30,7 @@ import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { QueryOrderMapping, UsersOrderBy } from '@/types/orders'
 import type { User } from '@/types/users'
+import { parseDate } from '@/utils/parsers/parse-date'
 
 import { NewInviteButton } from './invites/new-invite-button'
 import { UsersTable } from './table'
@@ -39,15 +40,26 @@ export function UsersList() {
   const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
-  const [page, search, role, status, orderBy, startDate, endDate] = getParams([
-    QUERY_PARAM_KEYS.page,
-    QUERY_PARAM_KEYS.search,
-    QUERY_PARAM_KEYS.role,
-    QUERY_PARAM_KEYS.status,
-    QUERY_PARAM_KEYS.orderBy,
-    QUERY_PARAM_KEYS.startDate,
-    QUERY_PARAM_KEYS.endDate,
-  ])
+  const [page, search, role, status, orderBy, startDateQuery, endDateQuery] =
+    getParams([
+      QUERY_PARAM_KEYS.page,
+      QUERY_PARAM_KEYS.search,
+      QUERY_PARAM_KEYS.role,
+      QUERY_PARAM_KEYS.status,
+      QUERY_PARAM_KEYS.orderBy,
+      QUERY_PARAM_KEYS.startDate,
+      QUERY_PARAM_KEYS.endDate,
+    ])
+
+  const startDate = parseDate<string>(startDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+  })
+  const endDate = parseDate<string>(endDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+    endOfDay: true,
+  })
 
   const ORDER_MAPPING: QueryOrderMapping<UsersOrder, UsersOrderBy> = {
     name_asc: { orderBy: 'name', order: 'ASC' },

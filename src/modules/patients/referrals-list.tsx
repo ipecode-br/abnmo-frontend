@@ -32,6 +32,7 @@ import { NewReferralButton } from '@/modules/referrals/new-referral-button'
 import { ReferralsTable } from '@/modules/referrals/table'
 import type { PatientReferralsOrderBy, QueryOrderMapping } from '@/types/orders'
 import type { Referral } from '@/types/referrals'
+import { parseDate } from '@/utils/parsers/parse-date'
 
 interface PatientReferralsListProps {
   patientId: string
@@ -44,14 +45,25 @@ export function PatientReferralsList({
   const { getParams, currentParams: paramsQueryKey } = useParams()
   const { canUser } = usePermissions()
 
-  const [page, category, status, orderBy, startDate, endDate] = getParams([
-    QUERY_PARAM_KEYS.page,
-    QUERY_PARAM_KEYS.category,
-    QUERY_PARAM_KEYS.status,
-    QUERY_PARAM_KEYS.orderBy,
-    QUERY_PARAM_KEYS.startDate,
-    QUERY_PARAM_KEYS.endDate,
-  ])
+  const [page, category, status, orderBy, startDateQuery, endDateQuery] =
+    getParams([
+      QUERY_PARAM_KEYS.page,
+      QUERY_PARAM_KEYS.category,
+      QUERY_PARAM_KEYS.status,
+      QUERY_PARAM_KEYS.orderBy,
+      QUERY_PARAM_KEYS.startDate,
+      QUERY_PARAM_KEYS.endDate,
+    ])
+
+  const startDate = parseDate<string>(startDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+  })
+  const endDate = parseDate<string>(endDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+    endOfDay: true,
+  })
 
   const ORDER_MAPPING: QueryOrderMapping<
     PatientReferralsOrder,

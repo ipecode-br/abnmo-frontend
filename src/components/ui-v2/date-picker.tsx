@@ -39,17 +39,13 @@ export function DatePicker({
   startYear,
   allowFutureDates,
 }: DatePickerProps) {
+  const selectedDate = parseDate<Date>(value)
+
   const handleCalendarSelect = useCallback(
-    (selectedDate: Date | undefined) => {
-      if (!selectedDate) return
-
-      const date = new Date(selectedDate)
-
-      const DD = String(date.getDate()).padStart(2, '0')
-      const MM = String(date.getMonth() + 1).padStart(2, '0')
-      const YYYY = String(date.getFullYear())
-
-      onChange(`${DD}/${MM}/${YYYY}`)
+    (value: Date | undefined) => {
+      if (!value) return
+      const parsedDate = parseDate<string>(value, { output: 'DD/MM/YYYY' })
+      onChange(parsedDate || '')
       if (onBlur) onBlur()
     },
     [onChange, onBlur],
@@ -79,7 +75,7 @@ export function DatePicker({
             startDate={startDate}
             onSelect={handleCalendarSelect}
             allowFutureDates={allowFutureDates}
-            selected={value ? parseDate(value) : undefined}
+            selected={selectedDate || undefined}
           />
         </PopoverContainer>
       </Popover>

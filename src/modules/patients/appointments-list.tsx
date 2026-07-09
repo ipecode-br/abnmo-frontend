@@ -35,6 +35,7 @@ import type {
   PatientAppointmentsOrderBy,
   QueryOrderMapping,
 } from '@/types/orders'
+import { parseDate } from '@/utils/parsers/parse-date'
 
 interface PatientAppointmentsListProps {
   patientId: string
@@ -47,14 +48,25 @@ export function PatientAppointmentsList({
   const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
-  const [page, category, status, orderBy, startDate, endDate] = getParams([
-    QUERY_PARAM_KEYS.page,
-    QUERY_PARAM_KEYS.category,
-    QUERY_PARAM_KEYS.status,
-    QUERY_PARAM_KEYS.orderBy,
-    QUERY_PARAM_KEYS.startDate,
-    QUERY_PARAM_KEYS.endDate,
-  ])
+  const [page, category, status, orderBy, startDateQuery, endDateQuery] =
+    getParams([
+      QUERY_PARAM_KEYS.page,
+      QUERY_PARAM_KEYS.category,
+      QUERY_PARAM_KEYS.status,
+      QUERY_PARAM_KEYS.orderBy,
+      QUERY_PARAM_KEYS.startDate,
+      QUERY_PARAM_KEYS.endDate,
+    ])
+
+  const startDate = parseDate<string>(startDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+  })
+  const endDate = parseDate<string>(endDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+    endOfDay: true,
+  })
 
   const ORDER_MAPPING: QueryOrderMapping<
     PatientAppointmentsOrder,
