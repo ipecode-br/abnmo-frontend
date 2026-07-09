@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SmilePlusIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -85,6 +86,7 @@ export function AppointmentModal({
   appointment,
   onClose,
 }: AppointmentModalProps) {
+  const formId = useId()
   const { patientOptions } = usePatientOptions()
   const { user } = usePermissions()
 
@@ -167,6 +169,7 @@ export function AppointmentModal({
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer
+            id={formId}
             className='grid gap-4 sm:grid-cols-2'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
@@ -233,6 +236,7 @@ export function AppointmentModal({
 
       <DialogFooter>
         <Button
+          form={formId}
           className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}

@@ -1,5 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -46,6 +47,7 @@ interface PatientRequirementModalProps {
 export function PatientRequirementModal({
   onClose,
 }: Readonly<PatientRequirementModalProps>) {
+  const formId = useId()
   const { patientOptions } = usePatientOptions()
 
   const formMethods = useForm<PatientRequirementFormSchema>({
@@ -88,7 +90,10 @@ export function PatientRequirementModal({
 
       <DialogContent>
         <FormProvider {...formMethods}>
-          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
+          <FormContainer
+            id={formId}
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
             <LabelWrapper>
               <Label isRequired>Paciente</Label>
               <ComboboxInput
@@ -121,6 +126,7 @@ export function PatientRequirementModal({
 
       <DialogFooter>
         <Button
+          form={formId}
           className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}

@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CircleXIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -43,6 +44,7 @@ export function DeclineSurveySubmissionModal({
   submission,
   onClose,
 }: Readonly<DeclineSurveySubmissionModalProps>) {
+  const formId = useId()
   const formMethods = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: { reason: '' },
@@ -80,6 +82,7 @@ export function DeclineSurveySubmissionModal({
       <DialogContent className='space-y-4'>
         <FormProvider {...formMethods}>
           <FormContainer
+            id={formId}
             className='gap-2'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
@@ -105,6 +108,7 @@ export function DeclineSurveySubmissionModal({
 
       <DialogFooter>
         <Button
+          form={formId}
           className='md:flex-1'
           variant='destructive'
           loading={formMethods.formState.isSubmitting}

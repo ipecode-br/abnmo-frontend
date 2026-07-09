@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CircleXIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -36,6 +37,7 @@ export function DeactivatePatientModal({
   name,
   onClose,
 }: Readonly<DeactivatePatientModalProps>) {
+  const formId = useId()
   const deactivatePatientFormSchema = z.object({
     name: z.string().refine((val) => val === name, {
       message: `Insira o nome do paciente corretamente: ${name}`,
@@ -79,7 +81,10 @@ export function DeactivatePatientModal({
 
       <DialogContent>
         <FormProvider {...formMethods}>
-          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
+          <FormContainer
+            id={formId}
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
             <LabelWrapper>
               <Label isRequired>Digite o nome completo do paciente:</Label>
               <TextInput name='name' description={`Nome: ${name}`} />
@@ -90,6 +95,7 @@ export function DeactivatePatientModal({
 
       <DialogFooter>
         <Button
+          form={formId}
           className='md:flex-1'
           variant='destructive'
           loading={formMethods.formState.isSubmitting}

@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailPlusIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -36,6 +37,7 @@ interface NewUserInviteModalProps {
 }
 
 export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
+  const formId = useId()
   const formMethods = useForm<UserInviteFormSchema>({
     resolver: zodResolver(userInviteFormSchema),
     defaultValues: { email: '', role: '' } as unknown as UserInviteFormSchema,
@@ -64,7 +66,10 @@ export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
 
       <DialogContent>
         <FormProvider {...formMethods}>
-          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
+          <FormContainer
+            id={formId}
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
             <LabelWrapper>
               <Label isRequired>E-mail</Label>
               <TextInput name='email' placeholder='Insira o e-mail' />
@@ -79,6 +84,7 @@ export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
 
       <DialogFooter>
         <Button
+          form={formId}
           className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}

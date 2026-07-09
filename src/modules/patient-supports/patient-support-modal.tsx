@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EditIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -49,6 +50,7 @@ export function PatientSupportModal({
   patientSupport,
   onClose,
 }: Readonly<PatientSupportModalProps>) {
+  const formId = useId()
   const ensurePatientId = patientId || patientSupport?.patientId || ''
 
   const formMethods = useForm<PatientSupportFormSchema>({
@@ -100,7 +102,10 @@ export function PatientSupportModal({
 
       <DialogContent>
         <FormProvider {...formMethods}>
-          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
+          <FormContainer
+            id={formId}
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
             <LabelWrapper>
               <Label isRequired>Nome completo</Label>
               <TextInput
@@ -132,6 +137,7 @@ export function PatientSupportModal({
 
       <DialogFooter>
         <Button
+          form={formId}
           className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}

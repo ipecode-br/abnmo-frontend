@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ClipboardPenIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -74,6 +75,7 @@ export function UpdateUserModal({
   user,
   onClose,
 }: Readonly<UpdateUserModalProps>) {
+  const formId = useId()
   const formMethods = useForm<UpdateUserFormSchema>({
     resolver: zodResolver(updateUserFormSchema),
     mode: 'onBlur',
@@ -122,6 +124,7 @@ export function UpdateUserModal({
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer
+            id={formId}
             className='gap-4'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
@@ -163,6 +166,7 @@ export function UpdateUserModal({
 
       <DialogFooter>
         <Button
+          form={formId}
           className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
