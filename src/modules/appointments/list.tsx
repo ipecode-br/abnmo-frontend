@@ -5,10 +5,9 @@ import { ClipboardCheckIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
-import { FilterContainer } from '@/components/filters/container'
-import { FilterDate } from '@/components/filters/date'
+import { FilterContainer } from '@/components/filters/filter-container'
+import { FilterDate } from '@/components/filters/filter-date'
 import { FilterSelect } from '@/components/filters/filter-select'
-import { FilterItem } from '@/components/filters/item'
 import { SearchInput } from '@/components/filters/search-input'
 import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
@@ -18,6 +17,7 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import type { AppointmentsOrder } from '@/enums/appointments'
 import {
@@ -123,22 +123,24 @@ export function AppointmentsList() {
 
       {showFilters && (
         <FilterContainer>
-          <FilterItem title='Categoria' className='lg:w-46'>
+          <LabelWrapper>
+            <Label className='lg:w-46'>Categoria</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
               placeholder='Todas'
               resetLabel='Limpar categoria'
             />
-          </FilterItem>
-          <FilterItem title='Status' className='lg:w-46'>
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label className='lg:w-46'>Status</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={APPOINTMENT_STATUS_OPTIONS}
               placeholder='Todos'
               resetLabel='Limpar status'
             />
-          </FilterItem>
+          </LabelWrapper>
           <FilterDate allowFutureDates />
           <ClearFiltersButton />
         </FilterContainer>

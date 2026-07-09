@@ -5,9 +5,8 @@ import { HeartHandshakeIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
-import { FilterDate } from '@/components/filters/date'
+import { FilterDate } from '@/components/filters/filter-date'
 import { FilterSelect } from '@/components/filters/filter-select'
-import { FilterItem } from '@/components/filters/item'
 import { SearchInput } from '@/components/filters/search-input'
 import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
@@ -17,6 +16,7 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import {
@@ -115,22 +115,24 @@ export function UsersList() {
 
       {showFilters && (
         <section className='flex flex-wrap items-end gap-6'>
-          <FilterItem title='Cargo' className='w-44'>
+          <LabelWrapper>
+            <Label className='w-44'>Cargo</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.role}
               options={USERS_ROLE_OPTIONS}
               placeholder='Todos'
               resetLabel='Limpar cargo'
             />
-          </FilterItem>
-          <FilterItem title='Status' className='w-44'>
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label className='w-44'>Status</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={USER_STATUS_OPTIONS}
               placeholder='Todos'
               resetLabel='Limpar status'
             />
-          </FilterItem>
+          </LabelWrapper>
           <FilterDate />
           <ClearFiltersButton />
         </section>

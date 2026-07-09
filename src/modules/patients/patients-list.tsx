@@ -5,10 +5,9 @@ import { PlusIcon, Users2Icon } from 'lucide-react'
 import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
-import { FilterContainer } from '@/components/filters/container'
-import { FilterDate } from '@/components/filters/date'
+import { FilterContainer } from '@/components/filters/filter-container'
+import { FilterDate } from '@/components/filters/filter-date'
 import { FilterSelect } from '@/components/filters/filter-select'
-import { FilterItem } from '@/components/filters/item'
 import { SearchInput } from '@/components/filters/search-input'
 import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
@@ -19,6 +18,7 @@ import {
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
 import { NavButton } from '@/components/ui/nav-button'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
@@ -113,14 +113,15 @@ export function PatientsList() {
 
       {showFilters && (
         <FilterContainer>
-          <FilterItem title='Status' className='lg:w-40'>
+          <LabelWrapper>
+            <Label className='lg:w-40'>Status</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={PATIENT_STATUS_OPTIONS}
               placeholder='Todos'
               resetLabel='Limpar status'
             />
-          </FilterItem>
+          </LabelWrapper>
           <FilterDate />
           <ClearFiltersButton />
         </FilterContainer>
