@@ -16,14 +16,15 @@ import { toast } from 'sonner'
 import type { z } from 'zod'
 
 import { ComboboxInput } from '@/components/form/combobox-input'
-import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
+import { DateInput } from '@/components/form-v2/date-input'
 import { Button } from '@/components/ui/button'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
 import { PATIENT_NMO_DIAGNOSTIC_OPTIONS } from '@/enums/patients'
@@ -183,15 +184,10 @@ export function PatientForm({
             isRequired={!isViewMode}
             readOnly={isViewMode}
           />
-          <DateInput
-            name='dateOfBirth'
-            label='Data de nascimento'
-            navMode='dropdown'
-            placeholder='Selecione a data'
-            wrapperClassName='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label>Data de nascimento</Label>
+            <DateInput name='dateOfBirth' disabled={isViewMode} />
+          </LabelWrapper>
           <TextInput
             name='cpf'
             label='CPF'

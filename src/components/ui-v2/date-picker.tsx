@@ -16,7 +16,7 @@ export interface DatePickerProps
     'startDate' | 'allowFutureDates' | 'startYear' | 'endYear'
   > {
   id: string
-  value: string
+  value?: string | null
   onChange: (value: string) => void
   onBlur?: () => void
   className?: string
@@ -86,7 +86,7 @@ export function DatePicker({
       <Input
         id={id}
         ref={ref}
-        value={value}
+        value={value || ''}
         onBlur={onBlur}
         className='pl-12'
         inputMode='numeric'
