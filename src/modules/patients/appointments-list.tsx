@@ -121,7 +121,7 @@ export function PatientAppointmentsList({
           />
 
           {canCreateAppointment && (
-            <NewAppointmentButton patientId={patientId} size='sm' />
+            <NewAppointmentButton patientId={patientId} />
           )}
         </SectionHeaderActions>
       </SectionHeader>
@@ -134,7 +134,7 @@ export function PatientAppointmentsList({
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
               placeholder='Todas'
-              resetLabel='Limpar categoria'
+              resetLabel='Todas'
             />
           </LabelWrapper>
           <LabelWrapper>
@@ -143,7 +143,7 @@ export function PatientAppointmentsList({
               param={QUERY_PARAM_KEYS.status}
               options={APPOINTMENT_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
           </LabelWrapper>
           <FilterDate allowFutureDates />

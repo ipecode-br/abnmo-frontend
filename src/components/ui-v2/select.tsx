@@ -11,6 +11,8 @@ import { RefCallBack } from 'react-hook-form'
 
 import { cn } from '@/utils/class-name-merge'
 
+import { Divider } from '../ui/divider'
+
 export type SelectOption = {
   label: string
   value: string
@@ -49,6 +51,7 @@ export function Select({
   options,
   variant,
   className,
+  resetLabel,
   align = 'start',
   contentClassName,
   placeholder = 'Selecione uma opção',
@@ -107,6 +110,18 @@ export function Select({
                   </BaseSelect.ItemIndicator>
                 </BaseSelect.Item>
               ))}
+
+              {resetLabel && selectedOption && (
+                <>
+                  <Divider className='my-1' />
+                  <BaseSelect.Item
+                    value='reset'
+                    className='data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground flex cursor-pointer items-center gap-2 rounded-md px-3 py-1.5 transition-colors outline-none [&_svg]:size-4'
+                  >
+                    <BaseSelect.ItemText>{resetLabel}</BaseSelect.ItemText>
+                  </BaseSelect.Item>
+                </>
+              )}
             </BaseSelect.List>
           </BaseSelect.Popup>
         </BaseSelect.Positioner>

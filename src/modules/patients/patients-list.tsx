@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { PlusIcon, Users2Icon } from 'lucide-react'
+import { Users2Icon } from 'lucide-react'
 import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
@@ -17,10 +17,8 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
-import { NavButton } from '@/components/ui/nav-button'
 import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
-import { ROUTES } from '@/constants/routes'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import {
   PATIENT_STATUS_OPTIONS,
@@ -28,7 +26,6 @@ import {
   type PatientsOrder,
 } from '@/enums/patients'
 import { useParams } from '@/hooks/params'
-import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { PatientsOrderBy, QueryOrderMapping } from '@/types/orders'
 import type { Patient } from '@/types/patients.d.ts'
@@ -38,7 +35,6 @@ import { PatientsTable } from './table'
 export function PatientsList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, currentParams: paramsQueryKey } = useParams()
-  const { canUser } = usePermissions()
 
   const [page, search, status, orderBy, startDate, endDate] = getParams([
     QUERY_PARAM_KEYS.page,
@@ -79,7 +75,6 @@ export function PatientsList() {
 
   const hasActiveFilters = Boolean(status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
-  const canCreatePatient = canUser('create', 'Patients')
 
   return (
     <>
@@ -90,7 +85,7 @@ export function PatientsList() {
           total={total}
         />
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar' className='w-40' />
+          <SearchInput className='w-40' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={PATIENTS_ORDER_OPTIONS}
@@ -101,13 +96,6 @@ export function PatientsList() {
           <ShowFilterButton
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
-
-          {canCreatePatient && (
-            <NavButton size='sm' href={ROUTES.dashboard.patients.new}>
-              <PlusIcon />
-              Cadastrar
-            </NavButton>
-          )}
         </SectionHeaderActions>
       </SectionHeader>
 
@@ -119,7 +107,7 @@ export function PatientsList() {
               param={QUERY_PARAM_KEYS.status}
               options={PATIENT_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
           </LabelWrapper>
           <FilterDate />

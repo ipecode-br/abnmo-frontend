@@ -60,8 +60,8 @@ export function SurveysList() {
           <SearchInput placeholder='Pesquisar' className='w-full sm:w-48' />
           <FilterSelect
             align='end'
+            resetLabel='Todos'
             placeholder='Status'
-            resetLabel='Limpar status'
             className='w-full sm:w-40'
             param={QUERY_PARAM_KEYS.status}
             options={SURVEY_STATUS_OPTIONS}

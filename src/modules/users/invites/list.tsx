@@ -70,7 +70,7 @@ export function UserInvitesList() {
         />
 
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar' className='w-48' />
+          <SearchInput className='w-48' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={INVITES_ORDER_OPTIONS}
@@ -79,7 +79,7 @@ export function UserInvitesList() {
             className='w-40'
           />
 
-          {canCreateInvite && <NewInviteButton size='sm' />}
+          {canCreateInvite && <NewInviteButton />}
         </SectionHeaderActions>
       </SectionHeader>
 

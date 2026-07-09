@@ -116,9 +116,7 @@ export function PatientReferralsList({
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          {canCreateReferral && (
-            <NewReferralButton patientId={patientId} size='sm' />
-          )}
+          {canCreateReferral && <NewReferralButton patientId={patientId} />}
         </SectionHeaderActions>
       </SectionHeader>
 
@@ -130,7 +128,7 @@ export function PatientReferralsList({
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
               placeholder='Todas'
-              resetLabel='Limpar categoria'
+              resetLabel='Todas'
             />
           </LabelWrapper>
           <LabelWrapper>
@@ -139,7 +137,7 @@ export function PatientReferralsList({
               param={QUERY_PARAM_KEYS.status}
               options={REFERRAL_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
           </LabelWrapper>
           <FilterDate allowFutureDates />

@@ -12,13 +12,13 @@ import { cn } from '@/utils/class-name-merge'
 import { InputButton } from '../ui/input-button'
 
 interface SearchInputProps {
-  placeholder: string
+  placeholder?: string
   className?: string
 }
 
 export function SearchInput({
-  placeholder,
   className,
+  placeholder = 'Pesquisar',
 }: Readonly<SearchInputProps>) {
   const searchParam = QUERY_PARAM_KEYS.search
   const pageParam = QUERY_PARAM_KEYS.page

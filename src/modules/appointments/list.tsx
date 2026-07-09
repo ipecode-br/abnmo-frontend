@@ -105,7 +105,7 @@ export function AppointmentsList() {
           total={total}
         />
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar' className='w-48' />
+          <SearchInput className='w-48' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={APPOINTMENTS_ORDER_OPTIONS}
@@ -117,7 +117,7 @@ export function AppointmentsList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          {canCreateAppointment && <NewAppointmentButton size='sm' />}
+          {canCreateAppointment && <NewAppointmentButton />}
         </SectionHeaderActions>
       </SectionHeader>
 
@@ -129,7 +129,7 @@ export function AppointmentsList() {
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
               placeholder='Todas'
-              resetLabel='Limpar categoria'
+              resetLabel='Todas'
             />
           </LabelWrapper>
           <LabelWrapper>
@@ -138,7 +138,7 @@ export function AppointmentsList() {
               param={QUERY_PARAM_KEYS.status}
               options={APPOINTMENT_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
           </LabelWrapper>
           <FilterDate allowFutureDates />

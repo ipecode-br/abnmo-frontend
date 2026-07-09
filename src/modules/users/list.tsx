@@ -97,7 +97,7 @@ export function UsersList() {
         />
 
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar' className='w-48' />
+          <SearchInput className='md:w-48' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={USERS_ORDER_OPTIONS}
@@ -109,7 +109,7 @@ export function UsersList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          {canCreatInvite && <NewInviteButton size='sm' />}
+          {canCreatInvite && <NewInviteButton />}
         </SectionHeaderActions>
       </SectionHeader>
 
@@ -121,7 +121,7 @@ export function UsersList() {
               param={QUERY_PARAM_KEYS.role}
               options={USERS_ROLE_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar cargo'
+              resetLabel='Todos'
             />
           </LabelWrapper>
           <LabelWrapper>
@@ -130,7 +130,7 @@ export function UsersList() {
               param={QUERY_PARAM_KEYS.status}
               options={USER_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
           </LabelWrapper>
           <FilterDate />

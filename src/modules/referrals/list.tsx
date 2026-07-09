@@ -102,7 +102,7 @@ export function ReferralsList() {
           total={total}
         />
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar' className='w-48' />
+          <SearchInput className='w-48' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={REFERRALS_ORDER_OPTIONS}
@@ -114,7 +114,7 @@ export function ReferralsList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          {canCreateReferral && <NewReferralButton size='sm' />}
+          {canCreateReferral && <NewReferralButton />}
         </SectionHeaderActions>
       </SectionHeader>
 
@@ -126,7 +126,7 @@ export function ReferralsList() {
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
               placeholder='Todas'
-              resetLabel='Limpar categoria'
+              resetLabel='Todas'
             />
           </LabelWrapper>
           <LabelWrapper>
@@ -135,7 +135,7 @@ export function ReferralsList() {
               param={QUERY_PARAM_KEYS.status}
               options={REFERRAL_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
           </LabelWrapper>
           <FilterDate allowFutureDates />

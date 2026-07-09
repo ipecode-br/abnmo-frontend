@@ -16,9 +16,9 @@ export const USER_STATUSES = {
 } as const
 export type UserStatus = keyof typeof USER_STATUSES
 
-export const USER_STATUS_OPTIONS = Object.entries(USER_STATUSES).map(
-  ([key, status]) => ({ label: status.label, value: key }),
-)
+export const USER_STATUS_OPTIONS = Object.entries(USER_STATUSES)
+  .filter(([key]) => key !== 'pending')
+  .map(([key, status]) => ({ label: status.label, value: key }))
 
 export const USERS_ORDERS = {
   name_asc: 'Nome (Asc.)',
