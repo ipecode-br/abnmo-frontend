@@ -15,10 +15,10 @@ import { FormProvider, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 import type { z } from 'zod'
 
-import { ComboboxInput } from '@/components/form/combobox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { TextInput } from '@/components/form/text-input'
+import { ComboboxInput } from '@/components/form-v2/combobox-input'
 import { DateInput } from '@/components/form-v2/date-input'
 import { SelectInput } from '@/components/form-v2/select-input'
 import { Button } from '@/components/ui/button'
@@ -112,8 +112,8 @@ export function PatientForm({
   }
   const submitButton = submitButtons[action]
 
-  function handleSelectState(value: BrazilState) {
-    formMethods.setValue('state', value)
+  function handleSelectState(value: string) {
+    formMethods.setValue('state', value as BrazilState)
     formMethods.setValue('city', '')
     formMethods.clearErrors('state')
     formMethods.clearErrors('city')
@@ -211,26 +211,26 @@ export function PatientForm({
             isRequired={!isViewMode}
             readOnly={isViewMode}
           />
-          <ComboboxInput
-            name='state'
-            label='Estado'
-            options={BRAZIL_STATE_OPTIONS}
-            onValueChange={handleSelectState}
-            placeholder='Selecione o estado'
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
-          <ComboboxInput
-            name='city'
-            label='Cidade'
-            options={cityOptions}
-            placeholder='Selecione a cidade'
-            className='lg:col-span-3'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-            disabled={!selectedUF}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label isRequired>Estado</Label>
+            <ComboboxInput
+              name='state'
+              options={BRAZIL_STATE_OPTIONS}
+              onChange={handleSelectState}
+              placeholder='Selecione o estado'
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
+          <LabelWrapper className='lg:col-span-2'>
+            <Label isRequired>Cidade</Label>
+            <ComboboxInput
+              name='city'
+              options={cityOptions}
+              placeholder='Selecione a cidade'
+              readOnly={isViewMode}
+              disabled={!selectedUF}
+            />
+          </LabelWrapper>
 
           <LabelWrapper className='lg:col-span-2'>
             <Label isRequired>Gênero</Label>

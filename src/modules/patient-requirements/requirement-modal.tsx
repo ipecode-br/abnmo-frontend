@@ -4,8 +4,8 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { ComboboxInput } from '@/components/form/combobox-input'
 import { FormContainer } from '@/components/form/form-container'
+import { ComboboxInput } from '@/components/form-v2/combobox-input'
 import { SelectInput } from '@/components/form-v2/select-input'
 import { TextareaInput } from '@/components/form-v2/textarea-input'
 import { Button } from '@/components/ui/button'
@@ -89,13 +89,14 @@ export function PatientRequirementModal({
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <ComboboxInput
-              name='patientId'
-              label='Paciente'
-              placeholder='Selecione um paciente'
-              options={patientOptions}
-              isRequired
-            />
+            <LabelWrapper>
+              <Label isRequired>Paciente</Label>
+              <ComboboxInput
+                name='patientId'
+                placeholder='Selecione um paciente'
+                options={patientOptions}
+              />
+            </LabelWrapper>
 
             <LabelWrapper>
               <Label isRequired>Tipo da solicitação</Label>
