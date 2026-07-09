@@ -29,6 +29,7 @@ import { useParams } from '@/hooks/params'
 import { api } from '@/lib/api'
 import type { PatientsOrderBy, QueryOrderMapping } from '@/types/orders'
 import type { Patient } from '@/types/patients.d.ts'
+import { parseDate } from '@/utils/parsers/parse-date'
 
 import { PatientsTable } from './table'
 
@@ -36,14 +37,25 @@ export function PatientsList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
   const { getParams, currentParams: paramsQueryKey } = useParams()
 
-  const [page, search, status, orderBy, startDate, endDate] = getParams([
-    QUERY_PARAM_KEYS.page,
-    QUERY_PARAM_KEYS.search,
-    QUERY_PARAM_KEYS.status,
-    QUERY_PARAM_KEYS.orderBy,
-    QUERY_PARAM_KEYS.startDate,
-    QUERY_PARAM_KEYS.endDate,
-  ])
+  const [page, search, status, orderBy, startDateQuery, endDateQuery] =
+    getParams([
+      QUERY_PARAM_KEYS.page,
+      QUERY_PARAM_KEYS.search,
+      QUERY_PARAM_KEYS.status,
+      QUERY_PARAM_KEYS.orderBy,
+      QUERY_PARAM_KEYS.startDate,
+      QUERY_PARAM_KEYS.endDate,
+    ])
+
+  const startDate = parseDate<string>(startDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+  })
+  const endDate = parseDate<string>(endDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+    endOfDay: true,
+  })
 
   const ORDER_MAPPING: QueryOrderMapping<PatientsOrder, PatientsOrderBy> = {
     date_asc: { orderBy: 'date', order: 'ASC' },
@@ -55,7 +67,7 @@ export function PatientsList() {
   }
 
   const { data: response, isLoading } = useQuery({
-    placeholderData: (previousData) => previousData,
+    // placeholderData: (previousData) => previousData,
     queryKey: [QUERY_CACHE_KEYS.patients.main, paramsQueryKey],
     queryFn: () =>
       api<{ patients: Patient[]; total: number }>('/patients', {
