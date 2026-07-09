@@ -6,6 +6,7 @@ import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
+import { parseDate } from '@/utils/parsers/parse-date'
 
 import { Calendar } from '../ui-v2/calendar'
 import { Label, LabelWrapper } from '../ui-v2/label'
@@ -22,23 +23,25 @@ export function FilterDate({
 }: Readonly<FilterDateProps>) {
   const { getParams, updateParams } = useParams()
 
-  const pageParam = QUERY_PARAM_KEYS.page
   const startDateParam = QUERY_PARAM_KEYS.startDate
   const endDateParam = QUERY_PARAM_KEYS.endDate
 
   const [startDate, endDate] = getParams([startDateParam, endDateParam])
-  const selectedStartDate = startDate ? new Date(startDate) : undefined
-  const selectedEndDate = endDate ? new Date(endDate) : undefined
+
+  const selectedStartDate =
+    parseDate<Date>(startDate, { input: 'YYYY-MM-DD' }) || undefined
+  const selectedEndDate =
+    parseDate<Date>(endDate, { input: 'YYYY-MM-DD' }) || undefined
 
   function handleSelectDate(
     value: Date | undefined,
-    param: typeof startDateParam | typeof endDateParam,
+    key: typeof startDateParam | typeof endDateParam,
   ) {
     if (!value) return
 
     updateParams({
-      set: [{ key: param, value: value.toISOString() }],
-      remove: [pageParam],
+      set: [{ key, value: parseDate(value, { output: 'YYYY-MM-DD' })! }],
+      remove: [QUERY_PARAM_KEYS.page],
     })
   }
 
