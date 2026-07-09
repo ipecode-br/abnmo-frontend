@@ -3,6 +3,7 @@ type ParseDateType = 'date' | 'ISOString' | 'DD/MM/YYYY' | 'YYYY-MM-DD'
 interface ParseDateOptions {
   input?: ParseDateType
   output?: ParseDateType
+  endOfDay?: boolean
 }
 
 /**
@@ -12,6 +13,7 @@ interface ParseDateOptions {
  * @param options - Configuration options for input and output formats
  * @param options.input - The format of the input string ('ISOString', 'DD/MM/YYYY', or 'YYYY-MM-DD')
  * @param options.output - The desired output format ('date', 'ISOString', 'DD/MM/YYYY', or 'YYYY-MM-DD')
+ * @param options.endOfDay - Whether to set the time to the end of the day (default: false)
  *
  * @returns The parsed date in the specified output format, or null if the input is invalid
  *
@@ -24,6 +26,11 @@ interface ParseDateOptions {
  * // Parse a YYYY-MM-DD string and format as ISO string
  * parseDate('2023-12-25', { input: 'YYYY-MM-DD', output: 'ISOString' })
  * // Returns: "2023-12-25T00:00:00.000Z"
+ *
+ * @example
+ * // Parse a DD/MM/YYYY string and set time to end of day
+ * parseDate('25/12/2023', { input: 'DD/MM/YYYY', endOfDay: true })
+ * // Returns: Date object for December 25, 2023 with time set to 23:59:59
  *
  * @example
  * // Format an existing Date as DD/MM/YYYY
@@ -43,6 +50,7 @@ export function parseDate<T>(
 
   const input = options.input
   const output = options.output
+  const endOfDay = options.endOfDay
 
   let date: Date | null = null
   const isValueString = typeof value === 'string'
@@ -66,6 +74,10 @@ export function parseDate<T>(
   }
 
   if (!date) return null as T
+
+  if (endOfDay) {
+    date.setHours(23, 59, 59, 999)
+  }
 
   if (output === 'ISOString') {
     return date.toISOString() as T
