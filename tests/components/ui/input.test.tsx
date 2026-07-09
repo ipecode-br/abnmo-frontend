@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
-import { Atom } from 'lucide-react'
 
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/ui-v2/input'
 
 describe('Input', () => {
   it('should render a default Input', () => {
@@ -21,33 +20,5 @@ describe('Input', () => {
     const inputElement = screen.getByRole('textbox')
     expect(inputElement).toBeInTheDocument()
     expect(inputElement).toHaveClass('border-error outline-error')
-  })
-  it('should render a default Input with icon', () => {
-    render(<Input icon={Atom} />)
-
-    const inputElement = screen.getByRole('textbox')
-    const iconElement = screen.getByTestId('input-icon')
-
-    expect(inputElement).toBeInTheDocument()
-    expect(iconElement).toBeInTheDocument()
-
-    expect(iconElement).toHaveClass('text-disabled')
-    expect(iconElement).toHaveClass(
-      'absolute left-3 shrink-0 transition-colors',
-    )
-  })
-  it('should render an error Input with icon', () => {
-    render(<Input icon={Atom} variant='error' />)
-
-    const inputElement = screen.getByRole('textbox')
-    const iconElement = screen.getByTestId('input-icon')
-
-    expect(inputElement).toBeInTheDocument()
-    expect(iconElement).toBeInTheDocument()
-
-    expect(iconElement).toHaveClass('text-error')
-    expect(iconElement).toHaveClass(
-      'absolute left-3 shrink-0 transition-colors',
-    )
   })
 })

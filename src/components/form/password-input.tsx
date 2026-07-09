@@ -1,36 +1,26 @@
-import { EyeIcon, EyeOffIcon, LockKeyholeIcon } from 'lucide-react'
+import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Input, type InputProps } from '@/components/ui/input'
+import { Input, type InputProps } from '@/components/ui-v2/input'
 import { cn } from '@/utils/class-name-merge'
 
-import { Label } from '../ui/label'
+import { Button } from '../ui/button'
 import { FormMessage } from './form-message'
 import { PasswordRequirements } from './password-requirements'
-import { RequiredInput } from './required-input'
 
-interface RequiredPasswordInputProps {
+interface PasswordInputProps extends InputProps {
   name: string
-  label: string
   type?: never
+  description?: string
+  showRequirements?: boolean
 }
-
-type PasswordInputProps = RequiredPasswordInputProps &
-  InputProps & {
-    isRequired?: boolean
-    message?: string
-    showRequirements?: boolean
-    wrapperClassName?: InputProps['className']
-  }
 
 export function PasswordInput({
   name,
-  label,
-  isRequired,
-  message,
+  className,
+  description,
   showRequirements,
-  wrapperClassName,
   ...props
 }: Readonly<PasswordInputProps>) {
   const [showPassword, setShowPassword] = useState(false)
@@ -45,39 +35,34 @@ export function PasswordInput({
       name={name}
       control={control}
       render={({ field, fieldState }) => {
-        const showMessage = fieldState.error?.message ?? message
+        const errorMessage = fieldState.error?.message
 
         return (
-          <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-            <Label htmlFor={name}>
-              {label}
-              {isRequired && <RequiredInput />}
-            </Label>
-            <div className='relative flex'>
+          <>
+            <div className={cn('relative flex items-center', className)}>
               <Input
                 id={name}
-                icon={LockKeyholeIcon}
                 variant={fieldState.error && 'error'}
                 type={showPassword ? 'text' : 'password'}
                 {...props}
                 {...field}
               />
 
-              <button
+              <Button
                 type='button'
+                variant='ghost'
                 onClick={() => setShowPassword(!showPassword)}
-                className='text-foreground-soft hover:text-primary focus-visible:outline-ring absolute top-0 right-1 flex size-10 cursor-pointer items-center justify-center rounded-lg transition-colors [&_svg]:size-5'
+                className='hover:text-primary absolute right-1 size-9 -outline-offset-1'
               >
                 {showPassword ? <EyeIcon /> : <EyeOffIcon />}
-              </button>
+              </Button>
             </div>
 
-            <FormMessage error={!!fieldState.error?.message}>
-              {showMessage}
-            </FormMessage>
+            {description && <FormMessage>{description}</FormMessage>}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
 
             {showRequirements && <PasswordRequirements value={field.value} />}
-          </div>
+          </>
         )
       }}
     />

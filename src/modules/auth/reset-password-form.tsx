@@ -10,6 +10,7 @@ import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Button } from '@/components/ui/button'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import { passwordSchema } from '@/schemas'
@@ -58,19 +59,21 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
         <FormField>
-          <PasswordInput
-            name='password'
-            label='Senha'
-            placeholder='Digite sua senha'
-            showRequirements
-            isRequired
-          />
-          <PasswordInput
-            name='confirmPassword'
-            label='Confirmar senha'
-            placeholder='Repita sua senha'
-            isRequired
-          />
+          <LabelWrapper>
+            <Label isRequired>Senha</Label>
+            <PasswordInput
+              name='password'
+              showRequirements
+              placeholder='Digite sua senha'
+            />
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label isRequired>Confirmar senha</Label>
+            <PasswordInput
+              name='confirmPassword'
+              placeholder='Repita sua senha'
+            />
+          </LabelWrapper>
         </FormField>
 
         <Button type='submit' loading={formMethods.formState.isSubmitting}>

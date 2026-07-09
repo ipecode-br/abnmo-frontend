@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextInput } from '@/components/form/text-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -18,6 +18,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
@@ -100,28 +101,31 @@ export function PatientSupportModal({
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <TextInput
-              name='name'
-              label='Nome completo'
-              maxLength={64}
-              placeholder='Insira o nome completo'
-              isRequired
-            />
-            <TextInput
-              name='kinship'
-              label='Parentesco'
-              maxLength={32}
-              placeholder='Insira o parentesco'
-              isRequired
-            />
-            <TextInput
-              name='phone'
-              label='Telefone (WhatsApp)'
-              mask='phone'
-              maxLength={15}
-              placeholder='(00) 00000-0000'
-              isRequired
-            />
+            <LabelWrapper>
+              <Label isRequired>Nome completo</Label>
+              <TextInput
+                name='name'
+                maxLength={64}
+                placeholder='Insira o nome completo'
+              />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Parentesco</Label>
+              <TextInput
+                name='kinship'
+                maxLength={32}
+                placeholder='Insira o parentesco'
+              />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Telefone (WhatsApp)</Label>
+              <TextInput
+                name='phone'
+                mask='phone'
+                maxLength={15}
+                placeholder='(00) 00000-0000'
+              />
+            </LabelWrapper>
           </FormContainer>
         </FormProvider>
       </DialogContent>

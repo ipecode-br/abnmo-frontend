@@ -32,6 +32,16 @@ export function getNullableStringSchema(maxLength = 5000) {
     })
 }
 
+export const passwordSchema = z
+  .string()
+  .trim()
+  .min(1, 'Insira sua senha')
+  .min(
+    PASSWORD_MIN_LENGTH,
+    `Sua senha precisa conter ${PASSWORD_MIN_LENGTH} ou mais caracteres`,
+  )
+  .regex(PASSWORD_REGEX, 'Senha inválida')
+
 export const specialtySchema = z.enum(SPECIALTIES_ENUM, {
   message: 'Categoria é obrigatória',
 })
@@ -53,16 +63,6 @@ export const nameSchema = z
   .regex(NAME_REGEX, 'Informe o nome e sobrenome')
 
 export const emailSchema = z.string().email('Insira um e-mail válido')
-
-export const passwordSchema = z
-  .string()
-  .trim()
-  .min(1, 'Insira sua senha')
-  .min(
-    PASSWORD_MIN_LENGTH,
-    `Sua senha precisa conter ${PASSWORD_MIN_LENGTH} ou mais caracteres`,
-  )
-  .regex(PASSWORD_REGEX, 'Senha inválida')
 
 export const avatarSchema = z.string().url()
 

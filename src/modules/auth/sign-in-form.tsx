@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -11,10 +10,11 @@ import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
-import { TextInput } from '@/components/form/text-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 
@@ -60,17 +60,14 @@ export function SignInForm() {
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
         <FormField className='gap-4'>
-          <TextInput
-            name='email'
-            label='E-mail'
-            icon={MailIcon}
-            placeholder='Digite seu e-mail'
-          />
-          <PasswordInput
-            name='password'
-            label='Senha'
-            placeholder='Digite sua senha'
-          />
+          <LabelWrapper>
+            <Label isRequired>E-mail</Label>
+            <TextInput name='email' placeholder='Digite seu e-mail' />
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label isRequired>Senha</Label>
+            <PasswordInput name='password' placeholder='Digite sua senha' />
+          </LabelWrapper>
         </FormField>
 
         <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[28rem]:flex-col'>

@@ -5,8 +5,8 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextInput } from '@/components/form/text-input'
 import { SelectInput } from '@/components/form-v2/select-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Divider } from '@/components/ui/divider'
 import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
@@ -49,8 +49,14 @@ export function UserProfileForm({ user }: Readonly<UserProfileFormProps>) {
     <FormProvider {...formMethods}>
       <FormContainer>
         <div className='grid gap-4 lg:grid-cols-3'>
-          <TextInput name='name' label='Nome completo' readOnly />
-          <TextInput name='email' label='E-mail' readOnly />
+          <LabelWrapper>
+            <Label isRequired>Nome completo</Label>
+            <TextInput name='name' readOnly />
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label isRequired>E-mail</Label>
+            <TextInput name='email' readOnly />
+          </LabelWrapper>
           <LabelWrapper>
             <Label>Cargo</Label>
             <SelectInput name='role' options={USERS_ROLE_OPTIONS} readOnly />
@@ -69,11 +75,10 @@ export function UserProfileForm({ user }: Readonly<UserProfileFormProps>) {
                   readOnly
                 />
               </LabelWrapper>
-              <TextInput
-                name='registrationId'
-                label='Registro profissional'
-                readOnly
-              />
+              <LabelWrapper>
+                <Label>Registro profissional</Label>
+                <TextInput name='registrationId' readOnly />
+              </LabelWrapper>
             </div>
           </>
         )}

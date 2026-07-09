@@ -4,7 +4,7 @@ import { SearchIcon, XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/ui-v2/input'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useDebounce } from '@/hooks/debounce'
 import { useParams } from '@/hooks/params'
@@ -42,14 +42,15 @@ export function SearchInput({
 
   return (
     <div className={cn('relative', className)}>
+      <span className='absolute top-1 left-1 size-7 rounded-md [&_svg]:size-4'>
+        <SearchIcon />
+      </span>
       <Input
-        size='sm'
         name='search'
         value={query}
-        icon={SearchIcon}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder={placeholder}
         className='w-full pr-10'
+        placeholder={placeholder}
+        onChange={(e) => setQuery(e.target.value)}
       />
 
       {query && (

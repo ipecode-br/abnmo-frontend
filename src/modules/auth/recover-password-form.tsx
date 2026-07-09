@@ -1,15 +1,15 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { MailIcon } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextInput } from '@/components/form/text-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { api } from '@/lib/api'
 import { emailSchema } from '@/schemas'
 
@@ -51,12 +51,10 @@ export function RecoverPasswordForm() {
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-        <TextInput
-          name='email'
-          label='E-mail'
-          icon={MailIcon}
-          placeholder='Digite seu e-mail'
-        />
+        <LabelWrapper>
+          <Label isRequired>E-mail</Label>
+          <TextInput name='email' placeholder='Digite seu e-mail' />
+        </LabelWrapper>
 
         <Button type='submit' loading={formMethods.formState.isSubmitting}>
           Enviar

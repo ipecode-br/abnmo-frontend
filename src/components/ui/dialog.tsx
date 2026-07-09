@@ -64,15 +64,11 @@ export function DialogContainer({
 interface DialogHeaderProps extends React.ComponentProps<'div'> {
   icon?: React.ReactNode
 }
-export function DialogHeader({
-  icon,
-  className,
-  ...props
-}: Readonly<DialogHeaderProps>) {
+export function DialogHeader({ icon, ...props }: Readonly<DialogHeaderProps>) {
   return (
-    <header className='flex items-center gap-4 p-5 pr-12'>
+    <header className='flex items-center gap-4 py-3 pr-12 pl-5'>
       {icon && icon}
-      <div className={cn('flex flex-col gap-0.5', className)} {...props} />
+      <div {...props} />
     </header>
   )
 }
@@ -80,7 +76,6 @@ export function DialogHeader({
 interface DialogIconProps extends React.ComponentProps<'div'> {
   icon: LucideIcon
 }
-
 const dialogIconVariants = cva(
   'border-border size-12 overflow-visible rounded-full p-2.5',
   {
@@ -97,9 +92,9 @@ const dialogIconVariants = cva(
   },
 )
 
-type DialogIconComponentProps = DialogIconProps &
-  VariantProps<typeof dialogIconVariants>
-
+interface DialogIconComponentProps
+  extends DialogIconProps,
+    VariantProps<typeof dialogIconVariants> {}
 export function DialogIcon({
   icon: Icon,
   variant,
@@ -151,7 +146,6 @@ interface DialogDetailFieldProps extends React.ComponentProps<'div'> {
   label: string
   value?: string | number
 }
-
 export function DialogDetailField({
   label,
   className,

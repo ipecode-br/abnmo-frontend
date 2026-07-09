@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCcwKeyIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -19,6 +20,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { api } from '@/lib/api'
 import { passwordSchema } from '@/schemas'
 
@@ -32,7 +34,6 @@ const changeUserPasswordSchema = z
     message: 'Repita sua nova senha corretamente',
     path: ['confirmPassword'],
   })
-
 type ChangeUserPasswordSchema = z.infer<typeof changeUserPasswordSchema>
 
 interface ChangeUserPasswordModalProps {
@@ -42,6 +43,8 @@ interface ChangeUserPasswordModalProps {
 export function ChangeUserPasswordModal({
   onClose,
 }: ChangeUserPasswordModalProps) {
+  const formId = useId()
+
   const formMethods = useForm<ChangeUserPasswordSchema>({
     resolver: zodResolver(changeUserPasswordSchema),
     defaultValues: { password: '', newPassword: '', confirmPassword: '' },
@@ -73,30 +76,35 @@ export function ChangeUserPasswordModal({
       </DialogHeader>
 
       <FormProvider {...formMethods}>
-        <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
+        <FormContainer
+          id={formId}
+          onSubmit={formMethods.handleSubmit(submitForm)}
+        >
           <DialogContent>
             <FormField>
-              <PasswordInput
-                name='password'
-                label='Senha atual'
-                placeholder='Digite sua senha atual'
-                isRequired
-              />
+              <LabelWrapper>
+                <Label isRequired>Senha atual</Label>
+                <PasswordInput
+                  name='password'
+                  placeholder='Digite sua senha atual'
+                />
+              </LabelWrapper>
+              <LabelWrapper>
+                <Label isRequired>Nova senha</Label>
+                <PasswordInput
+                  name='newPassword'
+                  showRequirements
+                  placeholder='Crie uma nova senha'
+                />
+              </LabelWrapper>
 
-              <PasswordInput
-                name='newPassword'
-                label='Nova senha'
-                placeholder='Crie uma nova senha'
-                showRequirements
-                isRequired
-              />
-
-              <PasswordInput
-                name='confirmPassword'
-                label='Confirmar nova senha'
-                placeholder='Repita a nova senha'
-                isRequired
-              />
+              <LabelWrapper>
+                <Label isRequired>Confirme a nova senha</Label>
+                <PasswordInput
+                  name='confirmPassword'
+                  placeholder='Repita a nova senha'
+                />
+              </LabelWrapper>
             </FormField>
           </DialogContent>
         </FormContainer>
@@ -105,6 +113,7 @@ export function ChangeUserPasswordModal({
       <DialogFooter>
         <Button
           type='submit'
+          form={formId}
           className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}

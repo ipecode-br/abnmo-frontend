@@ -17,10 +17,10 @@ import type { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
-import { TextInput } from '@/components/form/text-input'
 import { ComboboxInput } from '@/components/form-v2/combobox-input'
 import { DateInput } from '@/components/form-v2/date-input'
 import { SelectInput } from '@/components/form-v2/select-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
@@ -175,42 +175,42 @@ export function PatientForm({
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
         <FormField className='grid gap-4 lg:grid-cols-7'>
-          <TextInput
-            name='name'
-            label='Nome completo'
-            maxLength={64}
-            placeholder='Insira o nome completo'
-            wrapperClassName='lg:col-span-3'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-3'>
+            <Label isRequired>Nome completo</Label>
+            <TextInput
+              name='name'
+              maxLength={64}
+              placeholder='Insira o nome completo'
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
           <LabelWrapper className='lg:col-span-2'>
             <Label>Data de nascimento</Label>
             <DateInput name='dateOfBirth' disabled={isViewMode} />
           </LabelWrapper>
-          <TextInput
-            name='cpf'
-            label='CPF'
-            mask='cpf'
-            inputMode='numeric'
-            maxLength={14}
-            placeholder='000.000.000-00'
-            wrapperClassName='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label isRequired>CPF</Label>
+            <TextInput
+              name='cpf'
+              mask='cpf'
+              inputMode='numeric'
+              maxLength={14}
+              placeholder='000.000.000-00'
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
 
-          <TextInput
-            name='phone'
-            label='Telefone (WhatsApp)'
-            mask='phone'
-            inputMode='tel'
-            maxLength={15}
-            placeholder='(00) 00000-0000'
-            wrapperClassName='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label isRequired>Telefone (WhatsApp)</Label>
+            <TextInput
+              name='phone'
+              mask='phone'
+              inputMode='tel'
+              maxLength={15}
+              placeholder='(00) 00000-0000'
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
           <LabelWrapper className='lg:col-span-2'>
             <Label isRequired>Estado</Label>
             <ComboboxInput
@@ -248,16 +248,16 @@ export function PatientForm({
               readOnly={isViewMode}
             />
           </LabelWrapper>
-          <TextInput
-            name='email'
-            label='E-mail'
-            inputMode='email'
-            maxLength={64}
-            placeholder='Insira o e-mail'
-            wrapperClassName='lg:col-span-3'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-3'>
+            <Label isRequired>E-mail</Label>
+            <TextInput
+              name='email'
+              inputMode='email'
+              maxLength={64}
+              placeholder='Insira o e-mail'
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
         </FormField>
 
         <Divider />
@@ -271,14 +271,15 @@ export function PatientForm({
               readOnly={isViewMode}
             />
           </LabelWrapper>
-          <TextInput
-            name='disabilityDesc'
-            label='Se sim, qual?'
-            maxLength={500}
-            wrapperClassName='lg:col-span-2'
-            readOnly={isViewMode}
-            disabled={hasDisability === 'no'}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label>Se sim, qual?</Label>
+            <TextInput
+              name='disabilityDesc'
+              maxLength={500}
+              readOnly={isViewMode}
+              disabled={hasDisability === 'no'}
+            />
+          </LabelWrapper>
 
           <LabelWrapper className='lg:col-span-1'>
             <Label isRequired>Usa medicamento regularmente?</Label>
@@ -288,14 +289,15 @@ export function PatientForm({
               readOnly={isViewMode}
             />
           </LabelWrapper>
-          <TextInput
-            name='medicationDesc'
-            label='Se sim, qual?'
-            maxLength={500}
-            wrapperClassName='lg:col-span-2'
-            readOnly={isViewMode}
-            disabled={takeMedication === 'no'}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label>Se sim, qual?</Label>
+            <TextInput
+              name='medicationDesc'
+              maxLength={500}
+              readOnly={isViewMode}
+              disabled={takeMedication === 'no'}
+            />
+          </LabelWrapper>
 
           <LabelWrapper className='lg:col-span-2'>
             <Label isRequired>Possui diagnóstico de NMO?</Label>
@@ -327,34 +329,36 @@ export function PatientForm({
                     className='border-border flex items-start gap-4 max-lg:flex-col data-[first=false]:max-lg:border-t data-[first=false]:max-lg:pt-4'
                     key={support.id}
                   >
-                    <TextInput
-                      name={`supports.${index}.name`}
-                      label='Nome completo'
-                      maxLength={64}
-                      placeholder='Insira o nome completo'
-                      wrapperClassName='flex-1'
-                      isRequired
-                    />
-                    <TextInput
-                      name={`supports.${index}.kinship`}
-                      label='Parentesco'
-                      maxLength={32}
-                      placeholder='Insira o parentesco'
-                      wrapperClassName='lg:w-44'
-                      isRequired
-                    />
-                    <TextInput
-                      name={`supports.${index}.phone`}
-                      label='Telefone (WhatsApp)'
-                      mask='phone'
-                      maxLength={15}
-                      placeholder='(00) 00000-0000'
-                      wrapperClassName={
+                    <LabelWrapper className='flex-1'>
+                      <Label isRequired>Nome completo</Label>
+                      <TextInput
+                        name={`supports.${index}.name`}
+                        maxLength={64}
+                        placeholder='Insira o nome completo'
+                      />
+                    </LabelWrapper>
+                    <LabelWrapper className='lg:w-44'>
+                      <Label isRequired>Parentesco</Label>
+                      <TextInput
+                        name={`supports.${index}.kinship`}
+                        maxLength={32}
+                        placeholder='Insira o parentesco'
+                      />
+                    </LabelWrapper>
+                    <LabelWrapper
+                      className={
                         index === 0 && !isViewMode ? 'lg:w-58' : 'lg:w-44'
                       }
-                      readOnly={isViewMode}
-                      isRequired
-                    />
+                    >
+                      <Label isRequired>Telefone (WhatsApp)</Label>
+                      <TextInput
+                        name={`supports.${index}.phone`}
+                        mask='phone'
+                        maxLength={15}
+                        placeholder='(00) 00000-0000'
+                        readOnly={isViewMode}
+                      />
+                    </LabelWrapper>
                     {index > 0 && !isViewMode && (
                       <Button
                         type='button'

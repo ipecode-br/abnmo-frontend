@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { User2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -12,8 +11,8 @@ import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
-import { TextInput } from '@/components/form/text-input'
 import { SelectInput } from '@/components/form-v2/select-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
 import { Label, LabelWrapper } from '@/components/ui-v2/label'
@@ -72,7 +71,7 @@ export const signUpFormSchema = z
   })
 export type SignUpFormSchema = z.infer<typeof signUpFormSchema>
 
-type RegisterUserPayload = {
+type RegisterUserBody = {
   role: UserRole
   name: string
   password: string
@@ -86,7 +85,10 @@ interface SignUpFormProps {
   role: UserRole
 }
 
-export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
+export function SignUpForm({
+  role,
+  token: inviteToken,
+}: Readonly<SignUpFormProps>) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -112,12 +114,7 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
     registrationId,
   }: SignUpFormSchema) {
     startTransition(async () => {
-      const body: RegisterUserPayload = {
-        role,
-        name,
-        password,
-        inviteToken: token,
-      }
+      const body: RegisterUserBody = { role, name, password, inviteToken }
 
       if (specialty && registrationId) {
         body.specialty = specialty
@@ -142,13 +139,10 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(registerUser)}>
         <FormField>
-          <TextInput
-            name='name'
-            label='Nome completo'
-            icon={User2Icon}
-            placeholder='Insira seu nome completo'
-            isRequired
-          />
+          <LabelWrapper>
+            <Label isRequired>Nome completo</Label>
+            <TextInput name='name' placeholder='Insira seu nome completo' />
+          </LabelWrapper>
 
           {role === 'specialist' && (
             <>
@@ -156,27 +150,31 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
                 <Label isRequired>Especialidade</Label>
                 <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
               </LabelWrapper>
-              <TextInput
-                name='registrationId'
-                label='Registro profissional'
-                placeholder='Insira seu registro profissional'
-                isRequired
-              />
+              <LabelWrapper>
+                <Label isRequired>Registro profissional</Label>
+                <TextInput
+                  name='registrationId'
+                  placeholder='Insira seu registro profissional'
+                />
+              </LabelWrapper>
             </>
           )}
-          <PasswordInput
-            name='password'
-            label='Senha'
-            placeholder='Digite sua senha'
-            showRequirements
-            isRequired
-          />
-          <PasswordInput
-            name='confirmPassword'
-            label='Confirmar senha'
-            placeholder='Repita sua senha'
-            isRequired
-          />
+
+          <LabelWrapper>
+            <Label isRequired>Senha</Label>
+            <PasswordInput
+              name='password'
+              showRequirements
+              placeholder='Digite sua senha'
+            />
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label isRequired>Confirmar senha</Label>
+            <PasswordInput
+              name='confirmPassword'
+              placeholder='Repita sua senha'
+            />
+          </LabelWrapper>
         </FormField>
 
         <CheckboxInput

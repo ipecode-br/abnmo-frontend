@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextInput } from '@/components/form/text-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -19,6 +19,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
@@ -79,12 +80,10 @@ export function DeactivatePatientModal({
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <TextInput
-              name='name'
-              label='Digite o nome completo do paciente:'
-              message={`Nome: ${name}`}
-              isRequired
-            />
+            <LabelWrapper>
+              <Label isRequired>Digite o nome completo do paciente:</Label>
+              <TextInput name='name' description={`Nome: ${name}`} />
+            </LabelWrapper>
           </FormContainer>
         </FormProvider>
       </DialogContent>

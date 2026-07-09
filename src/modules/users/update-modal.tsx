@@ -7,8 +7,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextInput } from '@/components/form/text-input'
 import { SelectInput } from '@/components/form-v2/select-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -125,14 +125,15 @@ export function UpdateUserModal({
             className='gap-4'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
-            <TextInput
-              name='name'
-              label='Nome completo'
-              placeholder='Insira o nome'
-              isRequired
-            />
+            <LabelWrapper>
+              <Label isRequired>Nome completo</Label>
+              <TextInput name='name' placeholder='Insira o nome' />
+            </LabelWrapper>
 
-            <TextInput name='email' label='E-mail' readOnly />
+            <LabelWrapper>
+              <Label isRequired>E-mail</Label>
+              <TextInput name='email' readOnly />
+            </LabelWrapper>
 
             <LabelWrapper>
               <Label isRequired>Função</Label>
@@ -146,13 +147,14 @@ export function UpdateUserModal({
                   <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
                 </LabelWrapper>
 
-                <TextInput
-                  name='registrationId'
-                  label='Registro profissional'
-                  maxLength={32}
-                  placeholder='Insira o número do registro'
-                  isRequired
-                />
+                <LabelWrapper>
+                  <Label isRequired>Registro profissional</Label>
+                  <TextInput
+                    name='registrationId'
+                    maxLength={32}
+                    placeholder='Insira o número do registro'
+                  />
+                </LabelWrapper>
               </>
             )}
           </FormContainer>
