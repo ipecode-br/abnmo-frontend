@@ -56,7 +56,11 @@ export function RecoverPasswordForm() {
           <TextInput name='email' placeholder='Digite seu e-mail' />
         </LabelWrapper>
 
-        <Button type='submit' loading={formMethods.formState.isSubmitting}>
+        <Button
+          type='submit'
+          className='mt-2'
+          loading={formMethods.formState.isSubmitting}
+        >
           Enviar
         </Button>
 

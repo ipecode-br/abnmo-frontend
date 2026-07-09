@@ -56,7 +56,7 @@ export default async function Page({ searchParams }: Readonly<PageProps>) {
 
       <Divider />
 
-      <p className='text-foreground-soft text-center text-sm'>
+      <p className='text-foreground-soft text-center'>
         Já tem uma conta?{' '}
         <NavLink
           href={ROUTES.auth.signIn}

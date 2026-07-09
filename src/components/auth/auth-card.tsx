@@ -19,7 +19,7 @@ export function AuthCard({
   children,
 }: Readonly<AuthCardProps>) {
   return (
-    <div className='bg-background flex w-full max-w-md flex-col items-center gap-6 rounded-3xl p-8 shadow-xl/5'>
+    <div className='bg-background flex w-full max-w-md flex-col items-center gap-6 rounded-3xl p-6 shadow-xl/5 sm:p-8'>
       <header className='flex flex-col items-center gap-1 text-center'>
         {image && (
           <Image

@@ -32,6 +32,8 @@ export function getNullableStringSchema(maxLength = 5000) {
     })
 }
 
+export const emailSchema = z.string().email('Insira um e-mail válido')
+
 export const passwordSchema = z
   .string()
   .trim()
@@ -61,8 +63,6 @@ export const nameSchema = z
   .min(3, 'O nome deve conter mais de 3 caracteres')
   .regex(NON_SPECIAL_CHAR_REGEX, 'Números e caracteres especiais são inválidos')
   .regex(NAME_REGEX, 'Informe o nome e sobrenome')
-
-export const emailSchema = z.string().email('Insira um e-mail válido')
 
 export const avatarSchema = z.string().url()
 

@@ -28,7 +28,7 @@ import { api } from '@/lib/api'
 
 const userInviteFormSchema = z.object({
   email: z.string().email('Insira um e-mail válido'),
-  role: z.enum(USERS_ROLE_ENUM),
+  role: z.enum(USERS_ROLE_ENUM, { message: 'Selecione um cargo' }),
 })
 type UserInviteFormSchema = z.infer<typeof userInviteFormSchema>
 

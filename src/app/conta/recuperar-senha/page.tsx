@@ -20,7 +20,7 @@ export default function Page() {
 
       <Divider />
 
-      <p className='text-foreground-soft text-center text-sm'>
+      <p className='text-foreground-soft text-center'>
         Mudou de ideia?{' '}
         <NavLink
           href={ROUTES.auth.signIn}

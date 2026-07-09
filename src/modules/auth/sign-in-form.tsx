@@ -6,10 +6,9 @@ import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
+import { CheckboxInput } from '@/components/form-v2/checkbox-input'
 import { TextInput } from '@/components/form-v2/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -17,14 +16,16 @@ import { NavLink } from '@/components/ui/nav-link'
 import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
+import { emailSchema } from '@/schemas'
 
 export const signInFormSchema = z.object({
-  email: z.string().email('Insira um e-mail válido'),
+  email: emailSchema,
   password: z.string().min(8, 'Sua senha deve conter 8 ou mais caracteres'),
   keepLoggedIn: z.boolean().optional(),
 })
 export type SignInFormSchema = z.infer<typeof signInFormSchema>
 
+// TODO: redirect patients to new screening flow when it's ready
 export function SignInForm() {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -59,18 +60,16 @@ export function SignInForm() {
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-        <FormField className='gap-4'>
-          <LabelWrapper>
-            <Label isRequired>E-mail</Label>
-            <TextInput name='email' placeholder='Digite seu e-mail' />
-          </LabelWrapper>
-          <LabelWrapper>
-            <Label isRequired>Senha</Label>
-            <PasswordInput name='password' placeholder='Digite sua senha' />
-          </LabelWrapper>
-        </FormField>
+        <LabelWrapper>
+          <Label isRequired>E-mail</Label>
+          <TextInput name='email' placeholder='Digite seu e-mail' />
+        </LabelWrapper>
+        <LabelWrapper>
+          <Label isRequired>Senha</Label>
+          <PasswordInput name='password' placeholder='Digite sua senha' />
+        </LabelWrapper>
 
-        <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[28rem]:flex-col'>
+        <div className='flex items-center justify-between gap-4 max-[28rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
@@ -81,7 +80,7 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button type='submit' loading={isPending}>
+        <Button type='submit' loading={isPending} className='mt-2'>
           Entrar
         </Button>
 

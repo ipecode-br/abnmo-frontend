@@ -9,7 +9,6 @@ import { z } from 'zod'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { SelectInput } from '@/components/form-v2/select-input'
 import { TextInput } from '@/components/form-v2/text-input'
@@ -138,44 +137,42 @@ export function SignUpForm({
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(registerUser)}>
-        <FormField>
-          <LabelWrapper>
-            <Label isRequired>Nome completo</Label>
-            <TextInput name='name' placeholder='Insira seu nome completo' />
-          </LabelWrapper>
+        <LabelWrapper>
+          <Label isRequired>Nome completo</Label>
+          <TextInput name='name' placeholder='Insira seu nome completo' />
+        </LabelWrapper>
 
-          {role === 'specialist' && (
-            <>
-              <LabelWrapper>
-                <Label isRequired>Especialidade</Label>
-                <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
-              </LabelWrapper>
-              <LabelWrapper>
-                <Label isRequired>Registro profissional</Label>
-                <TextInput
-                  name='registrationId'
-                  placeholder='Insira seu registro profissional'
-                />
-              </LabelWrapper>
-            </>
-          )}
+        {role === 'specialist' && (
+          <>
+            <LabelWrapper>
+              <Label isRequired>Especialidade</Label>
+              <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Registro profissional</Label>
+              <TextInput
+                name='registrationId'
+                placeholder='Insira seu registro profissional'
+              />
+            </LabelWrapper>
+          </>
+        )}
 
-          <LabelWrapper>
-            <Label isRequired>Senha</Label>
-            <PasswordInput
-              name='password'
-              showRequirements
-              placeholder='Digite sua senha'
-            />
-          </LabelWrapper>
-          <LabelWrapper>
-            <Label isRequired>Confirmar senha</Label>
-            <PasswordInput
-              name='confirmPassword'
-              placeholder='Repita sua senha'
-            />
-          </LabelWrapper>
-        </FormField>
+        <LabelWrapper>
+          <Label isRequired>Senha</Label>
+          <PasswordInput
+            name='password'
+            showRequirements
+            placeholder='Digite sua senha'
+          />
+        </LabelWrapper>
+        <LabelWrapper>
+          <Label isRequired>Confirmar senha</Label>
+          <PasswordInput
+            name='confirmPassword'
+            placeholder='Repita sua senha'
+          />
+        </LabelWrapper>
 
         <CheckboxInput
           name='consent'

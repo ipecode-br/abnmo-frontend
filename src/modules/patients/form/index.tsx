@@ -16,7 +16,6 @@ import { toast } from 'sonner'
 import type { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { ComboboxInput } from '@/components/form-v2/combobox-input'
 import { DateInput } from '@/components/form-v2/date-input'
 import { SelectInput } from '@/components/form-v2/select-input'
@@ -174,148 +173,144 @@ export function PatientForm({
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-        <FormField className='grid gap-4 lg:grid-cols-7'>
-          <LabelWrapper className='lg:col-span-3'>
-            <Label isRequired>Nome completo</Label>
-            <TextInput
-              name='name'
-              maxLength={64}
-              placeholder='Insira o nome completo'
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-2'>
-            <Label>Data de nascimento</Label>
-            <DateInput name='dateOfBirth' disabled={isViewMode} />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-2'>
-            <Label isRequired>CPF</Label>
-            <TextInput
-              name='cpf'
-              mask='cpf'
-              inputMode='numeric'
-              maxLength={14}
-              placeholder='000.000.000-00'
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
+        <LabelWrapper className='lg:col-span-3'>
+          <Label isRequired>Nome completo</Label>
+          <TextInput
+            name='name'
+            maxLength={64}
+            placeholder='Insira o nome completo'
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label>Data de nascimento</Label>
+          <DateInput name='dateOfBirth' disabled={isViewMode} />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>CPF</Label>
+          <TextInput
+            name='cpf'
+            mask='cpf'
+            inputMode='numeric'
+            maxLength={14}
+            placeholder='000.000.000-00'
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
 
-          <LabelWrapper className='lg:col-span-2'>
-            <Label isRequired>Telefone (WhatsApp)</Label>
-            <TextInput
-              name='phone'
-              mask='phone'
-              inputMode='tel'
-              maxLength={15}
-              placeholder='(00) 00000-0000'
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-2'>
-            <Label isRequired>Estado</Label>
-            <ComboboxInput
-              name='state'
-              options={BRAZIL_STATE_OPTIONS}
-              onChange={handleSelectState}
-              placeholder='Selecione o estado'
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-2'>
-            <Label isRequired>Cidade</Label>
-            <ComboboxInput
-              name='city'
-              options={cityOptions}
-              placeholder='Selecione a cidade'
-              readOnly={isViewMode}
-              disabled={!selectedUF}
-            />
-          </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Telefone (WhatsApp)</Label>
+          <TextInput
+            name='phone'
+            mask='phone'
+            inputMode='tel'
+            maxLength={15}
+            placeholder='(00) 00000-0000'
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Estado</Label>
+          <ComboboxInput
+            name='state'
+            options={BRAZIL_STATE_OPTIONS}
+            onChange={handleSelectState}
+            placeholder='Selecione o estado'
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Cidade</Label>
+          <ComboboxInput
+            name='city'
+            options={cityOptions}
+            placeholder='Selecione a cidade'
+            readOnly={isViewMode}
+            disabled={!selectedUF}
+          />
+        </LabelWrapper>
 
-          <LabelWrapper className='lg:col-span-2'>
-            <Label isRequired>Gênero</Label>
-            <SelectInput
-              name='gender'
-              options={GENDER_OPTIONS}
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-2'>
-            <Label isRequired>Raça ou Cor</Label>
-            <SelectInput
-              name='race'
-              options={RACE_OPTIONS}
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-3'>
-            <Label isRequired>E-mail</Label>
-            <TextInput
-              name='email'
-              inputMode='email'
-              maxLength={64}
-              placeholder='Insira o e-mail'
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-        </FormField>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Gênero</Label>
+          <SelectInput
+            name='gender'
+            options={GENDER_OPTIONS}
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Raça ou Cor</Label>
+          <SelectInput
+            name='race'
+            options={RACE_OPTIONS}
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-3'>
+          <Label isRequired>E-mail</Label>
+          <TextInput
+            name='email'
+            inputMode='email'
+            maxLength={64}
+            placeholder='Insira o e-mail'
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
 
         <Divider />
 
-        <FormField className='grid gap-4 lg:grid-cols-3'>
-          <LabelWrapper className='lg:col-span-1'>
-            <Label isRequired>Possui alguma deficiência?</Label>
-            <SelectInput
-              name='hasDisability'
-              options={YES_OR_NO_OPTIONS}
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-2'>
-            <Label>Se sim, qual?</Label>
-            <TextInput
-              name='disabilityDesc'
-              maxLength={500}
-              readOnly={isViewMode}
-              disabled={hasDisability === 'no'}
-            />
-          </LabelWrapper>
+        <LabelWrapper className='lg:col-span-1'>
+          <Label isRequired>Possui alguma deficiência?</Label>
+          <SelectInput
+            name='hasDisability'
+            options={YES_OR_NO_OPTIONS}
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label>Se sim, qual?</Label>
+          <TextInput
+            name='disabilityDesc'
+            maxLength={500}
+            readOnly={isViewMode}
+            disabled={hasDisability === 'no'}
+          />
+        </LabelWrapper>
 
-          <LabelWrapper className='lg:col-span-1'>
-            <Label isRequired>Usa medicamento regularmente?</Label>
-            <SelectInput
-              name='takeMedication'
-              options={YES_OR_NO_OPTIONS}
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-2'>
-            <Label>Se sim, qual?</Label>
-            <TextInput
-              name='medicationDesc'
-              maxLength={500}
-              readOnly={isViewMode}
-              disabled={takeMedication === 'no'}
-            />
-          </LabelWrapper>
+        <LabelWrapper className='lg:col-span-1'>
+          <Label isRequired>Usa medicamento regularmente?</Label>
+          <SelectInput
+            name='takeMedication'
+            options={YES_OR_NO_OPTIONS}
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label>Se sim, qual?</Label>
+          <TextInput
+            name='medicationDesc'
+            maxLength={500}
+            readOnly={isViewMode}
+            disabled={takeMedication === 'no'}
+          />
+        </LabelWrapper>
 
-          <LabelWrapper className='lg:col-span-2'>
-            <Label isRequired>Possui diagnóstico de NMO?</Label>
-            <SelectInput
-              name='nmoDiagnosis'
-              options={PATIENT_NMO_DIAGNOSTIC_OPTIONS}
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-          <LabelWrapper className='lg:col-span-1'>
-            <Label isRequired>Precisa de assistência legal?</Label>
-            <SelectInput
-              name='needLegalAssistance'
-              options={YES_OR_NO_OPTIONS}
-              readOnly={isViewMode}
-            />
-          </LabelWrapper>
-        </FormField>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Possui diagnóstico de NMO?</Label>
+          <SelectInput
+            name='nmoDiagnosis'
+            options={PATIENT_NMO_DIAGNOSTIC_OPTIONS}
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-1'>
+          <Label isRequired>Precisa de assistência legal?</Label>
+          <SelectInput
+            name='needLegalAssistance'
+            options={YES_OR_NO_OPTIONS}
+            readOnly={isViewMode}
+          />
+        </LabelWrapper>
 
         {isCreateForm && (
           <>

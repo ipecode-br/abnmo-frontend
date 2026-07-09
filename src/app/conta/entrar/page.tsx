@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   title: 'Acessar conta',
 }
 
-// TODO: redirect patients to new screening flow when it's ready
 export default function Page() {
   return (
     <AuthCard
@@ -15,18 +14,6 @@ export default function Page() {
       description='Insira seus dados para entrar na sua conta'
     >
       <SignInForm />
-
-      {/* <Divider text='ou' />
-
-      <p className='text-foreground-soft text-center text-sm'>
-        Não tem uma conta?{' '}
-        <NavLink
-          href={ROUTES.auth.signUp}
-          className='text-foreground font-medium whitespace-nowrap'
-        >
-          Registre-se como paciente aqui
-        </NavLink>
-      </p> */}
     </AuthCard>
   )
 }

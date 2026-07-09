@@ -7,7 +7,6 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Button } from '@/components/ui/button'
 import { Label, LabelWrapper } from '@/components/ui-v2/label'
@@ -58,25 +57,27 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-        <FormField>
-          <LabelWrapper>
-            <Label isRequired>Senha</Label>
-            <PasswordInput
-              name='password'
-              showRequirements
-              placeholder='Digite sua senha'
-            />
-          </LabelWrapper>
-          <LabelWrapper>
-            <Label isRequired>Confirmar senha</Label>
-            <PasswordInput
-              name='confirmPassword'
-              placeholder='Repita sua senha'
-            />
-          </LabelWrapper>
-        </FormField>
+        <LabelWrapper>
+          <Label isRequired>Senha</Label>
+          <PasswordInput
+            name='password'
+            showRequirements
+            placeholder='Digite sua senha'
+          />
+        </LabelWrapper>
+        <LabelWrapper>
+          <Label isRequired>Confirmar senha</Label>
+          <PasswordInput
+            name='confirmPassword'
+            placeholder='Repita sua senha'
+          />
+        </LabelWrapper>
 
-        <Button type='submit' loading={formMethods.formState.isSubmitting}>
+        <Button
+          type='submit'
+          className='mt-2'
+          loading={formMethods.formState.isSubmitting}
+        >
           Redefinir senha
         </Button>
       </FormContainer>

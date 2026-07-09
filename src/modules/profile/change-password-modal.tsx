@@ -8,7 +8,6 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Button } from '@/components/ui/button'
 import {
@@ -75,40 +74,39 @@ export function ChangeUserPasswordModal({
         <DialogTitle>Alterar senha</DialogTitle>
       </DialogHeader>
 
-      <FormProvider {...formMethods}>
-        <FormContainer
-          id={formId}
-          onSubmit={formMethods.handleSubmit(submitForm)}
-        >
-          <DialogContent>
-            <FormField>
-              <LabelWrapper>
-                <Label isRequired>Senha atual</Label>
-                <PasswordInput
-                  name='password'
-                  placeholder='Digite sua senha atual'
-                />
-              </LabelWrapper>
-              <LabelWrapper>
-                <Label isRequired>Nova senha</Label>
-                <PasswordInput
-                  name='newPassword'
-                  showRequirements
-                  placeholder='Crie uma nova senha'
-                />
-              </LabelWrapper>
+      <DialogContent>
+        <FormProvider {...formMethods}>
+          <FormContainer
+            id={formId}
+            className='gap-4'
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
+            <LabelWrapper>
+              <Label isRequired>Senha atual</Label>
+              <PasswordInput
+                name='password'
+                placeholder='Digite sua senha atual'
+              />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Nova senha</Label>
+              <PasswordInput
+                name='newPassword'
+                showRequirements
+                placeholder='Crie uma nova senha'
+              />
+            </LabelWrapper>
 
-              <LabelWrapper>
-                <Label isRequired>Confirme a nova senha</Label>
-                <PasswordInput
-                  name='confirmPassword'
-                  placeholder='Repita a nova senha'
-                />
-              </LabelWrapper>
-            </FormField>
-          </DialogContent>
-        </FormContainer>
-      </FormProvider>
+            <LabelWrapper>
+              <Label isRequired>Confirme a nova senha</Label>
+              <PasswordInput
+                name='confirmPassword'
+                placeholder='Repita a nova senha'
+              />
+            </LabelWrapper>
+          </FormContainer>
+        </FormProvider>
+      </DialogContent>
 
       <DialogFooter>
         <Button
