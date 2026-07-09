@@ -12,10 +12,11 @@ import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
-import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
+import { SelectInput } from '@/components/form-v2/select-input'
 import { Button } from '@/components/ui/button'
 import { NavLink } from '@/components/ui/nav-link'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { ROUTES } from '@/constants/routes'
 import { SPECIALTIES_OPTIONS, type Specialty } from '@/enums/shared'
 import { type UserRole, USERS_ROLE_ENUM } from '@/enums/users'
@@ -151,12 +152,10 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
 
           {role === 'specialist' && (
             <>
-              <SelectInput
-                name='specialty'
-                label='Especialidade'
-                options={SPECIALTIES_OPTIONS}
-                isRequired
-              />
+              <LabelWrapper>
+                <Label isRequired>Especialidade</Label>
+                <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
+              </LabelWrapper>
               <TextInput
                 name='registrationId'
                 label='Registro profissional'

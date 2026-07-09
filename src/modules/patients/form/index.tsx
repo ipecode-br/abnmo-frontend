@@ -18,9 +18,9 @@ import type { z } from 'zod'
 import { ComboboxInput } from '@/components/form/combobox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
-import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { DateInput } from '@/components/form-v2/date-input'
+import { SelectInput } from '@/components/form-v2/select-input'
 import { Button } from '@/components/ui/button'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
@@ -232,24 +232,22 @@ export function PatientForm({
             disabled={!selectedUF}
           />
 
-          <SelectInput
-            name='gender'
-            label='Gênero'
-            options={GENDER_OPTIONS}
-            placeholder='Selecione o gênero'
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
-          <SelectInput
-            name='race'
-            label='Raça ou Cor'
-            options={RACE_OPTIONS}
-            placeholder='Selecione a raça ou cor'
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label isRequired>Gênero</Label>
+            <SelectInput
+              name='gender'
+              options={GENDER_OPTIONS}
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
+          <LabelWrapper className='lg:col-span-2'>
+            <Label isRequired>Raça ou Cor</Label>
+            <SelectInput
+              name='race'
+              options={RACE_OPTIONS}
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
           <TextInput
             name='email'
             label='E-mail'
@@ -265,15 +263,14 @@ export function PatientForm({
         <Divider />
 
         <FormField className='grid gap-4 lg:grid-cols-3'>
-          <SelectInput
-            name='hasDisability'
-            label='Possui alguma deficiência?'
-            options={YES_OR_NO_OPTIONS}
-            placeholder='Teste'
-            className='lg:col-span-1'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-1'>
+            <Label isRequired>Possui alguma deficiência?</Label>
+            <SelectInput
+              name='hasDisability'
+              options={YES_OR_NO_OPTIONS}
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
           <TextInput
             name='disabilityDesc'
             label='Se sim, qual?'
@@ -283,14 +280,14 @@ export function PatientForm({
             disabled={hasDisability === 'no'}
           />
 
-          <SelectInput
-            name='takeMedication'
-            label='Usa medicamento regularmente?'
-            options={YES_OR_NO_OPTIONS}
-            isRequired={!isViewMode}
-            className='lg:col-span-1'
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-1'>
+            <Label isRequired>Usa medicamento regularmente?</Label>
+            <SelectInput
+              name='takeMedication'
+              options={YES_OR_NO_OPTIONS}
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
           <TextInput
             name='medicationDesc'
             label='Se sim, qual?'
@@ -300,22 +297,22 @@ export function PatientForm({
             disabled={takeMedication === 'no'}
           />
 
-          <SelectInput
-            name='nmoDiagnosis'
-            label='Possui diagnóstico de NMO?'
-            options={PATIENT_NMO_DIAGNOSTIC_OPTIONS}
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
-          <SelectInput
-            name='needLegalAssistance'
-            label='Precisa de assistência legal?'
-            options={YES_OR_NO_OPTIONS}
-            className='lg:col-span-1'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+          <LabelWrapper className='lg:col-span-2'>
+            <Label isRequired>Possui diagnóstico de NMO?</Label>
+            <SelectInput
+              name='nmoDiagnosis'
+              options={PATIENT_NMO_DIAGNOSTIC_OPTIONS}
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
+          <LabelWrapper className='lg:col-span-1'>
+            <Label isRequired>Precisa de assistência legal?</Label>
+            <SelectInput
+              name='needLegalAssistance'
+              options={YES_OR_NO_OPTIONS}
+              readOnly={isViewMode}
+            />
+          </LabelWrapper>
         </FormField>
 
         {isCreateForm && (

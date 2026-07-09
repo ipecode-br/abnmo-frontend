@@ -7,8 +7,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
+import { SelectInput } from '@/components/form-v2/select-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -19,6 +19,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { USERS_ROLE_OPTIONS } from '@/enums/users'
@@ -133,22 +134,17 @@ export function UpdateUserModal({
 
             <TextInput name='email' label='E-mail' readOnly />
 
-            <SelectInput
-              name='role'
-              label='Função'
-              options={USERS_ROLE_OPTIONS}
-              readOnly
-            />
+            <LabelWrapper>
+              <Label isRequired>Função</Label>
+              <SelectInput name='role' options={USERS_ROLE_OPTIONS} readOnly />
+            </LabelWrapper>
 
             {isSpecialist && (
               <>
-                <SelectInput
-                  name='specialty'
-                  label='Especialidade'
-                  options={SPECIALTIES_OPTIONS}
-                  placeholder='Selecione a especialidade'
-                  isRequired
-                />
+                <LabelWrapper>
+                  <Label isRequired>Especialidade</Label>
+                  <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
+                </LabelWrapper>
 
                 <TextInput
                   name='registrationId'

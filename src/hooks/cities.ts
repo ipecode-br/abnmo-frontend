@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 
-import type { SelectOption } from '@/components/ui/select'
+import type { SelectOption } from '@/components/ui-v2/select'
 import { CITIES_BY_UF } from '@/constants/cities'
 import type { BrazilState } from '@/enums/shared'
 

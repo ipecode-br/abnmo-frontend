@@ -6,8 +6,8 @@ import { z } from 'zod'
 
 import { ComboboxInput } from '@/components/form/combobox-input'
 import { FormContainer } from '@/components/form/form-container'
-import { SelectInput } from '@/components/form/select-input'
 import { TextareaInput } from '@/components/form/textarea-input'
+import { SelectInput } from '@/components/form-v2/select-input'
 import { Button } from '@/components/ui/button'
 import {
   DialogClose,
@@ -18,6 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui-v2/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   PATIENT_REQUIREMENT_TYPE_ENUM,
@@ -96,12 +97,13 @@ export function PatientRequirementModal({
               isRequired
             />
 
-            <SelectInput
-              name='type'
-              label='Tipo da solicitação'
-              options={PATIENT_REQUIREMENT_TYPE_OPTIONS}
-              isRequired
-            />
+            <LabelWrapper>
+              <Label isRequired>Tipo da solicitação</Label>
+              <SelectInput
+                name='type'
+                options={PATIENT_REQUIREMENT_TYPE_OPTIONS}
+              />
+            </LabelWrapper>
 
             <TextareaInput
               rows={6}
