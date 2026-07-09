@@ -5,7 +5,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { Input, type InputProps } from '@/components/ui-v2/input'
 import { cn } from '@/utils/class-name-merge'
 
-import { Button } from '../ui/button'
+import { InputButton } from '../ui/input-button'
 import { FormMessage } from './form-message'
 import { PasswordRequirements } from './password-requirements'
 
@@ -48,14 +48,12 @@ export function PasswordInput({
                 {...field}
               />
 
-              <Button
-                type='button'
-                variant='ghost'
+              <InputButton
+                className='right-1'
                 onClick={() => setShowPassword(!showPassword)}
-                className='hover:text-primary absolute right-1 size-9 -outline-offset-1'
               >
                 {showPassword ? <EyeIcon /> : <EyeOffIcon />}
-              </Button>
+              </InputButton>
             </div>
 
             {description && <FormMessage>{description}</FormMessage>}
