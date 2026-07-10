@@ -6,10 +6,7 @@ import { useTransition } from 'react'
 
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
-import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuContent } from '@/components/ui/dropdown/content'
-import { DropdownMenuItem } from '@/components/ui/dropdown/item'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import type { User } from '@/types/users.d.ts'
@@ -35,32 +32,28 @@ export function PatientHeaderUserDropdown({
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        aria-label='Abrir menu'
-        className='rounded-full pl-1'
-        indicator
-      >
+    <Menu>
+      <MenuTrigger aria-label='Abrir menu' className='rounded-full pl-1'>
         <Avatar src={user.avatarUrl} className='size-8 [&_svg]:size-4' />
         {firstName}
-      </DropdownMenuTrigger>
+      </MenuTrigger>
 
-      <DropdownMenuContent align='end'>
-        <DropdownMenuItem>
+      <MenuContent align='end'>
+        <MenuItem>
           <User2Icon /> Perfil
-        </DropdownMenuItem>
+        </MenuItem>
 
         <Divider />
 
-        <DropdownMenuItem onClick={logout} disabled={isPending}>
+        <MenuItem onClick={logout} disabled={isPending}>
           {isPending ? (
             <Loader2Icon className='animate-spin' />
           ) : (
             <LogOutIcon />
           )}
           Sair
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </MenuItem>
+      </MenuContent>
+    </Menu>
   )
 }

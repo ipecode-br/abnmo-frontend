@@ -4,10 +4,7 @@ import { EllipsisIcon, User2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuContent } from '@/components/ui/dropdown/content'
-import { DropdownMenuItem } from '@/components/ui/dropdown/item'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
+import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { ROUTES } from '@/constants/routes'
 import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
 
@@ -25,13 +22,13 @@ export function ApprovedPatientRequirementsListTableActions({
 
   return (
     <>
-      <DropdownMenu open={isDropdownOpen} onOpenChange={setDropdownOpen}>
-        <DropdownMenuTrigger variant='ghost' className='size-8'>
+      <Menu open={isDropdownOpen} onOpenChange={setDropdownOpen}>
+        <MenuTrigger variant='ghost' className='size-8'>
           <EllipsisIcon />
-        </DropdownMenuTrigger>
+        </MenuTrigger>
 
-        <DropdownMenuContent align='end'>
-          <DropdownMenuItem
+        <MenuContent align='end'>
+          <MenuItem
             onClick={() =>
               router.push(
                 ROUTES.dashboard.patients.details.info(requirement.patient.id),
@@ -40,9 +37,9 @@ export function ApprovedPatientRequirementsListTableActions({
           >
             <User2Icon />
             Informações do paciente
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          </MenuItem>
+        </MenuContent>
+      </Menu>
     </>
   )
 }

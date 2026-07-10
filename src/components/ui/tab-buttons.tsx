@@ -1,6 +1,6 @@
 'use client'
 
-import { ScrollArea } from '@base-ui-components/react'
+import { ScrollArea } from '@base-ui/react/scroll-area'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { cn } from '@/utils/class-name-merge'
