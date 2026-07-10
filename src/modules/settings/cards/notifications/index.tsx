@@ -9,7 +9,7 @@ export function NotificationCard({ label }: NotificationCardProps) {
   return (
     <Card className='flex w-full max-w-4xl items-center p-3'>
       <p className='text-foreground-soft mr-auto font-normal'>{label}</p>
-      <Switch />
+      <Switch label='' />
     </Card>
   )
 }
