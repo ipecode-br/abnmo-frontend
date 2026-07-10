@@ -1,4 +1,4 @@
-import { SelectOption } from '@/components/ui-v2/select'
+import { SelectOption } from '@/components/ui/select'
 
 interface GenerateYearOptionsProps {
   startYear: number

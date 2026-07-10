@@ -8,7 +8,7 @@ import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Divider } from '@/components/ui/divider'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { USERS_ROLE_OPTIONS } from '@/enums/users'
 import {

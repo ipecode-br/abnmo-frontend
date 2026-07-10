@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Checkbox, CheckboxProps } from '../ui-v2/checkbox'
+import { Checkbox, CheckboxProps } from '../ui/checkbox'
 import { FormMessage } from './form-message'
 
 interface CheckboxInputProps extends CheckboxProps {

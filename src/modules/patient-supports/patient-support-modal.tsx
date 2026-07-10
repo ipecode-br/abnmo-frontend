@@ -19,7 +19,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'

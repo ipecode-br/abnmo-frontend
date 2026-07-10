@@ -8,9 +8,9 @@ import { cn } from '@/utils/class-name-merge'
 import { formatDate } from '@/utils/formatters/format-date'
 import { parseDate } from '@/utils/parsers/parse-date'
 
-import { Calendar } from '../ui-v2/calendar'
-import { Label, LabelWrapper } from '../ui-v2/label'
-import { Popover, PopoverContainer, PopoverTrigger } from '../ui-v2/popover'
+import { Calendar } from '../ui/calendar'
+import { Label, LabelWrapper } from '../ui/label'
+import { Popover, PopoverContainer, PopoverTrigger } from '../ui/popover'
 
 interface FilterDateProps extends React.ComponentProps<'div'> {
   allowFutureDates?: boolean

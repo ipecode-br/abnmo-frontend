@@ -9,7 +9,7 @@ import { FormContainer } from '@/components/form/form-container'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { api } from '@/lib/api'
 import { emailSchema } from '@/schemas'
 

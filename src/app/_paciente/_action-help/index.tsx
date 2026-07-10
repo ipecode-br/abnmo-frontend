@@ -12,7 +12,7 @@ import {
   Popover,
   PopoverContainer,
   PopoverTrigger,
-} from '@/components/ui-v2/popover'
+} from '@/components/ui/popover'
 
 export function ActionHelp() {
   const [open, setOpen] = useState(false)

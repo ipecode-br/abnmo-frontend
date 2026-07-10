@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Select, SelectProps } from '../ui-v2/select'
+import { Select, SelectProps } from '../ui/select'
 import { FormMessage } from './form-message'
 
 interface SelectInputProps extends Omit<SelectProps, 'id'> {

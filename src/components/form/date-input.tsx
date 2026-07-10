@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { DatePicker, DatePickerProps } from '../ui-v2/date-picker'
+import { DatePicker, DatePickerProps } from '../ui/date-picker'
 import { FormMessage } from './form-message'
 
 interface DateInputProps

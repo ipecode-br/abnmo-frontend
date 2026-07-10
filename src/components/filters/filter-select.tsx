@@ -1,6 +1,6 @@
 'use client'
 
-import { Select, type SelectProps } from '@/components/ui-v2/select'
+import { Select, type SelectProps } from '@/components/ui/select'
 import { QUERY_PARAM_KEYS, type QueryParamKey } from '@/enums/params'
 import { useParams } from '@/hooks/params'
 

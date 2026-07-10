@@ -19,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   PATIENT_REQUIREMENT_TYPE_ENUM,

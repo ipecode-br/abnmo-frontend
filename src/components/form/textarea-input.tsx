@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Textarea, TextareaProps } from '../ui-v2/textarea'
+import { Textarea, TextareaProps } from '../ui/textarea'
 import { FormMessage } from './form-message'
 
 interface TextareaInputProps extends TextareaProps {

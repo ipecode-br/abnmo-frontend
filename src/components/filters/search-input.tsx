@@ -3,7 +3,7 @@
 import { SearchIcon, XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { Input } from '@/components/ui-v2/input'
+import { Input } from '@/components/ui/input'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useDebounce } from '@/hooks/debounce'
 import { useParams } from '@/hooks/params'

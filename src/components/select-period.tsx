@@ -2,7 +2,7 @@
 
 import { QUERY_PERIODS_OPTIONS, type QueryPeriod } from '@/enums/queries'
 
-import { Select, type SelectOption } from './ui-v2/select'
+import { Select, type SelectOption } from './ui/select'
 
 interface SelectPeriodProps {
   period: QueryPeriod

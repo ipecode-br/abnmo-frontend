@@ -17,7 +17,7 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import type { ReferralsOrder } from '@/enums/referrals'

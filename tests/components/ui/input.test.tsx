@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
 
-import { Input } from '@/components/ui-v2/input'
+import { Input } from '@/components/ui/input'
 
 describe('Input', () => {
   it('should render a default Input', () => {

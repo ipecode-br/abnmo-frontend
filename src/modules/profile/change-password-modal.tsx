@@ -19,7 +19,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { api } from '@/lib/api'
 import { passwordSchema } from '@/schemas'
 

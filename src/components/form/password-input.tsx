@@ -2,7 +2,7 @@ import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Input, type InputProps } from '@/components/ui-v2/input'
+import { Input, type InputProps } from '@/components/ui/input'
 import { cn } from '@/utils/class-name-merge'
 
 import { InputButton } from '../ui/input-button'

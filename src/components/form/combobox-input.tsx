@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Combobox, ComboboxProps } from '../ui-v2/combobox'
+import { Combobox, ComboboxProps } from '../ui/combobox'
 import { FormMessage } from './form-message'
 
 interface ComboboxInputProps extends Omit<ComboboxProps, 'value' | 'onChange'> {

@@ -11,7 +11,7 @@ import { RefCallBack } from 'react-hook-form'
 
 import { cn } from '@/utils/class-name-merge'
 
-import { Divider } from '../ui/divider'
+import { Divider } from './divider'
 
 export type SelectOption = {
   label: string

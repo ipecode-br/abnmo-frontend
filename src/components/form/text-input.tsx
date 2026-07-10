@@ -5,7 +5,7 @@ import { formatCepNumber } from '@/utils/formatters/format-cep-number'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
-import { Input, InputProps } from '../ui-v2/input'
+import { Input, InputProps } from '../ui/input'
 import { FormMessage } from './form-message'
 
 type InputMaskType = 'phone' | 'cpf' | 'cep' | 'number'

@@ -23,7 +23,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { PATIENT_CONDITION_OPTIONS } from '@/enums/patients'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'

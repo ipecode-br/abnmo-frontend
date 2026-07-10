@@ -20,7 +20,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Label, LabelWrapper } from '@/components/ui-v2/label'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { USERS_ROLE_OPTIONS } from '@/enums/users'
