@@ -13,14 +13,20 @@ interface SwitchGroupInputOptions {
 interface SwitchGroupInputProps extends React.ComponentProps<'div'> {
   name: string
   options: SwitchGroupInputOptions[]
+  disabledValues?: string[]
   description?: string
+  readOnly?: boolean
+  disabled?: boolean
 }
 
 export function SwitchGroupInput({
   name,
   options,
+  disabled,
+  readOnly,
   className,
   description,
+  disabledValues,
   ...props
 }: SwitchGroupInputProps) {
   const { control } = useFormContext()
@@ -46,7 +52,9 @@ export function SwitchGroupInput({
                 <Switch
                   key={value}
                   label={label}
+                  readOnly={readOnly}
                   checked={values.includes(value)}
+                  disabled={disabledValues?.includes(value) || disabled}
                   onCheckedChange={(checked) =>
                     handleCheckedChange(value, checked)
                   }
