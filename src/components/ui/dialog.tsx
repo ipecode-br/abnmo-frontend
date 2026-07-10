@@ -40,7 +40,7 @@ export function DialogContainer({
       <BaseDialog.Backdrop className='fixed inset-0 z-20 min-h-dvh bg-black/60 backdrop-blur transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-[-webkit-touch-callout:none]:absolute' />
       <BaseDialog.Popup
         className={cn(
-          'bg-background divide-border fixed top-1/2 left-1/2 z-30 flex max-h-[90vh] w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 flex-col divide-y rounded-2xl shadow-lg',
+          'bg-background divide-border fixed top-1/2 left-1/2 z-30 flex max-h-[90vh] w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 flex-col divide-y overflow-hidden rounded-2xl shadow-lg',
           'transition-all duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
           className,
         )}

@@ -4,7 +4,6 @@ import type { Specialty } from '@/enums/shared'
 
 export type Referral = {
   id: string
-  patientId: string
   date: string
   status: ReferralStatus
   category: Specialty
@@ -16,6 +15,13 @@ export type Referral = {
   patient: {
     id: string
     name: string
+    email: string
+    avatarUrl: string | null
+  }
+  specialist: {
+    id: string
+    name: string
+    email: string
     avatarUrl: string | null
   }
 }
