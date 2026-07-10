@@ -97,7 +97,7 @@ export function AppointmentsTable({
                     <TableLink
                       className='w-64'
                       href={ROUTES.dashboard.patients.details.info(
-                        appointment.patientId,
+                        appointment.patient.id,
                       )}
                     >
                       <Avatar

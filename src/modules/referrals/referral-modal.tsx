@@ -96,7 +96,7 @@ export function ReferralModal({
     resolver: zodResolver(referralFormSchema),
     defaultValues: {
       role: user?.role,
-      patientId: patientId ?? (referral?.patientId || ''),
+      patientId: patientId ?? (referral?.patient.id || ''),
       date: referral?.date || '',
       condition: referral?.condition || '',
       category: isUserSpecialist ? undefined : referral?.category || '',

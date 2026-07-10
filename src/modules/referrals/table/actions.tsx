@@ -59,7 +59,7 @@ export function ReferralsTableActions({
           <MenuItem
             onClick={() =>
               router.push(
-                ROUTES.dashboard.patients.details.info(referral.patientId),
+                ROUTES.dashboard.patients.details.info(referral.patient.id),
               )
             }
           >
@@ -69,7 +69,7 @@ export function ReferralsTableActions({
           <MenuItem
             onClick={() =>
               router.push(
-                ROUTES.dashboard.patients.details.history(referral.patientId),
+                ROUTES.dashboard.patients.details.history(referral.patient.id),
               )
             }
           >

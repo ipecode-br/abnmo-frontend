@@ -92,7 +92,7 @@ export function ReferralsTable({
                     <TableLink
                       className='w-64'
                       href={ROUTES.dashboard.patients.details.info(
-                        referral.patientId,
+                        referral.patient.id,
                       )}
                     >
                       <Avatar

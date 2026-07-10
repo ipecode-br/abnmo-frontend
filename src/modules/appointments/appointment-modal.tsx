@@ -97,7 +97,7 @@ export function AppointmentModal({
     resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
       role: user?.role,
-      patientId: patientId ?? (appointment?.patientId || ''),
+      patientId: patientId ?? (appointment?.patient.id || ''),
       date: appointment?.date || '',
       condition: appointment?.condition || '',
       category: isUserSpecialist ? undefined : appointment?.category || '',
