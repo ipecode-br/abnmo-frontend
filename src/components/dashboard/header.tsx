@@ -17,7 +17,7 @@ export function DashboardHeader() {
   const section = pathnames[0] as SectionTitle
   const sectionTitle = SECTION_TITLES[section || 'default']
 
-  const showBreadcrumbs = !!pathnames[0]
+  const showBreadcrumbs = !!pathnames[0] && pathnames[0] !== 'perfil'
   const showBackButton = pathnames.length > 0
 
   return (

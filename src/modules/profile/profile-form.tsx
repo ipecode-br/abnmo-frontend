@@ -10,7 +10,8 @@ import { TextInput } from '@/components/form/text-input'
 import { Divider } from '@/components/ui/divider'
 import { Label, LabelWrapper } from '@/components/ui/label'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
-import { USERS_ROLE_OPTIONS } from '@/enums/users'
+import { USER_ROLES, USERS_ROLE_OPTIONS } from '@/enums/users'
+import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 import {
   emailSchema,
   nameSchema,
@@ -45,21 +46,23 @@ export function UserProfileForm({ user }: Readonly<UserProfileFormProps>) {
     mode: 'onBlur',
   })
 
+  const roleOptions = convertObjectToOptions(USER_ROLES)
+
   return (
     <FormProvider {...formMethods}>
       <FormContainer>
         <div className='grid gap-4 lg:grid-cols-3'>
           <LabelWrapper>
-            <Label isRequired>Nome completo</Label>
+            <Label>Nome completo</Label>
             <TextInput name='name' readOnly />
           </LabelWrapper>
           <LabelWrapper>
-            <Label isRequired>E-mail</Label>
+            <Label>E-mail</Label>
             <TextInput name='email' readOnly />
           </LabelWrapper>
           <LabelWrapper>
             <Label>Cargo</Label>
-            <SelectInput name='role' options={USERS_ROLE_OPTIONS} readOnly />
+            <SelectInput name='role' options={roleOptions} readOnly />
           </LabelWrapper>
         </div>
 

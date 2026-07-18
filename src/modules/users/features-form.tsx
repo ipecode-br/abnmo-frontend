@@ -12,9 +12,11 @@ import { SwitchGroupInput } from '@/components/form/switch-group-input'
 import { Button } from '@/components/ui/button'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import {
+  APPOINTMENT_FEATURE_OPTIONS,
   BASE_FEATURES,
   MEMBER_FEATURE_OPTIONS,
   PATIENT_FEATURE_OPTIONS,
+  REFERRAL_FEATURE_OPTIONS,
   SURVEY_FEATURE_OPTIONS,
   USER_INVITE_FEATURE_OPTIONS,
 } from '@/enums/features'
@@ -36,6 +38,8 @@ const FEATURES_GROUP = [
   { title: 'Pacientes', options: PATIENT_FEATURE_OPTIONS },
   { title: 'Equipe', options: MEMBER_FEATURE_OPTIONS },
   { title: 'Convites de membros', options: USER_INVITE_FEATURE_OPTIONS },
+  { title: 'Atendimentos', options: APPOINTMENT_FEATURE_OPTIONS },
+  { title: 'Encaminhamentos', options: REFERRAL_FEATURE_OPTIONS },
 ] as const
 
 export function UserFeaturesForm({ user }: UserFeaturesFormProps) {

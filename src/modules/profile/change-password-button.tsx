@@ -1,6 +1,6 @@
 'use client'
 
-import { RectangleEllipsisIcon } from 'lucide-react'
+import { LockKeyholeOpenIcon } from 'lucide-react'
 import React, { useState } from 'react'
 
 import type { ButtonProps } from '@/components/ui/button'
@@ -14,7 +14,7 @@ export function ChangeUserPasswordButton(props?: Readonly<ButtonProps>) {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger {...props}>
-        <RectangleEllipsisIcon />
+        <LockKeyholeOpenIcon />
         Alterar senha
       </DialogTrigger>
 
