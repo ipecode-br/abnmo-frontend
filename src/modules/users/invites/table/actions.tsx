@@ -50,7 +50,7 @@ export function UserInvitesTableActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'cancel' && (
+      {canCancelInvite && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

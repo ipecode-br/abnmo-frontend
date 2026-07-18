@@ -65,30 +65,26 @@ export function PatientSupportCardActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && canUpdatePatientSupport && (
-        <Dialog
-          open={modalOpen === 'edit'}
-          onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
-        >
-          <PatientSupportModal
-            mode='edit'
-            patientSupport={patientSupport}
-            onClose={() => setModalOpen(null)}
-          />
-        </Dialog>
-      )}
+      <Dialog
+        open={modalOpen === 'edit'}
+        onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
+      >
+        <PatientSupportModal
+          mode='edit'
+          patientSupport={patientSupport}
+          onClose={() => setModalOpen(null)}
+        />
+      </Dialog>
 
-      {modalOpen === 'delete' && canDeletePatientSupport && (
-        <Dialog
-          open={modalOpen === 'delete'}
-          onOpenChange={(open) => setModalOpen(open ? 'delete' : null)}
-        >
-          <DeletePatientSupportModal
-            patientSupport={patientSupport}
-            onClose={() => setModalOpen(null)}
-          />
-        </Dialog>
-      )}
+      <Dialog
+        open={modalOpen === 'delete'}
+        onOpenChange={(open) => setModalOpen(open ? 'delete' : null)}
+      >
+        <DeletePatientSupportModal
+          patientSupport={patientSupport}
+          onClose={() => setModalOpen(null)}
+        />
+      </Dialog>
     </>
   )
 }

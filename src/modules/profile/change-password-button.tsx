@@ -18,9 +18,7 @@ export function ChangeUserPasswordButton(props?: Readonly<ButtonProps>) {
         Alterar senha
       </DialogTrigger>
 
-      {dialogOpen && (
-        <ChangeUserPasswordModal onClose={() => setDialogOpen(false)} />
-      )}
+      <ChangeUserPasswordModal onClose={() => setDialogOpen(false)} />
     </Dialog>
   )
 }

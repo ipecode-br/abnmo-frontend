@@ -22,13 +22,11 @@ export function NewPatientSupportButton({
         <PlusIcon /> Novo contato
       </DialogTrigger>
 
-      {isModalOpen && (
-        <PatientSupportModal
-          mode='create'
-          patientId={patientId}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
+      <PatientSupportModal
+        mode='create'
+        patientId={patientId}
+        onClose={() => setIsModalOpen(false)}
+      />
     </Dialog>
   )
 }

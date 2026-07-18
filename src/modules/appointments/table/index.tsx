@@ -173,14 +173,14 @@ export function AppointmentsTable({
           ))}
       </TableBody>
 
-      {viewAppointment && (
-        <Dialog
-          open={!!viewAppointment}
-          onOpenChange={() => setViewAppointment(null)}
-        >
+      <Dialog
+        open={!!viewAppointment}
+        onOpenChange={() => setViewAppointment(null)}
+      >
+        {viewAppointment && (
           <ViewAppointmentModal appointment={viewAppointment} />
-        </Dialog>
-      )}
+        )}
+      </Dialog>
     </Table>
   )
 }

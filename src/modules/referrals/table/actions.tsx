@@ -92,7 +92,7 @@ export function ReferralsTableActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && allowEdit && canUpdateReferral && (
+      {canUpdateReferral && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -104,7 +104,7 @@ export function ReferralsTableActions({
         </Dialog>
       )}
 
-      {modalOpen === 'cancel' && allowCancel && canCancelReferral && (
+      {canCancelReferral && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

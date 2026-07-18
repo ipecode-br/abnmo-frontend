@@ -159,14 +159,9 @@ export function ReferralsTable({
           ))}
       </TableBody>
 
-      {viewReferral && (
-        <Dialog
-          open={!!viewReferral}
-          onOpenChange={() => setViewReferral(null)}
-        >
-          <ViewReferralModal referral={viewReferral} />
-        </Dialog>
-      )}
+      <Dialog open={!!viewReferral} onOpenChange={() => setViewReferral(null)}>
+        {viewReferral && <ViewReferralModal referral={viewReferral} />}
+      </Dialog>
     </Table>
   )
 }

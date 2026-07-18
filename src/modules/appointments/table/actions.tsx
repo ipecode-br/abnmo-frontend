@@ -94,7 +94,7 @@ export function AppointmentsTableActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && allowEdit && canUpdateAppointment && (
+      {allowEdit && canUpdateAppointment && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -106,7 +106,7 @@ export function AppointmentsTableActions({
         </Dialog>
       )}
 
-      {modalOpen === 'cancel' && allowCancel && canCancelAppointment && (
+      {allowCancel && canCancelAppointment && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

@@ -32,8 +32,8 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
   const router = useRouter()
 
   const isPatientActive = patient.status === 'active'
-  const canCreateAppointment = canUser('create', 'Appointments')
   const canCreateReferral = canUser('create', 'Referrals')
+  const canCreateAppointment = canUser('create', 'Appointments')
   const canDeactivatePatient = canUser('delete', 'Patients')
 
   return (
@@ -89,51 +89,38 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
         </MenuContent>
       </Menu>
 
-      {isPatientActive && (
-        <>
-          {canCreateReferral && (
-            <Dialog
-              open={isReferralModalOpen}
-              onOpenChange={setReferralModalOpen}
-            >
-              {isReferralModalOpen && (
-                <ReferralModal
-                  patientId={patient.id}
-                  onClose={() => setReferralModalOpen(false)}
-                />
-              )}
-            </Dialog>
-          )}
+      {canCreateReferral && (
+        <Dialog open={isReferralModalOpen} onOpenChange={setReferralModalOpen}>
+          <ReferralModal
+            patientId={patient.id}
+            onClose={() => setReferralModalOpen(false)}
+          />
+        </Dialog>
+      )}
 
-          {canCreateAppointment && (
-            <Dialog
-              open={isAppointmentModalOpen}
-              onOpenChange={setAppointmentModalOpen}
-            >
-              {isAppointmentModalOpen && (
-                <AppointmentModal
-                  patientId={patient.id}
-                  onClose={() => setAppointmentModalOpen(false)}
-                />
-              )}
-            </Dialog>
-          )}
+      {canCreateAppointment && (
+        <Dialog
+          open={isAppointmentModalOpen}
+          onOpenChange={setAppointmentModalOpen}
+        >
+          <AppointmentModal
+            patientId={patient.id}
+            onClose={() => setAppointmentModalOpen(false)}
+          />
+        </Dialog>
+      )}
 
-          {canDeactivatePatient && (
-            <Dialog
-              open={isDeactivateModalOpen}
-              onOpenChange={setDeactivateModalOpen}
-            >
-              {isDeactivateModalOpen && (
-                <DeactivatePatientModal
-                  id={patient.id}
-                  name={patient.name}
-                  onClose={() => setDeactivateModalOpen(false)}
-                />
-              )}
-            </Dialog>
-          )}
-        </>
+      {canDeactivatePatient && (
+        <Dialog
+          open={isDeactivateModalOpen}
+          onOpenChange={setDeactivateModalOpen}
+        >
+          <DeactivatePatientModal
+            id={patient.id}
+            name={patient.name}
+            onClose={() => setDeactivateModalOpen(false)}
+          />
+        </Dialog>
       )}
     </>
   )

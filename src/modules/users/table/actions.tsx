@@ -91,7 +91,7 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && canUpdateUser && (
+      {canUpdateUser && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -100,10 +100,10 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
         </Dialog>
       )}
 
-      {modalOpen === 'status' && canDeleteUser && (
+      {canDeleteUser && (
         <Dialog
           open={modalOpen === 'status'}
-          onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
+          onOpenChange={(open) => setModalOpen(open ? 'status' : null)}
         >
           <ChangeUserStatusModal
             user={user}

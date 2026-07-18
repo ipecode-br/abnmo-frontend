@@ -149,29 +149,29 @@ export function PendingSurveysList() {
 
       <Pagination totalItems={total} />
 
-      {modalMode === 'approve' && selectedSubmission && (
-        <Dialog
-          open={modalMode === 'approve'}
-          onOpenChange={(open) => setModalMode(open ? 'approve' : null)}
-        >
+      <Dialog
+        open={modalMode === 'approve'}
+        onOpenChange={(open) => setModalMode(open ? 'approve' : null)}
+      >
+        {selectedSubmission && (
           <ApproveSurveySubmissionModal
             submission={selectedSubmission}
             onClose={() => setModalMode(null)}
           />
-        </Dialog>
-      )}
+        )}
+      </Dialog>
 
-      {modalMode === 'decline' && selectedSubmission && (
-        <Dialog
-          open={modalMode === 'decline'}
-          onOpenChange={(open) => setModalMode(open ? 'decline' : null)}
-        >
+      <Dialog
+        open={modalMode === 'decline'}
+        onOpenChange={(open) => setModalMode(open ? 'decline' : null)}
+      >
+        {selectedSubmission && (
           <DeclineSurveySubmissionModal
             submission={selectedSubmission}
             onClose={() => setModalMode(null)}
           />
-        </Dialog>
-      )}
+        )}
+      </Dialog>
     </>
   )
 }

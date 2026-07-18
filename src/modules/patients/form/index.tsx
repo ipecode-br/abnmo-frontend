@@ -415,11 +415,9 @@ export function PatientForm({
         </div>
 
         <Dialog open={isCancelModalOpen} onOpenChange={setIsCancelModalOpen}>
-          {isCancelModalOpen && (
-            <CancelPatientFormModal
-              onConfirm={() => router.push(ROUTES.dashboard.patients.main)}
-            />
-          )}
+          <CancelPatientFormModal
+            onConfirm={() => router.push(ROUTES.dashboard.patients.main)}
+          />
         </Dialog>
       </FormContainer>
     </FormProvider>
