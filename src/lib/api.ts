@@ -53,6 +53,7 @@ export async function api<Data>(
       '/register/user',
       '/recover-password',
       '/reset-password',
+      '/change-password',
     ].includes(url.pathname)
 
     if (response.status === 401 && !preventClearSession) {

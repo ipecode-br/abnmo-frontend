@@ -66,7 +66,7 @@ interface DialogHeaderProps extends React.ComponentProps<'div'> {
 }
 export function DialogHeader({ icon, ...props }: Readonly<DialogHeaderProps>) {
   return (
-    <header className='flex items-center gap-4 py-3 pr-12 pl-5'>
+    <header className='flex items-center gap-4 py-4 pr-12 pl-5'>
       {icon && icon}
       <div {...props} />
     </header>
