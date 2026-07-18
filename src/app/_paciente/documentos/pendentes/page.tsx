@@ -17,13 +17,13 @@ export default async function Page() {
   // TODO: remove this mock data when integrating with API
   const requirement: PatientRequirement = {
     id: '1',
-    type: 'screening',
-    status: 'pending',
+    type: 'medical_report',
+    title: 'Título do requisito',
     description: null,
+    status: 'pending',
     createdAt: '2024-10-20',
     submittedAt: null,
-    approvedAt: null,
-    patient: { id: '2', name: 'Paciente Exemplo', avatarUrl: null },
+    patient: { id: '2', name: 'Paciente Exemplo' },
   }
 
   return (

@@ -51,32 +51,24 @@ export type SurveySubmissionDocument = {
   mimeType: 'image/jpeg' | 'image/jpg' | 'image/png' | 'application/pdf'
 }
 
-export type SurveySubmissionUpdatedBy = {
+export type SurveySubmission = {
   id: string
   name: string
   email: string
-  avatarUrl: string | null
-}
-
-export type SurveySubmission = {
-  id: string
+  phone: string
   status: SurveySubmissionStatus
   reason: string | null
   updatedAt: string
   createdAt: string
-  name: string
-  email: string
-  phone: string
   document: SurveySubmissionDocument | null
-  updatedBy: SurveySubmissionUpdatedBy | null
 }
 
 export type SurveySubmissionListItem = Pick<
   SurveySubmission,
   'id' | 'name' | 'email' | 'phone' | 'status' | 'reason' | 'createdAt'
->
+> & { document: Pick<SurveySubmissionDocument, 'name' | 'url'> | null }
 
-export type SurveyUser = {
+export type SurveyPatient = {
   id: string
   name: string
   phone: string
@@ -86,7 +78,7 @@ export type SurveyUser = {
 }
 
 export type Survey = {
-  user: SurveyUser
+  patient: SurveyPatient
   id: string
   status: SurveyStatus
   signatureId: string | null
@@ -189,4 +181,4 @@ export type Survey = {
 }
 
 export type SurveyListItem = Pick<Survey, 'id' | 'status' | 'createdAt'> &
-  Pick<SurveyUser, 'name' | 'phone' | 'email'>
+  Pick<SurveyPatient, 'name' | 'phone' | 'email'>

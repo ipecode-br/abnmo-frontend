@@ -94,7 +94,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
   }
 
   const surveyStatus = SURVEY_STATUSES[survey.status]
-  const patient = survey.user
+  const patient = survey.patient
 
   const showUpdatedAt = new Date(survey.updatedAt) > new Date(survey.createdAt)
   const showReminderButton =
@@ -151,7 +151,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
             {showUpdatedAt && (
               <span>
                 Atualizado em{' '}
-                {formatDate(survey.updatedAt, { dateStyle: 'long' })}
+                {formatDate(survey.updatedAt, { dateStyle: 'long' })}.
               </span>
             )}
           </div>

@@ -22,11 +22,9 @@ export function AddPatientRequirementButton(props: Readonly<ButtonProps>) {
         Nova solicitação
       </DialogTrigger>
 
-      {isPatientRequirementOpen && (
-        <PatientRequirementModal
-          onClose={() => setIsPatientRequirementOpen(false)}
-        />
-      )}
+      <PatientRequirementModal
+        onClose={() => setIsPatientRequirementOpen(false)}
+      />
     </Dialog>
   )
 }

@@ -11,7 +11,6 @@ import {
   SectionHeaderActions,
   SectionHeaderTitle,
 } from '@/components/section-header'
-import { Avatar } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
 import {
   Table,
@@ -36,7 +35,6 @@ import type {
   QueryOrderMapping,
 } from '@/types/orders'
 import type { PatientRequirement } from '@/types/patient-requirements.d.ts'
-import { formatDate } from '@/utils/formatters/format-date'
 
 import { ApprovedPatientRequirementsListTableActions } from './approved-list-table-actions'
 import ApprovedPatientRequirementsListTableSkeleton from './approved-list-table-skeleton'
@@ -132,14 +130,10 @@ export function ApprovedPatientRequirementsListTable() {
               {requirements.map((requirement) => (
                 <TableRow key={requirement.id}>
                   <TableCell className='flex items-center gap-2'>
-                    <Avatar
-                      className='size-9'
-                      src={requirement.patient.avatarUrl}
-                    />
                     <span className='truncate'>{requirement.patient.name}</span>
                   </TableCell>
                   <TableCell>
-                    {formatDate(requirement.approvedAt ?? '-')}
+                    -{/*{formatDate(requirement.approvedAt ?? '-')}*/}
                   </TableCell>
                   <TableCell>
                     <Tag>{PATIENT_REQUIREMENT_TYPES[requirement.type]}</Tag>

@@ -10,7 +10,7 @@ import { TextInput } from '@/components/form/text-input'
 import { Divider } from '@/components/ui/divider'
 import { Label, LabelWrapper } from '@/components/ui/label'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
-import { USER_ROLES, USERS_ROLE_OPTIONS } from '@/enums/users'
+import { USER_ROLES } from '@/enums/users'
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 import {
   emailSchema,

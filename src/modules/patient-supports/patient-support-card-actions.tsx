@@ -1,21 +1,19 @@
 'use client'
 
-import { ClipboardPenIcon, EllipsisIcon, XCircleIcon } from 'lucide-react'
+import { ClipboardPenIcon, EllipsisIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Dialog } from '@/components/ui/dialog'
-import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { usePermissions } from '@/hooks/use-permissions'
-import type { PatientSupport } from '@/types/patient-support'
+import type { SupportContact } from '@/types/patients'
 
-import { DeletePatientSupportModal } from './delete-patient-support-modal'
 import { PatientSupportModal } from './patient-support-modal'
 
 type PatientSupportModalMode = 'edit' | 'delete'
 
 interface PatientSupportCardActionsProps {
-  patientSupport: PatientSupport
+  patientSupport: SupportContact
 }
 
 export function PatientSupportCardActions({
@@ -28,9 +26,8 @@ export function PatientSupportCardActions({
   const { canUser } = usePermissions()
 
   const canUpdatePatientSupport = canUser('update', 'PatientSupports')
-  const canDeletePatientSupport = canUser('delete', 'PatientSupports')
 
-  if (!canUpdatePatientSupport && !canDeletePatientSupport) {
+  if (!canUpdatePatientSupport) {
     return null
   }
 
@@ -49,19 +46,6 @@ export function PatientSupportCardActions({
               Editar
             </MenuItem>
           )}
-
-          {canDeletePatientSupport && (
-            <>
-              <Divider className='my-1' />
-              <MenuItem
-                variant='destructive'
-                onClick={() => setModalOpen('delete')}
-              >
-                <XCircleIcon />
-                Excluir
-              </MenuItem>
-            </>
-          )}
         </MenuContent>
       </Menu>
 
@@ -71,16 +55,6 @@ export function PatientSupportCardActions({
       >
         <PatientSupportModal
           mode='edit'
-          patientSupport={patientSupport}
-          onClose={() => setModalOpen(null)}
-        />
-      </Dialog>
-
-      <Dialog
-        open={modalOpen === 'delete'}
-        onOpenChange={(open) => setModalOpen(open ? 'delete' : null)}
-      >
-        <DeletePatientSupportModal
           patientSupport={patientSupport}
           onClose={() => setModalOpen(null)}
         />

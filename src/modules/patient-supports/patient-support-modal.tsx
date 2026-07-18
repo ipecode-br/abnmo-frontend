@@ -24,7 +24,7 @@ import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
 import { kinshipSchema, nameSchema, phoneSchema } from '@/schemas'
-import type { PatientSupport } from '@/types/patient-support'
+import type { SupportContact } from '@/types/patients'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 import { removeNonNumbers } from '@/utils/sanitizers'
 
@@ -41,7 +41,7 @@ interface PatientSupportModalProps {
   mode: PatientSupportModalMode
   onClose: () => void
   patientId?: string
-  patientSupport?: PatientSupport
+  patientSupport?: SupportContact
 }
 
 export function PatientSupportModal({
@@ -51,7 +51,6 @@ export function PatientSupportModal({
   onClose,
 }: Readonly<PatientSupportModalProps>) {
   const formId = useId()
-  const ensurePatientId = patientId || patientSupport?.patientId || ''
 
   const formMethods = useForm<PatientSupportFormSchema>({
     resolver: zodResolver(patientSupportFormSchema),
@@ -79,7 +78,7 @@ export function PatientSupportModal({
     const response =
       mode === 'create'
         ? await api(`/patient-supports/${patientId}`, { method: 'POST', body })
-        : await api(`/patient-supports/${patientSupport?.id}`, {
+        : await api(`/patient-supports/${patientId}`, {
             method: 'PUT',
             body,
           })
@@ -89,7 +88,7 @@ export function PatientSupportModal({
       return
     }
 
-    revalidateServerCache(NEXT_CACHE_TAGS.patient(ensurePatientId))
+    revalidateServerCache(NEXT_CACHE_TAGS.patient(patientId!))
     toast.success(response.message)
     onClose()
   }
