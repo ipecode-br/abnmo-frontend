@@ -9,7 +9,15 @@ export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   const session = cookies.get(COOKIES.session)
-  const isAuthRoute = pathname.startsWith('/conta/')
+
+  const AUTH_ROUTES = [
+    ROUTES.auth.signIn,
+    ROUTES.auth.signUp,
+    ROUTES.auth.forgotPassword,
+    ROUTES.auth.resetPassword,
+  ]
+
+  const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route))
 
   if (isAuthRoute && session) {
     return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))

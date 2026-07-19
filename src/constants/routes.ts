@@ -1,10 +1,9 @@
 export const ROUTES = {
   auth: {
-    signIn: '/conta/entrar',
-    signUp: '/conta/cadastrar',
-    forgotPassword: '/conta/recuperar-senha',
-    resetPassword: '/conta/nova-senha',
-    registerUser: '/conta/cadastrar/usuario',
+    signIn: '/entrar',
+    signUp: '/cadastrar',
+    forgotPassword: '/recuperar-senha',
+    resetPassword: '/nova-senha',
     clearSession: '/api/limpar-sessao',
   },
   patient: {
