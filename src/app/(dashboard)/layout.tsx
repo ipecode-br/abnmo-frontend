@@ -2,7 +2,7 @@ import { getCurrentUser } from '@/actions/users/get-current-user'
 import { BottomBar } from '@/components/bottom-bar'
 import { DashboardHeader } from '@/components/dashboard/header'
 import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
-import { DashboardSidebar } from '@/components/sidebar'
+import { Sidebar } from '@/components/sidebar'
 import { PermissionsProvider } from '@/providers/permissions-provider'
 
 export default async function Layout({
@@ -13,7 +13,7 @@ export default async function Layout({
   return (
     <PermissionsProvider initialState={{ user }}>
       <div className='flex h-svh overflow-hidden max-lg:flex-col'>
-        <DashboardSidebar />
+        <Sidebar />
 
         <div className='flex h-svh flex-1 flex-col overflow-x-hidden transition-all duration-500'>
           <DashboardHeader />

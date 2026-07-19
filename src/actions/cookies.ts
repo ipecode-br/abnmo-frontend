@@ -14,6 +14,14 @@ export async function getCookie(name: string) {
   return cookieStore.get(name)?.value
 }
 
+export async function setCookie(name: string, value: string) {
+  const cookieStore = await cookies()
+  cookieStore.set(name, value, {
+    path: '/',
+    domain: `.${env.NEXT_PUBLIC_DOMAIN}`,
+  })
+}
+
 export async function deleteCookie(name: string) {
   const cookieStore = await cookies()
 

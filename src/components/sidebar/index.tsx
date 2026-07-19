@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 
 import { canUser } from '@/actions/auth/can-user'
+import { getCookie } from '@/actions/cookies'
 import { getCurrentUser } from '@/actions/users/get-current-user'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
@@ -17,11 +18,24 @@ import { SidebarContainer } from './container'
 import { SidebarHeader } from './header'
 import { SidebarMenuSection } from './menu-section'
 
-export async function DashboardSidebar() {
-  const [user, canViewUsers, canViewSurveys] = await Promise.all([
+export async function Sidebar() {
+  const sidebarCookie = await getCookie('sidebar_expanded')
+  const initialExpanded = sidebarCookie ? sidebarCookie === 'true' : true
+
+  const [
+    user,
+    canViewSurveys,
+    canViewPatients,
+    canViewAppointments,
+    canViewReferrals,
+    canViewUsers,
+  ] = await Promise.all([
     getCurrentUser(),
-    canUser('read:user'),
-    canUser('read:survey'),
+    canUser(['read:survey', 'read:survey:others']),
+    canUser(['read:patient', 'read:patient:others']),
+    canUser(['read:appointment', 'read:appointment:others']),
+    canUser(['read:referral', 'read:referral:others']),
+    canUser(['read:user', 'read:user:others']),
   ])
 
   const SECTIONS = [
@@ -44,19 +58,19 @@ export async function DashboardSidebar() {
           label: 'Pacientes',
           icon: <Users2Icon />,
           path: ROUTES.dashboard.patients.main,
-          show: true,
+          show: canViewPatients,
         },
         {
           label: 'Atendimentos',
           icon: <ClipboardCheckIcon />,
           path: ROUTES.dashboard.appointments.main,
-          show: true,
+          show: canViewAppointments,
         },
         {
           label: 'Encaminhamentos',
           icon: <ClipboardPasteIcon />,
           path: ROUTES.dashboard.referrals.main,
-          show: true,
+          show: canViewReferrals,
         },
         // TODO: uncomment approvals when it's ready
         // {
@@ -88,7 +102,7 @@ export async function DashboardSidebar() {
   ]
 
   return (
-    <SidebarContainer>
+    <SidebarContainer initialExpanded={initialExpanded}>
       <SidebarHeader />
 
       <Divider />

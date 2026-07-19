@@ -5,10 +5,11 @@ import Link from 'next/link'
 
 import { IMAGES } from '@/constants/images'
 import { ROUTES } from '@/constants/routes'
-import { useSidebarStore } from '@/store/sidebar'
+
+import { useSidebar } from './container'
 
 export function SidebarHeader() {
-  const expanded = useSidebarStore((state) => state.expanded)
+  const { expanded } = useSidebar()
 
   return (
     <header className='relative flex items-center'>

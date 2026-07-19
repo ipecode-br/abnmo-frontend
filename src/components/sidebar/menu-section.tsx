@@ -3,25 +3,23 @@
 import { usePathname } from 'next/navigation'
 
 import { NavButton } from '@/components/ui/nav-button'
-import { useSidebarStore } from '@/store/sidebar'
 import { cn } from '@/utils/class-name-merge'
 
-interface SidebarMenuSectionProps {
-  sections: Array<{
-    id: string
-    buttons: Array<{
-      label: string
-      icon: React.ReactNode
-      path: string
-      show: boolean
-    }>
-  }>
+import { useSidebar } from './container'
+
+type Button = {
+  label: string
+  icon: React.ReactNode
+  path: string
+  show: boolean
 }
 
-export function SidebarMenuSection({
-  sections,
-}: Readonly<SidebarMenuSectionProps>) {
-  const expanded = useSidebarStore((state) => state.expanded)
+interface SidebarMenuSectionProps {
+  sections: { id: string; buttons: Button[] }[]
+}
+
+export function SidebarMenuSection({ sections }: SidebarMenuSectionProps) {
+  const { expanded } = useSidebar()
   const pathname = usePathname()
 
   return (
@@ -38,8 +36,8 @@ export function SidebarMenuSection({
                   key={button.label}
                   variant='ghost'
                   href={button.path}
-                  data-visible={expanded}
                   data-active={isActive}
+                  data-visible={expanded}
                   className={cn(
                     '[&_svg]:text-disabled text-foreground-soft size-10 justify-start gap-3 px-2.5 text-base transition-all duration-300',
                     'data-[visible=true]:w-full',

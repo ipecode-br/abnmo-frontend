@@ -4,9 +4,9 @@ import {
   ClipboardPasteIcon,
   HeartHandshakeIcon,
   LayoutDashboardIcon,
+  LayoutListIcon,
   MailPlusIcon,
   UserCircle2Icon,
-  UserPlus2Icon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -16,9 +16,17 @@ import { NavButton } from '@/components/ui/nav-button'
 import { ROUTES } from '@/constants/routes'
 
 export default async function Page() {
-  const [canCreatePatient, canViewUsers, canViewInvites] = await Promise.all([
-    false, // TODO: add create:patient feature
-    canUser('read:user'),
+  const [
+    canViewSurveys,
+    canViewAppointments,
+    canViewReferrals,
+    canViewUsers,
+    canViewInvites,
+  ] = await Promise.all([
+    canUser(['read:survey', 'read:survey:others']),
+    canUser(['read:appointment:others', 'read:appointment:others']),
+    canUser(['read:referral:others', 'read:referral:others']),
+    canUser(['read:user', 'read:user:others']),
     canUser('read:user-invite'),
   ])
 
@@ -42,20 +50,32 @@ export default async function Page() {
       ],
     },
     {
+      title: 'Catalogação',
+      show: canViewSurveys,
+      buttons: [
+        {
+          label: 'Visão geral',
+          icon: <ClipboardListIcon />,
+          path: ROUTES.dashboard.surveys.main,
+          show: true,
+        },
+        {
+          label: 'Lista de catalogações',
+          icon: <LayoutListIcon />,
+          path: ROUTES.dashboard.surveys.all,
+          show: true,
+        },
+      ],
+    },
+    {
       title: 'Pacientes',
-      show: true,
+      show: canViewAppointments,
       buttons: [
         {
           label: 'Pacientes',
           icon: <Users2Icon />,
           path: ROUTES.dashboard.patients.main,
           show: true,
-        },
-        {
-          label: 'Cadastrar paciente',
-          icon: <UserPlus2Icon />,
-          path: ROUTES.dashboard.patients.new,
-          show: canCreatePatient,
         },
       ],
     },
@@ -79,7 +99,7 @@ export default async function Page() {
     },
     {
       title: 'Encaminhamentos',
-      show: true,
+      show: canViewReferrals,
       buttons: [
         {
           label: 'Encaminhamentos',
@@ -97,7 +117,7 @@ export default async function Page() {
     },
     {
       title: 'Equipe',
-      show: canViewUsers || canViewUsers,
+      show: canViewUsers || canViewInvites,
       buttons: [
         {
           label: 'Membros',
@@ -122,7 +142,10 @@ export default async function Page() {
 
         return (
           <section key={title} className='space-y-4'>
-            <h2 className='text-foreground-soft leading-none'>{title}</h2>
+            <h2 className='text-foreground-soft text-lg leading-none font-medium'>
+              {title}
+            </h2>
+
             <div className='flex flex-wrap gap-4 max-sm:flex-col'>
               {buttons.map((button) => {
                 if (!button.show) return null

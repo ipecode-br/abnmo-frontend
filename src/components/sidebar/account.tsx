@@ -6,18 +6,18 @@ import { useRouter } from 'next/navigation'
 import { logout } from '@/actions/auth/logout'
 import { Avatar } from '@/components/ui/avatar'
 import { ROUTES } from '@/constants/routes'
-import { useSidebarStore } from '@/store/sidebar'
 import type { User } from '@/types/users.d.ts'
 
 import { Divider } from '../ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '../ui/menu'
+import { useSidebar } from './container'
 
 interface SidebarAccountProps {
   user?: User | null
 }
 
 export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
-  const expanded = useSidebarStore((state) => state.expanded)
+  const { expanded } = useSidebar()
   const router = useRouter()
 
   return (
