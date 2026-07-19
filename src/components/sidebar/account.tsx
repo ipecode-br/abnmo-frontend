@@ -42,7 +42,7 @@ export function SidebarAccount({ user }: Readonly<SidebarAccountProps>) {
           <EllipsisVerticalIcon className='text-foreground-soft' />
         </MenuTrigger>
         <MenuContent sideOffset={8} className='min-w-32'>
-          <MenuItem onClick={() => router.push(ROUTES.dashboard.profile)}>
+          <MenuItem onClick={() => router.push(ROUTES.profile)}>
             <UserCircle2Icon />
             Meu perfil
           </MenuItem>

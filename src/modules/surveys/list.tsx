@@ -92,7 +92,7 @@ export function SurveysList() {
                 <React.Fragment key={survey.id}>
                   <div className='text-foreground-soft md:hover:bg-accent flex gap-x-4 gap-y-2 py-4 max-md:flex-wrap md:items-center md:p-3'>
                     <a
-                      href={ROUTES.dashboard.surveys.details(survey.id)}
+                      href={ROUTES.surveys.details(survey.id)}
                       className='text-foreground hover:text-primary w-full truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'
                     >
                       {survey.name}

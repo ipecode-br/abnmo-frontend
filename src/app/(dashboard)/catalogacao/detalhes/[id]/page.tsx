@@ -86,11 +86,11 @@ export default async function Page({ params }: Readonly<PageParams>) {
   ])
 
   if (!canAccess) {
-    redirect(ROUTES.dashboard.main)
+    redirect(ROUTES.main)
   }
 
   if (!survey) {
-    redirect(ROUTES.dashboard.surveys.main)
+    redirect(ROUTES.surveys.main)
   }
 
   const surveyStatus = SURVEY_STATUSES[survey.status]
@@ -130,7 +130,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
               />
             )}
             <NavButton
-              href={ROUTES.dashboard.patients.details.info(patient.id)}
+              href={ROUTES.patients.details.info(patient.id)}
               className='max-md:flex-1'
               variant='outline'
               size='sm'

@@ -22,31 +22,31 @@ export function BottomBar() {
     {
       label: 'Visão geral',
       icon: <LayoutDashboardIcon />,
-      path: ROUTES.dashboard.main,
+      path: ROUTES.main,
       show: true,
     },
     {
       label: 'Catalogação',
       icon: <ClipboardListIcon />,
-      path: ROUTES.dashboard.surveys.main,
+      path: ROUTES.surveys.main,
       show: canUser(['read:survey', 'read:survey:others']),
     },
     {
       label: 'Pacientes',
       icon: <Users2Icon />,
-      path: ROUTES.dashboard.patients.main,
+      path: ROUTES.patients.main,
       show: canUser(['read:patient', 'read:patient:others']),
     },
     {
       label: 'Atendimentos',
       icon: <ClipboardCheckIcon />,
-      path: ROUTES.dashboard.appointments.main,
+      path: ROUTES.appointments.main,
       show: canUser(['read:appointment', 'read:appointment:others']),
     },
     {
       label: 'Menu',
       icon: <MenuIcon />,
-      path: ROUTES.dashboard.menu,
+      path: ROUTES.menu,
       show: true,
     },
   ]

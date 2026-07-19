@@ -45,7 +45,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
   ])
 
   if (!patient) {
-    redirect(ROUTES.dashboard.patients.main)
+    redirect(ROUTES.patients.main)
   }
 
   const patientSupports = patient.supportContacts ?? []

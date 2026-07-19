@@ -96,7 +96,7 @@ export function AppointmentsTable({
                   <TableCell>
                     <TableLink
                       className='w-64'
-                      href={ROUTES.dashboard.patients.details.info(
+                      href={ROUTES.patients.details.info(
                         appointment.patient.id,
                       )}
                     >

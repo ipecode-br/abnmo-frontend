@@ -13,49 +13,47 @@ export const ROUTES = {
       sent: '/paciente/documentos/enviados',
     },
   },
-  dashboard: {
-    main: '/',
-    menu: '/menu',
-    surveys: {
-      main: '/catalogacao',
-      all: '/catalogacao/todas',
-      details: (id: string) => `/catalogacao/detalhes/${id}`,
-    },
-    patients: {
-      main: '/pacientes',
-      new: '/pacientes/cadastrar',
-      details: {
-        info: (id: string) => `/pacientes/${id}/informacoes`,
-        history: (id: string) => `/pacientes/${id}/historico`,
-        documents: (id: string) => `/pacientes/${id}/documentos`,
-        referrals: (id: string) => `/pacientes/${id}/encaminhamentos`,
-        appointments: (id: string) => `/pacientes/${id}/atendimentos`,
-      },
-    },
-    referrals: {
-      main: '/encaminhamentos',
-      list: '/encaminhamentos/listagem',
-    },
-    appointments: {
-      main: '/atendimentos',
-      list: '/atendimentos/listagem',
-    },
-    approvals: {
-      main: '/aprovacoes',
-      pendingApprovals: '/aprovacoes/aprovacoes-pendentes',
-      pendingSubmissions: '/aprovacoes/envios-pendentes',
-      approved: '/aprovacoes/aprovados',
-    },
-    users: {
-      main: '/equipe',
-      details: (id: string) => `/equipe/${id}`,
-      invites: '/equipe/convites',
-    },
-
-    settings: {
-      main: '/configuracoes',
-      fontSize: '/configuracoes/fontes',
-    },
-    profile: '/perfil',
+  // Dashboard
+  main: '/',
+  menu: '/menu',
+  surveys: {
+    main: '/catalogacao',
+    all: '/catalogacao/todas',
+    details: (id: string) => `/catalogacao/detalhes/${id}`,
   },
+  patients: {
+    main: '/pacientes',
+    new: '/pacientes/cadastrar',
+    details: {
+      info: (id: string) => `/pacientes/${id}/informacoes`,
+      history: (id: string) => `/pacientes/${id}/historico`,
+      documents: (id: string) => `/pacientes/${id}/documentos`,
+      referrals: (id: string) => `/pacientes/${id}/encaminhamentos`,
+      appointments: (id: string) => `/pacientes/${id}/atendimentos`,
+    },
+  },
+  referrals: {
+    main: '/encaminhamentos',
+    list: '/encaminhamentos/listagem',
+  },
+  appointments: {
+    main: '/atendimentos',
+    list: '/atendimentos/listagem',
+  },
+  approvals: {
+    main: '/aprovacoes',
+    pendingApprovals: '/aprovacoes/aprovacoes-pendentes',
+    pendingSubmissions: '/aprovacoes/envios-pendentes',
+    approved: '/aprovacoes/aprovados',
+  },
+  users: {
+    main: '/equipe',
+    details: (id: string) => `/equipe/${id}`,
+    invites: '/equipe/convites',
+  },
+  settings: {
+    main: '/configuracoes',
+    fontSize: '/configuracoes/fontes',
+  },
+  profile: '/perfil',
 }

@@ -127,7 +127,7 @@ export function SignUpForm({
       }
 
       toast.success(response.message)
-      router.push(ROUTES.dashboard.main)
+      router.push(ROUTES.main)
     })
   }
 

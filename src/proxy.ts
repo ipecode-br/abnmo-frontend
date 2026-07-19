@@ -20,7 +20,7 @@ export async function proxy(request: NextRequest) {
   const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route))
 
   if (isAuthRoute && session) {
-    return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
+    return NextResponse.redirect(new URL(ROUTES.main, request.url))
   }
 
   if (!isAuthRoute && !session) {

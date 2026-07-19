@@ -51,7 +51,7 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
     }
 
     toast.success(response.message)
-    router.push(ROUTES.dashboard.main)
+    router.push(ROUTES.main)
   }
 
   return (

@@ -23,112 +23,112 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
     catalogacao: {
       icon: ClipboardListIcon,
       name: 'Catalogação',
-      path: ROUTES.dashboard.surveys.main,
+      path: ROUTES.surveys.main,
     },
     todas: {
       icon: LayoutListIcon,
       name: 'Todas',
-      path: ROUTES.dashboard.surveys.all,
+      path: ROUTES.surveys.all,
     },
     detalhes: {
       icon: FileUserIcon,
       name: 'Detalhes da catalogação',
-      path: ROUTES.dashboard.surveys.main,
+      path: ROUTES.surveys.main,
     },
   },
   pacientes: {
     pacientes: {
       icon: Users2Icon,
       name: 'Pacientes',
-      path: ROUTES.dashboard.patients.main,
+      path: ROUTES.patients.main,
     },
     informacoes: {
       icon: User2Icon,
       name: 'Informações do paciente',
-      path: ROUTES.dashboard.patients.main,
+      path: ROUTES.patients.main,
     },
     historico: {
       icon: HistoryIcon,
       name: 'Histórico do paciente',
-      path: ROUTES.dashboard.patients.main,
+      path: ROUTES.patients.main,
     },
     documentos: {
       icon: PaperclipIcon,
       name: 'Documentos',
-      path: ROUTES.dashboard.patients.main,
+      path: ROUTES.patients.main,
     },
     atendimentos: {
       icon: ClipboardCheckIcon,
       name: 'Atendimentos do paciente',
-      path: ROUTES.dashboard.patients.main,
+      path: ROUTES.patients.main,
     },
     encaminhamentos: {
       icon: ClipboardPasteIcon,
       name: 'Encaminhamentos do paciente',
-      path: ROUTES.dashboard.patients.main,
+      path: ROUTES.patients.main,
     },
     cadastrar: {
       icon: UserRoundPlusIcon,
       name: 'Cadastrar novo paciente',
-      path: ROUTES.dashboard.patients.new,
+      path: ROUTES.patients.new,
     },
   },
   atendimentos: {
     atendimentos: {
       icon: ClipboardCheckIcon,
       name: 'Atendimentos',
-      path: ROUTES.dashboard.appointments.main,
+      path: ROUTES.appointments.main,
     },
     listagem: {
       icon: ClipboardListIcon,
       name: 'Lista de atendimentos',
-      path: ROUTES.dashboard.appointments.list,
+      path: ROUTES.appointments.list,
     },
   },
   encaminhamentos: {
     encaminhamentos: {
       icon: ClipboardPasteIcon,
       name: 'Encaminhamentos',
-      path: ROUTES.dashboard.referrals.main,
+      path: ROUTES.referrals.main,
     },
     listagem: {
       icon: ClipboardListIcon,
       name: 'Lista de encaminhamentos',
-      path: ROUTES.dashboard.referrals.list,
+      path: ROUTES.referrals.list,
     },
   },
   aprovacoes: {
     aprovacoes: {
       icon: UserRoundCheckIcon,
       name: 'Aprovações',
-      path: ROUTES.dashboard.approvals.main,
+      path: ROUTES.approvals.main,
     },
     'aprovacoes-pendentes': {
       icon: ClipboardClockIcon,
       name: 'Aprovações pendentes',
-      path: ROUTES.dashboard.approvals.pendingApprovals,
+      path: ROUTES.approvals.pendingApprovals,
     },
     'envios-pendentes': {
       icon: ClockArrowUpIcon,
       name: 'Envios pendentes',
-      path: ROUTES.dashboard.approvals.pendingSubmissions,
+      path: ROUTES.approvals.pendingSubmissions,
     },
     aprovados: {
       icon: ClipboardCheckIcon,
       name: 'Aprovados',
-      path: ROUTES.dashboard.approvals.approved,
+      path: ROUTES.approvals.approved,
     },
   },
   equipe: {
     equipe: {
       icon: Users2Icon,
       name: 'Membros',
-      path: ROUTES.dashboard.users.main,
+      path: ROUTES.users.main,
     },
     convites: {
       icon: MailPlusIcon,
       name: 'Convites',
-      path: ROUTES.dashboard.users.invites,
+      path: ROUTES.users.invites,
     },
   },
 }

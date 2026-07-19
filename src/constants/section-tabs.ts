@@ -9,78 +9,78 @@ export const SECTION_TABS: Record<string, Array<TabButton>> = {
   catalogacao: [
     {
       title: 'Visão geral',
-      path: ROUTES.dashboard.surveys.main,
+      path: ROUTES.surveys.main,
     },
     {
       title: 'Todas',
-      path: ROUTES.dashboard.surveys.all,
+      path: ROUTES.surveys.all,
     },
   ],
   pacientes: [
     {
       title: 'Informações',
-      path: ROUTES.dashboard.patients.details.info,
+      path: ROUTES.patients.details.info,
     },
     {
       title: 'Histórico',
-      path: ROUTES.dashboard.patients.details.history,
+      path: ROUTES.patients.details.history,
     },
     // TODO: uncomment documents when it's ready
     // {
     //   title: 'Documentos',
-    //   path: ROUTES.dashboard.patients.details.documents,
+    //   path: ROUTES.patients.details.documents,
     // },
     {
       title: 'Atendimentos',
-      path: ROUTES.dashboard.patients.details.appointments,
+      path: ROUTES.patients.details.appointments,
     },
     {
       title: 'Encaminhamentos',
-      path: ROUTES.dashboard.patients.details.referrals,
+      path: ROUTES.patients.details.referrals,
     },
   ],
   atendimentos: [
     {
       title: 'Visão geral',
-      path: ROUTES.dashboard.appointments.main,
+      path: ROUTES.appointments.main,
     },
     {
       title: 'Lista de atendimentos',
-      path: ROUTES.dashboard.appointments.list,
+      path: ROUTES.appointments.list,
     },
   ],
   encaminhamentos: [
     {
       title: 'Visão geral',
-      path: ROUTES.dashboard.referrals.main,
+      path: ROUTES.referrals.main,
     },
     {
       title: 'Lista de encaminhamentos',
-      path: ROUTES.dashboard.referrals.list,
+      path: ROUTES.referrals.list,
     },
   ],
   aprovacoes: [
     {
       title: 'Aprovações pendentes',
-      path: ROUTES.dashboard.approvals.pendingApprovals,
+      path: ROUTES.approvals.pendingApprovals,
     },
     {
       title: 'Envios pendentes',
-      path: ROUTES.dashboard.approvals.pendingSubmissions,
+      path: ROUTES.approvals.pendingSubmissions,
     },
     {
       title: 'Aprovados',
-      path: ROUTES.dashboard.approvals.approved,
+      path: ROUTES.approvals.approved,
     },
   ],
   equipe: [
     {
       title: 'Membros',
-      path: ROUTES.dashboard.users.main,
+      path: ROUTES.users.main,
     },
     {
       title: 'Convites',
-      path: ROUTES.dashboard.users.invites,
+      path: ROUTES.users.invites,
     },
   ],
 }

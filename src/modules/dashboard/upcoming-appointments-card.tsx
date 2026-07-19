@@ -48,7 +48,7 @@ export async function DashboardUpcomingAppointmentsCard() {
           <NavButton
             size='sm'
             variant='outline'
-            href={ROUTES.dashboard.appointments.list}
+            href={ROUTES.appointments.list}
           >
             Ver todos
           </NavButton>

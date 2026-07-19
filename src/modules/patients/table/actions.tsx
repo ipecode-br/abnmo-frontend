@@ -67,7 +67,7 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
 
           <MenuItem
             onClick={() =>
-              router.push(ROUTES.dashboard.patients.details.info(patient.id))
+              router.push(ROUTES.patients.details.info(patient.id))
             }
           >
             <ClipboardListIcon />

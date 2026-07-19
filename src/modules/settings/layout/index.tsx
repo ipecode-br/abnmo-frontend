@@ -20,12 +20,12 @@ const SETTINGS_SIDEBAR_SECTIONS = [
       {
         label: 'Notificações',
         icon: <BellDot />,
-        path: ROUTES.dashboard.settings.main,
+        path: ROUTES.settings.main,
       },
       {
         label: 'Tamanho da fonte',
         icon: <ALargeSmall />,
-        path: ROUTES.dashboard.settings.fontSize,
+        path: ROUTES.settings.fontSize,
       },
     ],
   },

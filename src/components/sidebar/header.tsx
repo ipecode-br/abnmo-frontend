@@ -13,7 +13,7 @@ export function SidebarHeader() {
 
   return (
     <header className='relative flex items-center'>
-      <Link href={ROUTES.dashboard.main}>
+      <Link href={ROUTES.main}>
         <div className='flex items-center'>
           <Image
             src={IMAGES.icon}

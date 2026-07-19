@@ -50,9 +50,7 @@ export function SignInForm() {
       }
 
       router.push(
-        response.data?.role === 'patient'
-          ? ROUTES.patient.main
-          : ROUTES.dashboard.main,
+        response.data?.role === 'patient' ? ROUTES.patient.main : ROUTES.main,
       )
     })
   }

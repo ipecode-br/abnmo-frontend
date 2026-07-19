@@ -58,9 +58,7 @@ export function AppointmentsTableActions({
           )}
           <MenuItem
             onClick={() =>
-              router.push(
-                ROUTES.dashboard.patients.details.info(appointment.patient.id),
-              )
+              router.push(ROUTES.patients.details.info(appointment.patient.id))
             }
           >
             <ClipboardListIcon />
@@ -69,9 +67,7 @@ export function AppointmentsTableActions({
           <MenuItem
             onClick={() =>
               router.push(
-                ROUTES.dashboard.patients.details.history(
-                  appointment.patient.id,
-                ),
+                ROUTES.patients.details.history(appointment.patient.id),
               )
             }
           >

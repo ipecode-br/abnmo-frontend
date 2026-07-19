@@ -46,7 +46,7 @@ Ele garante que:
 export default async function PatientLayout({ children }) {
   const canAccess = await canUser('view', 'PatientDashboard')
 
-  if (!canAccess) redirect(ROUTES.dashboard.main)
+  if (!canAccess) redirect(ROUTES.main)
 
   return (
     <>

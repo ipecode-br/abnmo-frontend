@@ -60,7 +60,7 @@ export function UsersTable({ users, loading }: Readonly<UsersTableProps>) {
                 <TableCell>
                   <TableLink
                     className='w-64'
-                    href={ROUTES.dashboard.users.details(user.id)}
+                    href={ROUTES.users.details(user.id)}
                   >
                     <Avatar className='size-9' src={user.avatarUrl} />
                     <span className='truncate'>{user.name}</span>

@@ -38,13 +38,13 @@ export default async function Page() {
         {
           label: 'Tela inicial',
           icon: <LayoutDashboardIcon />,
-          path: ROUTES.dashboard.main,
+          path: ROUTES.main,
           show: true,
         },
         {
           label: 'Meu perfil',
           icon: <UserCircle2Icon />,
-          path: ROUTES.dashboard.profile,
+          path: ROUTES.profile,
           show: true,
         },
       ],
@@ -56,13 +56,13 @@ export default async function Page() {
         {
           label: 'Visão geral',
           icon: <ClipboardListIcon />,
-          path: ROUTES.dashboard.surveys.main,
+          path: ROUTES.surveys.main,
           show: true,
         },
         {
           label: 'Lista de catalogações',
           icon: <LayoutListIcon />,
-          path: ROUTES.dashboard.surveys.all,
+          path: ROUTES.surveys.all,
           show: true,
         },
       ],
@@ -74,7 +74,7 @@ export default async function Page() {
         {
           label: 'Pacientes',
           icon: <Users2Icon />,
-          path: ROUTES.dashboard.patients.main,
+          path: ROUTES.patients.main,
           show: true,
         },
       ],
@@ -86,13 +86,13 @@ export default async function Page() {
         {
           label: 'Atendimentos',
           icon: <ClipboardCheckIcon />,
-          path: ROUTES.dashboard.appointments.main,
+          path: ROUTES.appointments.main,
           show: true,
         },
         {
           label: 'Lista de atendimentos',
           icon: <ClipboardListIcon />,
-          path: ROUTES.dashboard.appointments.list,
+          path: ROUTES.appointments.list,
           show: true,
         },
       ],
@@ -104,13 +104,13 @@ export default async function Page() {
         {
           label: 'Encaminhamentos',
           icon: <ClipboardPasteIcon />,
-          path: ROUTES.dashboard.referrals.main,
+          path: ROUTES.referrals.main,
           show: true,
         },
         {
           label: 'Lista de encaminhamentos',
           icon: <ClipboardListIcon />,
-          path: ROUTES.dashboard.referrals.list,
+          path: ROUTES.referrals.list,
           show: true,
         },
       ],
@@ -122,13 +122,13 @@ export default async function Page() {
         {
           label: 'Membros',
           icon: <HeartHandshakeIcon />,
-          path: ROUTES.dashboard.users.main,
+          path: ROUTES.users.main,
           show: canViewUsers,
         },
         {
           label: 'Convites',
           icon: <MailPlusIcon />,
-          path: ROUTES.dashboard.users.invites,
+          path: ROUTES.users.invites,
           show: canViewInvites,
         },
       ],

@@ -91,9 +91,7 @@ export function ReferralsTable({
                   <TableCell>
                     <TableLink
                       className='w-64'
-                      href={ROUTES.dashboard.patients.details.info(
-                        referral.patient.id,
-                      )}
+                      href={ROUTES.patients.details.info(referral.patient.id)}
                     >
                       <Avatar
                         className='size-9'

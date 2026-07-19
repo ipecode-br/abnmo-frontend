@@ -15,7 +15,7 @@ export default async function Page() {
   const canAccess = await canUser('read:user-invite')
 
   if (!canAccess) {
-    redirect(ROUTES.dashboard.main)
+    redirect(ROUTES.main)
   }
 
   return (

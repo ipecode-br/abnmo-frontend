@@ -166,7 +166,7 @@ export function PatientForm({
 
     if (isCreateForm) {
       revalidateServerCache(NEXT_CACHE_TAGS.statistics.totalPatients.main)
-      router.push(ROUTES.dashboard.patients.main)
+      router.push(ROUTES.patients.main)
     }
   }
 
@@ -416,7 +416,7 @@ export function PatientForm({
 
         <Dialog open={isCancelModalOpen} onOpenChange={setIsCancelModalOpen}>
           <CancelPatientFormModal
-            onConfirm={() => router.push(ROUTES.dashboard.patients.main)}
+            onConfirm={() => router.push(ROUTES.patients.main)}
           />
         </Dialog>
       </FormContainer>

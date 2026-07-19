@@ -30,9 +30,7 @@ export function ApprovedPatientRequirementsListTableActions({
         <MenuContent align='end'>
           <MenuItem
             onClick={() =>
-              router.push(
-                ROUTES.dashboard.patients.details.info(requirement.patient.id),
-              )
+              router.push(ROUTES.patients.details.info(requirement.patient.id))
             }
           >
             <User2Icon />

@@ -70,7 +70,7 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
           )}
 
           {/* <MenuItem
-            onClick={() => router.push(ROUTES.dashboard.users.details(user.id))}
+            onClick={() => router.push(ROUTES.users.details(user.id))}
           >
             <UserSquare2Icon />
             Informações do usuário

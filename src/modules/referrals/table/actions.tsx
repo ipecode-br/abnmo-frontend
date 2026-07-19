@@ -58,9 +58,7 @@ export function ReferralsTableActions({
           )}
           <MenuItem
             onClick={() =>
-              router.push(
-                ROUTES.dashboard.patients.details.info(referral.patient.id),
-              )
+              router.push(ROUTES.patients.details.info(referral.patient.id))
             }
           >
             <ClipboardListIcon />
@@ -68,9 +66,7 @@ export function ReferralsTableActions({
           </MenuItem>
           <MenuItem
             onClick={() =>
-              router.push(
-                ROUTES.dashboard.patients.details.history(referral.patient.id),
-              )
+              router.push(ROUTES.patients.details.history(referral.patient.id))
             }
           >
             <ClipboardClockIcon />

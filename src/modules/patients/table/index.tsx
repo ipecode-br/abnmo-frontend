@@ -66,7 +66,7 @@ export function PatientsTable({
                 <TableCell>
                   <TableLink
                     className='w-64'
-                    href={ROUTES.dashboard.patients.details.info(patient.id)}
+                    href={ROUTES.patients.details.info(patient.id)}
                   >
                     <Avatar className='size-9' src={patient.avatarUrl} />
                     <span className='truncate'>{patient.name}</span>
