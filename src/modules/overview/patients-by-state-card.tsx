@@ -5,8 +5,8 @@ import { ChartPieIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { PieChart } from '@/components/charts/pie'
-import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
+import { ChartCard } from '@/components/ui/chart'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { CHART_PIE_COLORS } from '@/constants/charts'
@@ -14,7 +14,7 @@ import { type QueryPeriod } from '@/enums/queries'
 import { BRAZIL_STATES, BrazilState } from '@/enums/shared'
 import { api } from '@/lib/api'
 
-export function DashboardPatientsByStateCard() {
+export function TotalPatientsByStateCard() {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const limit = 6
@@ -42,7 +42,7 @@ export function DashboardPatientsByStateCard() {
   }))
 
   return (
-    <DashboardCardChart
+    <ChartCard
       title='Estados'
       icon={ChartPieIcon}
       className='sm:col-span-3'
@@ -92,6 +92,6 @@ export function DashboardPatientsByStateCard() {
           </p>
         )}
       </div>
-    </DashboardCardChart>
+    </ChartCard>
   )
 }

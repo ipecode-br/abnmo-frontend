@@ -18,7 +18,7 @@ import { NewAppointmentButton } from '@/modules/appointments/new-appointment-but
 
 import { AppointmentsTable } from '../appointments/table'
 
-export async function DashboardUpcomingAppointmentsCard() {
+export async function UpcomingAppointmentsCard() {
   const params: GetAppointmentsParams = {
     startDate: new Date().toISOString(),
     status: 'scheduled',
@@ -45,15 +45,11 @@ export async function DashboardUpcomingAppointmentsCard() {
           icon={<ClipboardCheckIcon />}
         />
         <SectionHeaderActions>
-          <NavButton
-            size='sm'
-            variant='outline'
-            href={ROUTES.appointments.list}
-          >
+          <NavButton variant='outline' href={ROUTES.appointments.list}>
             Ver todos
           </NavButton>
 
-          {canCreateAppointment && <NewAppointmentButton size='sm' />}
+          {canCreateAppointment && <NewAppointmentButton />}
         </SectionHeaderActions>
       </SectionHeader>
 

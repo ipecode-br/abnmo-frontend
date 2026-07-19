@@ -5,15 +5,15 @@ import { ChartBarDecreasingIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { BarChart } from '@/components/charts/bar'
-import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SelectPeriod } from '@/components/select-period'
+import { ChartCard } from '@/components/ui/chart'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { type QueryPeriod } from '@/enums/queries'
 import { Gender, GENDERS } from '@/enums/shared'
 import { api } from '@/lib/api'
 
-export function DashboardPatientsByGenderCard() {
+export function TotalPatientsByGenderCard() {
   const [period, setPeriod] = useState<QueryPeriod>('last-year')
 
   const { data: response, isLoading } = useQuery({
@@ -36,7 +36,7 @@ export function DashboardPatientsByGenderCard() {
   }))
 
   return (
-    <DashboardCardChart
+    <ChartCard
       title='Gêneros'
       icon={ChartBarDecreasingIcon}
       className='sm:col-span-3'
@@ -63,6 +63,6 @@ export function DashboardPatientsByGenderCard() {
           </p>
         )}
       </div>
-    </DashboardCardChart>
+    </ChartCard>
   )
 }
