@@ -81,7 +81,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
   const id = (await params).id
 
   const [canAccess, survey] = await Promise.all([
-    canUser('read:survey'),
+    canUser('read:survey:others'),
     getSurvey(id),
   ])
 

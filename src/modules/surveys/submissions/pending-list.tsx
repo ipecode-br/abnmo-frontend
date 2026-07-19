@@ -14,6 +14,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useParams } from '@/hooks/params'
+import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { SurveySubmission } from '@/types/surveys'
 import { formatDate } from '@/utils/formatters/format-date'
@@ -30,6 +31,7 @@ export function PendingSurveysList() {
     useState<SurveySubmission | null>(null)
 
   const { getParams, currentParams } = useParams()
+  const { canUser } = usePermissions()
 
   const [page] = getParams([QUERY_PARAM_KEYS.page])
   const status = 'pending_review'
@@ -56,6 +58,7 @@ export function PendingSurveysList() {
   const total = response?.data?.total ?? 0
 
   const isEmpty = !isLoading && submissions.length <= 0
+  const canReview = canUser('review:survey')
 
   return (
     <>
@@ -115,26 +118,28 @@ export function PendingSurveysList() {
                   </div>
                 )}
 
-                <div className='flex items-center gap-4 max-md:flex-1'>
-                  <Button
-                    size='sm'
-                    variant='outline'
-                    className='text-success flex-1'
-                    onClick={() => handleOpenModal('approve', submission)}
-                  >
-                    <CheckIcon />
-                    Aprovar
-                  </Button>
-                  <Button
-                    size='sm'
-                    variant='outline'
-                    className='text-error flex-1'
-                    onClick={() => handleOpenModal('decline', submission)}
-                  >
-                    <XIcon />
-                    Recusar
-                  </Button>
-                </div>
+                {canReview && (
+                  <div className='flex items-center gap-4 max-md:flex-1'>
+                    <Button
+                      size='sm'
+                      variant='outline'
+                      className='text-success flex-1'
+                      onClick={() => handleOpenModal('approve', submission)}
+                    >
+                      <CheckIcon />
+                      Aprovar
+                    </Button>
+                    <Button
+                      size='sm'
+                      variant='outline'
+                      className='text-error flex-1'
+                      onClick={() => handleOpenModal('decline', submission)}
+                    >
+                      <XIcon />
+                      Recusar
+                    </Button>
+                  </div>
+                )}
               </div>
 
               <span className='text-sm max-sm:mt-2'>
@@ -149,29 +154,33 @@ export function PendingSurveysList() {
 
       <Pagination totalItems={total} />
 
-      <Dialog
-        open={modalMode === 'approve'}
-        onOpenChange={(open) => setModalMode(open ? 'approve' : null)}
-      >
-        {selectedSubmission && (
-          <ApproveSurveySubmissionModal
-            submission={selectedSubmission}
-            onClose={() => setModalMode(null)}
-          />
-        )}
-      </Dialog>
+      {canReview && (
+        <>
+          <Dialog
+            open={modalMode === 'approve'}
+            onOpenChange={(open) => setModalMode(open ? 'approve' : null)}
+          >
+            {selectedSubmission && (
+              <ApproveSurveySubmissionModal
+                submission={selectedSubmission}
+                onClose={() => setModalMode(null)}
+              />
+            )}
+          </Dialog>
 
-      <Dialog
-        open={modalMode === 'decline'}
-        onOpenChange={(open) => setModalMode(open ? 'decline' : null)}
-      >
-        {selectedSubmission && (
-          <DeclineSurveySubmissionModal
-            submission={selectedSubmission}
-            onClose={() => setModalMode(null)}
-          />
-        )}
-      </Dialog>
+          <Dialog
+            open={modalMode === 'decline'}
+            onOpenChange={(open) => setModalMode(open ? 'decline' : null)}
+          >
+            {selectedSubmission && (
+              <DeclineSurveySubmissionModal
+                submission={selectedSubmission}
+                onClose={() => setModalMode(null)}
+              />
+            )}
+          </Dialog>
+        </>
+      )}
     </>
   )
 }
