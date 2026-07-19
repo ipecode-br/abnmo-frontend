@@ -2,34 +2,33 @@ import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { Card, type CardProps } from '@/components/ui/card'
-import { Divider } from '@/components/ui/divider'
 import { cn } from '@/utils/class-name-merge'
 
-interface DashboardCardChartProps extends CardProps {
+interface ChartCardProps extends CardProps {
   title: string
   icon: LucideIcon
   menu?: ReactNode
 }
 
-export function DashboardCardChart({
+export function ChartCard({
   icon,
   title,
   menu,
   className,
   children,
   ...props
-}: Readonly<DashboardCardChartProps>) {
+}: ChartCardProps) {
   const Icon = icon
 
   return (
-    <Card className={cn('flex flex-col gap-3 p-6', className)} {...props}>
-      <header className='flex items-center gap-2'>
+    <Card className={cn('flex flex-col gap-3', className)} {...props}>
+      <header className='border-border flex items-center gap-2 border-b pb-2'>
         <Icon className='text-disabled size-6 shrink-0' />
         <h3 className='text-xl font-medium'>{title}</h3>
 
         {menu && <div className='ml-auto'>{menu}</div>}
       </header>
-      <Divider />
+
       {children}
     </Card>
   )

@@ -10,8 +10,8 @@ import { getTotalAppointmentsByCategory } from '@/actions/statistics/get-total-a
 import { getTotalReferrals } from '@/actions/statistics/get-total-referrals'
 import { getTotalReferralsByCategory } from '@/actions/statistics/get-total-referrals-by-category'
 import { BarChart } from '@/components/charts/bar'
-import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SummaryCard } from '@/components/summary-card'
+import { ChartCard } from '@/components/ui/chart'
 import { SPECIALTIES } from '@/enums/shared'
 
 export const metadata: Metadata = {
@@ -71,7 +71,7 @@ export default async function Page({
         value={totalReferrals?.total}
       />
 
-      <DashboardCardChart
+      <ChartCard
         title='Atendimentos por categoria'
         icon={ChartBarDecreasingIcon}
       >
@@ -86,8 +86,8 @@ export default async function Page({
             </p>
           )}
         </div>
-      </DashboardCardChart>
-      <DashboardCardChart
+      </ChartCard>
+      <ChartCard
         title='Encaminhamentos por categoria'
         icon={ChartBarDecreasingIcon}
       >
@@ -102,7 +102,7 @@ export default async function Page({
             </p>
           )}
         </div>
-      </DashboardCardChart>
+      </ChartCard>
     </div>
   )
 }

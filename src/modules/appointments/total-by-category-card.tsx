@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ChartBarDecreasingIcon } from 'lucide-react'
 
 import { BarChart } from '@/components/charts/bar'
-import { DashboardCardChart } from '@/components/dashboard/cards/chart'
+import { ChartCard } from '@/components/ui/chart'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { SPECIALTIES, type Specialty } from '@/enums/shared'
@@ -32,10 +32,7 @@ export function TotalAppointmentsByCategoryCard() {
   }))
 
   return (
-    <DashboardCardChart
-      title='Atendimentos por categoria'
-      icon={ChartBarDecreasingIcon}
-    >
+    <ChartCard title='Atendimentos por categoria' icon={ChartBarDecreasingIcon}>
       <div className='flex h-full min-h-60 items-center justify-center'>
         {isLoading && <Skeleton className='bg-border/75 size-full' />}
 
@@ -51,6 +48,6 @@ export function TotalAppointmentsByCategoryCard() {
           </p>
         )}
       </div>
-    </DashboardCardChart>
+    </ChartCard>
   )
 }

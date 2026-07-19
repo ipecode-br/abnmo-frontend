@@ -14,32 +14,32 @@ interface SummaryCardProps extends CardProps {
 
 export function SummaryCard({
   label,
-  icon: Icon,
-  value = 0,
-  className,
   loading,
+  className,
+  value = 0,
+  icon: Icon,
   ...props
 }: Readonly<SummaryCardProps>) {
   return (
-    <Card
-      className={cn(
-        'flex min-h-30 flex-col justify-between gap-3 p-6',
-        className,
-      )}
-      {...props}
-    >
-      <div className='flex items-center justify-between'>
-        {loading ? (
-          <Skeleton className='h-9 w-10' />
-        ) : (
-          <span className='text-4xl leading-none font-semibold'>{value}</span>
-        )}
-
-        <div className='border-border text-primary rounded-full border p-2 [&_svg]:size-5'>
+    <>
+      <Card
+        className={cn('flex items-start justify-between gap-4', className)}
+        {...props}
+      >
+        <div className='flex flex-col gap-1'>
+          {loading ? (
+            <Skeleton className='h-9 w-12' />
+          ) : (
+            <span className='text-4xl leading-none font-semibold'>{value}</span>
+          )}
+          <span className='text-foreground-soft text-sm uppercase'>
+            {label}
+          </span>
+        </div>
+        <div className='border-border text-primary flex size-11 shrink-0 items-center justify-center rounded-full border [&_svg]:size-5.5'>
           <Icon />
         </div>
-      </div>
-      <p className='text-foreground-soft text-sm uppercase'>{label}</p>
-    </Card>
+      </Card>
+    </>
   )
 }

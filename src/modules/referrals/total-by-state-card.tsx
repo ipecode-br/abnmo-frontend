@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ChartPieIcon } from 'lucide-react'
 
 import { PieChart } from '@/components/charts/pie'
-import { DashboardCardChart } from '@/components/dashboard/cards/chart'
+import { ChartCard } from '@/components/ui/chart'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { CHART_PIE_COLORS } from '@/constants/charts'
@@ -40,7 +40,7 @@ export function TotalReferralsByStateCard() {
   }))
 
   return (
-    <DashboardCardChart title='Localização dos pacientes' icon={ChartPieIcon}>
+    <ChartCard title='Localização dos pacientes' icon={ChartPieIcon}>
       <div className='flex h-full items-center justify-center sm:min-h-60'>
         {isLoading && <Skeleton className='bg-border/75 size-full' />}
 
@@ -79,6 +79,6 @@ export function TotalReferralsByStateCard() {
           </p>
         )}
       </div>
-    </DashboardCardChart>
+    </ChartCard>
   )
 }

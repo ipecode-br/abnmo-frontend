@@ -3,7 +3,7 @@ import { LucideIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
 
-const cardVariants = cva('overflow-hidden rounded-2xl border p-4', {
+const cardVariants = cva('overflow-hidden rounded-2xl border p-4 md:p-6', {
   variants: {
     variant: {
       default: 'bg-card border-border shadow-xs',
