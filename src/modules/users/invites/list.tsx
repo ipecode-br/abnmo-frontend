@@ -58,7 +58,7 @@ export function UserInvitesList() {
   const invites = response?.data?.invites ?? []
   const total = response?.data?.total ?? 0
 
-  const canCreateInvite = canUser('create', 'Invites')
+  const canCreateInvite = canUser('create:user-invite')
 
   return (
     <>

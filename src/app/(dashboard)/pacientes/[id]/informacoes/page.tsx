@@ -38,10 +38,10 @@ export default async function Page({ params }: Readonly<PageParams>) {
     canCreatePatientSupport,
   ] = await Promise.all([
     getPatient(patientId),
-    canUser('delete', 'Patients'),
-    canUser('create', 'Referrals'),
-    canUser('create', 'Appointments'),
-    canUser('create', 'PatientSupports'),
+    canUser('deactivate:patient'),
+    canUser('create:referral'),
+    canUser('create:appointment'),
+    false, // TODO: add PatientSupports features
   ])
 
   if (!patient) {

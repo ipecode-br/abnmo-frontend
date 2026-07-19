@@ -35,8 +35,8 @@ export function AppointmentsTableActions({
 
   const allowEdit = appointment.status !== 'canceled'
   const allowCancel = !['completed', 'canceled'].includes(appointment.status)
-  const canUpdateAppointment = canUser('update', 'Appointments')
-  const canCancelAppointment = canUser('delete', 'Appointments')
+  const canUpdateAppointment = canUser('update:appointment')
+  const canCancelAppointment = canUser('cancel:appointment')
 
   return (
     <>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const canAccess = await canUser('view', 'Users')
+  const canAccess = await canUser('read:user')
 
   if (!canAccess) {
     redirect(ROUTES.dashboard.main)

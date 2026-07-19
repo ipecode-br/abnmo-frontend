@@ -97,7 +97,7 @@ export function UsersList() {
 
   const hasActiveFilters = Boolean(role || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
-  const canCreatInvite = canUser('create', 'Invites')
+  const canCreatInvite = canUser('create:user-invite')
 
   return (
     <>

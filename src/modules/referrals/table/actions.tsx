@@ -35,8 +35,8 @@ export function ReferralsTableActions({
 
   const allowEdit = referral.status !== 'canceled'
   const allowCancel = !['completed', 'canceled'].includes(referral.status)
-  const canUpdateReferral = canUser('update', 'Referrals')
-  const canCancelReferral = canUser('delete', 'Referrals')
+  const canUpdateReferral = canUser('update:referral')
+  const canCancelReferral = canUser('cancel:referral')
 
   return (
     <>

@@ -28,7 +28,7 @@ export async function DashboardUpcomingAppointmentsCard() {
   }
 
   const [canCreateAppointment, response] = await Promise.all([
-    canUser('create', 'Appointments'),
+    canUser('create:appointment'),
     getAppointments({
       cacheKey: NEXT_CACHE_TAGS.appointments.query(JSON.stringify(params)),
       params,

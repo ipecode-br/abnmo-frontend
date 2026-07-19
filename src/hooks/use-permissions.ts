@@ -3,16 +3,20 @@
 import { useContext } from 'react'
 import { useStore } from 'zustand'
 
-import { PermissionsContext } from '@/lib/permissions/provider'
+import { PermissionsContext } from '@/providers/permissions-provider'
 
 /**
- * Hook to check user permissions and access current user on the client side
+ * Hook to check user permissions and access current user on the client side.
  *
  * @example
  * const { user, canUser } = usePermissions()
  *
- * if (canUser('update', 'Patients')) {
+ * if (canUser('update:patient')) {
  *   // Show edit button
+ * }
+ *
+ * if (canUser('update:appointment', appointmentId)) {
+ *   // Can edit this specific appointment
  * }
  *
  * console.log(user) // Access current user

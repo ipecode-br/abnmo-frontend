@@ -6,7 +6,7 @@ import { env } from '@/config/env'
 import { inter } from '@/lib/fonts'
 import { cn } from '@/utils/class-name-merge'
 
-import { Providers } from './providers'
+import { Providers } from '../providers'
 
 export const metadata: Metadata = {
   title: {

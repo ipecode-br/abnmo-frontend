@@ -64,7 +64,7 @@ export function PatientForm({
   const { canUser } = usePermissions()
   const router = useRouter()
 
-  const canUpdatePatient = canUser('update', 'Patients')
+  const canUpdatePatient = canUser('update:patient')
   const isCreateForm = action === 'create'
   const isViewMode = action === 'view'
 

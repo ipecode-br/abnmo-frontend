@@ -20,8 +20,8 @@ import { SidebarMenuSection } from './menu-section'
 export async function DashboardSidebar() {
   const [user, canViewUsers, canViewSurveys] = await Promise.all([
     getCurrentUser(),
-    canUser('view', 'Users'),
-    canUser('view', 'Surveys'),
+    canUser('read:user'),
+    canUser('read:survey'),
   ])
 
   const SECTIONS = [

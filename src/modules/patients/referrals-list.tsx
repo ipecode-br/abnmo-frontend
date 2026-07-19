@@ -106,7 +106,7 @@ export function PatientReferralsList({
 
   const hasActiveFilters = Boolean(category || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
-  const canCreateReferral = canUser('create', 'Referrals')
+  const canCreateReferral = canUser('create:referral')
 
   return (
     <>

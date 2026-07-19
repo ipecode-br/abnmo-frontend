@@ -27,8 +27,8 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
   const [modalOpen, setModalOpen] = useState<UserModalMode | null>(null)
   const { canUser } = usePermissions()
 
-  const canUpdateUser = canUser('update', 'Users')
-  const canDeleteUser = canUser('delete', 'Users')
+  const canUpdateUser = canUser('update:user')
+  const canDeleteUser = canUser('deactivate:user')
 
   const changingStatusData = {
     active: {

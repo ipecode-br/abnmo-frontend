@@ -17,9 +17,9 @@ import { ROUTES } from '@/constants/routes'
 
 export default async function Page() {
   const [canCreatePatient, canViewUsers, canViewInvites] = await Promise.all([
-    canUser('create', 'Patients'),
-    canUser('view', 'Users'),
-    canUser('view', 'Invites'),
+    false, // TODO: add create:patient feature
+    canUser('read:user'),
+    canUser('read:user-invite'),
   ])
 
   const SECTIONS = [

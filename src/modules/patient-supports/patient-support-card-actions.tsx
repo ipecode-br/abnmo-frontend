@@ -5,7 +5,6 @@ import { useState } from 'react'
 
 import { Dialog } from '@/components/ui/dialog'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
-import { usePermissions } from '@/hooks/use-permissions'
 import type { SupportContact } from '@/types/patients'
 
 import { PatientSupportModal } from './patient-support-modal'
@@ -23,9 +22,7 @@ export function PatientSupportCardActions({
     null,
   )
 
-  const { canUser } = usePermissions()
-
-  const canUpdatePatientSupport = canUser('update', 'PatientSupports')
+  const canUpdatePatientSupport = false // TODO: add PatientSupports features
 
   if (!canUpdatePatientSupport) {
     return null

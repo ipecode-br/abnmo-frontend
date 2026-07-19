@@ -32,9 +32,9 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
   const router = useRouter()
 
   const isPatientActive = patient.status === 'active'
-  const canCreateReferral = canUser('create', 'Referrals')
-  const canCreateAppointment = canUser('create', 'Appointments')
-  const canDeactivatePatient = canUser('delete', 'Patients')
+  const canCreateReferral = canUser('create:referral')
+  const canCreateAppointment = canUser('create:appointment')
+  const canDeactivatePatient = canUser('deactivate:patient')
 
   return (
     <>

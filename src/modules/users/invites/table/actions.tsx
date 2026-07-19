@@ -22,7 +22,7 @@ export function UserInvitesTableActions({
   const [modalOpen, setModalOpen] = useState<InviteModalMode | null>(null)
   const { canUser } = usePermissions()
 
-  const canCancelInvite = canUser('delete', 'Invites')
+  const canCancelInvite = canUser('delete:user-invite')
 
   if (!canCancelInvite) {
     return null

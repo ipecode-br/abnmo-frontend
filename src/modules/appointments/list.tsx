@@ -112,7 +112,7 @@ export function AppointmentsList() {
 
   const hasActiveFilters = Boolean(category || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
-  const canCreateAppointment = canUser('create', 'Appointments')
+  const canCreateAppointment = canUser('create:appointment')
 
   return (
     <>
