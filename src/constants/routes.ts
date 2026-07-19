@@ -23,7 +23,6 @@ export const ROUTES = {
   },
   patients: {
     main: '/pacientes',
-    new: '/pacientes/cadastrar',
     details: {
       info: (id: string) => `/pacientes/${id}/informacoes`,
       history: (id: string) => `/pacientes/${id}/historico`,
@@ -34,11 +33,11 @@ export const ROUTES = {
   },
   referrals: {
     main: '/encaminhamentos',
-    list: '/encaminhamentos/listagem',
+    list: '/encaminhamentos/lista',
   },
   appointments: {
     main: '/atendimentos',
-    list: '/atendimentos/listagem',
+    list: '/atendimentos/lista',
   },
   approvals: {
     main: '/aprovacoes',

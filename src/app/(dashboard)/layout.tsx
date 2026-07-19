@@ -7,7 +7,9 @@ import { PermissionsProvider } from '@/providers/permissions-provider'
 
 export default async function Layout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: {
+  children: React.ReactNode
+}) {
   const user = await getCurrentUser()
 
   return (
@@ -19,7 +21,7 @@ export default async function Layout({
           <DashboardHeader />
           <DashboardTabButtons />
 
-          <main className='bg-background-soft flex flex-1 flex-col gap-4 p-6 lg:gap-6 lg:p-8'>
+          <main className='bg-background-soft flex flex-1 flex-col gap-4 p-4 md:p-6 lg:gap-6 lg:p-8'>
             {children}
           </main>
         </div>

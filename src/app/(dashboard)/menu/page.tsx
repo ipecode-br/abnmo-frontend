@@ -18,15 +18,19 @@ import { ROUTES } from '@/constants/routes'
 export default async function Page() {
   const [
     canViewSurveys,
-    canViewAppointments,
-    canViewReferrals,
+    canViewAppointment,
+    canViewAllAppointments,
+    canViewReferral,
+    canViewAllReferrals,
     canViewUsers,
     canViewInvites,
   ] = await Promise.all([
-    canUser(['read:survey', 'read:survey:others']),
-    canUser(['read:appointment:others', 'read:appointment:others']),
-    canUser(['read:referral:others', 'read:referral:others']),
-    canUser(['read:user', 'read:user:others']),
+    canUser('read:survey:others'),
+    canUser('read:appointment'),
+    canUser('read:appointment:others'),
+    canUser('read:referral'),
+    canUser('read:referral:others'),
+    canUser('read:user:others'),
     canUser('read:user-invite'),
   ])
 
@@ -69,7 +73,7 @@ export default async function Page() {
     },
     {
       title: 'Pacientes',
-      show: canViewAppointments,
+      show: true,
       buttons: [
         {
           label: 'Pacientes',
@@ -81,37 +85,37 @@ export default async function Page() {
     },
     {
       title: 'Atendimentos',
-      show: true,
+      show: canViewAppointment || canViewAllAppointments,
       buttons: [
         {
-          label: 'Atendimentos',
+          label: 'Visão geral',
           icon: <ClipboardCheckIcon />,
           path: ROUTES.appointments.main,
-          show: true,
+          show: canViewAppointment,
         },
         {
           label: 'Lista de atendimentos',
           icon: <ClipboardListIcon />,
           path: ROUTES.appointments.list,
-          show: true,
+          show: canViewAllAppointments,
         },
       ],
     },
     {
       title: 'Encaminhamentos',
-      show: canViewReferrals,
+      show: canViewReferral || canViewAllReferrals,
       buttons: [
         {
-          label: 'Encaminhamentos',
+          label: 'Visão geral',
           icon: <ClipboardPasteIcon />,
           path: ROUTES.referrals.main,
-          show: true,
+          show: canViewReferral,
         },
         {
           label: 'Lista de encaminhamentos',
           icon: <ClipboardListIcon />,
           path: ROUTES.referrals.list,
-          show: true,
+          show: canViewAllReferrals,
         },
       ],
     },
