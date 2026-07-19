@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button'
 import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import {
   APPOINTMENT_FEATURE_OPTIONS,
-  BASE_FEATURES,
   MEMBER_FEATURE_OPTIONS,
   PATIENT_FEATURE_OPTIONS,
   REFERRAL_FEATURE_OPTIONS,
@@ -94,7 +93,6 @@ export function UserFeaturesForm({ user }: UserFeaturesFormProps) {
                   name='features'
                   options={options}
                   readOnly={isViewMode}
-                  disabledValues={BASE_FEATURES}
                 />
               </fieldset>
             ))}
