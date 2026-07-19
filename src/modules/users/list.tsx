@@ -97,7 +97,7 @@ export function UsersList() {
 
   const hasActiveFilters = Boolean(role || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
-  const canCreatInvite = canUser('create:user-invite')
+  const canCreateInvite = canUser('create:user-invite')
 
   return (
     <>
@@ -121,7 +121,7 @@ export function UsersList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          {canCreatInvite && <NewInviteButton />}
+          {canCreateInvite && <NewInviteButton />}
         </SectionHeaderActions>
       </SectionHeader>
 

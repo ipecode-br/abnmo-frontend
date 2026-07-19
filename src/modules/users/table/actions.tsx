@@ -4,13 +4,16 @@ import {
   CheckCircle2Icon,
   ClipboardPenIcon,
   EllipsisIcon,
+  UserSquare2Icon,
   XCircleIcon,
 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
+import { ROUTES } from '@/constants/routes'
 import { usePermissions } from '@/hooks/use-permissions'
 import type { User } from '@/types/users'
 
@@ -26,27 +29,17 @@ interface UsersTableActionsProps {
 export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
   const [modalOpen, setModalOpen] = useState<UserModalMode | null>(null)
   const { canUser } = usePermissions()
+  const router = useRouter()
 
-  const canUpdateUser = canUser('update:user')
-  const canDeleteUser = canUser('deactivate:user')
+  const canUpdateUser = canUser('update:user:others')
+  const canActivateUser = canUser('activate:user')
+  const canDeactivateUser = canUser('deactivate:user')
 
-  const changingStatusData = {
-    active: {
-      variant: 'destructive',
-      icon: <XCircleIcon />,
-      label: 'Inativar',
-    },
-    inactive: {
-      variant: 'success',
-      icon: <CheckCircle2Icon />,
-      label: 'Ativar',
-    },
-  } as const
+  const showActivateButton = canActivateUser && user.status === 'inactive'
+  const showDeactivateButton = canDeactivateUser && user.status === 'active'
+  const showStatusModal = canActivateUser || canDeactivateUser
 
-  const statusButton =
-    changingStatusData[user.status === 'pending' ? 'active' : user.status]
-
-  if (!canUpdateUser && !canDeleteUser) {
+  if (!canUpdateUser && !showStatusModal) {
     return null
   }
 
@@ -62,6 +55,11 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
         </MenuTrigger>
 
         <MenuContent align='end'>
+          <MenuItem onClick={() => router.push(ROUTES.users.details(user.id))}>
+            <UserSquare2Icon />
+            Informações
+          </MenuItem>
+
           {canUpdateUser && (
             <MenuItem onClick={() => setModalOpen('edit')}>
               <ClipboardPenIcon />
@@ -69,22 +67,28 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
             </MenuItem>
           )}
 
-          {/* <MenuItem
-            onClick={() => router.push(ROUTES.users.details(user.id))}
-          >
-            <UserSquare2Icon />
-            Informações do usuário
-          </MenuItem> */}
-
-          {canDeleteUser && (
+          {showActivateButton && (
             <>
               <Divider className='my-1' />
               <MenuItem
-                variant={statusButton.variant}
+                variant='success'
                 onClick={() => setModalOpen('status')}
               >
-                {statusButton.icon}
-                {statusButton.label}
+                <CheckCircle2Icon />
+                Ativar
+              </MenuItem>
+            </>
+          )}
+
+          {showDeactivateButton && (
+            <>
+              <Divider className='my-1' />
+              <MenuItem
+                variant='destructive'
+                onClick={() => setModalOpen('status')}
+              >
+                <XCircleIcon />
+                Inativar
               </MenuItem>
             </>
           )}
@@ -100,7 +104,7 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
         </Dialog>
       )}
 
-      {canDeleteUser && (
+      {showStatusModal && (
         <Dialog
           open={modalOpen === 'status'}
           onOpenChange={(open) => setModalOpen(open ? 'status' : null)}

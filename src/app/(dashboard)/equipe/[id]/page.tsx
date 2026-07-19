@@ -1,9 +1,12 @@
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
+import { canUser } from '@/actions/auth/can-user'
 import { getUser } from '@/actions/users/get-user'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
 import { Tag } from '@/components/ui/tag'
+import { ROUTES } from '@/constants/routes'
 import { SPECIALTIES } from '@/enums/shared'
 import { USER_ROLES } from '@/enums/users'
 import { UserFeaturesForm } from '@/modules/users/features-form'
@@ -25,6 +28,12 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: PageParams) {
+  const canAccess = await canUser('read:user:others')
+
+  if (!canAccess) {
+    redirect(ROUTES.main)
+  }
+
   const userId = (await params).id
 
   const user = await getUser(userId)
