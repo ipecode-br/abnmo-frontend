@@ -35,6 +35,7 @@ export const USER_INVITE_FEATURE_OPTIONS = convertObjectToOptions(
 
 export const APPOINTMENT_FEATURES = {
   'create:appointment': 'Criar atendimento',
+  'read:appointment': 'Ver atendimento',
   'read:appointment:others': 'Ver todos os atendimentos',
   'update:appointment': 'Atualizar atendimento',
   'update:appointment:others': 'Atualizar atendimentos',
@@ -46,6 +47,7 @@ export const APPOINTMENT_FEATURE_OPTIONS =
 
 export const REFERRAL_FEATURES = {
   'create:referral': 'Criar encaminhamento',
+  'read:referral': 'Ver encaminhamento',
   'read:referral:others': 'Ver todos os encaminhamentos',
   'update:referral': 'Atualizar encaminhamento',
   'update:referral:others': 'Atualizar encaminhamentos',
@@ -55,6 +57,15 @@ export const REFERRAL_FEATURES = {
 export const REFERRAL_FEATURE_OPTIONS =
   convertObjectToOptions(REFERRAL_FEATURES)
 
+export const STATISTIC_FEATURES = {
+  'read:statistic': 'Ver todas as estatísticas',
+  'read:statistic:patient': 'Ver estatísticas de pacientes',
+  'read:statistic:appointment': 'Ver estatísticas de atendimentos',
+  'read:statistic:referral': 'Ver estatísticas de encaminhamentos',
+}
+export const STATISTIC_FEATURE_OPTIONS =
+  convertObjectToOptions(STATISTIC_FEATURES)
+
 export const FEATURES = {
   ...SURVEY_FEATURES,
   ...PATIENT_FEATURES,
@@ -62,5 +73,6 @@ export const FEATURES = {
   ...MEMBER_INVITE_FEATURES,
   ...APPOINTMENT_FEATURES,
   ...REFERRAL_FEATURES,
+  ...STATISTIC_FEATURES,
 }
 export type Feature = keyof typeof FEATURES
