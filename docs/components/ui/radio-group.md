@@ -85,7 +85,7 @@ export function RadioGroupItem({
       <RadioGroupPrimitive.Item
         id={id}
         className={cn(
-          'peer border-border focus-visible:ring-ring data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground data-[state=checked]:bg-primary data-[state=checked]:inset-shadow-md size-6 shrink-0 cursor-pointer rounded-md border shadow-xs focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+          'peer border-border focus-visible:ring-ring data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground data-[state=checked]:bg-primary size-6 shrink-0 cursor-pointer rounded-md border shadow-xs focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         {...props}
