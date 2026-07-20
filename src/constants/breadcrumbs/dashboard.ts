@@ -73,7 +73,7 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       name: 'Atendimentos',
       path: ROUTES.appointments.main,
     },
-    listagem: {
+    lista: {
       icon: ClipboardListIcon,
       name: 'Lista de atendimentos',
       path: ROUTES.appointments.list,
@@ -85,7 +85,7 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       name: 'Encaminhamentos',
       path: ROUTES.referrals.main,
     },
-    listagem: {
+    lista: {
       icon: ClipboardListIcon,
       name: 'Lista de encaminhamentos',
       path: ROUTES.referrals.list,

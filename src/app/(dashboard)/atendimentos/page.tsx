@@ -14,9 +14,20 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const canAccess = await canUser('read:appointment:others')
+  const [canViewStatistics, canViewAppointmentStatistics, canViewAppointments] =
+    await Promise.all([
+      canUser('read:statistic'),
+      canUser('read:statistic:appointment'),
+      canUser('read:appointment:others'),
+    ])
 
-  if (!canAccess) {
+  const canViewPage = canViewStatistics || canViewAppointmentStatistics
+
+  if (!canViewPage && canViewAppointments) {
+    redirect(ROUTES.appointments.list)
+  }
+
+  if (!canViewPage) {
     redirect(ROUTES.main)
   }
 
