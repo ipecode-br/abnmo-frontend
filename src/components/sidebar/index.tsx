@@ -31,11 +31,11 @@ export async function Sidebar() {
     canViewUsers,
   ] = await Promise.all([
     getCurrentUser(),
-    canUser(['read:survey', 'read:survey:others']),
-    canUser(['read:patient', 'read:patient:others']),
+    canUser('read:survey:others'),
+    canUser('read:patient:others'),
     canUser(['read:appointment', 'read:appointment:others']),
     canUser(['read:referral', 'read:referral:others']),
-    canUser(['read:user', 'read:user:others']),
+    canUser('read:user:others'),
   ])
 
   const SECTIONS = [

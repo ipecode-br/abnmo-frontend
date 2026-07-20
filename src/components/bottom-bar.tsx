@@ -29,13 +29,13 @@ export function BottomBar() {
       label: 'Catalogação',
       icon: <ClipboardListIcon />,
       path: ROUTES.surveys.main,
-      show: canUser(['read:survey', 'read:survey:others']),
+      show: canUser('read:survey:others'),
     },
     {
       label: 'Pacientes',
       icon: <Users2Icon />,
       path: ROUTES.patients.main,
-      show: canUser(['read:patient', 'read:patient:others']),
+      show: canUser('read:patient:others'),
     },
     {
       label: 'Atendimentos',

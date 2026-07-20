@@ -11,7 +11,6 @@ import {
   PaperclipIcon,
   User2Icon,
   UserRoundCheckIcon,
-  UserRoundPlusIcon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -66,11 +65,6 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       icon: ClipboardPasteIcon,
       name: 'Encaminhamentos do paciente',
       path: ROUTES.patients.main,
-    },
-    cadastrar: {
-      icon: UserRoundPlusIcon,
-      name: 'Cadastrar novo paciente',
-      path: ROUTES.patients.new,
     },
   },
   atendimentos: {
