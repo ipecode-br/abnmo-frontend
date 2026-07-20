@@ -1,9 +1,7 @@
 import {
-  ClipboardCheckIcon,
   ClipboardListIcon,
-  ClipboardPasteIcon,
   HeartHandshakeIcon,
-  LayoutDashboardIcon,
+  LayoutGridIcon,
   LayoutListIcon,
   MailPlusIcon,
   UserCircle2Icon,
@@ -41,7 +39,7 @@ export default async function Page() {
       buttons: [
         {
           label: 'Tela inicial',
-          icon: <LayoutDashboardIcon />,
+          icon: <LayoutGridIcon />,
           path: ROUTES.main,
           show: true,
         },
@@ -89,7 +87,7 @@ export default async function Page() {
       buttons: [
         {
           label: 'Visão geral',
-          icon: <ClipboardCheckIcon />,
+          icon: <LayoutGridIcon />,
           path: ROUTES.appointments.main,
           show: canViewAppointment,
         },
@@ -107,7 +105,7 @@ export default async function Page() {
       buttons: [
         {
           label: 'Visão geral',
-          icon: <ClipboardPasteIcon />,
+          icon: <LayoutGridIcon />,
           path: ROUTES.referrals.main,
           show: canViewReferral,
         },

@@ -77,9 +77,7 @@ export default async function Page({
       >
         <div className='flex h-full min-h-60 items-center justify-center'>
           {totalAppointmentsByCategoryValues.length > 0 ? (
-            <div className='size-full min-h-40'>
-              <BarChart data={totalAppointmentsByCategoryValues} />
-            </div>
+            <BarChart data={totalAppointmentsByCategoryValues} />
           ) : (
             <p className='text-foreground-soft text-sm'>
               Nenhum atendimento registrado.
@@ -93,9 +91,7 @@ export default async function Page({
       >
         <div className='flex h-full min-h-60 items-center justify-center'>
           {totalReferralsByCategoryValues.length > 0 ? (
-            <div className='size-full min-h-40'>
-              <BarChart data={totalReferralsByCategoryValues} />
-            </div>
+            <BarChart data={totalReferralsByCategoryValues} />
           ) : (
             <p className='text-foreground-soft text-sm'>
               Nenhum atendimento registrado.

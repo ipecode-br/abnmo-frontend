@@ -3,7 +3,7 @@ import {
   ClipboardListIcon,
   ClipboardPasteIcon,
   HeartHandshakeIcon,
-  LayoutDashboardIcon,
+  LayoutGridIcon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -44,7 +44,7 @@ export async function Sidebar() {
       buttons: [
         {
           label: 'Visão geral',
-          icon: <LayoutDashboardIcon />,
+          icon: <LayoutGridIcon />,
           path: ROUTES.main,
           show: true,
         },

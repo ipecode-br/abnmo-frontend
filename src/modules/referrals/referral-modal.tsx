@@ -89,7 +89,7 @@ export function ReferralModal({
   const { patientOptions } = usePatientOptions()
   const { user } = usePermissions()
 
-  const isCreateMode = !!patientId || !referral
+  const isCreateMode = !referral
   const isUserSpecialist = user?.role === 'specialist'
 
   const formMethods = useForm<ReferralFormSchema>({
@@ -175,7 +175,7 @@ export function ReferralModal({
                 name='patientId'
                 options={patientOptions}
                 placeholder='Selecione um paciente'
-                readOnly={!isCreateMode || !!referral}
+                readOnly={!!referral || !!patientId}
               />
             </LabelWrapper>
             <LabelWrapper>

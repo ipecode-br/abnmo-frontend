@@ -6,6 +6,7 @@ import {
   ClockArrowUpIcon,
   FileUserIcon,
   HistoryIcon,
+  LayoutGridIcon,
   LayoutListIcon,
   MailPlusIcon,
   PaperclipIcon,
@@ -21,7 +22,7 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   catalogacao: {
     catalogacao: {
       icon: ClipboardListIcon,
-      name: 'Catalogação',
+      name: 'Visão geral',
       path: ROUTES.surveys.main,
     },
     todas: {
@@ -69,8 +70,8 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   },
   atendimentos: {
     atendimentos: {
-      icon: ClipboardCheckIcon,
-      name: 'Atendimentos',
+      icon: LayoutGridIcon,
+      name: 'Visão geral',
       path: ROUTES.appointments.main,
     },
     lista: {
@@ -81,8 +82,8 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   },
   encaminhamentos: {
     encaminhamentos: {
-      icon: ClipboardPasteIcon,
-      name: 'Encaminhamentos',
+      icon: LayoutGridIcon,
+      name: 'Visão geral',
       path: ROUTES.referrals.main,
     },
     lista: {

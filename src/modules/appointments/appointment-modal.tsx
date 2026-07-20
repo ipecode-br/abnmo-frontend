@@ -86,11 +86,11 @@ export function AppointmentModal({
   appointment,
   onClose,
 }: AppointmentModalProps) {
-  const formId = useId()
   const { patientOptions } = usePatientOptions()
   const { user } = usePermissions()
+  const formId = useId()
 
-  const isCreateMode = !!patientId || !appointment
+  const isCreateMode = !appointment
   const isUserSpecialist = user?.role === 'specialist'
 
   const formMethods = useForm<AppointmentFormSchema>({
@@ -176,7 +176,7 @@ export function AppointmentModal({
                 name='patientId'
                 options={patientOptions}
                 placeholder='Selecione um paciente'
-                readOnly={!isCreateMode || !!appointment}
+                readOnly={!!appointment || !!patientId}
               />
             </LabelWrapper>
             <LabelWrapper>
