@@ -97,7 +97,9 @@ export function ReferralModal({
     defaultValues: {
       role: user?.role,
       patientId: patientId ?? (referral?.patient.id || ''),
-      date: referral?.date || '',
+      date: referral?.date
+        ? parseDate(new Date(referral.date), { output: 'DD/MM/YYYY' })
+        : '',
       condition: referral?.condition || '',
       category: isUserSpecialist ? undefined : referral?.category || '',
       professionalName: referral?.professionalName || '',
@@ -114,26 +116,21 @@ export function ReferralModal({
     professionalName,
     annotation,
   }: ReferralFormSchema) {
-    const payload: Partial<ReferralFormSchema> = {
+    const body: Partial<ReferralFormSchema> = {
+      date: parseDate(date, { input: 'DD/MM/YYYY' }) as string,
       condition,
       annotation,
     }
 
     if (isCreateMode) {
-      payload.patientId = patientId
-      payload.category = isUserSpecialist ? undefined : category
-      payload.professionalName = professionalName
+      body.patientId = patientId
+      body.category = isUserSpecialist ? undefined : category
+      body.professionalName = professionalName
     }
 
     const response = isCreateMode
-      ? await api('/referrals', {
-          body: { ...payload, date: parseDate(date) },
-          method: 'POST',
-        })
-      : await api(`/referrals/${referral?.id}`, {
-          body: { ...payload, date: parseDate(date) },
-          method: 'PUT',
-        })
+      ? await api('/referrals', { method: 'POST', body })
+      : await api(`/referrals/${referral?.id}`, { method: 'PUT', body })
 
     if (!response.success) {
       toast.error(response.message)

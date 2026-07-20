@@ -39,7 +39,7 @@ export function DatePicker({
   startYear,
   allowFutureDates,
 }: DatePickerProps) {
-  const selectedDate = parseDate<Date>(value)
+  const selectedDate = parseDate<Date>(value, { input: 'DD/MM/YYYY' })
 
   const handleCalendarSelect = useCallback(
     (value: Date | undefined) => {

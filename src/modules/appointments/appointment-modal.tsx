@@ -98,7 +98,9 @@ export function AppointmentModal({
     defaultValues: {
       role: user?.role,
       patientId: patientId ?? (appointment?.patient.id || ''),
-      date: appointment?.date || '',
+      date: appointment?.date
+        ? parseDate(new Date(appointment.date), { output: 'DD/MM/YYYY' })
+        : '',
       condition: appointment?.condition || '',
       category: isUserSpecialist ? undefined : appointment?.category || '',
       professionalName: appointment?.professionalName || '',
@@ -115,26 +117,21 @@ export function AppointmentModal({
     professionalName,
     annotation,
   }: AppointmentFormSchema) {
-    const payload: Partial<AppointmentFormSchema> = {
+    const body: Partial<AppointmentFormSchema> = {
+      date: parseDate(date, { input: 'DD/MM/YYYY' }) as string,
       condition,
       annotation,
     }
 
     if (isCreateMode) {
-      payload.patientId = patientId
-      payload.category = isUserSpecialist ? undefined : category
-      payload.professionalName = professionalName
+      body.patientId = patientId
+      body.category = isUserSpecialist ? undefined : category
+      body.professionalName = professionalName
     }
 
     const response = isCreateMode
-      ? await api('/appointments', {
-          body: { ...payload, date: parseDate(date) },
-          method: 'POST',
-        })
-      : await api(`/appointments/${appointment?.id}`, {
-          body: { ...payload, date: parseDate(date) },
-          method: 'PUT',
-        })
+      ? await api('/appointments', { method: 'POST', body })
+      : await api(`/appointments/${appointment?.id}`, { method: 'PUT', body })
 
     if (!response.success) {
       toast.error(response.message)
