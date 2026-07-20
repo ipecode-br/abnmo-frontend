@@ -21,7 +21,7 @@ export function ChartCard({
   const Icon = icon
 
   return (
-    <Card className={cn('flex flex-col gap-3', className)} {...props}>
+    <Card className={cn('flex flex-col gap-4', className)} {...props}>
       <header className='border-border flex items-center gap-2 border-b pb-2'>
         <Icon className='text-disabled size-6 shrink-0' />
         <h3 className='text-xl font-medium'>{title}</h3>

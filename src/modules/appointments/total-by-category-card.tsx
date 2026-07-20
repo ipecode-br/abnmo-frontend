@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ChartBarDecreasingIcon } from 'lucide-react'
 
 import { BarChart } from '@/components/charts/bar'
-import { ChartCard } from '@/components/ui/chart'
+import { ChartCard } from '@/components/ui/chart-card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { SPECIALTIES, type Specialty } from '@/enums/shared'

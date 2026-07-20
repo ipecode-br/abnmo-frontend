@@ -11,7 +11,7 @@ import { getTotalReferrals } from '@/actions/statistics/get-total-referrals'
 import { getTotalReferralsByCategory } from '@/actions/statistics/get-total-referrals-by-category'
 import { BarChart } from '@/components/charts/bar'
 import { SummaryCard } from '@/components/summary-card'
-import { ChartCard } from '@/components/ui/chart'
+import { ChartCard } from '@/components/ui/chart-card'
 import { SPECIALTIES } from '@/enums/shared'
 
 export const metadata: Metadata = {

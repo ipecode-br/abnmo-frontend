@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import { PieChart } from '@/components/charts/pie'
 import { SelectPeriod } from '@/components/select-period'
-import { ChartCard } from '@/components/ui/chart'
+import { ChartCard } from '@/components/ui/chart-card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { CHART_PIE_COLORS } from '@/constants/charts'

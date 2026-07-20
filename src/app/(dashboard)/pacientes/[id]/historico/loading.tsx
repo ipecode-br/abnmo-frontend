@@ -5,7 +5,7 @@ import {
 } from 'lucide-react'
 
 import { SummaryCard } from '@/components/summary-card'
-import { ChartCard } from '@/components/ui/chart'
+import { ChartCard } from '@/components/ui/chart-card'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Loading() {
