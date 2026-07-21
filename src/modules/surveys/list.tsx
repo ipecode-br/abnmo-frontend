@@ -13,6 +13,7 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
+import { List, ListHead, ListRow } from '@/components/ui/list'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
@@ -79,44 +80,45 @@ export function SurveysList() {
         )}
 
         {!isEmpty && (
-          <div className='divide-border divide-y'>
-            <div className='text-foreground-soft bg-accent/75 border-border hidden items-center gap-4 rounded-t-lg border p-3 md:flex'>
+          <List>
+            <ListHead>
               <span className='md:w-48 lg:w-56'>Nome completo</span>
               <span className='flex-1'>E-mail</span>
               <span className='w-24'>Status</span>
               <span className='w-24'>Data</span>
-            </div>
+            </ListHead>
             {surveys.map((survey) => {
               const status = SURVEY_STATUSES[survey.status]
               return (
-                <React.Fragment key={survey.id}>
-                  <div className='text-foreground-soft md:hover:bg-accent flex gap-x-4 gap-y-2 py-4 max-md:flex-wrap md:items-center md:p-3'>
-                    <a
-                      href={ROUTES.surveys.details(survey.id)}
-                      className='text-foreground hover:text-primary w-full truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'
-                    >
-                      {survey.name}
-                    </a>
+                <ListRow
+                  key={survey.id}
+                  className='text-foreground-soft max-md:flex-wrap last:max-md:pb-0 nth-[2]:max-md:pt-1'
+                >
+                  <a
+                    href={ROUTES.surveys.details(survey.id)}
+                    className='text-foreground hover:text-primary w-full truncate leading-tight font-semibold max-md:text-lg md:w-48 lg:w-56'
+                  >
+                    {survey.name}
+                  </a>
 
-                    <span className='w-full whitespace-nowrap md:flex-1 md:truncate'>
-                      {survey.email}
-                    </span>
+                  <span className='w-full whitespace-nowrap md:flex-1 md:truncate'>
+                    {survey.email}
+                  </span>
 
-                    <Tag
-                      size='sm'
-                      variant={status.variant}
-                      className='w-24 justify-center'
-                    >
-                      {status.label}
-                    </Tag>
-                    <span className='w-24 max-md:ml-auto'>
-                      {formatDate(survey.createdAt, { dateStyle: 'short' })}
-                    </span>
-                  </div>
-                </React.Fragment>
+                  <Tag
+                    size='sm'
+                    variant={status.variant}
+                    className='w-24 justify-center'
+                  >
+                    {status.label}
+                  </Tag>
+                  <span className='w-24 max-md:ml-auto'>
+                    {formatDate(survey.createdAt, { dateStyle: 'short' })}
+                  </span>
+                </ListRow>
               )
             })}
-          </div>
+          </List>
         )}
       </Card>
 
