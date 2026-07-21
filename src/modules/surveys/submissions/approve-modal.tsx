@@ -33,7 +33,7 @@ export function ApproveSurveySubmissionModal({
   async function approve() {
     startApproving(async () => {
       const response = await api(
-        `/surveys/submissions/${submission.id}/approve`,
+        `/survey-submissions/${submission.id}/approve`,
         { method: 'PATCH' },
       )
 

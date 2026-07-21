@@ -1,5 +1,4 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { HTMLAttributes } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 
@@ -26,7 +25,7 @@ const tagVariants = cva(
   },
 )
 
-export type TagProps = HTMLAttributes<HTMLDivElement> &
+export type TagProps = React.ComponentProps<'div'> &
   VariantProps<typeof tagVariants>
 
 export function Tag({

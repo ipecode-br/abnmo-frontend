@@ -13,7 +13,7 @@ export function Dialog({ children, ...props }: DialogProps) {
   return <BaseDialog.Root {...props}>{children}</BaseDialog.Root>
 }
 
-interface DialogTriggerProps
+export interface DialogTriggerProps
   extends React.ComponentProps<typeof BaseDialog.Trigger>,
     VariantProps<typeof buttonVariants> {}
 export function DialogTrigger({

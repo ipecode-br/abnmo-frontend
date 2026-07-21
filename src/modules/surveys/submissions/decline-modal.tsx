@@ -52,10 +52,10 @@ export function DeclineSurveySubmissionModal({
   })
 
   async function submitForm({ reason }: FormSchema) {
-    const response = await api(
-      `/surveys/submissions/${submission.id}/decline`,
-      { method: 'PATCH', body: { reason } },
-    )
+    const response = await api(`/survey-submissions/${submission.id}/decline`, {
+      method: 'PATCH',
+      body: { reason },
+    })
 
     if (!response.success) {
       toast.error(response.message)
