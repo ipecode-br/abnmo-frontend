@@ -14,7 +14,7 @@ import {
   ChildrenSchoolSupportSituation,
   CrisisAction,
   DailyActivityAssistance,
-  DiagnosisType,
+  Diagnosis,
   EducationLevel,
   EmploymentStatus,
   ExerciseBeforeNmo,
@@ -116,7 +116,7 @@ export type Survey = {
   currentJobIsPcd: boolean | null
   receivesSicknessBenefit: SicknessBenefitStatus
   receivesBpcLoas: BpcLoasStatus
-  diagnosis: DiagnosisType
+  diagnosis: Diagnosis
   firstCrisisSymptoms: FirstCrisisSymptom[]
   affectedAreas: AffectedArea[]
   diagnosingDoctorName: string | null

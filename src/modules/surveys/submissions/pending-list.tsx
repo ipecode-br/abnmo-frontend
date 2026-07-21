@@ -88,7 +88,7 @@ export function PendingSurveysList() {
           submissions.map((submission) => (
             <Card
               key={submission.id}
-              className='text-foreground-soft flex flex-col gap-2'
+              className='text-foreground-soft flex flex-col gap-2 md:p-4'
             >
               <header className='flex flex-wrap items-end justify-between gap-x-8 gap-y-1'>
                 <h3 className='text-foreground text-xl font-semibold'>

@@ -1,13 +1,16 @@
+import type { PatientStatus } from '@/enums/patients'
 import type {
-  PatientGender,
-  PatientRace,
-  PatientStatus,
-} from '@/enums/patients'
-import type { BrazilState } from '@/enums/shared'
+  BrazilState,
+  Gender,
+  Kinship,
+  MaritalStatus,
+  Race,
+} from '@/enums/shared'
+import { Diagnosis } from '@/enums/surveys'
 
 type SupportContact = {
   name: string
-  kinship: string
+  kinship: Kinship
   phone: string
 }
 
@@ -24,15 +27,15 @@ export type Patient = {
   createdAt: string
   supportContacts: SupportContact[]
   dateOfBirth: string
-  gender: PatientGender
-  race: PatientRace
-  maritalStatus: string
+  gender: Gender
+  race: Race
+  maritalStatus: MaritalStatus
   addressCep: string
   addressState: BrazilState
   addressCity: string
   addressStreet: string
   addressNumber: string
-  diagnosis: string
+  diagnosis: Diagnosis
   nmoMedications: []
   generalMedications: []
   hasVisualAlteration: boolean

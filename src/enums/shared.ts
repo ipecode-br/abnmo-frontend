@@ -104,7 +104,7 @@ export const MARITAL_STATUSES = {
 }
 export type MaritalStatus = keyof typeof MARITAL_STATUSES
 
-export const KINSHIP_TYPES = {
+export const KINSHIPS = {
   grandparent: 'Avô/Avó',
   spouse: 'Esposo(a)',
   children: 'Filho(a)',
@@ -115,7 +115,7 @@ export const KINSHIP_TYPES = {
   uncle_aunt: 'Tio(a)',
   other: 'Outro',
 }
-export type KinshipType = keyof typeof KINSHIP_TYPES
+export type Kinship = keyof typeof KINSHIPS
 
 export const TIME_UNITS = {
   days: 'Dia(s)',

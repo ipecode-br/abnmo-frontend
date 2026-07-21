@@ -199,13 +199,13 @@ export const TRANSPORT_MODES = {
 }
 export type TransportMode = keyof typeof TRANSPORT_MODES
 
-export const DIAGNOSIS_TYPES = {
+export const DIAGNOSIS = {
   anti_aqp4_positive: 'Anti-AQP4 POSITIVO (REAGENTE)',
   anti_aqp4_negative: 'Anti-AQP4 NEGATIVO (NÃO REAGENTE)',
   anti_mog_positive: 'Anti-MOG POSITIVO',
   both_negative: 'Negativo para ambos',
 }
-export type DiagnosisType = keyof typeof DIAGNOSIS_TYPES
+export type Diagnosis = keyof typeof DIAGNOSIS
 
 export const FIRST_CRISIS_SYMPTOMS = {
   vomiting: 'Vômitos',
