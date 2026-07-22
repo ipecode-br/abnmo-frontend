@@ -24,7 +24,13 @@ export async function api<Data>(
   try {
     if (isServerSide) {
       const cookies = await getAllCookies()
-      headers = { ...headers, Cookie: cookies.toString() }
+      const sessionCookie = cookies.get('session')
+      headers = {
+        ...headers,
+        ...(sessionCookie && {
+          Cookie: `${sessionCookie.name}=${sessionCookie.value}`,
+        }),
+      }
     }
 
     const url = new URL(path, env.NEXT_PUBLIC_API_URL)

@@ -5,6 +5,8 @@ import { DashboardTabButtons } from '@/components/dashboard/tab-buttons'
 import { Sidebar } from '@/components/sidebar'
 import { PermissionsProvider } from '@/providers/permissions-provider'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Layout({
   children,
 }: {

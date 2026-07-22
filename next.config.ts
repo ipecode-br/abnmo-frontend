@@ -13,12 +13,12 @@ const nextConfig: NextConfig = {
     remotePatterns:
       env.NODE_ENV === 'production'
         ? [
-            { protocol: 'https', hostname: '**.svm.abnmo.org' },
+            { protocol: 'https', hostname: '**.abnmo.org' },
             { protocol: 'https', hostname: 'd2q3o9ng2mw15p.cloudfront.net' },
             { protocol: 'https', hostname: 'd3esvuqs2o4gq9.cloudfront.net' },
           ]
         : [
-            { protocol: 'https', hostname: '**.svm.abnmo.org' },
+            { protocol: 'https', hostname: '**.abnmo.org' },
             { protocol: 'https', hostname: 'd2q3o9ng2mw15p.cloudfront.net' },
             { protocol: 'https', hostname: 'd3esvuqs2o4gq9.cloudfront.net' },
             { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
