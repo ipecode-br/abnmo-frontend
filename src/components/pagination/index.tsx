@@ -35,6 +35,8 @@ export function Pagination({
 
   const isFirstPage = currentPage === 1
   const isLastPage = currentPage === totalPages
+
+  const showPageButtons = totalPages > 1
   const showFirstAndLastArrowButtons = totalItems > perPage
 
   function getCurrentItems() {
@@ -100,44 +102,46 @@ export function Pagination({
         Exibindo {getCurrentItems()} {totalItems > 1 ? 'itens' : 'item'}
       </div>
 
-      <div className='flex flex-wrap justify-center gap-2'>
-        {showFirstAndLastArrowButtons && (
-          <PaginationButton
-            variant='ghost'
-            title='Primeira página'
-            disabled={isFirstPage}
-            className='w-8 disabled:opacity-25'
-            onClick={() => handlePaginate(1)}
-          >
-            <ChevronFirstIcon />
-          </PaginationButton>
-        )}
+      {showPageButtons && (
+        <div className='flex flex-wrap justify-center gap-2'>
+          {showFirstAndLastArrowButtons && (
+            <PaginationButton
+              variant='ghost'
+              title='Primeira página'
+              disabled={isFirstPage}
+              className='w-8 disabled:opacity-25'
+              onClick={() => handlePaginate(1)}
+            >
+              <ChevronFirstIcon />
+            </PaginationButton>
+          )}
 
-        {pageButtons.map((page) => (
-          <PaginationButton
-            key={page.key}
-            disabled={page.value === '...'}
-            active={page.value === currentPage}
-            onClick={() =>
-              page.value !== '...' ? handlePaginate(page.value) : null
-            }
-          >
-            {page.value}
-          </PaginationButton>
-        ))}
+          {pageButtons.map((page) => (
+            <PaginationButton
+              key={page.key}
+              disabled={page.value === '...'}
+              active={page.value === currentPage}
+              onClick={() =>
+                page.value !== '...' ? handlePaginate(page.value) : null
+              }
+            >
+              {page.value}
+            </PaginationButton>
+          ))}
 
-        {showFirstAndLastArrowButtons && (
-          <PaginationButton
-            variant='ghost'
-            title='Última página'
-            disabled={isLastPage}
-            className='w-8 disabled:opacity-25'
-            onClick={() => handlePaginate(totalPages)}
-          >
-            <ChevronLastIcon />
-          </PaginationButton>
-        )}
-      </div>
+          {showFirstAndLastArrowButtons && (
+            <PaginationButton
+              variant='ghost'
+              title='Última página'
+              disabled={isLastPage}
+              className='w-8 disabled:opacity-25'
+              onClick={() => handlePaginate(totalPages)}
+            >
+              <ChevronLastIcon />
+            </PaginationButton>
+          )}
+        </div>
+      )}
 
       <div className='text-right'>
         Página {currentPage} de {totalPages}

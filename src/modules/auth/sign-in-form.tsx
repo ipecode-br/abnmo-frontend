@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -9,22 +8,24 @@ import { z } from 'zod'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { TextInput } from '@/components/form/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { NavLink } from '@/components/ui/nav-link'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
+import { emailSchema } from '@/schemas'
 
 export const signInFormSchema = z.object({
-  email: z.string().email('Insira um e-mail válido'),
+  email: emailSchema,
   password: z.string().min(8, 'Sua senha deve conter 8 ou mais caracteres'),
   keepLoggedIn: z.boolean().optional(),
 })
 export type SignInFormSchema = z.infer<typeof signInFormSchema>
 
+// TODO: redirect patients to new screening flow when it's ready
 export function SignInForm() {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -36,12 +37,12 @@ export function SignInForm() {
   })
   const formErrorMessage = formMethods.formState.errors.root?.message
 
-  async function submitForm(data: SignInFormSchema) {
+  async function submitForm(body: SignInFormSchema) {
     startTransition(async () => {
-      const response = await api<{ accountType: 'user' | 'patient' }>(
-        '/login',
-        { method: 'POST', body: JSON.stringify(data) },
-      )
+      const response = await api<{ role: string }>('/login', {
+        method: 'POST',
+        body: body,
+      })
 
       if (!response.success) {
         formMethods.setError('root', { message: response.message })
@@ -49,9 +50,7 @@ export function SignInForm() {
       }
 
       router.push(
-        response.data?.accountType === 'user'
-          ? ROUTES.dashboard.main
-          : ROUTES.patient.main,
+        response.data?.role === 'patient' ? ROUTES.patient.main : ROUTES.main,
       )
     })
   }
@@ -59,21 +58,16 @@ export function SignInForm() {
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-        <FormField className='gap-4'>
-          <TextInput
-            name='email'
-            label='E-mail'
-            icon={MailIcon}
-            placeholder='Digite seu e-mail'
-          />
-          <PasswordInput
-            name='password'
-            label='Senha'
-            placeholder='Digite sua senha'
-          />
-        </FormField>
+        <LabelWrapper>
+          <Label isRequired>E-mail</Label>
+          <TextInput name='email' placeholder='Digite seu e-mail' />
+        </LabelWrapper>
+        <LabelWrapper>
+          <Label isRequired>Senha</Label>
+          <PasswordInput name='password' placeholder='Digite sua senha' />
+        </LabelWrapper>
 
-        <div className='flex items-center justify-between gap-x-3 gap-y-5 text-sm max-[28rem]:flex-col'>
+        <div className='flex items-center justify-between gap-4 max-[28rem]:flex-col'>
           <CheckboxInput name='keepLoggedIn' label='Manter conectado' />
 
           <NavLink
@@ -84,7 +78,7 @@ export function SignInForm() {
           </NavLink>
         </div>
 
-        <Button type='submit' loading={isPending}>
+        <Button type='submit' loading={isPending} className='mt-2'>
           Entrar
         </Button>
 

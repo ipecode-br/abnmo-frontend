@@ -1,0 +1,59 @@
+import { ClipboardCheckIcon } from 'lucide-react'
+
+import {
+  getAppointments,
+  type GetAppointmentsParams,
+} from '@/actions/appointments/get-appointments'
+import { canUser } from '@/actions/auth/can-user'
+import {
+  SectionHeader,
+  SectionHeaderActions,
+  SectionHeaderTitle,
+} from '@/components/section-header'
+import { Card } from '@/components/ui/card'
+import { NavButton } from '@/components/ui/nav-button'
+import { NEXT_CACHE_TAGS } from '@/constants/cache'
+import { ROUTES } from '@/constants/routes'
+import { NewAppointmentButton } from '@/modules/appointments/new-appointment-button'
+
+import { AppointmentsTable } from '../appointments/table'
+
+export async function UpcomingAppointmentsCard() {
+  const params: GetAppointmentsParams = {
+    startDate: new Date().toISOString(),
+    status: 'scheduled',
+    orderBy: 'date',
+    order: 'ASC',
+    limit: 5,
+  }
+
+  const [canCreateAppointment, response] = await Promise.all([
+    canUser('create:appointment'),
+    getAppointments({
+      cacheKey: NEXT_CACHE_TAGS.appointments.query(JSON.stringify(params)),
+      params,
+    }),
+  ])
+
+  const appointments = response?.appointments ?? []
+
+  return (
+    <Card className='p-6 sm:col-span-6'>
+      <SectionHeader className='mb-6'>
+        <SectionHeaderTitle
+          title='Próximos atendimentos'
+          icon={<ClipboardCheckIcon />}
+        />
+        <SectionHeaderActions>
+          <NavButton variant='outline' href={ROUTES.appointments.list}>
+            Ver todos
+          </NavButton>
+
+          {canCreateAppointment && <NewAppointmentButton />}
+        </SectionHeaderActions>
+      </SectionHeader>
+
+      <AppointmentsTable appointments={appointments} hideColumns={['status']} />
+    </Card>
+  )
+}

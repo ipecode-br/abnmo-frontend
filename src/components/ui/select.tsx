@@ -4,9 +4,10 @@ import {
   Select as BaseSelect,
   type SelectPositionerProps,
   type SelectRootProps,
-} from '@base-ui-components/react/select'
+} from '@base-ui/react/select'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react'
+import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
+import { RefCallBack } from 'react-hook-form'
 
 import { cn } from '@/utils/class-name-merge'
 
@@ -19,21 +20,16 @@ export type SelectOption = {
 }
 
 const selectTriggerVariants = cva(
-  'bg-background data-[placeholder]:text-disabled hover:bg-accent flex cursor-pointer items-center gap-2 rounded-lg border pr-2 pl-3 text-left shadow-xs outline-offset-4 transition-colors disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none',
+  'bg-background data-[placeholder]:text-disabled border-border [&_svg]:text-disabled text-foreground flex h-10 cursor-pointer items-center gap-2 rounded-lg border pr-2 pl-3 text-left transition-colors focus:outline-2 focus:-outline-offset-1 disabled:pointer-events-none disabled:opacity-50 aria-[readonly]:pointer-events-none [&_svg]:opacity-50 disabled:[&_svg]:opacity-50 aria-[readonly]:[&_svg]:opacity-25',
   {
     variants: {
       variant: {
-        default: 'outline-ring border-border',
+        default: 'outline-ring hover:border-ring',
         error: 'outline-error border-error',
-      },
-      size: {
-        default: 'h-10',
-        sm: 'h-9',
       },
     },
     defaultVariants: {
       variant: 'default',
-      size: 'default',
     },
   },
 )
@@ -45,35 +41,35 @@ export type SelectProps = Omit<SelectRootProps<string, false>, 'items'> &
     className?: string
     placeholder?: string
     resetLabel?: string
+    contentClassName?: string
+    ref?: RefCallBack
   }
 
 export function Select({
-  size,
+  ref,
   value,
-  align = 'start',
   options,
+  variant,
   className,
   resetLabel,
+  align = 'start',
+  contentClassName,
   placeholder = 'Selecione uma opção',
-  variant,
   ...props
 }: Readonly<SelectProps>) {
   const selectedOption = options.find((option) => option.value === value)
-  const hideIndicator = props.disabled || props.readOnly
 
   return (
     <BaseSelect.Root value={value} items={options} {...props}>
       <BaseSelect.Trigger
-        className={selectTriggerVariants({ variant, size, className })}
+        ref={ref}
+        className={cn(selectTriggerVariants({ variant }), className)}
       >
         <BaseSelect.Value className='w-full truncate whitespace-nowrap'>
           {() => (selectedOption ? selectedOption.label : placeholder)}
         </BaseSelect.Value>
-        <BaseSelect.Icon
-          data-hide={hideIndicator}
-          className='data-[hide=opacity-50'
-        >
-          <ChevronsUpDownIcon className='text-disabled size-4.5 shrink-0' />
+        <BaseSelect.Icon aria-readonly={true}>
+          <ChevronsUpDownIcon className='size-4.5' />
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
 
@@ -86,11 +82,13 @@ export function Select({
         >
           <BaseSelect.Popup
             className={cn(
-              'border-border bg-popover rounded-lg border p-2 shadow-lg outline-none',
-              'max-h-[min(var(--available-height),32rem)] max-w-[var(--available-width)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] overflow-y-auto overscroll-contain',
+              'border-border bg-popover scroll-py-4 rounded-xl border p-2 shadow-lg outline-none',
+              'max-h-[min(var(--available-height),32rem)] max-w-(--available-width) min-w-(--anchor-width) origin-(--transform-origin) overflow-y-auto overscroll-contain',
               'transition-[transform,translate,opacity]',
-              'data-[ending-style]:-translate-y-2 data-[ending-style]:opacity-0',
-              'data-[starting-style]:-translate-y-2 data-[starting-style]:opacity-0',
+              'data-starting-style:-translate-y-2 data-starting-style:opacity-0',
+              'data-ending-style:-translate-y-2 data-ending-style:opacity-0',
+              'scrollbar-thumb-foreground-soft/40 scrollbar-track-transparent scrollbar-thin',
+              contentClassName,
             )}
           >
             <BaseSelect.List>
@@ -98,11 +96,7 @@ export function Select({
                 <BaseSelect.Item
                   key={value}
                   value={value}
-                  className={cn(
-                    'data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground',
-                    'flex cursor-pointer items-center justify-between gap-2 rounded-md px-3 py-1.5 transition-colors outline-none',
-                    '[&_svg]:size-4',
-                  )}
+                  className='data-highlighted:bg-primary data-highlighted:text-primary-foreground data-highlighted:[&_svg]:text-primary-foreground flex cursor-pointer items-center justify-between gap-1 rounded-md px-3 py-1.5 transition-colors outline-none'
                 >
                   <BaseSelect.ItemText className='flex flex-col'>
                     <span>{label}</span>
@@ -112,7 +106,7 @@ export function Select({
                   </BaseSelect.ItemText>
 
                   <BaseSelect.ItemIndicator>
-                    <CheckIcon />
+                    <CheckIcon className='text-primary relative left-1.5 size-4.5' />
                   </BaseSelect.ItemIndicator>
                 </BaseSelect.Item>
               ))}
@@ -124,7 +118,6 @@ export function Select({
                     value='reset'
                     className='data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground flex cursor-pointer items-center gap-2 rounded-md px-3 py-1.5 transition-colors outline-none [&_svg]:size-4'
                   >
-                    <XIcon />
                     <BaseSelect.ItemText>{resetLabel}</BaseSelect.ItemText>
                   </BaseSelect.Item>
                 </>

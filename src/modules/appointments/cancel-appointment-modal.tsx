@@ -50,7 +50,7 @@ export function CancelAppointmentModal({
         QUERY_CACHE_KEYS.statistics.totalAppointmentsByState,
       ])
       revalidateServerCache([
-        NEXT_CACHE_TAGS.patient(appointment.patientId),
+        NEXT_CACHE_TAGS.patient(appointment.patient.id),
         NEXT_CACHE_TAGS.appointments.main,
         NEXT_CACHE_TAGS.statistics.totalAppointments.main,
         NEXT_CACHE_TAGS.statistics.totalPatientsWithAppointments.main,
@@ -77,14 +77,14 @@ export function CancelAppointmentModal({
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={isPending}
           variant='destructive'
           onClick={cancelAppointment}
         >
           Confirmar cancelamento
         </Button>
-        <DialogClose className='flex-1' disabled={isPending}>
+        <DialogClose className='md:flex-1' disabled={isPending}>
           Voltar
         </DialogClose>
       </DialogFooter>

@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { User2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -10,12 +9,11 @@ import { z } from 'zod'
 
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
-import { NavLink } from '@/components/ui/nav-link'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { ROUTES } from '@/constants/routes'
 import { SPECIALTIES_OPTIONS, type Specialty } from '@/enums/shared'
 import { type UserRole, USERS_ROLE_ENUM } from '@/enums/users'
@@ -71,7 +69,7 @@ export const signUpFormSchema = z
   })
 export type SignUpFormSchema = z.infer<typeof signUpFormSchema>
 
-type RegisterUserPayload = {
+type RegisterUserBody = {
   role: UserRole
   name: string
   password: string
@@ -85,7 +83,10 @@ interface SignUpFormProps {
   role: UserRole
 }
 
-export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
+export function SignUpForm({
+  role,
+  token: inviteToken,
+}: Readonly<SignUpFormProps>) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -111,22 +112,14 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
     registrationId,
   }: SignUpFormSchema) {
     startTransition(async () => {
-      const payload: RegisterUserPayload = {
-        role,
-        name,
-        password,
-        inviteToken: token,
-      }
+      const body: RegisterUserBody = { role, name, password, inviteToken }
 
       if (specialty && registrationId) {
-        payload.specialty = specialty
-        payload.registrationId = registrationId
+        body.specialty = specialty
+        body.registrationId = registrationId
       }
 
-      const response = await api('/register/user', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      })
+      const response = await api('/register/user', { method: 'POST', body })
 
       if (!response.success) {
         toast.error(response.message)
@@ -134,7 +127,7 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
       }
 
       toast.success(response.message)
-      router.push(ROUTES.dashboard.main)
+      router.push(ROUTES.main)
     })
   }
 
@@ -143,54 +136,46 @@ export function SignUpForm({ token, role }: Readonly<SignUpFormProps>) {
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(registerUser)}>
-        <FormField>
-          <TextInput
-            name='name'
-            label='Nome completo'
-            icon={User2Icon}
-            placeholder='Insira seu nome completo'
-            isRequired
-          />
+        <LabelWrapper>
+          <Label isRequired>Nome completo</Label>
+          <TextInput name='name' placeholder='Insira seu nome completo' />
+        </LabelWrapper>
 
-          {role === 'specialist' && (
-            <>
-              <SelectInput
-                name='specialty'
-                label='Especialidade'
-                options={SPECIALTIES_OPTIONS}
-                isRequired
-              />
+        {role === 'specialist' && (
+          <>
+            <LabelWrapper>
+              <Label isRequired>Especialidade</Label>
+              <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Registro profissional</Label>
               <TextInput
                 name='registrationId'
-                label='Registro profissional'
                 placeholder='Insira seu registro profissional'
-                isRequired
               />
-            </>
-          )}
+            </LabelWrapper>
+          </>
+        )}
+
+        <LabelWrapper>
+          <Label isRequired>Senha</Label>
           <PasswordInput
             name='password'
-            label='Senha'
-            placeholder='Digite sua senha'
             showRequirements
-            isRequired
+            placeholder='Digite sua senha'
           />
+        </LabelWrapper>
+        <LabelWrapper>
+          <Label isRequired>Confirmar senha</Label>
           <PasswordInput
             name='confirmPassword'
-            label='Confirmar senha'
             placeholder='Repita sua senha'
-            isRequired
           />
-        </FormField>
+        </LabelWrapper>
 
         <CheckboxInput
           name='consent'
-          label={
-            <span className='text-xs'>
-              Li e concordo com os <NavLink href='#'>Termos de Uso</NavLink> e{' '}
-              <NavLink href='#'>Política de Privacidade</NavLink>
-            </span>
-          }
+          label='Li e concordo com os Termos de Uso e Políticas de Privacidade'
         />
 
         <Button type='submit' loading={isPending}>

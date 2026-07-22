@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailPlusIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -19,6 +20,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { USERS_ROLE_ENUM, USERS_ROLE_OPTIONS } from '@/enums/users'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
@@ -26,7 +28,7 @@ import { api } from '@/lib/api'
 
 const userInviteFormSchema = z.object({
   email: z.string().email('Insira um e-mail válido'),
-  role: z.enum(USERS_ROLE_ENUM),
+  role: z.enum(USERS_ROLE_ENUM, { message: 'Selecione um cargo' }),
 })
 type UserInviteFormSchema = z.infer<typeof userInviteFormSchema>
 
@@ -35,17 +37,15 @@ interface NewUserInviteModalProps {
 }
 
 export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
+  const formId = useId()
   const formMethods = useForm<UserInviteFormSchema>({
     resolver: zodResolver(userInviteFormSchema),
     defaultValues: { email: '', role: '' } as unknown as UserInviteFormSchema,
     mode: 'onBlur',
   })
 
-  async function submitForm(data: UserInviteFormSchema) {
-    const response = await api('/users/invites', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
+  async function submitForm(body: UserInviteFormSchema) {
+    const response = await api('/users/invites', { method: 'POST', body: body })
 
     if (!response.success) {
       toast.error(response.message)
@@ -66,33 +66,33 @@ export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
 
       <DialogContent>
         <FormProvider {...formMethods}>
-          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <TextInput
-              name='email'
-              label='E-mail'
-              placeholder='Insira o e-mail'
-              isRequired
-            />
-            <SelectInput
-              name='role'
-              label='Cargo'
-              options={USERS_ROLE_OPTIONS}
-              isRequired
-            />
+          <FormContainer
+            id={formId}
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
+            <LabelWrapper>
+              <Label isRequired>E-mail</Label>
+              <TextInput name='email' placeholder='Insira o e-mail' />
+            </LabelWrapper>
+            <LabelWrapper>
+              <Label isRequired>Cargo</Label>
+              <SelectInput name='role' options={USERS_ROLE_OPTIONS} />
+            </LabelWrapper>
           </FormContainer>
         </FormProvider>
       </DialogContent>
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          form={formId}
+          className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
           Enviar
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

@@ -18,7 +18,7 @@ export function NewInviteButton(props: Readonly<ButtonProps>) {
         Novo convite
       </DialogTrigger>
 
-      {modalOpen && <NewUserInviteModal onClose={() => setModalOpen(false)} />}
+      <NewUserInviteModal onClose={() => setModalOpen(false)} />
     </Dialog>
   )
 }

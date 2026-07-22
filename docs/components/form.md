@@ -54,7 +54,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { FormContainer } from '@/components/form/form-container'
-import { TextInput } from '@/components/form/text-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
 
 import {
@@ -481,7 +481,7 @@ import { toast } from 'sonner'
 import { CheckboxInput } from '@/components/form/checkbox-input'
 import { FormContainer } from '@/components/form/form-container'
 import { FormField } from '@/components/form/form-field'
-import { TextInput } from '@/components/form/text-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 

@@ -5,9 +5,8 @@ import { HeartHandshakeIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
-import { FilterDate } from '@/components/filters/date'
+import { FilterDate } from '@/components/filters/filter-date'
 import { FilterSelect } from '@/components/filters/filter-select'
-import { FilterItem } from '@/components/filters/item'
 import { SearchInput } from '@/components/filters/search-input'
 import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
@@ -17,6 +16,7 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import {
@@ -30,24 +30,36 @@ import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { QueryOrderMapping, UsersOrderBy } from '@/types/orders'
 import type { User } from '@/types/users'
+import { parseDate } from '@/utils/parsers/parse-date'
 
 import { NewInviteButton } from './invites/new-invite-button'
 import { UsersTable } from './table'
 
 export function UsersList() {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
-  const [page, search, role, status, orderBy, startDate, endDate] = getParams([
-    QUERY_PARAM_KEYS.page,
-    QUERY_PARAM_KEYS.search,
-    QUERY_PARAM_KEYS.role,
-    QUERY_PARAM_KEYS.status,
-    QUERY_PARAM_KEYS.orderBy,
-    QUERY_PARAM_KEYS.startDate,
-    QUERY_PARAM_KEYS.endDate,
-  ])
+  const [page, search, role, status, orderBy, startDateQuery, endDateQuery] =
+    getParams([
+      QUERY_PARAM_KEYS.page,
+      QUERY_PARAM_KEYS.search,
+      QUERY_PARAM_KEYS.role,
+      QUERY_PARAM_KEYS.status,
+      QUERY_PARAM_KEYS.orderBy,
+      QUERY_PARAM_KEYS.startDate,
+      QUERY_PARAM_KEYS.endDate,
+    ])
+
+  const startDate = parseDate<string>(startDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+  })
+  const endDate = parseDate<string>(endDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+    endOfDay: true,
+  })
 
   const ORDER_MAPPING: QueryOrderMapping<UsersOrder, UsersOrderBy> = {
     name_asc: { orderBy: 'name', order: 'ASC' },
@@ -65,7 +77,7 @@ export function UsersList() {
 
   const { data: response, isLoading } = useQuery({
     placeholderData: (previousData) => previousData,
-    queryKey: [QUERY_CACHE_KEYS.users.main, paramsQueryKey],
+    queryKey: [QUERY_CACHE_KEYS.users.main, currentParams],
     queryFn: () =>
       api<{ users: User[]; total: number }>('/users', {
         params: {
@@ -85,7 +97,7 @@ export function UsersList() {
 
   const hasActiveFilters = Boolean(role || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
-  const canCreatInvite = canUser('create', 'Invites')
+  const canCreateInvite = canUser('create:user-invite')
 
   return (
     <>
@@ -97,7 +109,7 @@ export function UsersList() {
         />
 
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar' className='w-48' />
+          <SearchInput className='md:w-48' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={USERS_ORDER_OPTIONS}
@@ -109,28 +121,30 @@ export function UsersList() {
             onClick={() => setManualShowFilters(!manualShowFilters)}
           />
 
-          {canCreatInvite && <NewInviteButton size='sm' />}
+          {canCreateInvite && <NewInviteButton />}
         </SectionHeaderActions>
       </SectionHeader>
 
       {showFilters && (
         <section className='flex flex-wrap items-end gap-6'>
-          <FilterItem title='Cargo' className='w-44'>
+          <LabelWrapper>
+            <Label className='w-44'>Cargo</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.role}
               options={USERS_ROLE_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar cargo'
+              resetLabel='Todos'
             />
-          </FilterItem>
-          <FilterItem title='Status' className='w-44'>
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label className='w-44'>Status</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={USER_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
-          </FilterItem>
+          </LabelWrapper>
           <FilterDate />
           <ClearFiltersButton />
         </section>

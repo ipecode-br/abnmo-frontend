@@ -4,7 +4,7 @@ import {
   type MenuPositionerProps,
   type MenuRootProps,
   type MenuTriggerProps as BaseMenuTriggerProps,
-} from '@base-ui-components/react'
+} from '@base-ui/react/menu'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utils/class-name-merge'

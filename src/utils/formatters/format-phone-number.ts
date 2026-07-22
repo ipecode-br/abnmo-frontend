@@ -29,7 +29,7 @@ import { NON_NUMBER_REGEX } from '@/constants/regex'
  * formatPhoneNumber('11abc987654321999')
  * // '(11) 98765-4321'
  */
-export function formatPhoneNumber(input: string) {
+export function formatPhoneNumber(input: string = '') {
   const sanitizedInput = input.replace(NON_NUMBER_REGEX, '')
 
   return sanitizedInput.length <= 10

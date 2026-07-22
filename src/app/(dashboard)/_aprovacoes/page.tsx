@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  redirect(ROUTES.dashboard.approvals.pendingApprovals)
+  redirect(ROUTES.approvals.pendingApprovals)
 }

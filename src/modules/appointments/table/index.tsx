@@ -84,8 +84,8 @@ export function AppointmentsTable({
               <TableRow key={appointment.id}>
                 <TableCell>
                   <Button
-                    size='icon_sm'
                     variant='ghost'
+                    className='size-8'
                     aria-label='Ver detalhes do atendimento'
                     onClick={() => setViewAppointment(appointment)}
                   >
@@ -96,8 +96,8 @@ export function AppointmentsTable({
                   <TableCell>
                     <TableLink
                       className='w-64'
-                      href={ROUTES.dashboard.patients.details.info(
-                        appointment.patientId,
+                      href={ROUTES.patients.details.info(
+                        appointment.patient.id,
                       )}
                     >
                       <Avatar
@@ -173,14 +173,14 @@ export function AppointmentsTable({
           ))}
       </TableBody>
 
-      {viewAppointment && (
-        <Dialog
-          open={!!viewAppointment}
-          onOpenChange={() => setViewAppointment(null)}
-        >
+      <Dialog
+        open={!!viewAppointment}
+        onOpenChange={() => setViewAppointment(null)}
+      >
+        {viewAppointment && (
           <ViewAppointmentModal appointment={viewAppointment} />
-        </Dialog>
-      )}
+        )}
+      </Dialog>
     </Table>
   )
 }

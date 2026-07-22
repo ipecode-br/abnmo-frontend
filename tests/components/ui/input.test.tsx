@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
-import { Atom } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
 
@@ -12,42 +11,18 @@ describe('Input', () => {
     const inputElement = screen.getByRole('textbox')
     expect(inputElement).toBeInTheDocument()
     expect(inputElement).toHaveClass(
-      'w-full rounded-lg border px-3 shadow-xs transition-colors disabled:pointer-events-none disabled:opacity-50 border-border text-foreground',
+      'peer text-foreground bg-background placeholder:text-disabled w-full rounded-lg border px-3 text-base read-only:outline-none focus:outline-2 focus:-outline-offset-1 disabled:opacity-50',
     )
+    expect(inputElement).toHaveClass(
+      'border-border focus:outline-ring hover:border-ring',
+    )
+    expect(inputElement).toHaveClass('h-10')
   })
   it('should render an error Input', () => {
     render(<Input variant='error' />)
 
     const inputElement = screen.getByRole('textbox')
     expect(inputElement).toBeInTheDocument()
-    expect(inputElement).toHaveClass('border-error outline-error')
-  })
-  it('should render a default Input with icon', () => {
-    render(<Input icon={Atom} />)
-
-    const inputElement = screen.getByRole('textbox')
-    const iconElement = screen.getByTestId('input-icon')
-
-    expect(inputElement).toBeInTheDocument()
-    expect(iconElement).toBeInTheDocument()
-
-    expect(iconElement).toHaveClass('text-disabled')
-    expect(iconElement).toHaveClass(
-      'absolute left-3 shrink-0 transition-colors',
-    )
-  })
-  it('should render an error Input with icon', () => {
-    render(<Input icon={Atom} variant='error' />)
-
-    const inputElement = screen.getByRole('textbox')
-    const iconElement = screen.getByTestId('input-icon')
-
-    expect(inputElement).toBeInTheDocument()
-    expect(iconElement).toBeInTheDocument()
-
-    expect(iconElement).toHaveClass('text-error')
-    expect(iconElement).toHaveClass(
-      'absolute left-3 shrink-0 transition-colors',
-    )
+    expect(inputElement).toHaveClass('border-error focus:outline-error')
   })
 })

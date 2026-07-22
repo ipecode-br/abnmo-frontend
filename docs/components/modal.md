@@ -118,11 +118,7 @@ export function TableActions() {
   return (
     <>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setDropdownOpen}>
-        <DropdownMenuTrigger
-          size='icon'
-          variant='ghost'
-          ref={dropdownTriggerRef}
-        >
+        <DropdownMenuTrigger variant='ghost' ref={dropdownTriggerRef}>
           <EllipsisIcon />
         </DropdownMenuTrigger>
 
@@ -548,7 +544,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { TextInput } from '@/components/form/text-input'
+import { TextInput } from '@/components/form-v2/text-input'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog/close'
 import { DialogContainer } from '@/components/ui/dialog/container'

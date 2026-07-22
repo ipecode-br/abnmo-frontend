@@ -2,29 +2,22 @@
 
 import { redirect } from 'next/navigation'
 
-import { NEXT_CACHE_TAGS } from '@/constants/cache'
 import { COOKIES } from '@/constants/cookies'
 import { ROUTES } from '@/constants/routes'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
-import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
 
-import { deleteCookie, getCookie } from '../cookies'
-import { getUserFromToken } from '../users/get-user-from-token'
+import { deleteCookie } from '../cookies'
 
 export async function logout() {
-  const refreshToken = await getCookie(COOKIES.refreshToken)
-  const user = await getUserFromToken()
+  await api('/logout', { method: 'POST' })
 
-  if (refreshToken) {
-    await api('/logout', { method: 'POST' })
-    await deleteCookie(COOKIES.refreshToken)
-    if (user?.id) {
-      revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
-    }
-  }
-
-  await deleteCookie(COOKIES.accessToken)
+  await Promise.all([
+    deleteCookie(COOKIES.session),
+    deleteCookie(COOKIES.cdnKeyPairId),
+    deleteCookie(COOKIES.cdnPolicy),
+    deleteCookie(COOKIES.cdnSignature),
+  ])
 
   revalidateClientCache('all')
 

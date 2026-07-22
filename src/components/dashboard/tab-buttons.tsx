@@ -2,10 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 
-import {
-  SECTION_TAB_BUTTONS,
-  type SectionTabButton,
-} from '@/constants/section-tab-buttons'
+import { SECTION_TABS, type SectionTab } from '@/constants/section-tabs'
 
 import { Divider } from '../ui/divider'
 import { TabButtons } from '../ui/tab-buttons'
@@ -14,7 +11,7 @@ export function DashboardTabButtons() {
   const segments = usePathname().split('/').filter(Boolean)
   const section = segments[0]
 
-  const buttons = SECTION_TAB_BUTTONS[section as SectionTabButton]
+  const buttons = SECTION_TABS[section as SectionTab]
 
   const hidePatientDetailsButtons =
     (section === 'pacientes' && segments.length < 2) ||

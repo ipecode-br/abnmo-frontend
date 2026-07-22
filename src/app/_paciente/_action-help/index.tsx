@@ -8,9 +8,11 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 
-import { Popover } from '@/components/ui/popover'
-import { PopoverContent } from '@/components/ui/popover/content'
-import { PopoverTrigger } from '@/components/ui/popover/trigger'
+import {
+  Popover,
+  PopoverContainer,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 export function ActionHelp() {
   const [open, setOpen] = useState(false)
@@ -24,7 +26,7 @@ export function ActionHelp() {
           <CircleQuestionMarkIcon />
         </PopoverTrigger>
 
-        <PopoverContent side='left' className='mb-5 gap-3 p-6'>
+        <PopoverContainer side='left' className='mb-5 gap-3 p-6'>
           <div className='flex items-center gap-2.5 text-2xl'>
             <HeadsetIcon />
             <h1>Precisa de ajuda?</h1>
@@ -49,7 +51,7 @@ export function ActionHelp() {
               <span>www.abnmo.org</span>
             </li>
           </ul>
-        </PopoverContent>
+        </PopoverContainer>
       </Popover>
     </div>
   )

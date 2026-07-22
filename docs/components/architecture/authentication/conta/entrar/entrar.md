@@ -228,7 +228,7 @@ const formMethods = useForm<SignInFormSchema>({
 async function signIn({ email, password, rememberMe }: SignInFormSchema) {
   const response = await api('/login', {
     method: 'POST',
-    body: JSON.stringify({ email, password, rememberMe }),
+    body: { email, password, rememberMe },
   })
 
   if (!response.success) {
@@ -238,7 +238,7 @@ async function signIn({ email, password, rememberMe }: SignInFormSchema) {
 
   const data = await getDataFromToken()
   const redirectPath =
-    data?.userRole === 'admin' ? ROUTES.dashboard.main : ROUTES.patient.main
+    data?.userRole === 'admin' ? ROUTES.main : ROUTES.patient.main
   router.push(redirectPath)
 }
 ```

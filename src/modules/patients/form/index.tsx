@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   CircleCheckIcon,
   CircleXIcon,
-  ClipboardEditIcon,
   PlusIcon,
   Trash2Icon,
   UserPlus2Icon,
@@ -18,28 +17,25 @@ import type { z } from 'zod'
 import { ComboboxInput } from '@/components/form/combobox-input'
 import { DateInput } from '@/components/form/date-input'
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Button } from '@/components/ui/button'
 import { Dialog } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
+import { PATIENT_NMO_DIAGNOSTIC_OPTIONS } from '@/enums/patients'
 import {
-  PATIENT_GENDER_OPTIONS,
-  PATIENT_NMO_DIAGNOSTIC_OPTIONS,
-  PATIENT_RACE_OPTIONS,
-} from '@/enums/patients'
-import {
-  BRAZILIAN_STATES_OPTIONS,
-  type UF,
+  BRAZIL_STATE_OPTIONS,
+  type BrazilState,
+  GENDER_OPTIONS,
+  RACE_OPTIONS,
   YES_OR_NO_OPTIONS,
 } from '@/enums/shared'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { useCities } from '@/hooks/cities'
-import { usePermissions } from '@/hooks/use-permissions'
 import { api } from '@/lib/api'
 import type { Patient } from '@/types/patients.d.ts'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
@@ -63,10 +59,8 @@ export function PatientForm({
 }: Readonly<PatientFormProps>) {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
   const [action, setAction] = useState<Mode>(mode)
-  const { canUser } = usePermissions()
   const router = useRouter()
 
-  const canUpdatePatient = canUser('update', 'Patients')
   const isCreateForm = action === 'create'
   const isViewMode = action === 'view'
 
@@ -87,15 +81,7 @@ export function PatientForm({
       gender: patient?.gender || '',
       race: patient?.race || '',
       phone: patient?.phone ? formatPhoneNumber(patient.phone) : '',
-      state: patient?.state || '',
-      city: patient?.city || '',
       email: patient?.email || '',
-      hasDisability: patient?.hasDisability ? 'yes' : 'no',
-      disabilityDesc: patient?.disabilityDesc || '',
-      takeMedication: patient?.takeMedication ? 'yes' : 'no',
-      medicationDesc: patient?.medicationDesc || '',
-      nmoDiagnosis: patient?.nmoDiagnosis || '',
-      needLegalAssistance: patient?.needLegalAssistance ? 'yes' : 'no',
       supports: isCreateForm
         ? [{ name: '', phone: '', kinship: '' }]
         : undefined,
@@ -121,8 +107,8 @@ export function PatientForm({
   }
   const submitButton = submitButtons[action]
 
-  function handleSelectState(value: UF) {
-    formMethods.setValue('state', value)
+  function handleSelectState(value: string) {
+    formMethods.setValue('state', value as BrazilState)
     formMethods.setValue('city', '')
     formMethods.clearErrors('state')
     formMethods.clearErrors('city')
@@ -138,7 +124,7 @@ export function PatientForm({
   }
 
   async function submitForm(data: PatientFormSchema) {
-    const payload = {
+    const body = {
       ...data,
       phone: removeNonNumbers(data.phone),
       cpf: removeNonNumbers(data.cpf),
@@ -152,8 +138,6 @@ export function PatientForm({
           }))
         : undefined,
     }
-
-    const body = JSON.stringify(payload)
 
     const response = isCreateForm
       ? await api('/patients', { method: 'POST', body })
@@ -178,161 +162,151 @@ export function PatientForm({
 
     if (isCreateForm) {
       revalidateServerCache(NEXT_CACHE_TAGS.statistics.totalPatients.main)
-      router.push(ROUTES.dashboard.patients.main)
+      router.push(ROUTES.patients.main)
     }
   }
 
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-        <FormField className='grid gap-4 lg:grid-cols-7'>
+        <LabelWrapper className='lg:col-span-3'>
+          <Label isRequired>Nome completo</Label>
           <TextInput
             name='name'
-            label='Nome completo'
             maxLength={64}
             placeholder='Insira o nome completo'
-            wrapperClassName='lg:col-span-3'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
-          <DateInput
-            name='dateOfBirth'
-            label='Data de nascimento'
-            navMode='dropdown'
-            placeholder='Selecione a data'
-            wrapperClassName='lg:col-span-2'
-            isRequired={!isViewMode}
-            readOnly={isViewMode}
-          />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label>Data de nascimento</Label>
+          <DateInput name='dateOfBirth' disabled={isViewMode} />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>CPF</Label>
           <TextInput
             name='cpf'
-            label='CPF'
             mask='cpf'
             inputMode='numeric'
             maxLength={14}
             placeholder='000.000.000-00'
-            wrapperClassName='lg:col-span-2'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
+        </LabelWrapper>
 
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Telefone (WhatsApp)</Label>
           <TextInput
             name='phone'
-            label='Telefone (WhatsApp)'
             mask='phone'
             inputMode='tel'
             maxLength={15}
             placeholder='(00) 00000-0000'
-            wrapperClassName='lg:col-span-2'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Estado</Label>
           <ComboboxInput
             name='state'
-            label='Estado'
-            options={BRAZILIAN_STATES_OPTIONS}
-            onValueChange={handleSelectState}
+            options={BRAZIL_STATE_OPTIONS}
+            onChange={handleSelectState}
             placeholder='Selecione o estado'
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Cidade</Label>
           <ComboboxInput
             name='city'
-            label='Cidade'
             options={cityOptions}
             placeholder='Selecione a cidade'
-            className='lg:col-span-3'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
             disabled={!selectedUF}
           />
+        </LabelWrapper>
 
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Gênero</Label>
           <SelectInput
             name='gender'
-            label='Gênero'
-            options={PATIENT_GENDER_OPTIONS}
-            placeholder='Selecione o gênero'
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
+            options={GENDER_OPTIONS}
             readOnly={isViewMode}
           />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Raça ou Cor</Label>
           <SelectInput
             name='race'
-            label='Raça ou Cor'
-            options={PATIENT_RACE_OPTIONS}
-            placeholder='Selecione a raça ou cor'
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
+            options={RACE_OPTIONS}
             readOnly={isViewMode}
           />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-3'>
+          <Label isRequired>E-mail</Label>
           <TextInput
             name='email'
-            label='E-mail'
             inputMode='email'
             maxLength={64}
             placeholder='Insira o e-mail'
-            wrapperClassName='lg:col-span-3'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
-        </FormField>
+        </LabelWrapper>
 
         <Divider />
 
-        <FormField className='grid gap-4 lg:grid-cols-3'>
+        <LabelWrapper className='lg:col-span-1'>
+          <Label isRequired>Possui alguma deficiência?</Label>
           <SelectInput
             name='hasDisability'
-            label='Possui alguma deficiência?'
             options={YES_OR_NO_OPTIONS}
-            placeholder='Teste'
-            className='lg:col-span-1'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label>Se sim, qual?</Label>
           <TextInput
             name='disabilityDesc'
-            label='Se sim, qual?'
             maxLength={500}
-            wrapperClassName='lg:col-span-2'
             readOnly={isViewMode}
             disabled={hasDisability === 'no'}
           />
+        </LabelWrapper>
 
+        <LabelWrapper className='lg:col-span-1'>
+          <Label isRequired>Usa medicamento regularmente?</Label>
           <SelectInput
             name='takeMedication'
-            label='Usa medicamento regularmente?'
             options={YES_OR_NO_OPTIONS}
-            isRequired={!isViewMode}
-            className='lg:col-span-1'
             readOnly={isViewMode}
           />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-2'>
+          <Label>Se sim, qual?</Label>
           <TextInput
             name='medicationDesc'
-            label='Se sim, qual?'
             maxLength={500}
-            wrapperClassName='lg:col-span-2'
             readOnly={isViewMode}
             disabled={takeMedication === 'no'}
           />
+        </LabelWrapper>
 
+        <LabelWrapper className='lg:col-span-2'>
+          <Label isRequired>Possui diagnóstico de NMO?</Label>
           <SelectInput
             name='nmoDiagnosis'
-            label='Possui diagnóstico de NMO?'
             options={PATIENT_NMO_DIAGNOSTIC_OPTIONS}
-            className='lg:col-span-2'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
+        </LabelWrapper>
+        <LabelWrapper className='lg:col-span-1'>
+          <Label isRequired>Precisa de assistência legal?</Label>
           <SelectInput
             name='needLegalAssistance'
-            label='Precisa de assistência legal?'
             options={YES_OR_NO_OPTIONS}
-            className='lg:col-span-1'
-            isRequired={!isViewMode}
             readOnly={isViewMode}
           />
-        </FormField>
+        </LabelWrapper>
 
         {isCreateForm && (
           <>
@@ -346,40 +320,41 @@ export function PatientForm({
                     className='border-border flex items-start gap-4 max-lg:flex-col data-[first=false]:max-lg:border-t data-[first=false]:max-lg:pt-4'
                     key={support.id}
                   >
-                    <TextInput
-                      name={`supports.${index}.name`}
-                      label='Nome completo'
-                      maxLength={64}
-                      placeholder='Insira o nome completo'
-                      wrapperClassName='flex-1'
-                      isRequired
-                    />
-                    <TextInput
-                      name={`supports.${index}.kinship`}
-                      label='Parentesco'
-                      maxLength={32}
-                      placeholder='Insira o parentesco'
-                      wrapperClassName='lg:w-44'
-                      isRequired
-                    />
-                    <TextInput
-                      name={`supports.${index}.phone`}
-                      label='Telefone (WhatsApp)'
-                      mask='phone'
-                      maxLength={15}
-                      placeholder='(00) 00000-0000'
-                      wrapperClassName={
+                    <LabelWrapper className='flex-1'>
+                      <Label isRequired>Nome completo</Label>
+                      <TextInput
+                        name={`supports.${index}.name`}
+                        maxLength={64}
+                        placeholder='Insira o nome completo'
+                      />
+                    </LabelWrapper>
+                    <LabelWrapper className='lg:w-44'>
+                      <Label isRequired>Parentesco</Label>
+                      <TextInput
+                        name={`supports.${index}.kinship`}
+                        maxLength={32}
+                        placeholder='Insira o parentesco'
+                      />
+                    </LabelWrapper>
+                    <LabelWrapper
+                      className={
                         index === 0 && !isViewMode ? 'lg:w-58' : 'lg:w-44'
                       }
-                      readOnly={isViewMode}
-                      isRequired
-                    />
+                    >
+                      <Label isRequired>Telefone (WhatsApp)</Label>
+                      <TextInput
+                        name={`supports.${index}.phone`}
+                        mask='phone'
+                        maxLength={15}
+                        placeholder='(00) 00000-0000'
+                        readOnly={isViewMode}
+                      />
+                    </LabelWrapper>
                     {index > 0 && !isViewMode && (
                       <Button
-                        size='icon'
                         type='button'
                         variant='ghost'
-                        className='text-error max-lg:w-full max-lg:border lg:mt-7'
+                        className='text-error size-10 max-lg:w-full max-lg:border lg:mt-7'
                         onClick={() => supportMethods.remove(index)}
                       >
                         <Trash2Icon />
@@ -403,16 +378,6 @@ export function PatientForm({
         )}
 
         <div className='flex flex-row-reverse gap-2 max-lg:mt-4 max-lg:flex-col'>
-          {isViewMode && patient?.status === 'active' && canUpdatePatient && (
-            <Button
-              type='button'
-              variant='outline'
-              onClick={() => setAction('edit')}
-            >
-              <ClipboardEditIcon /> Editar
-            </Button>
-          )}
-
           {!isViewMode && (
             <Button
               type='submit'
@@ -436,11 +401,9 @@ export function PatientForm({
         </div>
 
         <Dialog open={isCancelModalOpen} onOpenChange={setIsCancelModalOpen}>
-          {isCancelModalOpen && (
-            <CancelPatientFormModal
-              onConfirm={() => router.push(ROUTES.dashboard.patients.main)}
-            />
-          )}
+          <CancelPatientFormModal
+            onConfirm={() => router.push(ROUTES.patients.main)}
+          />
         </Dialog>
       </FormContainer>
     </FormProvider>

@@ -12,7 +12,7 @@ const canAccess = await canUser('view', 'PatientDashboard')
 
 // Se não puder, a aplicação faz o redirect automático
 if (!canAccess) {
-  redirect(ROUTES.dashboard.main)
+  redirect(ROUTES.main)
 }
 ```
 

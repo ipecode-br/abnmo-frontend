@@ -1,67 +1,35 @@
-import type { ReactNode } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { cn } from '@/utils/class-name-merge'
-
-import { DatePicker, type DatePickerProps } from '../ui/date-picker'
-import { InputProps } from '../ui/input'
-import { Label } from '../ui/label'
+import { DatePicker, DatePickerProps } from '../ui/date-picker'
 import { FormMessage } from './form-message'
-import { RequiredInput } from './required-input'
 
-interface RequiredDateInputProps {
+interface DateInputProps
+  extends Omit<DatePickerProps, 'id' | 'value' | 'onChange'> {
   name: string
-  label: string | ReactNode
+  description?: string
 }
 
-type DateInputProps = RequiredDateInputProps &
-  DatePickerProps & {
-    message?: string
-    isRequired?: boolean
-    wrapperClassName?: InputProps['className']
-  }
-
-export function DateInput({
-  name,
-  label,
-  message,
-  readOnly,
-  isRequired,
-  wrapperClassName,
-  ...props
-}: Readonly<DateInputProps>) {
+export function DateInput({ name, description, ...props }: DateInputProps) {
   const { control } = useFormContext()
-
-  if (!control) {
-    throw new Error('DateInput must be used within a FormProvider')
-  }
 
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => {
-        const showMessage = fieldState.error?.message ?? message
+        const errorMessage = fieldState.error?.message
 
         return (
-          <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-            <Label htmlFor={name} readOnly={readOnly}>
-              {label}
-              {isRequired && <RequiredInput />}
-            </Label>
-
+          <>
             <DatePicker
-              name={name}
-              readOnly={readOnly}
-              value={field.value}
-              onSelectDate={field.onChange}
-              variant={fieldState.error && 'error'}
+              id={name}
+              error={!!errorMessage}
+              {...field}
               {...props}
             />
-            <FormMessage error={!!fieldState.error?.message}>
-              {showMessage}
-            </FormMessage>
-          </div>
+            {description && <FormMessage>{description}</FormMessage>}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
+          </>
         )
       }}
     />

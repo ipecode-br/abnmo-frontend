@@ -25,7 +25,7 @@ import { NewInviteButton } from './new-invite-button'
 import { UserInvitesTable } from './table'
 
 export function UserInvitesList() {
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
   const [page, search, orderBy, startDate, endDate] = getParams([
@@ -48,7 +48,7 @@ export function UserInvitesList() {
 
   const { data: response, isLoading } = useQuery({
     placeholderData: (previousData) => previousData,
-    queryKey: [QUERY_CACHE_KEYS.users.invites, paramsQueryKey],
+    queryKey: [QUERY_CACHE_KEYS.users.invites, currentParams],
     queryFn: () =>
       api<{ invites: UserInvite[]; total: number }>('/users/invites', {
         params: { page, search, startDate, endDate, ...orderByQuery },
@@ -58,7 +58,7 @@ export function UserInvitesList() {
   const invites = response?.data?.invites ?? []
   const total = response?.data?.total ?? 0
 
-  const canCreateInvite = canUser('create', 'Invites')
+  const canCreateInvite = canUser('create:user-invite')
 
   return (
     <>
@@ -70,7 +70,7 @@ export function UserInvitesList() {
         />
 
         <SectionHeaderActions>
-          <SearchInput placeholder='Pesquisar' className='w-48' />
+          <SearchInput className='w-48' />
           <FilterSelect
             param={QUERY_PARAM_KEYS.orderBy}
             options={INVITES_ORDER_OPTIONS}
@@ -79,7 +79,7 @@ export function UserInvitesList() {
             className='w-40'
           />
 
-          {canCreateInvite && <NewInviteButton size='sm' />}
+          {canCreateInvite && <NewInviteButton />}
         </SectionHeaderActions>
       </SectionHeader>
 

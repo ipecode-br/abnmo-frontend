@@ -1,12 +1,10 @@
 import {
-  ClipboardCheckIcon,
   ClipboardListIcon,
-  ClipboardPasteIcon,
   HeartHandshakeIcon,
-  LayoutDashboardIcon,
+  LayoutGridIcon,
+  LayoutListIcon,
   MailPlusIcon,
   UserCircle2Icon,
-  UserPlus2Icon,
   Users2Icon,
 } from 'lucide-react'
 
@@ -16,10 +14,22 @@ import { NavButton } from '@/components/ui/nav-button'
 import { ROUTES } from '@/constants/routes'
 
 export default async function Page() {
-  const [canCreatePatient, canViewUsers, canViewInvites] = await Promise.all([
-    canUser('create', 'Patients'),
-    canUser('view', 'Users'),
-    canUser('view', 'Invites'),
+  const [
+    canViewSurveys,
+    canViewAppointment,
+    canViewAllAppointments,
+    canViewReferral,
+    canViewAllReferrals,
+    canViewUsers,
+    canViewInvites,
+  ] = await Promise.all([
+    canUser('read:survey:others'),
+    canUser('read:appointment'),
+    canUser('read:appointment:others'),
+    canUser('read:referral'),
+    canUser('read:referral:others'),
+    canUser('read:user:others'),
+    canUser('read:user-invite'),
   ])
 
   const SECTIONS = [
@@ -29,14 +39,32 @@ export default async function Page() {
       buttons: [
         {
           label: 'Tela inicial',
-          icon: <LayoutDashboardIcon />,
-          path: ROUTES.dashboard.main,
+          icon: <LayoutGridIcon />,
+          path: ROUTES.main,
           show: true,
         },
         {
           label: 'Meu perfil',
           icon: <UserCircle2Icon />,
-          path: ROUTES.dashboard.profile,
+          path: ROUTES.profile,
+          show: true,
+        },
+      ],
+    },
+    {
+      title: 'Catalogação',
+      show: canViewSurveys,
+      buttons: [
+        {
+          label: 'Visão geral',
+          icon: <ClipboardListIcon />,
+          path: ROUTES.surveys.main,
+          show: true,
+        },
+        {
+          label: 'Lista de catalogações',
+          icon: <LayoutListIcon />,
+          path: ROUTES.surveys.all,
           show: true,
         },
       ],
@@ -48,67 +76,61 @@ export default async function Page() {
         {
           label: 'Pacientes',
           icon: <Users2Icon />,
-          path: ROUTES.dashboard.patients.main,
+          path: ROUTES.patients.main,
           show: true,
-        },
-        {
-          label: 'Cadastrar paciente',
-          icon: <UserPlus2Icon />,
-          path: ROUTES.dashboard.patients.new,
-          show: canCreatePatient,
         },
       ],
     },
     {
       title: 'Atendimentos',
-      show: true,
+      show: canViewAppointment || canViewAllAppointments,
       buttons: [
         {
-          label: 'Atendimentos',
-          icon: <ClipboardCheckIcon />,
-          path: ROUTES.dashboard.appointments.main,
-          show: true,
+          label: 'Visão geral',
+          icon: <LayoutGridIcon />,
+          path: ROUTES.appointments.main,
+          show: canViewAppointment,
         },
         {
           label: 'Lista de atendimentos',
           icon: <ClipboardListIcon />,
-          path: ROUTES.dashboard.appointments.list,
-          show: true,
+          path: ROUTES.appointments.list,
+          show: canViewAllAppointments,
         },
       ],
     },
     {
       title: 'Encaminhamentos',
-      show: true,
+      show: canViewReferral || canViewAllReferrals,
       buttons: [
         {
-          label: 'Encaminhamentos',
-          icon: <ClipboardPasteIcon />,
-          path: ROUTES.dashboard.referrals.main,
-          show: true,
+          label: 'Visão geral',
+          icon: <LayoutGridIcon />,
+          path: ROUTES.referrals.main,
+          show: canViewReferral,
         },
         {
           label: 'Lista de encaminhamentos',
           icon: <ClipboardListIcon />,
-          path: ROUTES.dashboard.referrals.list,
-          show: true,
+          path: ROUTES.referrals.list,
+          show: canViewAllReferrals,
         },
       ],
     },
     {
       title: 'Equipe',
-      show: canViewUsers || canViewUsers,
+      show: canViewUsers || canViewInvites,
       buttons: [
         {
           label: 'Membros',
           icon: <HeartHandshakeIcon />,
-          path: ROUTES.dashboard.users.main,
+          path: ROUTES.users.main,
           show: canViewUsers,
         },
         {
           label: 'Convites',
           icon: <MailPlusIcon />,
-          path: ROUTES.dashboard.users.invites,
+          path: ROUTES.users.invites,
           show: canViewInvites,
         },
       ],
@@ -122,7 +144,10 @@ export default async function Page() {
 
         return (
           <section key={title} className='space-y-4'>
-            <h2 className='text-foreground-soft leading-none'>{title}</h2>
+            <h2 className='text-foreground-soft text-lg leading-none font-medium'>
+              {title}
+            </h2>
+
             <div className='flex flex-wrap gap-4 max-sm:flex-col'>
               {buttons.map((button) => {
                 if (!button.show) return null

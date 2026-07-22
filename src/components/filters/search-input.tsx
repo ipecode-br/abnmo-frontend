@@ -3,35 +3,36 @@
 import { SearchIcon, XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useDebounce } from '@/hooks/debounce'
 import { useParams } from '@/hooks/params'
 import { cn } from '@/utils/class-name-merge'
 
+import { InputButton } from '../ui/input-button'
+
 interface SearchInputProps {
-  placeholder: string
+  placeholder?: string
   className?: string
 }
 
 export function SearchInput({
-  placeholder,
   className,
+  placeholder = 'Pesquisar',
 }: Readonly<SearchInputProps>) {
-  const queryParam = QUERY_PARAM_KEYS.search
+  const searchParam = QUERY_PARAM_KEYS.search
   const pageParam = QUERY_PARAM_KEYS.page
 
   const { getParam, updateParams } = useParams()
-  const searchQuery = getParam(queryParam) || ''
+  const searchQuery = getParam(searchParam) || ''
 
   const [query, setQuery] = useState(searchQuery)
   const debouncedQuery = useDebounce(query)
 
   useEffect(() => {
     updateParams({
-      set: [{ key: queryParam, value: debouncedQuery }],
-      remove: !debouncedQuery ? [queryParam, pageParam] : [pageParam],
+      set: [{ key: searchParam, value: debouncedQuery }],
+      remove: !debouncedQuery ? [searchParam, pageParam] : [pageParam],
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery])
@@ -41,27 +42,24 @@ export function SearchInput({
   }, [searchQuery])
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn('relative flex items-center', className)}>
+      <SearchIcon className='text-disabled absolute left-3 size-5' />
       <Input
-        size='sm'
         name='search'
         value={query}
-        icon={SearchIcon}
-        onChange={(e) => setQuery(e.target.value)}
+        className='px-10'
         placeholder={placeholder}
-        className='w-full pr-10'
+        onChange={(e) => setQuery(e.target.value)}
       />
 
       {query && (
-        <Button
-          size='icon'
-          variant='ghost'
-          title='Limpar pesquisa'
-          className='absolute top-1 right-1 size-7 rounded-md [&_svg]:size-4'
+        <InputButton
+          className='right-1'
+          aria-label='Limpar pesquisa'
           onClick={() => setQuery('')}
         >
           <XIcon />
-        </Button>
+        </InputButton>
       )}
     </div>
   )

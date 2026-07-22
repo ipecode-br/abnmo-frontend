@@ -105,7 +105,7 @@ export function TableLink({
   return (
     <Link
       className={cn(
-        'outline-ring flex cursor-pointer items-center gap-2 rounded-lg outline-offset-4',
+        'outline-ring hover:text-primary flex cursor-pointer items-center gap-2 rounded-lg outline-offset-4',
         className,
       )}
       {...props}

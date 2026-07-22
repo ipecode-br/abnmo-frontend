@@ -12,15 +12,16 @@ export default async function Page() {
     return null
   }
 
-  const showUpdatedDate = new Date(user.updatedAt) > new Date(user.createdAt)
+  const { updatedAt, createdAt } = user
+  const showUpdatedDate = new Date(updatedAt) > new Date(createdAt)
 
   return (
     <>
       <div className='flex items-center gap-4'>
-        <Avatar src={user.avatarUrl} className='size-16' />
+        <Avatar src={user.avatarUrl} className='size-18' />
         <div>
           <p className='text-xl font-semibold'>{user.name}</p>
-          <span className='text-foreground-soft text-sm'>{user.email}</span>
+          <span className='text-foreground-soft'>{user.email}</span>
         </div>
       </div>
 
@@ -34,19 +35,18 @@ export default async function Page() {
 
       <Divider />
 
-      <span className='text-foreground-soft text-sm'>
-        Conta registrada em{' '}
-        {formatDate(user.createdAt, {
-          dateStyle: 'short',
-          timeStyle: 'short',
-        })}
-        .
-        {showUpdatedDate &&
-          ` Última atualização realizada em ${formatDate(user.updatedAt, {
-            dateStyle: 'short',
-            timeStyle: 'short',
-          })}.`}
-      </span>
+      <div className='text-foreground-soft flex flex-col gap-1 text-sm'>
+        <span>
+          Conta registrada em{' '}
+          {formatDate(createdAt, { dateStyle: 'short', timeStyle: 'short' })}.
+        </span>
+        {showUpdatedDate && (
+          <span>
+            Última atualização realizada em{' '}
+            {formatDate(updatedAt, { dateStyle: 'short', timeStyle: 'short' })}.
+          </span>
+        )}
+      </div>
     </>
   )
 }

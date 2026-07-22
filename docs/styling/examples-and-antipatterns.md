@@ -48,7 +48,7 @@ export function Card({ className, ...props }: Readonly<CardProps>) {
   <Breadcrumbs />
 
   <section className='ml-auto flex items-center gap-2'>
-    <Button size='icon' variant='outline' className='rounded-full'>
+    <Button variant='outline' className='rounded-full'>
       <CircleHelpIcon className='text-foreground-soft' />
     </Button>
   </section>

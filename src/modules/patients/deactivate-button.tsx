@@ -26,13 +26,11 @@ export function DeactivatePatientButton({
         Inativar
       </DialogTrigger>
 
-      {isModalOpen && (
-        <DeactivatePatientModal
-          id={patient.id}
-          name={patient.name}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
+      <DeactivatePatientModal
+        id={patient.id}
+        name={patient.name}
+        onClose={() => setIsModalOpen(false)}
+      />
     </Dialog>
   )
 }

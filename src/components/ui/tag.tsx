@@ -1,5 +1,4 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { HTMLAttributes } from 'react'
 
 import { cn } from '@/utils/class-name-merge'
 
@@ -8,7 +7,7 @@ const tagVariants = cva(
   {
     variants: {
       variant: {
-        outlined: 'bg-background text-foreground-soft border-border',
+        default: 'bg-background text-foreground-soft border-border',
         info: 'bg-border/50 text-foreground border-border',
         warning: 'bg-warning/10 text-warning border-warning/25',
         error: 'bg-error/10 text-error border-error/25',
@@ -20,13 +19,13 @@ const tagVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'outlined',
+      variant: 'default',
       size: 'default',
     },
   },
 )
 
-export type TagProps = HTMLAttributes<HTMLDivElement> &
+export type TagProps = React.ComponentProps<'div'> &
   VariantProps<typeof tagVariants>
 
 export function Tag({

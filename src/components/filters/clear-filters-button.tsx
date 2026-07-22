@@ -18,7 +18,6 @@ export function ClearFiltersButton({
 
   return (
     <Button
-      size='sm'
       variant='muted'
       onClick={clearParams}
       className={cn('ml-auto', className)}

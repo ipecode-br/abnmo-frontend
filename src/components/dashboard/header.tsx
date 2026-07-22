@@ -17,17 +17,16 @@ export function DashboardHeader() {
   const section = pathnames[0] as SectionTitle
   const sectionTitle = SECTION_TITLES[section || 'default']
 
-  const showBreadcrumbs = !!pathnames[0]
+  const showBreadcrumbs = !!pathnames[0] && pathnames[0] !== 'perfil'
   const showBackButton = pathnames.length > 0
 
   return (
     <header className='border-border flex h-16 shrink-0 items-center gap-4 border-b px-8'>
       {showBackButton && (
         <Button
-          size='icon_sm'
           variant='ghost'
           aria-label='Voltar'
-          className='-ml-2 [&_svg]:size-6'
+          className='-ml-2 size-8 [&_svg]:size-6'
           onClick={() => router.back()}
         >
           <ChevronLeftIcon />
@@ -48,7 +47,6 @@ export function DashboardHeader() {
 
       {/* <section className='ml-auto flex items-center gap-2'>
         <Button
-          size='icon'
           variant='outline'
           className='rounded-full'
           aria-label='Ajuda'
@@ -57,7 +55,6 @@ export function DashboardHeader() {
         </Button>
 
         <Button
-          size='icon'
           variant='outline'
           className='rounded-full'
           aria-label='Notificações'

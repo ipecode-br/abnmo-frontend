@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ClipboardPenIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -19,6 +20,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
 import { USERS_ROLE_OPTIONS } from '@/enums/users'
@@ -73,6 +75,7 @@ export function UpdateUserModal({
   user,
   onClose,
 }: Readonly<UpdateUserModalProps>) {
+  const formId = useId()
   const formMethods = useForm<UpdateUserFormSchema>({
     resolver: zodResolver(updateUserFormSchema),
     mode: 'onBlur',
@@ -94,11 +97,11 @@ export function UpdateUserModal({
   }: UpdateUserFormSchema) {
     const response = await api(`/users/${user.id}`, {
       method: 'PUT',
-      body: JSON.stringify({
+      body: {
         name: name,
         specialty: isSpecialist ? specialty : null,
         registrationId: isSpecialist ? registrationId : null,
-      }),
+      },
     })
 
     if (!response.success) {
@@ -121,42 +124,40 @@ export function UpdateUserModal({
       <DialogContent>
         <FormProvider {...formMethods}>
           <FormContainer
+            id={formId}
             className='gap-4'
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
-            <TextInput
-              name='name'
-              label='Nome completo'
-              placeholder='Insira o nome'
-              isRequired
-            />
+            <LabelWrapper>
+              <Label isRequired>Nome completo</Label>
+              <TextInput name='name' placeholder='Insira o nome' />
+            </LabelWrapper>
 
-            <TextInput name='email' label='E-mail' readOnly />
+            <LabelWrapper>
+              <Label isRequired>E-mail</Label>
+              <TextInput name='email' readOnly />
+            </LabelWrapper>
 
-            <SelectInput
-              name='role'
-              label='Função'
-              options={USERS_ROLE_OPTIONS}
-              readOnly
-            />
+            <LabelWrapper>
+              <Label isRequired>Função</Label>
+              <SelectInput name='role' options={USERS_ROLE_OPTIONS} readOnly />
+            </LabelWrapper>
 
             {isSpecialist && (
               <>
-                <SelectInput
-                  name='specialty'
-                  label='Especialidade'
-                  options={SPECIALTIES_OPTIONS}
-                  placeholder='Selecione a especialidade'
-                  isRequired
-                />
+                <LabelWrapper>
+                  <Label isRequired>Especialidade</Label>
+                  <SelectInput name='specialty' options={SPECIALTIES_OPTIONS} />
+                </LabelWrapper>
 
-                <TextInput
-                  name='registrationId'
-                  label='Registro profissional'
-                  maxLength={32}
-                  placeholder='Insira o número do registro'
-                  isRequired
-                />
+                <LabelWrapper>
+                  <Label isRequired>Registro profissional</Label>
+                  <TextInput
+                    name='registrationId'
+                    maxLength={32}
+                    placeholder='Insira o número do registro'
+                  />
+                </LabelWrapper>
               </>
             )}
           </FormContainer>
@@ -165,14 +166,15 @@ export function UpdateUserModal({
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          form={formId}
+          className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
           Confirmar
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

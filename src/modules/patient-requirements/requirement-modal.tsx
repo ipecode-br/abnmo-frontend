@@ -1,5 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -18,6 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   PATIENT_REQUIREMENT_TYPE_ENUM,
@@ -45,6 +47,7 @@ interface PatientRequirementModalProps {
 export function PatientRequirementModal({
   onClose,
 }: Readonly<PatientRequirementModalProps>) {
+  const formId = useId()
   const { patientOptions } = usePatientOptions()
 
   const formMethods = useForm<PatientRequirementFormSchema>({
@@ -57,10 +60,10 @@ export function PatientRequirementModal({
     mode: 'onBlur',
   })
 
-  async function submitForm(data: PatientRequirementFormSchema) {
+  async function submitForm(body: PatientRequirementFormSchema) {
     const response = await api('/patient-requirements', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body,
     })
 
     if (!response.success) {
@@ -87,43 +90,51 @@ export function PatientRequirementModal({
 
       <DialogContent>
         <FormProvider {...formMethods}>
-          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <ComboboxInput
-              name='patientId'
-              label='Paciente'
-              placeholder='Selecione um paciente'
-              options={patientOptions}
-              isRequired
-            />
+          <FormContainer
+            id={formId}
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
+            <LabelWrapper>
+              <Label isRequired>Paciente</Label>
+              <ComboboxInput
+                name='patientId'
+                placeholder='Selecione um paciente'
+                options={patientOptions}
+              />
+            </LabelWrapper>
 
-            <SelectInput
-              name='type'
-              label='Tipo da solicitação'
-              options={PATIENT_REQUIREMENT_TYPE_OPTIONS}
-              isRequired
-            />
+            <LabelWrapper>
+              <Label isRequired>Tipo da solicitação</Label>
+              <SelectInput
+                name='type'
+                options={PATIENT_REQUIREMENT_TYPE_OPTIONS}
+              />
+            </LabelWrapper>
 
-            <TextareaInput
-              rows={6}
-              maxLength={500}
-              name='description'
-              label='Descrição (opcional)'
-              placeholder='Adicione detalhes sobre a solicitação...'
-            />
+            <LabelWrapper>
+              <Label>Descrição</Label>
+              <TextareaInput
+                rows={6}
+                maxLength={500}
+                name='description'
+                placeholder='Adicione detalhes sobre a solicitação'
+              />
+            </LabelWrapper>
           </FormContainer>
         </FormProvider>
       </DialogContent>
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          form={formId}
+          className='md:flex-1'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
         >
           Confirmar
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

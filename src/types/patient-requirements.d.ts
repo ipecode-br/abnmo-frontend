@@ -6,14 +6,13 @@ import type {
 export type PatientRequirement = {
   id: string
   type: PatientRequirementType
-  status: PatientRequirementStatus
+  title: string
   description: string | null
+  status: PatientRequirementStatus
   submittedAt: string | null
-  approvedAt: string | null
   createdAt: string
   patient: {
     id: string
     name: string
-    avatarUrl: string | null
   }
 }

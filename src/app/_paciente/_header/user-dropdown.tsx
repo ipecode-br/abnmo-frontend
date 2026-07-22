@@ -3,18 +3,11 @@
 import { Loader2Icon, LogOutIcon, User2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { toast } from 'sonner'
 
-import { getUserFromToken } from '@/actions/users/get-user-from-token'
 import { Avatar } from '@/components/ui/avatar'
 import { Divider } from '@/components/ui/divider'
-import { DropdownMenu } from '@/components/ui/dropdown'
-import { DropdownMenuContent } from '@/components/ui/dropdown/content'
-import { DropdownMenuItem } from '@/components/ui/dropdown/item'
-import { DropdownMenuTrigger } from '@/components/ui/dropdown/trigger'
-import { NEXT_CACHE_TAGS } from '@/constants/cache'
+import { Menu, MenuContent, MenuItem, MenuTrigger } from '@/components/ui/menu'
 import { ROUTES } from '@/constants/routes'
-import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
 import { api } from '@/lib/api'
 import type { User } from '@/types/users.d.ts'
 
@@ -32,50 +25,35 @@ export function PatientHeaderUserDropdown({
 
   async function logout() {
     startTransition(async () => {
-      const user = await getUserFromToken()
+      api('/logout', { method: 'POST' })
 
-      if (!user?.id) return
-
-      const response = await api('/logout', { method: 'POST' })
-
-      if (!response.success) {
-        toast.error(response.message)
-        return
-      }
-
-      revalidateServerCache(NEXT_CACHE_TAGS.user(user.id))
-      toast.success(response.message)
       router.replace(ROUTES.auth.signIn)
     })
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        aria-label='Abrir menu'
-        className='rounded-full pl-1'
-        indicator
-      >
+    <Menu>
+      <MenuTrigger aria-label='Abrir menu' className='rounded-full pl-1'>
         <Avatar src={user.avatarUrl} className='size-8 [&_svg]:size-4' />
         {firstName}
-      </DropdownMenuTrigger>
+      </MenuTrigger>
 
-      <DropdownMenuContent align='end'>
-        <DropdownMenuItem>
+      <MenuContent align='end'>
+        <MenuItem>
           <User2Icon /> Perfil
-        </DropdownMenuItem>
+        </MenuItem>
 
         <Divider />
 
-        <DropdownMenuItem onClick={logout} disabled={isPending}>
+        <MenuItem onClick={logout} disabled={isPending}>
           {isPending ? (
             <Loader2Icon className='animate-spin' />
           ) : (
             <LogOutIcon />
           )}
           Sair
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </MenuItem>
+      </MenuContent>
+    </Menu>
   )
 }

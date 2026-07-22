@@ -57,7 +57,7 @@ export function useParams() {
 
   return {
     searchParams,
-    paramsQueryKey: searchParams.toString(),
+    currentParams: searchParams.toString(),
     getParam,
     getParams,
     updateParams,

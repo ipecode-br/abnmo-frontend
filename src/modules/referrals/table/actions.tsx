@@ -35,13 +35,17 @@ export function ReferralsTableActions({
 
   const allowEdit = referral.status !== 'canceled'
   const allowCancel = !['completed', 'canceled'].includes(referral.status)
-  const canUpdateReferral = canUser('update', 'Referrals')
-  const canCancelReferral = canUser('delete', 'Referrals')
+  const canUpdateReferral = canUser('update:referral')
+  const canCancelReferral = canUser('cancel:referral')
 
   return (
     <>
       <Menu>
-        <MenuTrigger size='icon_sm' variant='ghost' aria-label='Abrir ações'>
+        <MenuTrigger
+          variant='ghost'
+          className='size-8'
+          aria-label='Abrir ações'
+        >
           <EllipsisIcon />
         </MenuTrigger>
 
@@ -54,9 +58,7 @@ export function ReferralsTableActions({
           )}
           <MenuItem
             onClick={() =>
-              router.push(
-                ROUTES.dashboard.patients.details.info(referral.patientId),
-              )
+              router.push(ROUTES.patients.details.info(referral.patient.id))
             }
           >
             <ClipboardListIcon />
@@ -64,9 +66,7 @@ export function ReferralsTableActions({
           </MenuItem>
           <MenuItem
             onClick={() =>
-              router.push(
-                ROUTES.dashboard.patients.details.history(referral.patientId),
-              )
+              router.push(ROUTES.patients.details.history(referral.patient.id))
             }
           >
             <ClipboardClockIcon />
@@ -88,7 +88,7 @@ export function ReferralsTableActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && allowEdit && canUpdateReferral && (
+      {canUpdateReferral && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -100,7 +100,7 @@ export function ReferralsTableActions({
         </Dialog>
       )}
 
-      {modalOpen === 'cancel' && allowCancel && canCancelReferral && (
+      {canCancelReferral && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

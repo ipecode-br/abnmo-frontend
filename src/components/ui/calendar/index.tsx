@@ -4,41 +4,42 @@ import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { DayPicker, type PropsSingle } from 'react-day-picker'
 
-import { CalendarDropdownNav } from './dropdown-nav'
-import { CalendarStepNav } from './step-nav'
+import { CalendarNav } from './nav'
 
 export interface CalendarProps extends Omit<PropsSingle, 'mode'> {
-  navMode?: 'step' | 'dropdown'
   allowFutureDates?: boolean
   startDate?: string | Date | null
+  startYear?: number
+  endYear?: number
 }
 
 export function Calendar({
-  navMode = 'step',
-  allowFutureDates,
-  startDate,
+  allowFutureDates = true,
+  startYear,
+  endYear,
   ...props
 }: Readonly<CalendarProps>) {
+  const today = new Date()
+
+  const startDate = props.startDate ? new Date(props.startDate) : undefined
+
   const dateRestrictions = {
     ...(startDate && {
-      fromDate: new Date(startDate),
-      fromMonth: new Date(startDate),
+      fromDate: startDate,
+      fromMonth: startDate,
       disabled: (date: Date) => {
-        const start = new Date(startDate)
-        start.setHours(0, 0, 0, 0)
-        return date < start
+        startDate.setHours(0, 0, 0, 0)
+        return date < startDate
       },
     }),
     ...(!allowFutureDates && {
-      toDate: new Date(),
-      toMonth: new Date(),
+      toDate: today,
+      toMonth: today,
       disabled: (date: Date) => {
-        const today = new Date()
         today.setHours(23, 59, 59, 999)
         if (startDate) {
-          const start = new Date(startDate)
-          start.setHours(0, 0, 0, 0)
-          return date > today || date < start
+          startDate.setHours(0, 0, 0, 0)
+          return date > today || date < startDate
         }
         return date > today
       },
@@ -50,30 +51,34 @@ export function Calendar({
       mode='single'
       locale={ptBR}
       showOutsideDays
+      defaultMonth={props.selected}
+      components={{
+        Nav: (props) => (
+          <CalendarNav startYear={startYear} endYear={endYear} {...props} />
+        ),
+      }}
       {...dateRestrictions}
       classNames={{
-        months: 'p-1',
+        months: '',
         month_caption: 'hidden',
-        outside: 'text-disabled/50',
-        weekday: 'font-medium text-disabled pt-2 pb-1 border-b border-border',
-        week: 'pt-2',
+        outside: 'text-foreground/40',
+        weekday: 'font-medium text-disabled pt-4 pb-1 border-b border-border',
         day: 'overflow-hidden',
         day_button:
-          'size-9 flex justify-center p-2 items-center cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors rounded-md hover:border-primary outline-none m-0.25 mt-1',
+          'size-9 flex justify-center p-2 items-center cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors rounded-md hover:border-primary outline-none m-0.75 mt-1',
         selected:
           'text-white font-medium [&_button]:bg-primary [&_button]:border-primary',
         focused: 'text-white [&_button]:bg-primary [&_button]:border-primary',
         today:
           'text-primary font-semibold [&_button]:border [&_button]:border-border ',
-        disabled: 'opacity-25 pointer-events-none',
+        disabled: 'opacity-20 pointer-events-none',
       }}
       formatters={{
         formatWeekdayName(weekday, option) {
-          return format(weekday, 'EEEEE', option)
+          const name = format(weekday, 'EEEEEE', option)
+          const capitalized = name.charAt(0).toUpperCase() + name.slice(1)
+          return capitalized === 'Sab' ? 'Sáb' : capitalized
         },
-      }}
-      components={{
-        Nav: navMode === 'step' ? CalendarStepNav : CalendarDropdownNav,
       }}
       {...props}
     />
@@ -86,8 +91,9 @@ export function Calendar({
     selected={selectedDate}
     onSelect={setSelectedDate}
     startDate={Date} - optional
-    navMode={"dropdown" | "step" (default)} - optional 
-    allowFutureDates={true | false (default)} - optional
+    startYear={Number} - optional
+    endYear={Number} - optional
+    allowFutureDates={true (default) | false} - optional
   />
 
 */

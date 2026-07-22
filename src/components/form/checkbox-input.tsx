@@ -1,62 +1,41 @@
-import type { ReactNode } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { cn } from '@/utils/class-name-merge'
-
-import { Checkbox, type CheckboxProps } from '../ui/checkbox'
-import { Label } from '../ui/label'
+import { Checkbox, CheckboxProps } from '../ui/checkbox'
 import { FormMessage } from './form-message'
-import { RequiredInput } from './required-input'
 
-interface RequiredCheckboxInputProps {
+interface CheckboxInputProps extends CheckboxProps {
   name: string
-  label: string | ReactNode
+  label: string
+  description?: string
 }
-
-type CheckboxInputProps = RequiredCheckboxInputProps &
-  CheckboxProps & {
-    isRequired?: boolean
-    wrapperClassName?: CheckboxProps['className']
-  }
 
 export function CheckboxInput({
   name,
-  label,
-  isRequired,
-  wrapperClassName,
+  description,
   ...props
-}: Readonly<CheckboxInputProps>) {
+}: CheckboxInputProps) {
   const { control } = useFormContext()
-
-  if (!control) {
-    throw new Error('CheckboxInput must be used within a FormProvider')
-  }
 
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState }) => (
-        <div className={cn('flex flex-col gap-1', wrapperClassName)}>
-          <div className='flex items-center gap-2'>
+      render={({ field, fieldState }) => {
+        const errorMessage = fieldState.error?.message
+
+        return (
+          <>
             <Checkbox
-              id={name}
               checked={field.value}
               onCheckedChange={field.onChange}
               {...props}
-              {...field}
             />
-            <Label
-              htmlFor={name}
-              className='font-normal peer-disabled:pointer-events-none hover:cursor-pointer'
-            >
-              {label}
-              {isRequired && <RequiredInput />}
-            </Label>
-          </div>
-          <FormMessage error>{fieldState.error?.message}</FormMessage>
-        </div>
-      )}
+
+            {description && <FormMessage>{description}</FormMessage>}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
+          </>
+        )
+      }}
     />
   )
 }

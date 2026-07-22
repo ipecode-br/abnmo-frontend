@@ -28,37 +28,6 @@
   --color-error: #df1c41;
 
   --color-ring: #036246;
-
-  --inset-shadow-md: inset 0 1px 6px rgba(0, 0, 0, 0.1);
-
-  /* Animations */
-
-  --animate-fade-in: fade-in 150ms ease-in-out;
-  --animate-fade-out: fade-out 150ms ease-in-out;
-
-  /* Keyframes */
-
-  @keyframes fade-in {
-    0% {
-      opacity: 0;
-      visibility: hidden;
-    }
-    100% {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-  @keyframes fade-out {
-    0% {
-      opacity: 1;
-      visibility: visible;
-    }
-    100% {
-      opacity: 0;
-      visibility: hidden;
-    }
-  }
 }
 
 @utility container {
@@ -66,10 +35,15 @@
   padding-inline: 2rem;
 }
 
+.root {
+  isolation: isolate;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-inter);
+  position: relative;
 }
 
 strong {
@@ -77,7 +51,7 @@ strong {
 }
 
 ::-webkit-scrollbar {
-  @apply bg-background-soft h-4 w-4;
+  @apply bg-background-soft size-4;
 }
 
 ::-webkit-scrollbar-thumb {

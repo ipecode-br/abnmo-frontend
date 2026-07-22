@@ -1,25 +1,47 @@
 import { cn } from '@/utils/class-name-merge'
 
-interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
-  readOnly?: boolean
+interface LabelWrapperProps extends React.ComponentProps<'label'> {
+  preventLabelClick?: boolean
 }
 
-export function Label({
-  readOnly,
+export function LabelWrapper({
   className,
-  children,
+  preventLabelClick,
   ...props
-}: Readonly<LabelProps>) {
+}: LabelWrapperProps) {
+  const Comp = (preventLabelClick ? 'div' : 'label') as 'label'
+
   return (
-    <label
-      aria-readonly={readOnly}
+    <Comp
+      className={cn('flex shrink-0 flex-col gap-1', className)}
+      {...props}
+    />
+  )
+}
+
+interface LabelProps extends React.ComponentProps<'label'> {
+  isRequired?: boolean
+  as?: React.ElementType
+}
+export function Label({
+  children,
+  className,
+  isRequired,
+  as = 'span',
+  ...props
+}: LabelProps) {
+  const Comp = as
+
+  return (
+    <Comp
       className={cn(
-        'font-medium peer-disabled:opacity-50 aria-readonly:pointer-events-none',
+        'cursor-default text-base leading-snug font-medium',
         className,
       )}
       {...props}
     >
       {children}
-    </label>
+      {isRequired && <span className='pl-0.5 text-red-600'>*</span>}
+    </Comp>
   )
 }

@@ -7,38 +7,6 @@ import {
 
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
-export const PATIENT_RACES = {
-  white: 'Branca',
-  black: 'Preta',
-  yellow: 'Amarela',
-  mixed_race: 'Parda',
-  indigenous: 'Indígena',
-  prefer_not_to_say: 'Prefiro não informar',
-  other: 'Outro',
-}
-export type PatientRace = keyof typeof PATIENT_RACES
-
-export const PATIENT_RACE_OPTIONS = convertObjectToOptions(PATIENT_RACES)
-
-export const PATIENT_RACES_ENUM = Object.keys(PATIENT_RACES) as [PatientRace]
-
-export const PATIENT_GENDERS = {
-  male_cis: 'Homem (Cis)',
-  female_cis: 'Mulher (Cis)',
-  male_trans: 'Homem (Trans)',
-  female_trans: 'Mulher (Trans)',
-  non_binary: 'Não-binário',
-  prefer_not_to_say: 'Prefiro não informar',
-  other: 'Outro',
-}
-export type PatientGender = keyof typeof PATIENT_GENDERS
-
-export const PATIENT_GENDER_OPTIONS = convertObjectToOptions(PATIENT_GENDERS)
-
-export const PATIENT_GENDERS_ENUM = Object.keys(PATIENT_GENDERS) as [
-  PatientGender,
-]
-
 export const PATIENT_STATUSES = {
   active: {
     variant: 'success',
@@ -51,6 +19,12 @@ export const PATIENT_STATUSES = {
     label: 'Inativo',
     icon: CircleXIcon,
     color: '[&_svg]:text-error',
+  },
+  pending: {
+    variant: 'default',
+    label: 'Pendente',
+    icon: AlertTriangleIcon,
+    color: '[&_svg]:text-warning',
   },
 } as const
 export type PatientStatus = keyof typeof PATIENT_STATUSES

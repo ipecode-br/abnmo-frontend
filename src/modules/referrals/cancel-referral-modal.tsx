@@ -50,7 +50,7 @@ export function CancelReferralModal({
         QUERY_CACHE_KEYS.statistics.totalReferrals,
       ])
       revalidateServerCache([
-        NEXT_CACHE_TAGS.patient(referral.patientId),
+        NEXT_CACHE_TAGS.patient(referral.patient.id),
         NEXT_CACHE_TAGS.referrals.main,
         NEXT_CACHE_TAGS.statistics.totalReferrals.main,
         NEXT_CACHE_TAGS.statistics.totalPatientsWithReferrals.main,
@@ -78,14 +78,14 @@ export function CancelReferralModal({
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          className='md:flex-1'
           loading={isPending}
           variant='destructive'
           onClick={cancelReferral}
         >
           Confirmar cancelamento
         </Button>
-        <DialogClose className='flex-1' disabled={isPending}>
+        <DialogClose className='md:flex-1' disabled={isPending}>
           Voltar
         </DialogClose>
       </DialogFooter>

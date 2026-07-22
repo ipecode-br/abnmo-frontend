@@ -5,8 +5,9 @@ export type User = {
   id: string
   name: string
   email: string
-  role: UserRole
   avatarUrl: string | null
+  role: UserRole
+  features: string[]
   status: UserStatus
   specialty: Specialty | null
   registrationId: string | null

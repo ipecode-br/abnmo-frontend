@@ -25,12 +25,10 @@ export function NewReferralButton({
         Encaminhar
       </DialogTrigger>
 
-      {modalOpen && (
-        <ReferralModal
-          patientId={patientId}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
+      <ReferralModal
+        patientId={patientId}
+        onClose={() => setModalOpen(false)}
+      />
     </Dialog>
   )
 }

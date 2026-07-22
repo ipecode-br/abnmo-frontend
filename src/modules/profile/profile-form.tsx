@@ -8,8 +8,10 @@ import { FormContainer } from '@/components/form/form-container'
 import { SelectInput } from '@/components/form/select-input'
 import { TextInput } from '@/components/form/text-input'
 import { Divider } from '@/components/ui/divider'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { SPECIALTIES_OPTIONS } from '@/enums/shared'
-import { USERS_ROLE_OPTIONS } from '@/enums/users'
+import { USER_ROLES } from '@/enums/users'
+import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 import {
   emailSchema,
   nameSchema,
@@ -44,35 +46,42 @@ export function UserProfileForm({ user }: Readonly<UserProfileFormProps>) {
     mode: 'onBlur',
   })
 
+  const roleOptions = convertObjectToOptions(USER_ROLES)
+
   return (
     <FormProvider {...formMethods}>
       <FormContainer>
         <div className='grid gap-4 lg:grid-cols-3'>
-          <TextInput name='name' label='Nome completo' readOnly />
-          <TextInput name='email' label='E-mail' readOnly />
-          <SelectInput
-            name='role'
-            label='Cargo'
-            options={USERS_ROLE_OPTIONS}
-            readOnly
-          />
+          <LabelWrapper>
+            <Label>Nome completo</Label>
+            <TextInput name='name' readOnly />
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label>E-mail</Label>
+            <TextInput name='email' readOnly />
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label>Cargo</Label>
+            <SelectInput name='role' options={roleOptions} readOnly />
+          </LabelWrapper>
         </div>
 
         {user.role === 'specialist' && (
           <>
             <Divider />
             <div className='grid gap-4 md:grid-cols-2'>
-              <SelectInput
-                name='specialty'
-                label='Especialidade'
-                options={SPECIALTIES_OPTIONS}
-                readOnly
-              />
-              <TextInput
-                name='registrationId'
-                label='Registro profissional'
-                readOnly
-              />
+              <LabelWrapper>
+                <Label>Especialidade</Label>
+                <SelectInput
+                  name='specialty'
+                  options={SPECIALTIES_OPTIONS}
+                  readOnly
+                />
+              </LabelWrapper>
+              <LabelWrapper>
+                <Label>Registro profissional</Label>
+                <TextInput name='registrationId' readOnly />
+              </LabelWrapper>
             </div>
           </>
         )}

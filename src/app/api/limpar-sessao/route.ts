@@ -9,12 +9,7 @@ export async function GET() {
   const response = NextResponse.redirect(url)
 
   response.cookies.delete({
-    name: COOKIES.accessToken,
-    path: '/',
-    domain: `.${env.NEXT_PUBLIC_DOMAIN}`,
-  })
-  response.cookies.delete({
-    name: COOKIES.refreshToken,
+    name: COOKIES.session,
     path: '/',
     domain: `.${env.NEXT_PUBLIC_DOMAIN}`,
   })

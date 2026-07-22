@@ -256,7 +256,7 @@ const formMethods = useForm<SignUpFormSchema>({
 async function registerUser({ name, email, password }: SignUpFormSchema) {
   const response = await api('/register', {
     method: 'POST',
-    body: JSON.stringify({ name, email, password }),
+    body: { name, email, password },
   })
 
   if (!response.success) {

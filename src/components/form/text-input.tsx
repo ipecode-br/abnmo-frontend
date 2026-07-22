@@ -1,52 +1,42 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Input, type InputProps } from '@/components/ui/input'
-import { cn } from '@/utils/class-name-merge'
+import { NON_NUMBER_REGEX } from '@/constants/regex'
+import { formatCepNumber } from '@/utils/formatters/format-cep-number'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
-import { formatDateInput } from '@/utils/formatters/format-date-input'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
-import { Label } from '../ui/label'
+import { Input, InputProps } from '../ui/input'
 import { FormMessage } from './form-message'
-import { RequiredInput } from './required-input'
 
-type InputMaskType = 'phone' | 'cpf' | 'date'
+type InputMaskType = 'phone' | 'cpf' | 'cep' | 'number'
 
-interface RequiredTextInputProps {
+interface TextInputProps extends InputProps {
   name: string
-  label: string
+  description?: string
+  mask?: InputMaskType
 }
 
-type TextInputProps = RequiredTextInputProps &
-  InputProps & {
-    isRequired?: boolean
-    mask?: InputMaskType
-    message?: string
-    wrapperClassName?: InputProps['className']
-  }
+const INPUT_MODES: Record<InputMaskType, InputProps['inputMode']> = {
+  phone: 'tel',
+  cpf: 'numeric',
+  cep: 'numeric',
+  number: 'numeric',
+}
 
 export function TextInput({
   name,
-  label,
-  isRequired,
+  description,
   mask,
-  message,
-  readOnly,
-  wrapperClassName,
-  icon,
   ...props
-}: Readonly<TextInputProps>) {
+}: TextInputProps) {
   const { control } = useFormContext()
 
-  if (!control) {
-    throw new Error('TextInput must be used within a FormProvider')
-  }
-
-  function formatter(input: string) {
-    if (mask === 'phone') return formatPhoneNumber(input)
-    if (mask === 'cpf') return formatCpfNumber(input)
-    if (mask === 'date') return formatDateInput(input)
-    return input
+  function formatter(value: string) {
+    if (mask === 'phone') return formatPhoneNumber(value)
+    if (mask === 'cpf') return formatCpfNumber(value)
+    if (mask === 'cep') return formatCepNumber(value)
+    if (mask === 'number') return value.replace(NON_NUMBER_REGEX, '')
+    return value
   }
 
   return (
@@ -54,31 +44,25 @@ export function TextInput({
       name={name}
       control={control}
       render={({ field, fieldState }) => {
-        const showMessage = fieldState.error?.message ?? message
+        const errorMessage = fieldState.error?.message
 
         return (
-          <div className={cn('flex w-full flex-col gap-1', wrapperClassName)}>
-            <Label htmlFor={name} readOnly={readOnly}>
-              {label}
-              {isRequired && <RequiredInput />}
-            </Label>
+          <>
             <Input
               {...field}
               id={name}
-              icon={icon}
-              readOnly={readOnly}
-              variant={fieldState.error && 'error'}
+              name={name}
+              inputMode={mask ? INPUT_MODES[mask] : undefined}
+              variant={!!errorMessage ? 'error' : 'default'}
               onChange={(e) => {
                 const formattedValue = formatter(e.target.value)
                 field.onChange(formattedValue)
               }}
               {...props}
             />
-
-            <FormMessage error={!!fieldState.error?.message}>
-              {showMessage}
-            </FormMessage>
-          </div>
+            {description && <FormMessage>{description}</FormMessage>}
+            {errorMessage && <FormMessage error>{errorMessage}</FormMessage>}
+          </>
         )
       }}
     />

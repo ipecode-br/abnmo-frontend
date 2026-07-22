@@ -10,17 +10,16 @@ export async function PatientsWithReferralsPercentageCard() {
     getTotalPatientsWithReferrals(),
   ])
 
-  const totalPatientsValue = totalPatients?.total || 0
-  const totalPatientsWithReferralsValue = totalPatientsWithReferrals?.total || 0
-
-  const totalPatientsWithReferralsPercentage =
-    (totalPatientsWithReferralsValue / totalPatientsValue) * 100 || 0
+  const patientsValue = totalPatients?.total || 0
+  const referralsValue = totalPatientsWithReferrals?.total || 0
+  const percentageCalc = (referralsValue / patientsValue) * 100 || 0
+  const percentage = Math.max(0, Math.min(100, percentageCalc))
 
   return (
     <SummaryCard
       icon={UserCheck2Icon}
       label='Pacientes encaminhados'
-      value={`${totalPatientsWithReferralsPercentage.toFixed(1)}%`}
+      value={`${percentage.toFixed(1)}%`}
       className='sm:col-span-1'
     />
   )

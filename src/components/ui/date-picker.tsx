@@ -1,77 +1,98 @@
-'use client'
-
-import 'react-day-picker/style.css'
-
 import { CalendarDaysIcon } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
+import { RefCallBack } from 'react-hook-form'
 
 import { cn } from '@/utils/class-name-merge'
-import { formatDate } from '@/utils/formatters/format-date'
+import { formatDateInput } from '@/utils/formatters/format-date-input'
+import { parseDate } from '@/utils/parsers/parse-date'
 
-import { Calendar, type CalendarProps } from './calendar'
-import { Popover } from './popover'
-import { PopoverContent } from './popover/content'
-import { PopoverTrigger, type PopoverTriggerProps } from './popover/trigger'
+import { Calendar, CalendarProps } from './calendar'
+import { Input } from './input'
+import { Popover, PopoverContainer, PopoverTrigger } from './popover'
 
 export interface DatePickerProps
-  extends Omit<PopoverTriggerProps, 'value'>,
-    Pick<CalendarProps, 'allowFutureDates' | 'navMode' | 'startDate'> {
+  extends Pick<
+    CalendarProps,
+    'startDate' | 'allowFutureDates' | 'startYear' | 'endYear'
+  > {
+  id: string
   value?: string | null
-  onSelectDate?: (date: string) => void
-  modal?: boolean
-  placeholder?: string
+  onChange: (value: string) => void
+  onBlur?: () => void
+  className?: string
+  disabled?: boolean
+  error?: boolean
+  ref?: RefCallBack
 }
 
 export function DatePicker({
+  id,
+  ref,
   value,
-  navMode,
+  error,
+  onBlur,
+  endYear,
+  onChange,
+  disabled,
   className,
-  allowFutureDates,
-  onSelectDate,
-  modal,
   startDate,
-  placeholder = 'Selecionar data',
-  ...props
-}: Readonly<DatePickerProps>) {
-  const [open, setOpen] = useState(false)
+  startYear,
+  allowFutureDates,
+}: DatePickerProps) {
+  const selectedDate = parseDate<Date>(value, { input: 'DD/MM/YYYY' })
 
   const handleCalendarSelect = useCallback(
-    (selectedDate: Date | undefined) => {
-      if (!selectedDate) return
-
-      onSelectDate?.(selectedDate.toISOString())
-      setOpen(false)
+    (value: Date | undefined) => {
+      if (!value) return
+      const parsedDate = parseDate<string>(value, { output: 'DD/MM/YYYY' })
+      onChange(parsedDate || '')
+      if (onBlur) onBlur()
     },
-    [onSelectDate],
+    [onChange, onBlur],
   )
 
   return (
-    <Popover open={open} onOpenChange={setOpen} modal={modal}>
-      <PopoverTrigger
-        variant='outline'
-        className={cn(
-          '[&_svg]:text-disabled justify-start overflow-hidden pl-3 font-normal [&_svg]:size-4.5',
-          className,
-        )}
-        {...props}
-      >
-        <CalendarDaysIcon />
-        {value ? (
-          formatDate(value, { dateStyle: 'short' })
-        ) : (
-          <span className='text-disabled'>{placeholder}</span>
-        )}
-      </PopoverTrigger>
-
-      <PopoverContent>
-        <Calendar
-          navMode={navMode}
-          startDate={startDate}
-          onSelect={handleCalendarSelect}
-          allowFutureDates={allowFutureDates}
-          selected={value ? new Date(value) : undefined}
-        />
-      </PopoverContent>
-    </Popover>
+    <div
+      aria-disabled={disabled}
+      className={cn(
+        'relative flex items-center aria-disabled:pointer-events-none aria-disabled:opacity-50',
+        className,
+      )}
+    >
+      <Popover>
+        <PopoverTrigger
+          type='button'
+          disabled={disabled}
+          aria-label='Abrir calendário'
+          className='absolute left-1 flex size-8 rounded-md [&_svg]:size-5.5'
+        >
+          <CalendarDaysIcon />
+        </PopoverTrigger>
+        <PopoverContainer>
+          <Calendar
+            endYear={endYear}
+            startYear={startYear}
+            startDate={startDate}
+            onSelect={handleCalendarSelect}
+            allowFutureDates={allowFutureDates}
+            selected={selectedDate || undefined}
+          />
+        </PopoverContainer>
+      </Popover>
+      <Input
+        id={id}
+        ref={ref}
+        value={value || ''}
+        onBlur={onBlur}
+        className='pl-12'
+        inputMode='numeric'
+        placeholder='00/00/0000'
+        variant={error ? 'error' : 'default'}
+        onChange={(e) => {
+          const formattedValue = formatDateInput(e.target.value)
+          onChange(formattedValue)
+        }}
+      />
+    </div>
   )
 }

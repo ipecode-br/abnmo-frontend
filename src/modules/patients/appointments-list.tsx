@@ -5,10 +5,9 @@ import { ClipboardCheckIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { ClearFiltersButton } from '@/components/filters/clear-filters-button'
-import { FilterContainer } from '@/components/filters/container'
-import { FilterDate } from '@/components/filters/date'
+import { FilterContainer } from '@/components/filters/filter-container'
+import { FilterDate } from '@/components/filters/filter-date'
 import { FilterSelect } from '@/components/filters/filter-select'
-import { FilterItem } from '@/components/filters/item'
 import { ShowFilterButton } from '@/components/filters/show-filter-button'
 import { Pagination } from '@/components/pagination'
 import {
@@ -17,6 +16,7 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import {
   APPOINTMENT_STATUS_OPTIONS,
@@ -35,6 +35,7 @@ import type {
   PatientAppointmentsOrderBy,
   QueryOrderMapping,
 } from '@/types/orders'
+import { parseDate } from '@/utils/parsers/parse-date'
 
 interface PatientAppointmentsListProps {
   patientId: string
@@ -44,17 +45,28 @@ export function PatientAppointmentsList({
   patientId,
 }: Readonly<PatientAppointmentsListProps>) {
   const [manualShowFilters, setManualShowFilters] = useState(false)
-  const { getParams, paramsQueryKey } = useParams()
+  const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
 
-  const [page, category, status, orderBy, startDate, endDate] = getParams([
-    QUERY_PARAM_KEYS.page,
-    QUERY_PARAM_KEYS.category,
-    QUERY_PARAM_KEYS.status,
-    QUERY_PARAM_KEYS.orderBy,
-    QUERY_PARAM_KEYS.startDate,
-    QUERY_PARAM_KEYS.endDate,
-  ])
+  const [page, category, status, orderBy, startDateQuery, endDateQuery] =
+    getParams([
+      QUERY_PARAM_KEYS.page,
+      QUERY_PARAM_KEYS.category,
+      QUERY_PARAM_KEYS.status,
+      QUERY_PARAM_KEYS.orderBy,
+      QUERY_PARAM_KEYS.startDate,
+      QUERY_PARAM_KEYS.endDate,
+    ])
+
+  const startDate = parseDate<string>(startDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+  })
+  const endDate = parseDate<string>(endDateQuery, {
+    input: 'YYYY-MM-DD',
+    output: 'ISOString',
+    endOfDay: true,
+  })
 
   const ORDER_MAPPING: QueryOrderMapping<
     PatientAppointmentsOrder,
@@ -78,7 +90,7 @@ export function PatientAppointmentsList({
 
   const { data: response, isLoading } = useQuery({
     placeholderData: (previousData) => previousData,
-    queryKey: [QUERY_CACHE_KEYS.appointments.main, patientId, paramsQueryKey],
+    queryKey: [QUERY_CACHE_KEYS.appointments.main, patientId, currentParams],
     queryFn: () =>
       api<{ appointments: Appointment[]; total: number }>(`/appointments`, {
         params: {
@@ -98,7 +110,7 @@ export function PatientAppointmentsList({
 
   const hasActiveFilters = Boolean(category || status || startDate || endDate)
   const showFilters = manualShowFilters || hasActiveFilters
-  const canCreateAppointment = canUser('create', 'Appointments')
+  const canCreateAppointment = canUser('create:appointment')
 
   return (
     <>
@@ -121,29 +133,31 @@ export function PatientAppointmentsList({
           />
 
           {canCreateAppointment && (
-            <NewAppointmentButton patientId={patientId} size='sm' />
+            <NewAppointmentButton patientId={patientId} />
           )}
         </SectionHeaderActions>
       </SectionHeader>
 
       {showFilters && (
         <FilterContainer>
-          <FilterItem title='Categoria' className='lg:w-46'>
+          <LabelWrapper>
+            <Label className='lg:w-46'>Categoria</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.category}
               options={SPECIALTIES_OPTIONS}
               placeholder='Todas'
-              resetLabel='Limpar categoria'
+              resetLabel='Todas'
             />
-          </FilterItem>
-          <FilterItem title='Status' className='lg:w-46'>
+          </LabelWrapper>
+          <LabelWrapper>
+            <Label className='lg:w-46'>Status</Label>
             <FilterSelect
               param={QUERY_PARAM_KEYS.status}
               options={APPOINTMENT_STATUS_OPTIONS}
               placeholder='Todos'
-              resetLabel='Limpar status'
+              resetLabel='Todos'
             />
-          </FilterItem>
+          </LabelWrapper>
           <FilterDate allowFutureDates />
           <ClearFiltersButton />
         </FilterContainer>

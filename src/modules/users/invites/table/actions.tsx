@@ -22,7 +22,7 @@ export function UserInvitesTableActions({
   const [modalOpen, setModalOpen] = useState<InviteModalMode | null>(null)
   const { canUser } = usePermissions()
 
-  const canCancelInvite = canUser('delete', 'Invites')
+  const canCancelInvite = canUser('delete:user-invite')
 
   if (!canCancelInvite) {
     return null
@@ -31,7 +31,11 @@ export function UserInvitesTableActions({
   return (
     <>
       <Menu>
-        <MenuTrigger size='icon_sm' variant='ghost' aria-label='Abrir ações'>
+        <MenuTrigger
+          variant='ghost'
+          className='size-8'
+          aria-label='Abrir ações'
+        >
           <EllipsisIcon />
         </MenuTrigger>
 
@@ -46,7 +50,7 @@ export function UserInvitesTableActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'cancel' && (
+      {canCancelInvite && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

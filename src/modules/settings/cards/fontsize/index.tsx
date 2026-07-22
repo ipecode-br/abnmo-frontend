@@ -22,7 +22,6 @@ export function FontSizeCard({
   return (
     <Button
       variant='ghost'
-      asChild
       className={twMerge(
         'focus-visible:ring-offset-background group ring-offset-background focus-visible:ring-ring relative w-fit rounded-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
         isSelected && 'ring-primary ring-2 ring-offset-2',

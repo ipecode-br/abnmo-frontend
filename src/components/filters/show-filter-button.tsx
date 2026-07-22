@@ -11,7 +11,6 @@ export function ShowFilterButton({
 }: Readonly<ButtonProps>) {
   return (
     <Button
-      size='sm'
       variant='outline'
       className={cn('[&_svg]:text-disabled', className)}
       {...props}

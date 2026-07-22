@@ -1,19 +1,15 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { LucideIcon } from 'lucide-react'
-
-import { cn } from '@/utils/class-name-merge'
 
 export const inputVariants = cva(
-  'bg-background outline-ring w-full shrink-0 rounded-lg border px-3 shadow-xs outline-offset-4 transition-colors read-only:outline-none disabled:pointer-events-none disabled:opacity-50',
+  'peer text-foreground bg-background placeholder:text-disabled w-full rounded-lg border px-3 text-base read-only:outline-none focus:outline-2 focus:-outline-offset-1 disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'border-border text-foreground placeholder:text-disabled',
-        error: 'border-error outline-error',
+        default: 'border-border focus:outline-ring hover:border-ring',
+        error: 'border-error focus:outline-error',
       },
       size: {
         default: 'h-10',
-        sm: 'h-9',
       },
     },
     defaultVariants: {
@@ -23,53 +19,15 @@ export const inputVariants = cva(
   },
 )
 
-export type InputProps = Omit<React.ComponentProps<'input'>, 'size'> &
-  VariantProps<typeof inputVariants> & {
-    icon?: LucideIcon
-  }
+export interface InputProps
+  extends Omit<React.ComponentProps<'input'>, 'size'>,
+    VariantProps<typeof inputVariants> {}
 
-export function Input({
-  icon,
-  className,
-  variant,
-  size,
-  ...props
-}: Readonly<InputProps>) {
-  const Icon = icon
-
-  const iconColors = {
-    default: 'text-disabled',
-    error: 'text-error',
-  }
-
-  if (Icon) {
-    return (
-      <div
-        className={cn(
-          'relative flex w-full items-center [&_svg]:size-4.5',
-          props.disabled && '[&_svg]:opacity-50',
-        )}
-      >
-        <input
-          type={props.type ?? 'text'}
-          className={cn(inputVariants({ variant, size, className }), 'pl-10')}
-          {...props}
-        />
-        <Icon
-          data-testid='input-icon'
-          className={cn(
-            'pointer-events-none absolute left-3 shrink-0 transition-colors',
-            iconColors[variant ?? 'default'],
-          )}
-        />
-      </div>
-    )
-  }
-
+export function Input({ className, variant, size, ...props }: InputProps) {
   return (
     <input
       type={props.type ?? 'text'}
-      className={cn(inputVariants({ variant, size, className }))}
+      className={inputVariants({ variant, size, className })}
       {...props}
     />
   )

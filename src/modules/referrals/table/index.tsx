@@ -79,8 +79,8 @@ export function ReferralsTable({
               <TableRow key={referral.id}>
                 <TableCell>
                   <Button
-                    size='icon_sm'
                     variant='ghost'
+                    className='size-8'
                     aria-label='Ver detalhes do encaminhamento'
                     onClick={() => setViewReferral(referral)}
                   >
@@ -91,9 +91,7 @@ export function ReferralsTable({
                   <TableCell>
                     <TableLink
                       className='w-64'
-                      href={ROUTES.dashboard.patients.details.info(
-                        referral.patientId,
-                      )}
+                      href={ROUTES.patients.details.info(referral.patient.id)}
                     >
                       <Avatar
                         className='size-9'
@@ -159,14 +157,9 @@ export function ReferralsTable({
           ))}
       </TableBody>
 
-      {viewReferral && (
-        <Dialog
-          open={!!viewReferral}
-          onOpenChange={() => setViewReferral(null)}
-        >
-          <ViewReferralModal referral={viewReferral} />
-        </Dialog>
-      )}
+      <Dialog open={!!viewReferral} onOpenChange={() => setViewReferral(null)}>
+        {viewReferral && <ViewReferralModal referral={viewReferral} />}
+      </Dialog>
     </Table>
   )
 }

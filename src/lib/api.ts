@@ -10,20 +10,27 @@ type ApiResponse<Data> = {
   data?: Data
 }
 
-interface ApiOptions extends RequestInit {
+interface ApiOptions extends Omit<RequestInit, 'body'> {
   params?: Record<string, string | number | boolean | undefined | null>
+  body?: Record<string, unknown>
 }
 
 export async function api<Data>(
   path: string,
-  { params, headers, ...options }: ApiOptions = {},
+  { params, headers, body, ...options }: ApiOptions = {},
 ): Promise<ApiResponse<Data>> {
   const isServerSide = typeof window === 'undefined'
 
   try {
     if (isServerSide) {
       const cookies = await getAllCookies()
-      headers = { ...headers, Cookie: cookies.toString() }
+      const sessionCookie = cookies.get('session')
+      headers = {
+        ...headers,
+        ...(sessionCookie && {
+          Cookie: `${sessionCookie.name}=${sessionCookie.value}`,
+        }),
+      }
     }
 
     const url = new URL(path, env.NEXT_PUBLIC_API_URL)
@@ -43,15 +50,16 @@ export async function api<Data>(
         Accept: 'application/json',
         ...headers,
       },
+      body: body ? JSON.stringify(body) : undefined,
       ...options,
     })
 
     const preventClearSession = [
       '/login',
-      '/register/patient',
       '/register/user',
       '/recover-password',
       '/reset-password',
+      '/change-password',
     ].includes(url.pathname)
 
     if (response.status === 401 && !preventClearSession) {

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ChartBarDecreasingIcon } from 'lucide-react'
 
 import { BarChart } from '@/components/charts/bar'
-import { DashboardCardChart } from '@/components/dashboard/cards/chart'
+import { ChartCard } from '@/components/ui/chart-card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { SPECIALTIES, type Specialty } from '@/enums/shared'
@@ -32,7 +32,7 @@ export function TotalReferralsByCategoryCard() {
   }))
 
   return (
-    <DashboardCardChart
+    <ChartCard
       title='Encaminhamentos por categoria'
       icon={ChartBarDecreasingIcon}
     >
@@ -51,6 +51,6 @@ export function TotalReferralsByCategoryCard() {
           </p>
         )}
       </div>
-    </DashboardCardChart>
+    </ChartCard>
   )
 }

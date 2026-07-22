@@ -25,12 +25,10 @@ export function NewAppointmentButton({
         Novo atendimento
       </DialogTrigger>
 
-      {modalOpen && (
-        <AppointmentModal
-          patientId={patientId}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
+      <AppointmentModal
+        patientId={patientId}
+        onClose={() => setModalOpen(false)}
+      />
     </Dialog>
   )
 }

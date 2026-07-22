@@ -35,13 +35,17 @@ export function AppointmentsTableActions({
 
   const allowEdit = appointment.status !== 'canceled'
   const allowCancel = !['completed', 'canceled'].includes(appointment.status)
-  const canUpdateAppointment = canUser('update', 'Appointments')
-  const canCancelAppointment = canUser('delete', 'Appointments')
+  const canUpdateAppointment = canUser('update:appointment')
+  const canCancelAppointment = canUser('cancel:appointment')
 
   return (
     <>
       <Menu>
-        <MenuTrigger size='icon_sm' variant='ghost' aria-label='Abrir ações'>
+        <MenuTrigger
+          variant='ghost'
+          className='size-8'
+          aria-label='Abrir ações'
+        >
           <EllipsisIcon />
         </MenuTrigger>
 
@@ -54,9 +58,7 @@ export function AppointmentsTableActions({
           )}
           <MenuItem
             onClick={() =>
-              router.push(
-                ROUTES.dashboard.patients.details.info(appointment.patientId),
-              )
+              router.push(ROUTES.patients.details.info(appointment.patient.id))
             }
           >
             <ClipboardListIcon />
@@ -65,9 +67,7 @@ export function AppointmentsTableActions({
           <MenuItem
             onClick={() =>
               router.push(
-                ROUTES.dashboard.patients.details.history(
-                  appointment.patientId,
-                ),
+                ROUTES.patients.details.history(appointment.patient.id),
               )
             }
           >
@@ -90,7 +90,7 @@ export function AppointmentsTableActions({
         </MenuContent>
       </Menu>
 
-      {modalOpen === 'edit' && allowEdit && canUpdateAppointment && (
+      {allowEdit && canUpdateAppointment && (
         <Dialog
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
@@ -102,7 +102,7 @@ export function AppointmentsTableActions({
         </Dialog>
       )}
 
-      {modalOpen === 'cancel' && allowCancel && canCancelAppointment && (
+      {allowCancel && canCancelAppointment && (
         <Dialog
           open={modalOpen === 'cancel'}
           onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}

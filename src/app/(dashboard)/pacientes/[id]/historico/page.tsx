@@ -10,8 +10,8 @@ import { getTotalAppointmentsByCategory } from '@/actions/statistics/get-total-a
 import { getTotalReferrals } from '@/actions/statistics/get-total-referrals'
 import { getTotalReferralsByCategory } from '@/actions/statistics/get-total-referrals-by-category'
 import { BarChart } from '@/components/charts/bar'
-import { DashboardCardChart } from '@/components/dashboard/cards/chart'
 import { SummaryCard } from '@/components/summary-card'
+import { ChartCard } from '@/components/ui/chart-card'
 import { SPECIALTIES } from '@/enums/shared'
 
 export const metadata: Metadata = {
@@ -71,38 +71,34 @@ export default async function Page({
         value={totalReferrals?.total}
       />
 
-      <DashboardCardChart
+      <ChartCard
         title='Atendimentos por categoria'
         icon={ChartBarDecreasingIcon}
       >
         <div className='flex h-full min-h-60 items-center justify-center'>
           {totalAppointmentsByCategoryValues.length > 0 ? (
-            <div className='size-full min-h-40'>
-              <BarChart data={totalAppointmentsByCategoryValues} />
-            </div>
+            <BarChart data={totalAppointmentsByCategoryValues} />
           ) : (
             <p className='text-foreground-soft text-sm'>
               Nenhum atendimento registrado.
             </p>
           )}
         </div>
-      </DashboardCardChart>
-      <DashboardCardChart
+      </ChartCard>
+      <ChartCard
         title='Encaminhamentos por categoria'
         icon={ChartBarDecreasingIcon}
       >
         <div className='flex h-full min-h-60 items-center justify-center'>
           {totalReferralsByCategoryValues.length > 0 ? (
-            <div className='size-full min-h-40'>
-              <BarChart data={totalReferralsByCategoryValues} />
-            </div>
+            <BarChart data={totalReferralsByCategoryValues} />
           ) : (
             <p className='text-foreground-soft text-sm'>
               Nenhum atendimento registrado.
             </p>
           )}
         </div>
-      </DashboardCardChart>
+      </ChartCard>
     </div>
   )
 }

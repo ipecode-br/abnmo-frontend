@@ -7,9 +7,9 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { FormContainer } from '@/components/form/form-container'
-import { FormField } from '@/components/form/form-field'
 import { PasswordInput } from '@/components/form/password-input'
 import { Button } from '@/components/ui/button'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { ROUTES } from '@/constants/routes'
 import { api } from '@/lib/api'
 import { passwordSchema } from '@/schemas'
@@ -42,7 +42,7 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
   async function submitForm({ password, resetToken }: ResetPasswordFormSchema) {
     const response = await api('/reset-password', {
       method: 'POST',
-      body: JSON.stringify({ password, resetToken }),
+      body: { password, resetToken },
     })
 
     if (!response.success) {
@@ -51,29 +51,33 @@ export function ResetPasswordForm({ token }: Readonly<ResetPasswordFormProps>) {
     }
 
     toast.success(response.message)
-    router.push(ROUTES.dashboard.main)
+    router.push(ROUTES.main)
   }
 
   return (
     <FormProvider {...formMethods}>
       <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-        <FormField>
+        <LabelWrapper>
+          <Label isRequired>Senha</Label>
           <PasswordInput
             name='password'
-            label='Senha'
-            placeholder='Digite sua senha'
             showRequirements
-            isRequired
+            placeholder='Digite sua senha'
           />
+        </LabelWrapper>
+        <LabelWrapper>
+          <Label isRequired>Confirmar senha</Label>
           <PasswordInput
             name='confirmPassword'
-            label='Confirmar senha'
             placeholder='Repita sua senha'
-            isRequired
           />
-        </FormField>
+        </LabelWrapper>
 
-        <Button type='submit' loading={formMethods.formState.isSubmitting}>
+        <Button
+          type='submit'
+          className='mt-2'
+          loading={formMethods.formState.isSubmitting}
+        >
           Redefinir senha
         </Button>
       </FormContainer>

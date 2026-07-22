@@ -1,12 +1,14 @@
 import {
   ClipboardCheckIcon,
+  ClipboardListIcon,
   ClipboardPasteIcon,
   HeartHandshakeIcon,
-  LayoutDashboardIcon,
+  LayoutGridIcon,
   Users2Icon,
 } from 'lucide-react'
 
 import { canUser } from '@/actions/auth/can-user'
+import { getCookie } from '@/actions/cookies'
 import { getCurrentUser } from '@/actions/users/get-current-user'
 import { Divider } from '@/components/ui/divider'
 import { ROUTES } from '@/constants/routes'
@@ -16,10 +18,24 @@ import { SidebarContainer } from './container'
 import { SidebarHeader } from './header'
 import { SidebarMenuSection } from './menu-section'
 
-export async function DashboardSidebar() {
-  const [user, canViewUsers] = await Promise.all([
+export async function Sidebar() {
+  const sidebarCookie = await getCookie('sidebar_expanded')
+  const initialExpanded = sidebarCookie ? sidebarCookie === 'true' : true
+
+  const [
+    user,
+    canViewSurveys,
+    canViewPatients,
+    canViewAppointments,
+    canViewReferrals,
+    canViewUsers,
+  ] = await Promise.all([
     getCurrentUser(),
-    canUser('view', 'Users'),
+    canUser('read:survey:others'),
+    canUser('read:patient:others'),
+    canUser(['read:appointment', 'read:appointment:others']),
+    canUser(['read:referral', 'read:referral:others']),
+    canUser('read:user:others'),
   ])
 
   const SECTIONS = [
@@ -28,39 +44,45 @@ export async function DashboardSidebar() {
       buttons: [
         {
           label: 'Visão geral',
-          icon: <LayoutDashboardIcon />,
-          path: ROUTES.dashboard.main,
+          icon: <LayoutGridIcon />,
+          path: ROUTES.main,
           show: true,
+        },
+        {
+          label: 'Catalogação',
+          icon: <ClipboardListIcon />,
+          path: ROUTES.surveys.main,
+          show: canViewSurveys,
         },
         {
           label: 'Pacientes',
           icon: <Users2Icon />,
-          path: ROUTES.dashboard.patients.main,
-          show: true,
+          path: ROUTES.patients.main,
+          show: canViewPatients,
         },
         {
           label: 'Atendimentos',
           icon: <ClipboardCheckIcon />,
-          path: ROUTES.dashboard.appointments.main,
-          show: true,
+          path: ROUTES.appointments.main,
+          show: canViewAppointments,
         },
         {
           label: 'Encaminhamentos',
           icon: <ClipboardPasteIcon />,
-          path: ROUTES.dashboard.referrals.main,
-          show: true,
+          path: ROUTES.referrals.main,
+          show: canViewReferrals,
         },
         // TODO: uncomment approvals when it's ready
         // {
         //   label: 'Aprovações',
         //   icon: <UserRoundCheckIcon />,
-        //   path: ROUTES.dashboard.approvals.pendingApprovals,
+        //   path: ROUTES.approvals.pendingApprovals,
         // show: true,
         // },
         {
           label: 'Equipe',
           icon: <HeartHandshakeIcon />,
-          path: ROUTES.dashboard.users.main,
+          path: ROUTES.users.main,
           show: canViewUsers,
         },
       ],
@@ -72,7 +94,7 @@ export async function DashboardSidebar() {
     //     {
     //       label: 'Configurações',
     //       icon: <BoltIcon />,
-    //       path: ROUTES.dashboard.settings.main,
+    //       path: ROUTES.settings.main,
     // show: true,
     //     },
     //   ],
@@ -80,7 +102,7 @@ export async function DashboardSidebar() {
   ]
 
   return (
-    <SidebarContainer>
+    <SidebarContainer initialExpanded={initialExpanded}>
       <SidebarHeader />
 
       <Divider />

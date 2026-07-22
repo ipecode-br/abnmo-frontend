@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-import { env } from './config/env'
 import { COOKIES } from './constants/cookies'
 import { ROUTES } from './constants/routes'
 
@@ -9,50 +8,22 @@ export async function proxy(request: NextRequest) {
   const cookies = request.cookies
   const pathname = request.nextUrl.pathname
 
-  const accessToken = cookies.get(COOKIES.accessToken)
-  const refreshToken = cookies.get(COOKIES.refreshToken)
-  const isAuthRoute = pathname.startsWith('/conta/')
+  const session = cookies.get(COOKIES.session)
 
-  if (refreshToken && !accessToken) {
-    try {
-      const url = new URL('/refresh-token', env.NEXT_PUBLIC_API_URL)
+  const AUTH_ROUTES = [
+    ROUTES.auth.signIn,
+    ROUTES.auth.signUp,
+    ROUTES.auth.forgotPassword,
+    ROUTES.auth.resetPassword,
+  ]
 
-      const response = await fetch(url, {
-        credentials: 'include',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Cookie: `refresh_token=${refreshToken.value}`,
-        },
-      })
+  const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route))
 
-      if (!response.ok) {
-        return NextResponse.redirect(
-          new URL(ROUTES.auth.clearSession, env.NEXT_PUBLIC_APP_URL),
-        )
-      }
-
-      const setCookie = response.headers.get('set-cookie')
-      const nextResponse = NextResponse.redirect(request.nextUrl.clone())
-
-      if (setCookie) {
-        nextResponse.headers.append('set-cookie', setCookie)
-      }
-
-      return nextResponse
-    } catch {
-      return NextResponse.redirect(
-        new URL(ROUTES.auth.clearSession, env.NEXT_PUBLIC_APP_URL),
-      )
-    }
+  if (isAuthRoute && session) {
+    return NextResponse.redirect(new URL(ROUTES.main, request.url))
   }
 
-  if (isAuthRoute && accessToken) {
-    return NextResponse.redirect(new URL(ROUTES.dashboard.main, request.url))
-  }
-
-  if (!isAuthRoute && !accessToken && !refreshToken) {
+  if (!isAuthRoute && !session) {
     return NextResponse.redirect(new URL(ROUTES.auth.signIn, request.url))
   }
 

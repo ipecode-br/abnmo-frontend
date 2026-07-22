@@ -1,0 +1,34 @@
+import type { Metadata } from 'next'
+
+import { AuthCard } from '@/components/auth/auth-card'
+import { Divider } from '@/components/ui/divider'
+import { NavLink } from '@/components/ui/nav-link'
+import { ROUTES } from '@/constants/routes'
+import { RecoverPasswordForm } from '@/modules/auth/recover-password-form'
+
+export const metadata: Metadata = {
+  title: 'Recuperar senha',
+}
+
+export default function Page() {
+  return (
+    <AuthCard
+      title='Recuperar senha'
+      description='Insira seu e-mail para recuperar sua senha'
+    >
+      <RecoverPasswordForm />
+
+      <Divider />
+
+      <p className='text-foreground-soft text-center'>
+        Mudou de ideia?{' '}
+        <NavLink
+          href={ROUTES.auth.signIn}
+          className='text-foreground font-medium whitespace-nowrap'
+        >
+          Acesse sua conta
+        </NavLink>
+      </p>
+    </AuthCard>
+  )
+}

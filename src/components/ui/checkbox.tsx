@@ -1,31 +1,62 @@
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import {
+  Checkbox as UICheckbox,
+  CheckboxRootProps,
+} from '@base-ui/react/checkbox'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { CheckIcon } from 'lucide-react'
 
 import { cn } from '@/utils/class-name-merge'
 
+export const checkboxVariants = cva(
+  'bg-background border-border data-checked:bg-primary data-checked:border-primary text-background outline-primary group-hover:border-ring flex shrink-0 items-center justify-center rounded-md border-2 transition-colors',
+  {
+    variants: {
+      variant: {
+        default: 'border-border',
+        error: 'border-error focus:outline-error',
+      },
+      size: {
+        default: 'size-5.5 [&_svg]:size-4.5',
+        lg: 'size-7 [&_svg]:size-5',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  },
+)
+
 export interface CheckboxProps
-  extends React.ComponentProps<typeof CheckboxPrimitive.Root> {
-  size?: 'sm' | 'md'
+  extends CheckboxRootProps,
+    VariantProps<typeof checkboxVariants> {
+  label?: string
 }
 
-export function Checkbox({ size = 'sm', ...props }: Readonly<CheckboxProps>) {
+export function Checkbox({
+  label,
+  className,
+  variant,
+  size,
+  ...props
+}: CheckboxProps) {
   return (
-    <CheckboxPrimitive.Root
+    <label
       className={cn(
-        'peer border-border data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground data-[state=checked]:bg-primary hover:bg-background-soft outline-ring shrink-0 rounded border-2 shadow-xs outline-offset-4 transition-colors hover:cursor-pointer disabled:pointer-events-none disabled:opacity-50',
-        size === 'sm' && 'size-4.5',
-        size === 'md' && 'size-5',
+        'text-foreground group flex cursor-pointer items-center gap-2 text-base',
+        props.disabled ? 'opacity-50' : '',
+        className,
       )}
-      {...props}
     >
-      <CheckboxPrimitive.Indicator
-        className={cn('flex items-center justify-center')}
+      <UICheckbox.Root
+        className={cn(checkboxVariants({ variant, size }))}
+        {...props}
       >
-        <CheckIcon
-          className={cn(size === 'sm' && 'size-3', size === 'md' && 'size-4')}
-          strokeWidth={3}
-        />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
+        <UICheckbox.Indicator className='flex data-unchecked:hidden'>
+          <CheckIcon />
+        </UICheckbox.Indicator>
+      </UICheckbox.Root>
+      {label && <span>{label}</span>}
+    </label>
   )
 }

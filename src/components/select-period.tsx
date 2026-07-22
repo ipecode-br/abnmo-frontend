@@ -14,24 +14,22 @@ export function SelectPeriod({
   period,
   disabled,
   onSelect,
-}: Readonly<SelectPeriodProps>) {
+}: SelectPeriodProps) {
   const options: SelectOption[] = QUERY_PERIODS_OPTIONS.map((option) => ({
     label: option.label,
     value: option.value,
   }))
 
-  function handleValueChange(value: string) {
-    onSelect(value as QueryPeriod)
-  }
-
   return (
     <Select
-      size='sm'
       align='end'
       value={period}
       options={options}
       disabled={disabled}
-      onValueChange={handleValueChange}
+      onValueChange={(value) => {
+        if (!value) return
+        onSelect(value as QueryPeriod)
+      }}
     />
   )
 }

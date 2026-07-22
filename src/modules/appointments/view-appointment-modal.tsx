@@ -23,7 +23,7 @@ interface ViewAppointmentModalProps {
 
 export function ViewAppointmentModal({
   appointment,
-}: Readonly<ViewAppointmentModalProps>) {
+}: ViewAppointmentModalProps) {
   const status = APPOINTMENT_STATUSES[appointment.status]
   const condition = PATIENT_CONDITIONS[appointment.condition]
   const specialty = SPECIALTIES[appointment.category]

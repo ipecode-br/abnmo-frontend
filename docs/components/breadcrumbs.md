@@ -30,17 +30,17 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
   pacientes: {
     icon: Users2Icon,
     name: 'Pacientes',
-    path: ROUTES.dashboard.patients.main,
+    path: ROUTES.patients.main,
   },
   informacoes: {
     icon: User2Icon,
     name: 'Informações do paciente',
-    path: ROUTES.dashboard.patients.main,
+    path: ROUTES.patients.main,
   },
   historico: {
     icon: HistoryIcon,
     name: 'Histórico do paciente',
-    path: ROUTES.dashboard.patients.main,
+    path: ROUTES.patients.main,
   },
 }
 ```
@@ -74,7 +74,7 @@ export function Header() {
         // 'configuracoes' é o segmento da URL (ex: /dashboard/configuracoes)
         icon: SettingsIcon,
         name: 'Configurações',
-        path: ROUTES.dashboard.settings, // Rota definida em src/constants/routes.ts
+        path: ROUTES.settings, // Rota definida em src/constants/routes.ts
       },
     }
     ```

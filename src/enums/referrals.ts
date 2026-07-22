@@ -1,7 +1,7 @@
 import { convertObjectToOptions } from '@/helpers/convert-object-to-options'
 
 export const REFERRAL_STATUSES = {
-  scheduled: { variant: 'outlined', label: 'Agendado' },
+  scheduled: { variant: 'default', label: 'Agendado' },
   canceled: { variant: 'error', label: 'Cancelado' },
   completed: { variant: 'success', label: 'Concluído' },
   no_show: { variant: 'info', label: 'Não compareceu' },

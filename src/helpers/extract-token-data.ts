@@ -1,30 +1,9 @@
-'use server'
-
 import jwt from 'jsonwebtoken'
 
-import { getCookie } from '@/actions/cookies'
+export async function extractTokenData<T>(token: string) {
+  if (!token) return null
 
-interface ExtractTokenDataProps {
-  cookie?: string
-  token?: string
-}
-
-export async function extractTokenData<T>({
-  cookie,
-  token,
-}: ExtractTokenDataProps) {
-  let value: string | undefined = token
-
-  if (cookie) {
-    const cookieValue = await getCookie(cookie)
-    const tokenWithoutPrefix = cookieValue?.slice(2)
-    const extractedToken = tokenWithoutPrefix?.split('.').slice(0, 3).join('.')
-    value = extractedToken
-  }
-
-  if (!value) return null
-
-  const payload = jwt.decode(value) as T
+  const payload = jwt.decode(token) as T
 
   if (!payload) return null
 

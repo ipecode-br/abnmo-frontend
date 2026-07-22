@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CircleXIcon } from 'lucide-react'
+import { useId } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -19,6 +20,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Label, LabelWrapper } from '@/components/ui/label'
 import { NEXT_CACHE_TAGS, QUERY_CACHE_KEYS } from '@/constants/cache'
 import { revalidateClientCache } from '@/helpers/revalidate-client-cache'
 import { revalidateServerCache } from '@/helpers/revalidate-server-cache'
@@ -35,6 +37,7 @@ export function DeactivatePatientModal({
   name,
   onClose,
 }: Readonly<DeactivatePatientModalProps>) {
+  const formId = useId()
   const deactivatePatientFormSchema = z.object({
     name: z.string().refine((val) => val === name, {
       message: `Insira o nome do paciente corretamente: ${name}`,
@@ -78,20 +81,22 @@ export function DeactivatePatientModal({
 
       <DialogContent>
         <FormProvider {...formMethods}>
-          <FormContainer onSubmit={formMethods.handleSubmit(submitForm)}>
-            <TextInput
-              name='name'
-              label='Digite o nome completo do paciente:'
-              message={`Nome: ${name}`}
-              isRequired
-            />
+          <FormContainer
+            id={formId}
+            onSubmit={formMethods.handleSubmit(submitForm)}
+          >
+            <LabelWrapper>
+              <Label isRequired>Digite o nome completo do paciente:</Label>
+              <TextInput name='name' description={`Nome: ${name}`} />
+            </LabelWrapper>
           </FormContainer>
         </FormProvider>
       </DialogContent>
 
       <DialogFooter>
         <Button
-          className='flex-1'
+          form={formId}
+          className='md:flex-1'
           variant='destructive'
           loading={formMethods.formState.isSubmitting}
           onClick={formMethods.handleSubmit(submitForm)}
@@ -99,7 +104,7 @@ export function DeactivatePatientModal({
           Inativar paciente
         </Button>
         <DialogClose
-          className='flex-1'
+          className='md:flex-1'
           disabled={formMethods.formState.isSubmitting}
         >
           Voltar

@@ -40,7 +40,7 @@ export function PatientDocuments({
         <section key={section.title}>
           <div className='mb-4 flex items-center justify-between'>
             <h2 className='text-xl font-semibold'>{section.title}</h2>
-            <Button size='icon' className='size-8'>
+            <Button className='size-8'>
               <PlusIcon />
             </Button>
           </div>
@@ -70,7 +70,6 @@ export function PatientDocuments({
                 {isEditing && (
                   <Dialog>
                     <DialogTrigger
-                      size='icon'
                       variant='ghost'
                       className='text-foreground-soft ml-2 size-8'
                     >
@@ -88,13 +87,15 @@ export function PatientDocuments({
 
                       <DialogFooter>
                         <Button
-                          className='flex-1'
+                          className='md:flex-1'
                           variant='destructive'
                           onClick={() => handleConfirmDelete(doc.id)}
                         >
                           Excluir documento
                         </Button>
-                        <DialogClose className='flex-1'>Cancelar</DialogClose>
+                        <DialogClose className='md:flex-1'>
+                          Cancelar
+                        </DialogClose>
                       </DialogFooter>
                     </DialogContainer>
                   </Dialog>
