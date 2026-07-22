@@ -1,5 +1,6 @@
 import './globals.css'
 
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 
 import { env } from '@/config/env'
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang='pt-BR'>
       <body className={cn('root antialiased', inter.variable)}>
         <Providers>{children}</Providers>
+        <Analytics mode='production' />
       </body>
     </html>
   )
