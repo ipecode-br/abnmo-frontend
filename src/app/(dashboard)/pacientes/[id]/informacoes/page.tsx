@@ -209,7 +209,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
           <List>
             {supportContacts.map((support, index) => (
               <ListRow key={index} className='flex-wrap'>
-                <h3 className='mr-auto text-lg font-medium'>{support.name}</h3>
+                <h3 className='mr-auto font-medium'>{support.name}</h3>
                 <Tag size='sm'>{KINSHIPS[support.kinship]}</Tag>
                 <div className='flex items-center gap-3'>
                   <span>{formatPhoneNumber(support.phone)}</span>
