@@ -24,7 +24,7 @@ describe('Button', () => {
     const buttonElement = screen.getByRole('button', { name: buttonText })
 
     expect(buttonElement).toHaveClass('bg-background')
-    expect(buttonElement).toHaveClass('text-accent-foreground')
+    expect(buttonElement).toHaveClass('text-foreground')
     expect(buttonElement).toHaveClass('border')
     expect(buttonElement).toHaveClass('border-border')
   })

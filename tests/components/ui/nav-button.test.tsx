@@ -17,7 +17,7 @@ describe('NavButton', () => {
     expect(fancyButtonElement).toHaveClass('bg-primary')
     expect(fancyButtonElement).toHaveClass('text-primary-foreground')
     expect(fancyButtonElement).toHaveClass('hover:bg-primary/80')
-    expect(fancyButtonElement).toHaveClass('shadow-xs')
+    expect(fancyButtonElement).toHaveClass('shadow-md')
     expect(fancyButtonElement).toHaveClass('h-10')
     expect(fancyButtonElement).toHaveClass('px-4')
   })
