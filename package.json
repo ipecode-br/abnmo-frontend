@@ -32,6 +32,7 @@
     "react-dom": "19.2.4",
     "react-hook-form": "7.55.0",
     "recharts": "3.1.0",
+    "sharp": "0.35.3",
     "sonner": "2.0.4",
     "tailwind-merge": "3.2.0",
     "zod": "3.24.3",
@@ -67,6 +68,7 @@
     "typescript-eslint": "8.29.0"
   },
   "overrides": {
+    "sharp": "0.35.3",
     "next": {
       "postcss": "8.5.10"
     }
