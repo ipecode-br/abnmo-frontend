@@ -68,6 +68,7 @@ export function DeclineSurveySubmissionModal({
     ])
 
     toast.success(response.message)
+    formMethods.reset({ reason: '' })
     onClose()
   }
 
