@@ -29,7 +29,6 @@ export function PendingSurveysList() {
   const [modalMode, setModalMode] = useState<SubmissionModalMode | null>(null)
   const [selectedSubmission, setSelectedSubmission] =
     useState<SurveySubmission | null>(null)
-  const [modalKey, setModalKey] = useState(0)
 
   const { getParams, currentParams } = useParams()
   const { canUser } = usePermissions()
@@ -52,7 +51,6 @@ export function PendingSurveysList() {
     submission: SurveySubmission,
   ) {
     setSelectedSubmission(submission)
-    setModalKey((prev) => prev + 1)
     setModalMode(mode)
   }
 
@@ -162,9 +160,8 @@ export function PendingSurveysList() {
             open={modalMode === 'approve'}
             onOpenChange={(open) => setModalMode(open ? 'approve' : null)}
           >
-            {selectedSubmission && (
+            {selectedSubmission && modalMode === 'approve' && (
               <ApproveSurveySubmissionModal
-                key={`approve-${modalKey}`}
                 submission={selectedSubmission}
                 onClose={() => setModalMode(null)}
               />
@@ -175,9 +172,8 @@ export function PendingSurveysList() {
             open={modalMode === 'decline'}
             onOpenChange={(open) => setModalMode(open ? 'decline' : null)}
           >
-            {selectedSubmission && (
+            {selectedSubmission && modalMode === 'decline' && (
               <DeclineSurveySubmissionModal
-                key={`decline-${modalKey}`}
                 submission={selectedSubmission}
                 onClose={() => setModalMode(null)}
               />

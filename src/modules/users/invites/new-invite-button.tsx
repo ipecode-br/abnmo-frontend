@@ -9,16 +9,18 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { NewUserInviteModal } from './new-invite-modal'
 
 export function NewInviteButton(props: Readonly<ButtonProps>) {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger {...props}>
         <PlusIcon />
         Novo convite
       </DialogTrigger>
 
-      <NewUserInviteModal onClose={() => setModalOpen(false)} />
+      {isModalOpen && (
+        <NewUserInviteModal onClose={() => setIsModalOpen(false)} />
+      )}
     </Dialog>
   )
 }

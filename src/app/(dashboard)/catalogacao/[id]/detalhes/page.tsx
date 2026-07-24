@@ -124,16 +124,14 @@ export default async function Page({ params }: Readonly<PageParams>) {
           <div className='flex flex-wrap gap-4'>
             {showReminderButton && (
               <SendSurveySignatureReminderButton
-                id={survey.signatureId!}
+                id={survey.id}
                 className='flex-1 md:w-44'
-                size='sm'
               />
             )}
             <NavButton
               href={ROUTES.patients.details.info(patient.id)}
               className='max-md:flex-1'
               variant='outline'
-              size='sm'
             >
               <EyeIcon />
               Ver paciente

@@ -38,6 +38,7 @@ export function DeactivatePatientModal({
   onClose,
 }: Readonly<DeactivatePatientModalProps>) {
   const formId = useId()
+
   const deactivatePatientFormSchema = z.object({
     name: z.string().refine((val) => val === name, {
       message: `Insira o nome do paciente corretamente: ${name}`,

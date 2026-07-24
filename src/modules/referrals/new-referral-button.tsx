@@ -16,19 +16,21 @@ export function NewReferralButton({
   patientId,
   ...props
 }: Readonly<NewReferralButtonProps>) {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger {...props}>
         <ClipboardPasteIcon />
         Encaminhar
       </DialogTrigger>
 
-      <ReferralModal
-        patientId={patientId}
-        onClose={() => setModalOpen(false)}
-      />
+      {isModalOpen && (
+        <ReferralModal
+          patientId={patientId}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </Dialog>
   )
 }

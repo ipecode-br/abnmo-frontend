@@ -132,13 +132,7 @@ export function DialogContent({
   ...props
 }: React.ComponentProps<'div'>) {
   return (
-    <div
-      className={cn(
-        'flex flex-1 flex-col gap-2 overflow-y-auto p-5',
-        className,
-      )}
-      {...props}
-    />
+    <div className={cn('flex-1 overflow-y-auto p-5', className)} {...props} />
   )
 }
 

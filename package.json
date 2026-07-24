@@ -13,7 +13,7 @@
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "eslint .",
     "lint:tsc": "tsc --noEmit",
-    "validate": "eslint . && tsc --noEmit",
+    "validate": "prettier --check . && eslint . && tsc --noEmit",
     "prepare": "husky"
   },
   "dependencies": {

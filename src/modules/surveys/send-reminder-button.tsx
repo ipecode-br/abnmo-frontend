@@ -28,7 +28,7 @@ export function SendSurveySignatureReminderButton({
         return
       }
 
-      toast.success(response.success)
+      toast.success(response.message)
     })
   }
 

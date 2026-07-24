@@ -41,7 +41,7 @@ export default async function Page({ searchParams }: Readonly<PageProps>) {
   }
 
   const isTokenValid = !!tokenValue
-  const content = isTokenValid ? CARD_CONTENT['valid'] : CARD_CONTENT['invalid']
+  const content = isTokenValid ? CARD_CONTENT.valid : CARD_CONTENT.invalid
 
   return (
     <AuthCard title={content.title} description={content.description}>

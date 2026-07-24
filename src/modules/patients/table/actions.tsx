@@ -91,10 +91,12 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
 
       {canCreateReferral && (
         <Dialog open={isReferralModalOpen} onOpenChange={setReferralModalOpen}>
-          <ReferralModal
-            patientId={patient.id}
-            onClose={() => setReferralModalOpen(false)}
-          />
+          {isReferralModalOpen && (
+            <ReferralModal
+              patientId={patient.id}
+              onClose={() => setReferralModalOpen(false)}
+            />
+          )}
         </Dialog>
       )}
 
@@ -103,10 +105,12 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
           open={isAppointmentModalOpen}
           onOpenChange={setAppointmentModalOpen}
         >
-          <AppointmentModal
-            patientId={patient.id}
-            onClose={() => setAppointmentModalOpen(false)}
-          />
+          {isAppointmentModalOpen && (
+            <AppointmentModal
+              patientId={patient.id}
+              onClose={() => setAppointmentModalOpen(false)}
+            />
+          )}
         </Dialog>
       )}
 
@@ -115,11 +119,13 @@ export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
           open={isDeactivateModalOpen}
           onOpenChange={setDeactivateModalOpen}
         >
-          <DeactivatePatientModal
-            id={patient.id}
-            name={patient.name}
-            onClose={() => setDeactivateModalOpen(false)}
-          />
+          {isDeactivateModalOpen && (
+            <DeactivatePatientModal
+              id={patient.id}
+              name={patient.name}
+              onClose={() => setDeactivateModalOpen(false)}
+            />
+          )}
         </Dialog>
       )}
     </>

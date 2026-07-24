@@ -38,6 +38,7 @@ interface NewUserInviteModalProps {
 
 export function NewUserInviteModal({ onClose }: NewUserInviteModalProps) {
   const formId = useId()
+
   const formMethods = useForm<UserInviteFormSchema>({
     resolver: zodResolver(userInviteFormSchema),
     defaultValues: { email: '', role: '' } as unknown as UserInviteFormSchema,

@@ -19,7 +19,7 @@ interface UserInvitesTableActionsProps {
 export function UserInvitesTableActions({
   invite,
 }: Readonly<UserInvitesTableActionsProps>) {
-  const [modalOpen, setModalOpen] = useState<InviteModalMode | null>(null)
+  const [modelMode, setModalMode] = useState<InviteModalMode | null>(null)
   const { canUser } = usePermissions()
 
   const canCancelInvite = canUser('delete:user-invite')
@@ -42,7 +42,7 @@ export function UserInvitesTableActions({
         <MenuContent align='end'>
           <MenuItem
             variant='destructive'
-            onClick={() => setModalOpen('cancel')}
+            onClick={() => setModalMode('cancel')}
           >
             <CircleXIcon />
             Cancelar
@@ -52,13 +52,15 @@ export function UserInvitesTableActions({
 
       {canCancelInvite && (
         <Dialog
-          open={modalOpen === 'cancel'}
-          onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}
+          open={modelMode === 'cancel'}
+          onOpenChange={(open) => setModalMode(open ? 'cancel' : null)}
         >
-          <CancelUserInviteModal
-            invite={invite}
-            onClose={() => setModalOpen(null)}
-          />
+          {modelMode === 'cancel' && (
+            <CancelUserInviteModal
+              invite={invite}
+              onClose={() => setModalMode(null)}
+            />
+          )}
         </Dialog>
       )}
     </>

@@ -16,19 +16,21 @@ export function NewAppointmentButton({
   patientId,
   ...props
 }: Readonly<NewAppointmentButtonProps>) {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger {...props}>
         <ClipboardPlusIcon />
         Novo atendimento
       </DialogTrigger>
 
-      <AppointmentModal
-        patientId={patientId}
-        onClose={() => setModalOpen(false)}
-      />
+      {isModalOpen && (
+        <AppointmentModal
+          patientId={patientId}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </Dialog>
   )
 }

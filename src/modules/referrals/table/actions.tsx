@@ -29,7 +29,7 @@ interface ReferralsTableActionsProps {
 export function ReferralsTableActions({
   referral,
 }: Readonly<ReferralsTableActionsProps>) {
-  const [modalOpen, setModalOpen] = useState<ReferralModalMode | null>(null)
+  const [modalMode, setModalMode] = useState<ReferralModalMode | null>(null)
   const { canUser } = usePermissions()
   const router = useRouter()
 
@@ -51,7 +51,7 @@ export function ReferralsTableActions({
 
         <MenuContent align='end'>
           {allowEdit && canUpdateReferral && (
-            <MenuItem onClick={() => setModalOpen('edit')}>
+            <MenuItem onClick={() => setModalMode('edit')}>
               <ClipboardPenIcon />
               Editar
             </MenuItem>
@@ -78,7 +78,7 @@ export function ReferralsTableActions({
               <Divider className='my-1' />
               <MenuItem
                 variant='destructive'
-                onClick={() => setModalOpen('cancel')}
+                onClick={() => setModalMode('cancel')}
               >
                 <XCircleIcon />
                 Cancelar
@@ -90,25 +90,29 @@ export function ReferralsTableActions({
 
       {canUpdateReferral && (
         <Dialog
-          open={modalOpen === 'edit'}
-          onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
+          open={modalMode === 'edit'}
+          onOpenChange={(open) => setModalMode(open ? 'edit' : null)}
         >
-          <ReferralModal
-            referral={referral}
-            onClose={() => setModalOpen(null)}
-          />
+          {modalMode === 'edit' && (
+            <ReferralModal
+              referral={referral}
+              onClose={() => setModalMode(null)}
+            />
+          )}
         </Dialog>
       )}
 
       {canCancelReferral && (
         <Dialog
-          open={modalOpen === 'cancel'}
-          onOpenChange={(open) => setModalOpen(open ? 'cancel' : null)}
+          open={modalMode === 'cancel'}
+          onOpenChange={(open) => setModalMode(open ? 'cancel' : null)}
         >
-          <CancelReferralModal
-            referral={referral}
-            onClose={() => setModalOpen(null)}
-          />
+          {modalMode === 'cancel' && (
+            <CancelReferralModal
+              referral={referral}
+              onClose={() => setModalMode(null)}
+            />
+          )}
         </Dialog>
       )}
     </>

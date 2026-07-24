@@ -100,7 +100,9 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
           open={modalOpen === 'edit'}
           onOpenChange={(open) => setModalOpen(open ? 'edit' : null)}
         >
-          <UpdateUserModal user={user} onClose={() => setModalOpen(null)} />
+          {modalOpen === 'edit' && (
+            <UpdateUserModal user={user} onClose={() => setModalOpen(null)} />
+          )}
         </Dialog>
       )}
 
@@ -109,10 +111,12 @@ export function UsersTableActions({ user }: Readonly<UsersTableActionsProps>) {
           open={modalOpen === 'status'}
           onOpenChange={(open) => setModalOpen(open ? 'status' : null)}
         >
-          <ChangeUserStatusModal
-            user={user}
-            onClose={() => setModalOpen(null)}
-          />
+          {modalOpen === 'status' && (
+            <ChangeUserStatusModal
+              user={user}
+              onClose={() => setModalOpen(null)}
+            />
+          )}
         </Dialog>
       )}
     </>

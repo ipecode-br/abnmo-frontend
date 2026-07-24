@@ -45,6 +45,7 @@ export function DeclineSurveySubmissionModal({
   onClose,
 }: Readonly<DeclineSurveySubmissionModalProps>) {
   const formId = useId()
+
   const formMethods = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: { reason: '' },
@@ -96,6 +97,7 @@ export function DeclineSurveySubmissionModal({
               <Label isRequired>Motivo</Label>
               <TextareaInput
                 rows={6}
+                showCounter
                 name='reason'
                 maxLength={MAX_REASON_LENGTH}
                 placeholder='Insira o motivo da recusa'

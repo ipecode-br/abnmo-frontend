@@ -173,10 +173,12 @@ export function SignUpForm({
           />
         </LabelWrapper>
 
-        <CheckboxInput
-          name='consent'
-          label='Li e concordo com os Termos de Uso e Políticas de Privacidade'
-        />
+        <div className='space-y-2'>
+          <CheckboxInput
+            name='consent'
+            label='Li e concordo com os termos e políticas'
+          />
+        </div>
 
         <Button type='submit' loading={isPending}>
           Cadastrar
