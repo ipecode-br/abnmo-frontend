@@ -1,46 +1,75 @@
-# Sistema Viver Melhor (SVM) - ABNMO - Front-End
+# Sistema Viver Melhor (SVM) — Front-End
 
-Aplicação Front-End do **Sistema Viver Melhor (SVM)**, desenvolvida para a ABNMO. Este sistema foi projetado para equipes multidisciplinares de saúde, proporcionando uma plataforma centralizada para acompanhamento de pacientes, gerenciamento de encaminhamentos e consolidação de informações clínicas.
+Aplicação Front-End do **Sistema Viver Melhor (SVM)**, desenvolvida para a ABNMO. Plataforma centralizada para equipes multidisciplinares de saúde com acompanhamento de pacientes, gerenciamento de encaminhamentos e consolidação de informações clínicas.
 
-O sistema otimiza o fluxo de atendimento com integração de dados em uma interface responsiva, acessível e adaptável a diversos dispositivos.
+## Stack
 
-## Tecnologias utilizadas
+- **Next.js 16** (App Router) + **React 19** + **TypeScript** (strict)
+- **Tailwind CSS v4** (`@tailwindcss/postcss`) + Base UI (`@base-ui/react`) + CVA
+- **TanStack Query** (server state) + **Zustand** (global state)
+- **React Hook Form** + **Zod** (form management and validation)
+- **Recharts** (charts) + **lucide-react** (icons) + **date-fns** (dates)
+- **Jest** + **Testing Library** (tests)
+- **ESLint 9** flat config + **Prettier** (linting/formatting)
+- **Husky** + **lint-staged** + **commitlint** (git hooks)
 
-- **Typescript**: Tipagem estática para maior segurança no desenvolvimento;
-- **Next.js 16**: Framework React para renderização híbrida e roteamento eficiente;
-- **Tailwind CSS**: Framework CSS utilitário;
-- **React Hook Form + Zod**: Gerenciamento de formulários com validação robusta.
+## Pré-requisitos
 
-## Como executar localmente
+- Node.js 20.9.0 (LTS) ou superior
+- NPM
 
-### Pré-requisitos
+## Estrutura
 
-- Node.js - versão 20.9.0 (LTS) ou superior
-- NPM (Node package manager)
-- Docker
-
-### Instalação e configuração
-
-#### 1. Clone o repositório e instale as dependências
-
-```bash
-git clone https://github.com/ipecode-br/abnmo-frontend
-cd abnmo-frontend
-npm install
+```
+src/
+  app/              Rotas em português (App Router)
+  actions/          Server Actions do Next.js
+  components/       Componentes React reutilizáveis
+  modules/          Lógica de negócio por funcionalidade
+  providers/        Providers de contexto React
+  store/            Stores Zustand (period, permissions)
+  lib/              Configurações (api client, tanstack-query, fonts, can)
+  config/           Configurações da aplicação (env.ts, cache.ts)
+  constants/        Rotas, cache keys, cookies, regex, etc.
+  enums/            Enums para features, pacientes, queries, etc.
+  helpers/          Funções auxiliares de negócio
+  hooks/            Custom hooks
+  schemas/          Schemas Zod
+  types/            Tipos globais TypeScript
+  utils/            Utilitários puros (cn, formatters, sanitizers)
+  proxy.ts          Proxy Next.js 16 — proteção de rotas via cookie de sessão
 ```
 
-#### 2. Configure as variáveis de ambiente
-
-Copie o arquivo de exemplo `env.sample` e renomeie para `.env.local` ou execute o comando:
+## Configuração
 
 ```bash
-cp env.sample .env.local
+cp .env.sample .env.local   # Configurar variáveis de ambiente
+npm install                 # save-exact=true (sem ranges ^)
+npm run dev                 # http://localhost:3000
 ```
 
-#### 3. Inicie a aplicação
+### Variáveis de ambiente
 
-```bash
-npm run dev
-```
+| Variável              | Padrão                  | Descrição              |
+| --------------------- | ----------------------- | ---------------------- |
+| `NEXT_PUBLIC_APP_URL` | `http://localhost:3000` | URL da aplicação       |
+| `NEXT_PUBLIC_API_URL` | `http://localhost:3333` | URL da API             |
+| `NEXT_PUBLIC_DOMAIN`  | `localhost`             | Domínio (para cookies) |
 
-O aplicativo estará disponível em [http://localhost:3000](http://localhost:3000) por padrão.
+Use `.env.local` para desenvolvimento e `.env.test` para testes.
+
+## Comandos
+
+| Comando                       | Descrição                   |
+| ----------------------------- | --------------------------- |
+| `npm run dev`                 | Servidor de desenvolvimento |
+| `npm test`                    | Jest (suíte completa)       |
+| `npm run test:watch`          | Jest --watch                |
+| `npm run build`               | `next build`                |
+| `npm run build:analyze`       | `ANALYZE=true next build`   |
+| `npm run start`               | `next start`                |
+| `npm run lint:tsc`            | `tsc --noEmit`              |
+| `npm run lint:eslint:check`   | ESLint check                |
+| `npm run lint:prettier:check` | Prettier check              |
+| `npm run lint:prettier:fix`   | Prettier write              |
+| `npm run validate`            | Prettier + ESLint + tsc     |
