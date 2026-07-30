@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronFirstIcon, ChevronLastIcon } from 'lucide-react'
+import { useCallback, useEffect } from 'react'
 
 import { QUERY_PARAM_KEYS } from '@/enums/params'
 import { useParams } from '@/hooks/params'
@@ -25,12 +26,31 @@ export function Pagination({
 }: Readonly<PaginationProps>) {
   const { getParam, updateParams } = useParams()
 
+  const currentPage = Number(getParam(QUERY_PARAM_KEYS.page)) || 1
+  const totalPages = Math.ceil(totalItems / perPage)
+
+  const handlePaginate = useCallback(
+    (page: number) => {
+      updateParams({
+        remove: page <= 1 ? ['page'] : undefined,
+        set: page > 1 ? [{ key: 'page', value: page }] : undefined,
+      })
+    },
+    [updateParams],
+  )
+
+  useEffect(() => {
+    if (totalItems <= 0) return
+
+    if (currentPage > totalPages) {
+      handlePaginate(totalPages)
+    }
+  }, [totalItems, totalPages, currentPage, handlePaginate])
+
   if (totalItems <= 0) {
     return null
   }
 
-  const currentPage = Number(getParam(QUERY_PARAM_KEYS.page)) || 1
-  const totalPages = Math.ceil(totalItems / perPage)
   const lastPageItems = totalItems - (totalPages - 1) * perPage
 
   const isFirstPage = currentPage === 1
@@ -85,13 +105,6 @@ export function Pagination({
     }
 
     return pageButtons
-  }
-
-  function handlePaginate(page: number) {
-    updateParams({
-      remove: page <= 1 ? ['page'] : undefined,
-      set: page > 1 ? [{ key: 'page', value: page }] : undefined,
-    })
   }
 
   const pageButtons = generatePageButtons()
