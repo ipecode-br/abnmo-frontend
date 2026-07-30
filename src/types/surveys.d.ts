@@ -34,6 +34,7 @@ import {
   SicknessBenefitStatus,
   SpecialtyBeforeDiagnosis,
   StudyInterruptionSituation,
+  SurveyFillingMethod,
   SurveyStatus,
   SurveySubmissionStatus,
   TransportMode,
@@ -57,6 +58,7 @@ export type SurveySubmission = {
   email: string
   phone: string
   status: SurveySubmissionStatus
+  fillingMethod: SurveyFillingMethod
   reason: string | null
   updatedAt: string
   createdAt: string

@@ -34,7 +34,7 @@ export function DataField({ label, children, ...props }: DataFieldProps) {
 
   return (
     <div {...props}>
-      <span className='text-foreground-soft'>{label}</span>
+      <span className='text-foreground-soft block'>{label}</span>
       <div className='text-lg font-medium'>{children}</div>
     </div>
   )

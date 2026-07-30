@@ -1,3 +1,10 @@
+export const SURVEY_FILLING_METHODS = {
+  self: 'Sozinho(a)',
+  whatsapp: 'WhatsApp',
+  interview: 'Entrevista',
+} as const
+export type SurveyFillingMethod = keyof typeof SURVEY_FILLING_METHODS
+
 export const SURVEY_SUBMISSION_STATUSES = {
   pending_document: { variant: 'default', label: 'Aguardando laudo' },
   pending_review: { variant: 'default', label: 'Aguardando revisão' },
