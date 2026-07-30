@@ -73,3 +73,7 @@ Use `.env.local` para desenvolvimento e `.env.test` para testes.
 | `npm run lint:prettier:check` | Prettier check              |
 | `npm run lint:prettier:fix`   | Prettier write              |
 | `npm run validate`            | Prettier + ESLint + tsc     |
+
+## Documentação
+
+A documentação completa do projeto está em [`docs/`](./docs/index.md) — incluindo guias de componentes, convenções de código, sistema de permissões e padrões de estilo.

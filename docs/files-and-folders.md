@@ -1,413 +1,244 @@
-# Documentação de arquivos e pastas
+# Organização de arquivos e pastas
 
-Este documento estabelece as diretrizes para organização e criação de arquivos e pastas no projeto, definindo onde cada tipo de código deve ser localizado para manter a estrutura consistente e escalável.
+Diretrizes para onde cada tipo de código deve ser localizado.
 
 ## Regras gerais
 
-- **Reutilização**: Componentes e utilities globais ficam em `src/components/` e `src/utils/`
-- **Escopo específico**: Arquivos específicos de uma página ficam na pasta correspondente em `src/app/`
-- **Prefixo underscore**: Pastas que não são rotas em `src/app/` devem usar prefixo `_`
-- **Nomenclatura**: Siga as [convenções de nomenclatura](./naming.md) do projeto
-- **Agrupamento**: Organize por funcionalidade e contexto
+- **Reutilização**: Componentes e utilities globais em `src/components/` e `src/utils/`
+- **Escopo específico**: Arquivos de uma página na pasta correspondente em `src/app/`
+- **Prefixo underscore**: Pastas não-rotas em `src/app/` usam prefixo `_`
+- **Nomenclatura**: Siga as [convenções de nomenclatura](./naming.md)
 
-## Estrutura principal do projeto
+## Estrutura principal
 
 ```
 src/
-  actions/          ← Server actions do Next.js
+  actions/          ← Server Actions do Next.js
   app/              ← Pages e layouts (App Router)
   components/       ← Componentes React reutilizáveis
-  config/           ← Configurações da aplicação
-  constants/        ← Constantes e enums
-  helpers/          ← Funções auxiliares reutilizáveis
+  config/           ← Configurações (env.ts, cache.ts)
+  constants/        ← Constantes e valores estáticos
+  enums/            ← Enums TypeScript
+  helpers/          ← Funções auxiliares com lógica de negócio
   hooks/            ← Custom hooks reutilizáveis
-  lib/              ← Configurações de bibliotecas
+  lib/              ← Configurações de bibliotecas (api, tanstack-query, can, fonts)
+  modules/          ← Lógica de negócio por funcionalidade
+  providers/        ← Providers de contexto React
+  schemas/          ← Schemas Zod compartilhados
   store/            ← Estado global (Zustand)
-  types/            ← Types TypeScript globais
-  utils/            ← Utilities e formatadores
-  middleware.ts     ← Middleware do Next.js
+  types/            ← Tipos TypeScript globais
+  utils/            ← Utilitários puros (formatters, validators, parsers)
+  proxy.ts          ← Proxy de proteção de rotas (Next.js 16)
 ```
 
 ## Componentes React
 
 ### Componentes globais reutilizáveis
 
-**Localização**: `src/components/`
-
-Para componentes que serão utilizados em múltiplos locais:
+**Localização:** `src/components/`
 
 ```
 src/components/
   breadcrumbs.tsx           ← Componente único global
-  auth/                     ← Grupo de componentes de autenticação
-    auth-card.tsx
-  dashboard/                ← Grupo de componentes do dashboard
+  auth/
+    auth-card.tsx           ← Card wrapper de autenticação
+  dashboard/
+    header.tsx              ← Header do dashboard
+    tab-buttons.tsx         ← Abas de navegação
+  sidebar/                  ← Sistema de sidebar
+    index.tsx
     container.tsx
-    tab-buttons.tsx
-  charts/                   ← Grupo de componentes de gráficos
-    bar.tsx
-    custom-tooltip.tsx
+    header.tsx
+    account.tsx
+    menu-section.tsx
+  charts/
+    bar.tsx                 ← Gráfico de barras
+    pie.tsx                 ← Gráfico de pizza
+    custom-tooltip.tsx      ← Tooltip customizado
 ```
 
 ### Componentes de UI base
 
-**Localização**: `src/components/ui/`
+**Localização:** `src/components/ui/`
 
-Componentes primitivos e unitários baseados em bibliotecas como Radix:
+Componentes primitivos baseados em Base UI (`@base-ui/react`):
 
 ```
 src/components/ui/
-  button.tsx               ← Componente simples
-  input.tsx
-  card.tsx
-  select/                  ← Componente composto com subcomponentes
-    index.tsx
-    trigger.tsx
-    content.tsx
-    item.tsx
-  calendar/                ← Componente complexo isolado
-    index.tsx
-    dropdown-nav.tsx
-    step-nav.tsx
+  button.tsx, input.tsx, card.tsx, checkbox.tsx
+  dialog.tsx, popover.tsx, menu.tsx, select.tsx
+  combobox.tsx, switch.tsx, tab-buttons.tsx, tab-select.tsx
+  alert.tsx, avatar.tsx, divider.tsx, label.tsx
+  nav-button.tsx, nav-link.tsx, skeleton.tsx, tag.tsx
+  status-tag.tsx, page-loader.tsx, data-display.tsx
+  date-picker.tsx, input-button.tsx, list.tsx, textarea.tsx
+  chart-card.tsx
+  calendar/
+    index.tsx, nav.tsx
 ```
 
 ### Componentes compostos
 
-**Localização**: `src/components/{nome-componente}/`
-
-Componentes que usam múltiplos componentes UI e possuem contexto próprio:
+**Localização:** `src/components/`
 
 ```
 src/components/
   form/                    ← Sistema de formulários
-    text-input.tsx
-    select-input.tsx
-    form-container.tsx
-    password-requirements.tsx
-  data-table/              ← Sistema de tabelas
-    header/
-      index.tsx
-      search.tsx
-      filter-button.tsx
-    filters/
-      index.tsx
-      status.tsx
-      date.tsx
+    text-input.tsx, select-input.tsx, date-input.tsx
+    password-input.tsx, password-requirements.tsx
+    checkbox-input.tsx, combobox-input.tsx, file-input.tsx
+    switch-input.tsx, switch-group-input.tsx, textarea-input.tsx
+    form-container.tsx, form-message.tsx
   pagination/              ← Sistema de paginação
-    index.tsx
-    button.tsx
+  filters/                 ← Filtros de tabela
+  tags/                    ← Tags de status
 ```
 
 ### Componentes específicos de página
 
-**Localização**: `src/app/{rota}/_components/`
-
-Para componentes usados apenas em uma página específica:
+**Localização:** `src/app/{rota}/_components/`
 
 ```
 src/app/
   pacientes/
-    _components/           ← Componentes específicos desta rota
-      patients-table-actions.tsx
-      patient-details-modal.tsx
-  (dashboard)/
-    _sidebar/              ← Componentes do sidebar
-      index.tsx
-      container.tsx
-      menu-section.tsx
-    _header/               ← Componentes do header
-      index.tsx
+    [id]/
+      _components/         ← Componentes específicos dos detalhes do paciente
 ```
 
-## Hooks personalizados
+## Hooks
 
-### Hooks globais reutilizáveis
+### Hooks globais
 
-**Localização**: `src/hooks/`
+**Localização:** `src/hooks/`
 
 ```
 src/hooks/
-  debounce.ts              ← Hook de debounce global
-  params.ts                ← Hook de query parameters
-  use-local-storage.ts     ← Hook de localStorage
+  debounce.ts, params.ts, cities.ts
+  use-permissions.ts, use-patient-otions.ts, use-utils.ts
 ```
 
 ### Hooks específicos
 
-**Localização**: `src/app/{rota}/_hooks/` ou junto ao componente
+**Localização:** `src/app/{rota}/_hooks/` ou junto ao componente
 
-```
-src/app/
-  paciente/triagem/
-    hooks.ts               ← Hook específico da triagem
-  _hooks/                  ← Hooks específicos da área
-    use-patient-data.ts
-```
-
-## Types e interfaces
+## Types
 
 ### Types globais
 
-**Localização**: `src/types/`
-
-Para types usados em múltiplos locais:
+**Localização:** `src/types/`
 
 ```
 src/types/
-  patients.ts              ← Types relacionados a pacientes
-  users.ts                 ← Types relacionados a usuários
-  api.ts                   ← Types de API
+  patients.d.ts, users.d.ts, appointments.d.ts
+  referrals.d.ts, surveys.d.ts, patient-requirements.d.ts, orders.d.ts
 ```
 
 ### Types específicos
 
-**Localização**: `src/app/{rota}/_types/`
+**Localização:** `src/app/{rota}/_types/`
 
-```
-src/app/
-  pacientes/
-    _types/
-      patient-filters.ts   ← Types específicos desta funcionalidade
-```
+## Constants
 
-## Constants e configurações
-
-### Constants globais
-
-**Localização**: `src/constants/`
+**Localização:** `src/constants/`
 
 ```
 src/constants/
-  routes.ts                ← Rotas da aplicação
-  brazilian-states.ts      ← Estados brasileiros
-  regex.ts                 ← Expressões regulares
-  cache.ts                 ← Cache keys
-  params.ts                ← Query parameters
+  routes.ts, cookies.ts, cache.ts, regex.ts, auth.ts, charts.ts
+  images.ts, section-tabs.ts, section-titles.ts
   breadcrumbs/             ← Configurações de breadcrumbs
-    index.ts
-    dashboard.ts
-    patient.ts
+  cities/
+    index.ts, json/        ← Lista de cidades por estado (27 arquivos JSON)
 ```
 
-### Configurações de biblioteca
+## Configurações
 
-**Localização**: `src/lib/`
+### Bibliotecas
+
+**Localização:** `src/lib/`
 
 ```
 src/lib/
-  api.ts                   ← Configuração da API
-  fonts.ts                 ← Configuração de fontes
-  tanstack-query.ts        ← Configuração do TanStack Query
-  permissions/             ← Sistema de permissões
+  api.ts, fonts.ts, tanstack-query.ts, can.ts
 ```
 
-### Configurações da aplicação
+### Aplicação
 
-**Localização**: `src/config/`
+**Localização:** `src/config/`
 
 ```
 src/config/
-  env.ts                   ← Variáveis de ambiente
+  env.ts, cache.ts
 ```
 
-## Utilities e helpers
+## Modules (lógica de negócio)
 
-### Utilities globais
-
-**Localização**: `src/utils/`
-
-Funções puras e formatadores:
+**Localização:** `src/modules/`
 
 ```
-src/utils/
-  class-name-merge.ts      ← Utility principal (cn)
-  wait.ts                  ← Delay function
-  formatters/              ← Formatadores de dados
-    format-date.ts
-    format-phone-number.ts
-    format-cpf-number.ts
-  mock/                    ← Dados de mock
-    patients.ts
-    users.ts
+src/modules/
+  appointments/, auth/, overview/
+  patient-requirements/, patient-supports/
+  patients/, profile/, referrals/
+  settings/, surveys/, users/
 ```
 
-### Helpers globais
+## Actions
 
-**Localização**: `src/helpers/`
-
-Funções com lógica de negócio:
-
-```
-src/helpers/
-  convert-object-to-options.ts  ← Conversão para select options
-  local-storage.ts              ← Gerenciamento de localStorage
-  auth/                         ← Helpers de autenticação
-    get-password-requirement.ts
-```
-
-## Actions e estado
-
-### Server actions
-
-**Localização**: `src/actions/`
-
-Server actions do Next.js:
+**Localização:** `src/actions/`
 
 ```
 src/actions/
-  auth.ts                  ← Ações de autenticação
-  users.ts                 ← Ações de usuários
-  cache.ts                 ← Ações de cache
-  cookies.ts               ← Gerenciamento de cookies
-  token.ts                 ← Gerenciamento de tokens
+  cookies.ts, sidebar.ts
+  auth/
+    can-user.ts, logout.ts
+  users/
+    get-current-user.ts, get-user.ts
+  patients/
+    get-patient.ts
+  appointments/
+    get-appointments.ts
+  surveys/
+    get-survey.ts, get-submission.ts
+  statistics/
+    get-total-appointments.ts, get-total-patients.ts, ...
 ```
 
-### Estado global
+## Store (Zustand)
 
-**Localização**: `src/store/`
-
-Estados globais usando Zustand:
+**Localização:** `src/store/`
 
 ```
 src/store/
-  sidebar.ts               ← Estado do sidebar
-  user.ts                  ← Estado do usuário atual
-  theme.ts                 ← Estado do tema (se houver)
-```
-
-## Exemplos práticos de organização
-
-### Feature completa - Pacientes
-
-```
-src/
-  types/
-    patients.ts            ← Types globais de pacientes
-  constants/
-    patients.ts            ← Constants de pacientes
-  components/
-    patients-table.tsx     ← Tabela reutilizável
-  app/
-    (dashboard)/
-      pacientes/
-        _components/       ← Componentes específicos
-          patient-details-modal.tsx
-          patients-table-actions.tsx
-        _hooks/
-          use-patient-filters.ts
-        _types/
-          patient-filters.ts
-        page.tsx           ← Página principal
-        [id]/
-          page.tsx         ← Página de detalhes
-```
-
-### Componente UI complexo - Calendar
-
-```
-src/components/ui/
-  calendar/
-    index.tsx              ← Componente principal
-    dropdown-nav.tsx       ← Navegação dropdown
-    step-nav.tsx          ← Navegação step
-```
-
-### Sistema de formulários
-
-```
-src/components/
-  form/                    ← Sistema completo
-    form-container.tsx     ← Container base
-    form-field.tsx         ← Field wrapper
-    form-message.tsx       ← Mensagens
-    text-input.tsx         ← Input de texto
-    select-input.tsx       ← Input de select
-    password-input.tsx     ← Input de senha
-    password-requirements.tsx  ← Requisitos de senha
-```
-
-### Utilities por categoria
-
-```
-src/utils/
-  class-name-merge.ts      ← Utility base
-  wait.ts                  ← Delay function
-  formatters/              ← Formatadores específicos
-    format-date.ts
-    format-phone-number.ts
-    format-cpf-number.ts
-  mock/                    ← Dados de desenvolvimento
-    patients.ts
-    users.ts
+  period.ts                ← Período selecionado nos filtros
+  permissions.ts           ← Permissões do usuário
 ```
 
 ## Diretrizes de decisão
 
 ### Onde criar um novo arquivo?
 
-**Pergunte-se:**
-
-1. **É reutilizável?** → `src/components/`, `src/hooks/`, `src/utils/`
+1. **É reutilizável?** → `src/components/`, `src/hooks/`, `src/utils/`, `src/helpers/`
 2. **É específico de uma página?** → `src/app/{rota}/_components/`
 3. **É um componente UI base?** → `src/components/ui/`
-4. **É um sistema complexo?** → `src/components/{nome-sistema}/`
+4. **É lógica de negócio de uma feature?** → `src/modules/{feature}/`
 5. **É configuração?** → `src/config/` ou `src/lib/`
 6. **É constante global?** → `src/constants/`
 7. **É tipo global?** → `src/types/`
+8. **É um server action?** → `src/actions/`
 
 ### Criando uma nova feature
 
-1. **Types**: Crie em `src/types/{feature}.ts` se global
-2. **Constants**: Adicione em `src/constants/{feature}.ts`
-3. **Components**: Crie em `src/components/{feature}/` se reutilizável
-4. **Page components**: Crie em `src/app/{rota}/_components/`
-5. **Hooks**: Crie em `src/hooks/` se global, ou `_hooks/` se específico
-6. **Utils**: Adicione em `src/utils/` ou `src/helpers/`
+1. **Types**: `src/types/{feature}.d.ts` se global
+2. **Constants**: `src/constants/` se necessário
+3. **Modules**: `src/modules/{feature}/` para lógica de negócio
+4. **Components**: `src/components/{feature}/` se reutilizável
+5. **Page components**: `src/app/{rota}/_components/`
+6. **Server actions**: `src/actions/{feature}/`
 
 ## Boas práticas
-
-### 1. Organização
 
 - Mantenha arquivos relacionados próximos
 - Use pastas para agrupar funcionalidades
 - Evite aninhamento excessivo (máximo 3 níveis)
-
-### 2. Nomenclatura
-
-- Arquivos em kebab-case
-- Pastas em kebab-case
-- Componentes em PascalCase
-- Siga as [convenções de nomenclatura](./naming.md)
-
-### 3. Reutilização
-
-- Identifique padrões comuns
-- Extraia lógica repetitiva para utilities
-- Crie componentes reutilizáveis quando apropriado
-
-### 4. Escopo
-
-- Mantenha código específico próximo ao uso
-- Promova para global apenas quando necessário
-- Evite dependências circulares
-
-### 5. Imports
-
 - Use imports absolutos com `@/`
 - Organize imports por categoria (externos, internos, relativos)
-- Use barrel exports (index.ts) quando apropriado
-
-## Checklist de organização
-
-Antes de criar novos arquivos, verifique:
-
-- O arquivo é realmente necessário ou pode usar existente?
-- A localização segue as diretrizes estabelecidas?
-- O nome segue as convenções de nomenclatura?
-- A pasta parent existe ou precisa ser criada?
-- O arquivo se relaciona com outros da mesma área?
-- Os imports estão organizados corretamente?
-- A funcionalidade é específica ou reutilizável?
-- Existe um padrão similar já estabelecido?
-- A estrutura facilita a manutenção futura?
-- O código segue o princípio DRY (Don't Repeat Yourself)?

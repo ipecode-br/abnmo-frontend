@@ -1,55 +1,53 @@
 # Documentação do projeto
 
-Bem-vindo à documentação do projeto ABNMO Frontend! Este é um guia completo para desenvolvedores que trabalham com o projeto, contendo diretrizes, padrões e boas práticas para manter a consistência e qualidade do código.
+Bem-vindo à documentação do projeto ABNMO Frontend. Guia completo para desenvolvedores com diretrizes, padrões e boas práticas.
 
 ## Sobre o projeto
 
-Este é um projeto Next.js construído com TypeScript, utilizando as melhores práticas de desenvolvimento moderno e uma arquitetura escalável. A documentação aqui presente foi criada para garantir que todos os desenvolvedores sigam os mesmos padrões e convenções.
+Next.js 16 (App Router) com TypeScript, Tailwind CSS v4 e arquitetura escalável.
 
 ## Estrutura da documentação
 
 ### Diretrizes fundamentais
 
-- **[Convenções de nomenclatura](./naming.md)** - Regras para nomeação de arquivos, componentes e pastas
-- **[Organização de arquivos e pastas](./files-and-folders.md)** - Como estruturar e onde criar novos arquivos
+- **[Convenções de nomenclatura](./naming.md)** — Regras para nomeação de arquivos, componentes e pastas
+- **[Organização de arquivos e pastas](./files-and-folders.md)** — Como estruturar e onde criar novos arquivos
+- **[Permissões](./permissions.md)** — Sistema de permissões baseado em Features
+- **[Gerenciamento de estado](./state-management.md)** — Zustand + TanStack Query
+- **[Proxy](./proxy.md)** — Proteção de rotas (substituto do middleware)
 
 ### Componentes
 
-- **[Ícones](./components/icons.md)** - Como utilizar ícones do Lucide de forma otimizada
-- **[Modais](./components/modal.md)** - Como criar modais e dialogs no projeto
-- **[Formulários](./components/form.md)** - Como criar formulários com React Hook Form e Zod
-- **[Tabelas](./components/table.md)** - Como criar tabelas de dados com filtros e paginação
+- **[Ícones](./components/icons.md)** — Como utilizar ícones do Lucide
+- **[Modais](./components/modal.md)** — Como criar dialogs com Base UI
+- **[Formulários](./components/form.md)** — React Hook Form + Zod
+- **[Tabelas](./components/table.md)** — Tabelas de dados com filtros e paginação
+- **[Gráficos](./components/charts.md)** — Gráficos com Recharts
+
+### Features
+
+- **[Autenticação](./features/auth.md)** — Login, cadastro, recuperação de senha
+- **[Dashboard](./features/dashboard.md)** — Área principal de gerenciamento
+- **[Área do paciente](./features/patients-area.md)** — Portal do paciente
 
 ## Como usar esta documentação
 
-1. **Novos desenvolvedores**: Comece pelas diretrizes fundamentais para entender a estrutura do projeto
-2. **Desenvolvimento de features**: Consulte as seções específicas de componentes
+1. **Novos desenvolvedores**: Comece pelas diretrizes fundamentais
+2. **Desenvolvimento de features**: Consulte as seções específicas de componentes e features
 3. **Revisão de código**: Use os checklists para garantir conformidade
 4. **Dúvidas**: Procure exemplos práticos em cada seção
 
-## Contribuindo para a documentação
-
-Esta documentação é um documento vivo que deve ser atualizada conforme o projeto evolui. Se você identificar:
-
-- Padrões não documentados
-- Exemplos que precisam ser atualizados
-- Novas convenções sendo adotadas
-- Seções que precisam de esclarecimentos
-
-Por favor, contribua para manter a documentação atualizada e útil para todos os desenvolvedores da equipe.
-
 ## Tecnologias principais
 
-O projeto utiliza as seguintes tecnologias principais:
-
-- **Framework**: Next.js 14+ (App Router)
-- **Linguagem**: TypeScript
-- **Estilização**: Tailwind CSS
+- **Framework**: Next.js 16 (App Router)
+- **Linguagem**: TypeScript (strict)
+- **Estilização**: Tailwind CSS v4
 - **Formulários**: React Hook Form + Zod
-- **Estado**: Zustand (estado global) + TanStack Query (estado servidor)
-- **UI Components**: Radix UI + componentes customizados
+- **Estado**: Zustand (global) + TanStack Query (servidor)
+- **UI**: Base UI (`@base-ui/react`) + CVA + Lucide React
+- **Gráficos**: Recharts
 - **Testes**: Jest + Testing Library
 
 ---
 
-**Última atualização**: 29 de agosto de 2025
+**Última atualização**: Julho de 2026

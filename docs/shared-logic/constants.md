@@ -1,141 +1,54 @@
 # Constantes
 
-O diretório `src/constants` centraliza valores estáticos e configurações que são compartilhados em toda a aplicação. Manter essas constantes em um local centralizado facilita a manutenção e garante a consistência.
+O diretório `src/constants/` centraliza valores estáticos compartilhados.
 
-## Arquivos Principais
+## Arquivos
 
 ### `routes.ts`
 
-Define todas as rotas da aplicação em um objeto estruturado. Isso evita o uso de strings "mágicas" para links e redirecionamentos, permitindo que as URLs sejam atualizadas em um único local.
+Define todas as rotas em um objeto estruturado:
 
-**Estrutura**:
-
-```typescript
-export const ROUTES = {
-  auth: {
-    signIn: '/conta/entrar',
-    // ...
-  },
-  dashboard: {
-    main: '/',
-    patients: {
-      main: '/pacientes',
-      details: (id: string) => `/pacientes/${id}/informacoes`,
-    },
-    // ...
-  },
-}
+```ts
+ROUTES.auth.signIn // '/entrar'
+ROUTES.auth.signUp // '/cadastrar'
+ROUTES.auth.forgotPassword // '/recuperar-senha'
+ROUTES.auth.resetPassword // '/nova-senha'
+ROUTES.main // '/'
+ROUTES.dashboard.patients.main // '/pacientes'
 ```
 
-**Como Usar**:
+### `cookies.ts`
 
-```tsx
-import { ROUTES } from '@/constants/routes'
-import Link from 'next/link'
-
-// <Link href="/conta/entrar">... (Incorreto)
-;<Link href={ROUTES.auth.signIn}>Entrar</Link> // (Correto)
-```
-
----
-
-### `params.ts`
-
-Centraliza as chaves (nomes) dos parâmetros de busca da URL (query params). É usado em conjunto com o hook `useParams` para garantir consistência ao ler ou escrever na URL.
-
-**Estrutura**:
-
-```typescript
-export const QUERY_PARAMS = {
-  page: 'page',
-  search: 'search',
-  status: 'status',
-  // ...
-}
-```
-
----
+Nomes de cookies usados na aplicação (ex.: `COOKIES.session`).
 
 ### `cache.ts`
 
-Define as chaves de cache usadas pela aplicação, tanto para o cache do Next.js (tags) quanto para o TanStack Query (`queryKey`).
-
-- `NEXT_CACHE_TAGS`: Usado para revalidação de dados em Server Actions.
-- `QUERY_CACHE_KEYS`: Usado como a chave principal (`queryKey`) em `useQuery` para identificar e gerenciar o cache de dados do lado do cliente.
-
-**Estrutura**:
-
-```typescript
-export const NEXT_CACHE_TAGS = {
-  user: (id: string) => `user/${id}`,
-}
-
-export const QUERY_CACHE_KEYS = {
-  profile: 'profile',
-  patients: 'patients',
-}
-```
-
----
-
-### `storage-keys.ts`
-
-Define as chaves usadas para armazenar dados no `localStorage` ou `sessionStorage` do navegador. Isso previne conflitos e erros de digitação.
-
-**Estrutura**:
-
-```typescript
-export const PATIENT_STORAGE_KEYS = {
-  screening: {
-    patientData: 'screening_patient_data',
-    // ...
-  },
-} as const
-```
-
----
+Chaves de cache para Next.js (`revalidateTag`) e TanStack Query (`queryKey`).
 
 ### `regex.ts`
 
-Contém uma coleção de expressões regulares (RegExp) usadas para validação de formulários e formatação de strings.
+Expressões regulares para validação: `CPF_REGEX`, `PASSWORD_REGEX`, `NAME_REGEX`, `PHONE_REGEX`, `NON_SPECIAL_CHAR_REGEX`, etc.
 
-**Exemplos**:
+### `auth.ts`
 
-- `NON_NUMBER_REGEX`: Remove tudo que não for dígito.
-- `CPF_REGEX`: Valida uma string no formato de CPF.
-- `PASSWORD_REGEX`: Valida a força de uma senha (dígitos, maiúsculas, minúsculas, etc.).
+Constantes de autenticação como `PASSWORD_MIN_LENGTH`.
 
----
+### `charts.ts`
 
-### Listas de Opções
+Configurações e cores para gráficos Recharts.
 
-Alguns arquivos fornecem arrays de objetos padronizados, ideais para serem usados em componentes de select, radio groups, etc.
+### `breadcrumbs/`
 
-- **`brazilian-states.ts`**: Lista de todos os estados brasileiros com `label` e `value`.
-- **`genders.ts`**: Lista de opções de gênero.
+Configuração de breadcrumbs por área (dashboard, patient).
 
-**Estrutura Padrão**:
+### `cities/`
 
-```typescript
-// Exemplo de GENDERS
-export const GENDERS = [
-  { label: 'Feminino', value: 'female' },
-  { label: 'Masculino', value: 'male' },
-  // ...
-]
-```
+Lista de cidades brasileiras por estado (arquivos JSON em `cities/json/`).
 
----
+### `section-tabs.ts` / `section-titles.ts`
 
-### `enums.ts`
+Configurações de abas e títulos das seções do dashboard.
 
-Define objetos que funcionam como enumerações, mapeando chaves a valores legíveis. É útil para traduzir valores da API para a UI.
+### `images.ts`
 
-**Estrutura**:
-
-```typescript
-export const yesOrNoEnum = {
-  yes: 'Sim',
-  no: 'Não',
-} as const
-```
+Caminhos de imagens estáticas (ícone, logo, etc.).

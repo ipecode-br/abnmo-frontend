@@ -1,86 +1,76 @@
-# Permissões de acesso ao sistema
+# Sistema de Permissões
 
-Este documento detalha as permissões de acesso dos usuários do sistema, organizadas por perfil e por tipo de ação, incluindo eventuais restrições aplicáveis.
+O sistema de permissões usa o modelo de **Features** — cada funcionalidade do sistema é representada por uma string no formato `action:resource:scope`.
 
----
+## Como funciona
 
-## Perfis de acesso
+### Formato
 
-- Administração: acesso completo ao sistema e a todas as ações.
-- Gestão
-- Enfermagem
-- Especialista
-- Paciente
+```
+action:resource:scope
+```
 
-Legenda utilizada nas tabelas:
+- **action**: `read`, `create`, `update`, `delete`, `activate`, `deactivate`, `cancel`, `review`
+- **resource**: `survey`, `patient`, `user`, `user-invite`, `appointment`, `referral`, `statistic`
+- **scope**: (opcional) `others` — ignora verificação de ownership
 
-- Sim: ação permitida
-- X: ação não permitida
-- Observações adicionais são descritas quando necessário
+### Exemplos
 
----
+| Feature                  | Significado                        |
+| ------------------------ | ---------------------------------- |
+| `read:patient:others`    | Ver todos os pacientes             |
+| `create:appointment`     | Criar atendimentos próprios        |
+| `update:user:others`     | Atualizar dados de qualquer membro |
+| `cancel:survey:others`   | Cancelar qualquer catalogação      |
+| `read:statistic:patient` | Ver estatísticas de pacientes      |
 
-## Pacientes
+## Regras
 
-| Ação      | Administração | Gestão | Enfermagem | Especialista | Paciente                         |
-| --------- | ------------- | ------ | ---------- | ------------ | -------------------------------- |
-| Listar    | Sim           | Sim    | Sim        | Sim          | X                                |
-| Detalhes  | Sim           | Sim    | Sim        | Sim          | X                                |
-| Cadastrar | Sim           | Sim    | Sim        | X            | X                                |
-| Alterar   | Sim           | Sim    | Sim        | X            | Sim (apenas seus próprios dados) |
-| Inativar  | Sim           | Sim    | X          | X            | X                                |
+- **Admin**: acesso total a todas as features (bypass)
+- **Ownership**: sem o sufixo `:others`, o usuário só pode agir sobre recursos próprios (compara `user.id` com `compareToId`)
+- **Múltiplas features**: passa um array — basta uma dar match (OR)
 
----
+## Grupos de features
 
-## Atendimentos
+Definidos em `src/enums/features.ts`:
 
-| Ação      | Administração | Gestão | Enfermagem | Especialista | Paciente                                |
-| --------- | ------------- | ------ | ---------- | ------------ | --------------------------------------- |
-| Listar    | Sim           | Sim    | Sim        | Sim          | Sim (apenas seus próprios atendimentos) |
-| Cadastrar | Sim           | Sim    | Sim        | Sim          | X                                       |
-| Alterar   | Sim           | Sim    | Sim        | Sim          | X                                       |
-| Cancelar  | Sim           | Sim    | Sim        | X            | X                                       |
+| Grupo         | Features                                                   |
+| ------------- | ---------------------------------------------------------- |
+| `survey`      | `read`, `review`, `update`, `cancel` (todas com `:others`) |
+| `patient`     | `read:others`, `update:others`, `activate`, `deactivate`   |
+| `user`        | `read:others`, `update:others`, `activate`, `deactivate`   |
+| `user-invite` | `create`, `read`, `delete`                                 |
+| `appointment` | `create`, `read`, `update`, `cancel` (com/sem `:others`)   |
+| `referral`    | `create`, `read`, `update`, `cancel` (com/sem `:others`)   |
+| `statistic`   | `read` geral + `patient`, `appointment`, `referral`        |
 
----
+## Uso no código
 
-## Encaminhamentos
+### Server Action
 
-| Ação      | Administração | Gestão | Enfermagem | Especialista | Paciente                                   |
-| --------- | ------------- | ------ | ---------- | ------------ | ------------------------------------------ |
-| Listar    | Sim           | Sim    | Sim        | Sim          | Sim (apenas seus próprios encaminhamentos) |
-| Cadastrar | Sim           | Sim    | Sim        | X            | X                                          |
-| Alterar   | Sim           | Sim    | Sim        | Sim          | X                                          |
-| Cancelar  | Sim           | Sim    | Sim        | X            | X                                          |
+```ts
+// src/actions/auth/can-user.ts
+const canViewAllPatients = await canUser('read:patient:others')
+const canUpdateAppointment = await canUser('update:appointment', appointmentId)
+```
 
----
+### Client-side (via Zustand store)
 
-## Contatos de apoio do paciente
+```ts
+// src/store/permissions.ts
+const can = usePermissionsStore((s) => s.can)
+can('create:appointment')
+can(['read:statistic:patient', 'read:statistic'])
+```
 
-| Ação      | Administração | Gestão | Enfermagem | Especialista | Paciente                            |
-| --------- | ------------- | ------ | ---------- | ------------ | ----------------------------------- |
-| Cadastrar | Sim           | Sim    | Sim        | X            | Sim (apenas seus próprios contatos) |
-| Alterar   | Sim           | Sim    | Sim        | X            | Sim (apenas seus próprios contatos) |
-| Remover   | Sim           | Sim    | Sim        | X            | Sim (apenas seus próprios contatos) |
+### Core
 
----
+```ts
+// src/lib/can.ts
+can(user, 'read:patient:others')
+can(user, ['create:appointment', 'update:appointment'], targetId)
+```
 
-## Usuários da equipe
+## Provider
 
-| Ação                            | Administração | Gestão                         | Enfermagem                     | Especialista                   | Paciente |
-| ------------------------------- | ------------- | ------------------------------ | ------------------------------ | ------------------------------ | -------- |
-| Listar                          | Sim           | Sim                            | X                              | X                              | X        |
-| Detalhes do seu próprio usuário | Sim           | Sim                            | Sim                            | Sim                            | X        |
-| Alterar                         | Sim           | Sim (apenas o próprio usuário) | Sim (apenas o próprio usuário) | Sim (apenas o próprio usuário) | X        |
-| Inativar                        | Sim           | X                              | X                              | X                              | X        |
-| Ativar                          | Sim           | X                              | X                              | X                              | X        |
-| Cadastrar convites              | Sim           | Sim                            | X                              | X                              | X        |
-| Listar convites                 | Sim           | Sim                            | X                              | X                              | X        |
-| Cancelar convite                | Sim           | Sim                            | X                              | X                              | X        |
-
----
-
-## Estatísticas
-
-| Ação       | Administração | Gestão | Enfermagem | Especialista | Paciente |
-| ---------- | ------------- | ------ | ---------- | ------------ | -------- |
-| Visualizar | Sim           | Sim    | Sim        | Sim          | X        |
+O `PermissionsProvider` (`src/providers/permissions-provider.tsx`) inicializa a store de permissões com o usuário autenticado no layout do dashboard.

@@ -121,7 +121,7 @@ const alertVariants = cva('rounded-lg border px-3 py-2 text-sm', {
 <Card className='gap-4' />
 ```
 
-**Exceção**: É aceitável usar valores arbitrários com CSS variables dinâmicas do Radix ou outras bibliotecas:
+**Exceção**: É aceitável usar valores arbitrários com CSS variables dinâmicas do Base UI ou outras bibliotecas:
 
 ```tsx
 // ✅ OK (valores dinâmicos):

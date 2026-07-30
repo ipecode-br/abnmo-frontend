@@ -1,92 +1,83 @@
-# ConvertObjectToOptions
+# Helpers
 
-Função que recebe um objeto ou enum e transforma cada par chave/valor em um array de opções no formato `{ value, label }`.
+Funções auxiliares com lógica de negócio reutilizável em `src/helpers/`.
 
-**Localização:** **[helpers/convert-object-to-options.ts](../../abnmo-frontend/src/helpers/convert-object-to-options.ts)**
+---
 
-### Como usar
+## convertObjectToOptions
+
+Transforma um objeto ou enum em array de opções `{ value, label }`.
+
+**Localização:** `helpers/convert-object-to-options.ts`
 
 ```ts
 const states = { MG: 'Minas Gerais', SP: 'São Paulo' }
-console.log(options)
-// [
-//   { value: "MG", label: "Minas Gerais" },
-//   { value: "SP", label: "São Paulo" }
-// ]
-```
-
-```ts
-const booleanOptions = {
-  yes: 'Sim',
-  no: 'Não',
-}
-const options = convertObjectToOptions(booleanOptions)
-console.log(options)
-// [
-//   { value: "yes", label: "Sim" },
-//   { value: "no", label: "Não" }
-// ]
+convertObjectToOptions(states)
+// [{ value: 'MG', label: 'Minas Gerais' }, { value: 'SP', label: 'São Paulo' }]
 ```
 
 ---
 
-# LocalStorage
+## LocalStorage
 
-Funções responsáveis por `salvar`, `buscar` e `remover` dados no **localStorage** do navegador.
+Salvar, buscar e remover dados no `localStorage`.
 
-**Localização:** **[helpers/local-storage.ts](../../abnmo-frontend/src/helpers/local-storage.ts)**
-
-### Como usar
-
-`Salvar`
+**Localização:** `helpers/local-storage.ts`
 
 ```ts
-// Salva um valor sob a chave passada.
 setStorageItem('user', { name: 'John Doe', email: 'johndoe@example.com' })
-```
-
-`Buscar`
-
-```ts
-// Retorna o valor armazenado ou null se não existir ou ocorrer erro ao parsear.
 getStorageItem('user')
-```
-
-`Remover`
-
-```ts
-// Remove um item
 removeStorageItem('user')
-// ou remove múltiplos items
 removeStorageItem(['user', 'token'])
 ```
 
 ---
 
-# Auth
-
 ## getPasswordRequirements
 
-Função que valida uma senha contra regras de segurança e retorna um array indicando quais foram atendidas.
+Valida uma senha contra regras de segurança (maiúscula, minúscula, número, caractere especial, comprimento mínimo).
 
-- `type` → o tipo da regra
-- `text` → a mensagem para mostrar pro usuário
-- `isValid` → se a senha cumpre a regra (true/false)
-
-**Localização:** **[helpers/auth/get-password-requirement.ts](../../abnmo-frontend/src/helpers/auth/get-password-requirement.ts)**
-
-### Como usar
+**Localização:** `helpers/get-password-requirement.ts`
 
 ```ts
-const password = 'Abc123!'
-const requirements = getPasswordRequirements(password)
-console.log(requirements)
-
-// [
-//    { type: 'uppercase', text: 'Pelo menos 1 letra maiúscula', isValid: true },
-//    { type: 'lowercase', text: 'Pelo menos 1 letra minúscula', isValid: true },
-//    { type: 'number', text: 'Pelo menos 1 número', isValid: true },
-//    { type: 'special_char', text: 'Pelo menos 1 caractere especial', isValid: true },
-//    { type: 'length', text: 'Pelo menos 8 caracteres', isValid: false }
-// ]
+const requirements = getPasswordRequirements('Abc123!')
+// [{ type: 'uppercase', text: '...', isValid: true }, ...]
 ```
+
+---
+
+## extractTokenData
+
+Decodifica dados de um token JWT.
+
+**Localização:** `helpers/extract-token-data.ts`
+
+Usado na página de cadastro para extrair `email` e `role` do token de convite.
+
+```ts
+const data = await extractTokenData<{ email: string; role: UserRole }>(token)
+```
+
+---
+
+## getTimeDistanceToNow
+
+Calcula a distância temporal de uma data até o momento atual (ex.: "há 2 horas").
+
+**Localização:** `helpers/get-time-distance-to-now.ts`
+
+---
+
+## revalidateClientCache
+
+Força a reinvalidação do cache do TanStack Query no cliente.
+
+**Localização:** `helpers/revalidate-client-cache.ts`
+
+---
+
+## revalidateServerCache
+
+Força a reinvalidação do cache do Next.js no servidor via `revalidateTag`.
+
+**Localização:** `helpers/revalidate-server-cache.ts`
