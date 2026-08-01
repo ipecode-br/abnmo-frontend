@@ -13,8 +13,7 @@ import {
   SectionHeaderTitle,
 } from '@/components/section-header'
 import { Card } from '@/components/ui/card'
-import { List, ListHead, ListRow } from '@/components/ui/list'
-import { Skeleton } from '@/components/ui/skeleton'
+import { List, ListHead, ListRow, ListSkeleton } from '@/components/ui/list'
 import { Tag } from '@/components/ui/tag'
 import { QUERY_CACHE_KEYS } from '@/constants/cache'
 import { ROUTES } from '@/constants/routes'
@@ -71,23 +70,24 @@ export function SurveysList() {
       </SectionHeader>
 
       <Card className='md:p-6'>
-        {isLoading && <Skeleton quantity={perPage} className='h-10 w-full' />}
+        <List>
+          <ListHead>
+            <span className='md:w-48 lg:w-56'>Nome completo</span>
+            <span className='flex-1'>E-mail</span>
+            <span className='w-24'>Status</span>
+            <span className='w-24'>Data</span>
+          </ListHead>
 
-        {isEmpty && (
-          <p className='text-foreground-soft p-8 text-center'>
-            Nenhuma catalogação encontrada.
-          </p>
-        )}
+          {isLoading && <ListSkeleton quantity={perPage} />}
 
-        {!isEmpty && (
-          <List>
-            <ListHead>
-              <span className='md:w-48 lg:w-56'>Nome completo</span>
-              <span className='flex-1'>E-mail</span>
-              <span className='w-24'>Status</span>
-              <span className='w-24'>Data</span>
-            </ListHead>
-            {surveys.map((survey) => {
+          {isEmpty && (
+            <p className='text-foreground-soft pt-8 pb-2 text-center'>
+              Nenhuma soliticação encontrada.
+            </p>
+          )}
+
+          {!isEmpty &&
+            surveys.map((survey) => {
               const status = SURVEY_STATUSES[survey.status]
               return (
                 <ListRow
@@ -118,8 +118,7 @@ export function SurveysList() {
                 </ListRow>
               )
             })}
-          </List>
-        )}
+        </List>
       </Card>
 
       <Pagination totalItems={total} perPage={perPage} />

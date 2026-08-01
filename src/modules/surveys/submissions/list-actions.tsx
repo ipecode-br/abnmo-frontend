@@ -62,7 +62,7 @@ export function SurveySubmissionsListActions({
       <Menu>
         <MenuTrigger
           variant='ghost'
-          className='size-8'
+          className='hover:bg-border size-8'
           aria-label='Abrir ações'
         >
           <EllipsisIcon />

@@ -1,5 +1,7 @@
 import { cn } from '@/utils/class-name-merge'
 
+import { Skeleton } from './skeleton'
+
 export function List({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
@@ -31,4 +33,20 @@ export function ListRow({ className, ...props }: React.ComponentProps<'li'>) {
       {...props}
     />
   )
+}
+
+interface ListSkeletonProps extends React.ComponentProps<'li'> {
+  quantity?: number
+}
+
+export function ListSkeleton({
+  className,
+  quantity = 10,
+  ...props
+}: ListSkeletonProps) {
+  return Array.from({ length: quantity }).map((_, index) => (
+    <li key={index} className={cn('h-14 p-3', className)} {...props}>
+      <Skeleton key={index} className='size-full' />
+    </li>
+  ))
 }
