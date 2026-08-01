@@ -68,7 +68,7 @@ export function PendingSurveysList() {
     <>
       <SectionHeader>
         <SectionHeaderTitle
-          title='Pendentes'
+          title='Solicitações pendentes'
           icon={<ClipboardListIcon />}
           total={total}
         />

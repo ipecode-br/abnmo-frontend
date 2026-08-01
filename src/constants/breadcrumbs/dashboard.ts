@@ -7,7 +7,7 @@ import {
   FileUserIcon,
   HistoryIcon,
   LayoutGridIcon,
-  LayoutListIcon,
+  ListIcon,
   MailPlusIcon,
   PaperclipIcon,
   User2Icon,
@@ -25,8 +25,13 @@ export const DASHBOARD_BREADCRUMBS: Breadcrumbs = {
       name: 'Visão geral',
       path: ROUTES.surveys.main,
     },
+    solicitacoes: {
+      icon: ListIcon,
+      name: 'Solicitações',
+      path: ROUTES.surveys.submissions,
+    },
     todas: {
-      icon: LayoutListIcon,
+      icon: ListIcon,
       name: 'Todas',
       path: ROUTES.surveys.all,
     },
