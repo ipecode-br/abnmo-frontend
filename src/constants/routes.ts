@@ -18,6 +18,7 @@ export const ROUTES = {
   menu: '/menu',
   surveys: {
     main: '/catalogacao',
+    submissions: '/catalogacao/solicitacoes',
     all: '/catalogacao/todas',
     details: (id: string) => `/catalogacao/${id}/detalhes`,
   },

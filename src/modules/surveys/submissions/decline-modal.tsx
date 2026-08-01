@@ -89,8 +89,8 @@ export function DeclineSurveySubmissionModal({
             onSubmit={formMethods.handleSubmit(submitForm)}
           >
             <p>
-              Deseja recusar a catalogação de <strong>{submission.name}</strong>
-              ?
+              Deseja recusar a catalogação de{' '}
+              <strong>{submission.patient.name}</strong>?
             </p>
 
             <LabelWrapper className='my-2'>

@@ -12,6 +12,10 @@ export const SECTION_TABS: Record<string, Array<TabButton>> = {
       path: ROUTES.surveys.main,
     },
     {
+      title: 'Solicitações',
+      path: ROUTES.surveys.submissions,
+    },
+    {
       title: 'Todas',
       path: ROUTES.surveys.all,
     },

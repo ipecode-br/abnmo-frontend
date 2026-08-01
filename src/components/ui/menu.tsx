@@ -58,7 +58,7 @@ export function MenuContent({
 }
 
 const menuItemVariants = cva(
-  'data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground flex cursor-pointer items-center gap-2 rounded-md py-2 pr-6 pl-3 leading-tight transition-colors outline-none [&_svg]:size-5',
+  'data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground flex cursor-pointer items-center gap-2 rounded-md py-2 pr-6 pl-3 leading-tight transition-colors outline-none data-disabled:opacity-50 [&_svg]:size-5',
   {
     variants: {
       variant: {

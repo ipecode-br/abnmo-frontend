@@ -47,28 +47,32 @@ export type SurveySubmissionDocument = {
   key: string
   url: string
   name: string
-  filename: string
   size: number
   mimeType: 'image/jpeg' | 'image/jpg' | 'image/png' | 'application/pdf'
 }
 
 export type SurveySubmission = {
   id: string
-  name: string
-  email: string
-  phone: string
   status: SurveySubmissionStatus
   fillingMethod: SurveyFillingMethod
   reason: string | null
   updatedAt: string
   createdAt: string
+  patient: {
+    id: string
+    name: string
+    email: string
+    phone: string
+  }
   document: SurveySubmissionDocument | null
 }
 
 export type SurveySubmissionListItem = Pick<
   SurveySubmission,
-  'id' | 'name' | 'email' | 'phone' | 'status' | 'reason' | 'createdAt'
-> & { document: Pick<SurveySubmissionDocument, 'name' | 'url'> | null }
+  'id' | 'status' | 'fillingMethod' | 'reason' | 'createdAt' | 'patient'
+> & {
+  document: Pick<SurveySubmissionDocument, 'name' | 'url'> | null
+}
 
 export type SurveyPatient = {
   id: string

@@ -6,8 +6,8 @@ export const SURVEY_FILLING_METHODS = {
 export type SurveyFillingMethod = keyof typeof SURVEY_FILLING_METHODS
 
 export const SURVEY_SUBMISSION_STATUSES = {
-  pending_document: { variant: 'default', label: 'Aguardando laudo' },
-  pending_review: { variant: 'default', label: 'Aguardando revisão' },
+  pending_document: { variant: 'default', label: 'Laudo' },
+  pending_review: { variant: 'default', label: 'Revisão' },
   declined: { variant: 'error', label: 'Recusada' },
   approved: { variant: 'success', label: 'Aprovada' },
   completed: { variant: 'success', label: 'Concluída' },
@@ -23,6 +23,10 @@ export type SurveyStatus = keyof typeof SURVEY_STATUSES
 export const SURVEY_STATUS_OPTIONS = Object.entries(SURVEY_STATUSES).map(
   ([key, status]) => ({ label: status.label, value: key }),
 )
+
+export const SURVEY_SUBMISSION_STATUS_OPTIONS = Object.entries(
+  SURVEY_SUBMISSION_STATUSES,
+).map(([key, status]) => ({ label: status.label, value: key }))
 
 export const CHILDREN_SCHOOL_SUPPORT_SITUATIONS = {
   no_school_age_children: 'Não tenho filhos em fase escolar',

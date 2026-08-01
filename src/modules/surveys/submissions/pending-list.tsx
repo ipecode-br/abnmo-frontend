@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { DataField, DataRow } from '@/components/ui/data-display'
 import { Dialog } from '@/components/ui/dialog'
-import { Divider } from '@/components/ui/divider'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tag } from '@/components/ui/tag'
 import { WhatsAppButton } from '@/components/whatsapp-button'
@@ -79,7 +78,7 @@ export function PendingSurveysList() {
         {isLoading && (
           <Skeleton
             quantity={8}
-            className='bg-border/50 h-44 w-full rounded-2xl'
+            className='bg-border/50 h-64 w-full rounded-2xl'
           />
         )}
 
@@ -93,89 +92,95 @@ export function PendingSurveysList() {
           submissions.map((submission) => (
             <Card
               key={submission.id}
-              className='text-foreground-soft flex flex-col gap-2 md:p-4'
+              className='text-foreground-soft flex flex-col p-0 md:p-0'
             >
-              <header className='flex flex-wrap items-end justify-between gap-x-8 gap-y-2'>
-                <h3 className='text-foreground text-xl font-semibold'>
-                  {submission.name}
-                </h3>
+              <header className='flex justify-between gap-x-6 gap-y-4 p-4 max-md:flex-col md:p-6'>
+                <div className='flex flex-col justify-between gap-2 max-md:flex-col-reverse'>
+                  <h3 className='text-foreground text-2xl font-semibold'>
+                    {submission.patient.name}
+                  </h3>
+                  <span>
+                    {formatDate(submission.createdAt, {
+                      dateStyle: 'long',
+                      timeStyle: 'short',
+                    })}
+                  </span>
+                </div>
 
-                <div className='flex flex-wrap gap-x-8 gap-y-2'>
+                <div className='flex flex-col gap-4 md:items-end md:gap-3'>
                   <div className='flex items-center gap-3'>
-                    <span>{formatPhoneNumber(submission.phone)}</span>
+                    <span>{formatPhoneNumber(submission.patient.phone)}</span>
                     <WhatsAppButton
-                      phone={formatPhoneNumber(submission.phone)}
+                      phone={formatPhoneNumber(submission.patient.phone)}
                     />
                     <CopyButton
-                      value={formatPhoneNumber(submission.phone)}
+                      value={formatPhoneNumber(submission.patient.phone)}
                       message='Telefone copiado para a área de transferência.'
                     />
                   </div>
                   <div className='flex items-center gap-3'>
-                    <span>{submission.email}</span>
+                    <span>{submission.patient.email}</span>
                     <CopyButton
-                      value={submission.email}
+                      value={submission.patient.email}
                       message='E-mail copiado para a área de transferência.'
                     />
                   </div>
                 </div>
               </header>
 
-              <Divider className='my-1' />
+              <section className='border-border from-background-soft to-background-soft/50 border-t bg-gradient-to-b p-4 md:p-6'>
+                <DataRow className='flex-1'>
+                  {submission.document && (
+                    <DataField className='space-y-2' label='Laudo médico'>
+                      <div className='flex items-center gap-2'>
+                        <FileTextIcon className='text-foreground/50 size-5 transition-colors' />
+                        <a
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          href={submission.document.url}
+                          className='hover:text-primary text-foreground text-base font-medium underline underline-offset-3'
+                        >
+                          Ver laudo médico
+                        </a>
+                      </div>
+                    </DataField>
+                  )}
 
-              <DataRow className='flex-1'>
-                {submission.document && (
-                  <DataField className='space-y-2' label='Laudo médico'>
-                    <div className='flex items-center gap-2'>
-                      <FileTextIcon className='text-foreground/50 size-5 transition-colors' />
-                      <a
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        href={submission.document.url}
-                        className='hover:text-primary text-foreground text-base font-medium underline underline-offset-3'
-                      >
-                        Ver laudo médico
-                      </a>
-                    </div>
+                  <DataField
+                    className='space-y-1'
+                    label='Forma de preenchimento'
+                  >
+                    <Tag>
+                      {SURVEY_FILLING_METHODS[submission.fillingMethod]}
+                    </Tag>
                   </DataField>
-                )}
 
-                <DataField className='space-y-1' label='Forma de preenchimento'>
-                  <Tag>{SURVEY_FILLING_METHODS[submission.fillingMethod]}</Tag>
-                </DataField>
-
-                {canReview && (
-                  <DataField label='Ações' className='flex-1 space-y-1'>
-                    <div className='flex items-center gap-4'>
-                      <Button
-                        size='sm'
-                        variant='outline'
-                        className='text-success flex-1'
-                        onClick={() => handleOpenModal('approve', submission)}
-                      >
-                        <CheckIcon />
-                        Aprovar
-                      </Button>
-                      <Button
-                        size='sm'
-                        variant='outline'
-                        className='text-error flex-1'
-                        onClick={() => handleOpenModal('decline', submission)}
-                      >
-                        <XIcon />
-                        Recusar
-                      </Button>
-                    </div>
-                  </DataField>
-                )}
-              </DataRow>
-
-              <span className='mt-2 text-sm'>
-                {formatDate(submission.createdAt, {
-                  dateStyle: 'long',
-                  timeStyle: 'short',
-                })}
-              </span>
+                  {canReview && (
+                    <DataField label='Ações' className='flex-1 space-y-1'>
+                      <div className='flex items-center gap-4'>
+                        <Button
+                          size='sm'
+                          variant='outline'
+                          className='text-success flex-1'
+                          onClick={() => handleOpenModal('approve', submission)}
+                        >
+                          <CheckIcon />
+                          Aprovar
+                        </Button>
+                        <Button
+                          size='sm'
+                          variant='outline'
+                          className='text-error flex-1'
+                          onClick={() => handleOpenModal('decline', submission)}
+                        >
+                          <XIcon />
+                          Recusar
+                        </Button>
+                      </div>
+                    </DataField>
+                  )}
+                </DataRow>
+              </section>
             </Card>
           ))}
       </div>

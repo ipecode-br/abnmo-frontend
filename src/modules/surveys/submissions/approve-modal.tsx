@@ -62,7 +62,8 @@ export function ApproveSurveySubmissionModal({
 
       <DialogContent className='space-y-2'>
         <p>
-          Deseja aprovar a catalogação de <strong>{submission.name}</strong>?
+          Deseja aprovar a catalogação de{' '}
+          <strong>{submission.patient.name}</strong>?
         </p>
         <p>
           Ao confirmar, este paciente será notificado para prosseguir com a
