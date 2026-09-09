@@ -19,7 +19,7 @@ export const ROUTES = {
   surveys: {
     main: '/catalogacao',
     submissions: '/catalogacao/solicitacoes',
-    all: '/catalogacao/todas',
+    completed: '/catalogacao/preenchidas',
     details: (id: string) => `/catalogacao/${id}/detalhes`,
   },
   patients: {

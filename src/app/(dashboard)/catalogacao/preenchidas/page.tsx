@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants/routes'
 import { SurveysList } from '@/modules/surveys/list'
 
 export const metadata: Metadata = {
-  title: 'Catalogação',
+  title: 'Preenchidas',
 }
 
 export default async function Page() {
