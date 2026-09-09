@@ -22,13 +22,7 @@ import {
 import { NavButton } from '@/components/ui/nav-button'
 import { Tag } from '@/components/ui/tag'
 import { ROUTES } from '@/constants/routes'
-import {
-  BRAZIL_STATES,
-  GENDERS,
-  MARITAL_STATUSES,
-  RACES,
-  TIME_UNITS,
-} from '@/enums/shared'
+import { BRAZIL_STATES, GENDERS, MARITAL_STATUSES, RACES } from '@/enums/shared'
 import {
   AFFECTED_AREAS,
   BLADDER_CONTROLS,
@@ -67,6 +61,7 @@ import { SendSurveySignatureReminderButton } from '@/modules/surveys/send-remind
 import { formatCepNumber } from '@/utils/formatters/format-cep-number'
 import { formatCpfNumber } from '@/utils/formatters/format-cpf-number'
 import { formatDate } from '@/utils/formatters/format-date'
+import { formatDurationFromDays } from '@/utils/formatters/format-duration'
 import { formatPhoneNumber } from '@/utils/formatters/format-phone-number'
 
 export const metadata: Metadata = {
@@ -144,12 +139,19 @@ export default async function Page({ params }: Readonly<PageParams>) {
           </Tag>
           <div className='text-foreground-soft flex flex-wrap gap-1 text-sm'>
             <span>
-              Enviado em {formatDate(survey.createdAt, { dateStyle: 'long' })}.
+              Enviado em{' '}
+              {formatDate(survey.createdAt, {
+                dateStyle: 'short',
+                timeStyle: 'short',
+              })}
             </span>
             {showUpdatedAt && (
               <span>
-                Atualizado em{' '}
-                {formatDate(survey.updatedAt, { dateStyle: 'long' })}.
+                - Atualizado em{' '}
+                {formatDate(survey.updatedAt, {
+                  dateStyle: 'short',
+                  timeStyle: 'short',
+                })}
               </span>
             )}
           </div>
@@ -321,7 +323,9 @@ export default async function Page({ params }: Readonly<PageParams>) {
                 ? formatDate(survey.diagnosisDate, { dateStyle: 'long' })
                 : null}
             </DataField>
-            <DataField label='Tempo até diagnóstico'>{`${survey.timeToDiagnosis} ${TIME_UNITS[survey.timeToDiagnosisUnit]}`}</DataField>
+            <DataField label='Tempo até diagnóstico'>
+              {formatDurationFromDays(survey.timeToDiagnosisInDays)}
+            </DataField>
             <DataField label='Crises antes do diagnóstico'>
               {renderValueOrNotProvided(survey.crisesBeforeDiagnosis)}
             </DataField>

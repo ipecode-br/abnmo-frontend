@@ -1,10 +1,4 @@
-import {
-  BrazilState,
-  Gender,
-  MaritalStatus,
-  Race,
-  TimeUnit,
-} from '@/enums/shared'
+import { BrazilState, Gender, MaritalStatus, Race } from '@/enums/shared'
 import {
   AffectedArea,
   BladderControl,
@@ -137,8 +131,7 @@ export type Survey = {
   currentTreatmentHospital: string | null
   currentTreatmentHospitalCep: string | null
   specialistsBeforeDiagnosis: SpecialtyBeforeDiagnosis[]
-  timeToDiagnosis: number
-  timeToDiagnosisUnit: TimeUnit
+  timeToDiagnosisInDays: number
   suspectedMultipleSclerosis: boolean | null
   otherSuspectedDiseases: string | null
   crisesBeforeDiagnosis: number | null

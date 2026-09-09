@@ -116,10 +116,3 @@ export const KINSHIPS = {
   other: 'Outro',
 }
 export type Kinship = keyof typeof KINSHIPS
-
-export const TIME_UNITS = {
-  days: 'Dia(s)',
-  weeks: 'Semana(s)',
-  years: 'Ano(s)',
-}
-export type TimeUnit = keyof typeof TIME_UNITS
