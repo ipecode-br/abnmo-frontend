@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@base-ui/react": "1.6.0",
-    "@hookform/resolvers": "5.0.1",
+    "@hookform/resolvers": "7.0.3",
     "@tanstack/react-query": "5.83.0",
     "@vercel/analytics": "2.0.1",
     "class-variance-authority": "0.7.1",
@@ -33,10 +33,10 @@
     "react-dom": "19.3.1",
     "react-hook-form": "7.55.0",
     "recharts": "3.1.0",
-    "sharp": "0.35.3",
+    "sharp": "0.35.5",
     "sonner": "2.0.4",
     "tailwind-merge": "3.2.0",
-    "zod": "3.24.3",
+    "zod": "4.6.7",
     "zustand": "5.0.6"
   },
   "devDependencies": {
@@ -67,5 +67,10 @@
     "ts-node": "10.9.2",
     "typescript": "5",
     "typescript-eslint": "8.65.0"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "11.0.5"
+    }
   }
 }
