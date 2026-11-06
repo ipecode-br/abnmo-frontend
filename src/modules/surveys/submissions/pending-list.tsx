@@ -101,7 +101,7 @@ export function PendingSurveysList() {
                   </h3>
                   <span>
                     {formatDate(submission.createdAt, {
-                      dateStyle: 'long',
+                      dateStyle: 'medium',
                       timeStyle: 'short',
                     })}
                   </span>
@@ -128,7 +128,7 @@ export function PendingSurveysList() {
                 </div>
               </header>
 
-              <section className='border-border from-background-soft to-background-soft/50 border-t bg-gradient-to-b p-4 md:p-6'>
+              <section className='border-border from-background-soft to-background-soft/50 mt-auto border-t bg-gradient-to-b p-4 md:p-6'>
                 <DataRow className='flex-1'>
                   {submission.document && (
                     <DataField className='space-y-2' label='Laudo médico'>
