@@ -8,111 +8,108 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # ABNMO Frontend — Agent Guide
 
+## Project
+
+Front end for the **Sistema Viver Melhor (SVM)**, built for ABNMO. A centralized platform for multidisciplinary health teams to track patients, manage referrals, and consolidate clinical information.
+
+This guide covers the project's concepts, structure, and conventions. Dependencies, scripts, and configuration values change often: read `package.json`, `.env.sample`, and the referenced config files for their current state.
+
 ## Stack
 
-- **Next.js 16** (App Router), **TypeScript** (strict), **Tailwind CSS v4** (`@tailwindcss/postcss`)
-- **State**: Zustand (global) + TanStack Query (server state)
-- **UI**: Base UI primitives (`@base-ui/react`) + `class-variance-authority` variants, `lucide-react` icons
-- **Forms**: React Hook Form + Zod
-- **Test**: Jest + Testing Library
-- **Lint**: ESLint 9 flat config (`eslint-config-next/core-web-vitals` + `typescript-eslint` + `simple-import-sort` + Prettier)
+- **Framework**: Next.js App Router with React and strict TypeScript
+- **Styling**: Tailwind CSS with Base UI primitives and `class-variance-authority` variants
+- **State**: Zustand for global state and TanStack Query for server state
+- **Forms**: React Hook Form with Zod validation
+- **Tests**: Jest and Testing Library
+- **Quality**: ESLint, Prettier, Husky, and commitlint
+- **Charts and icons**: Recharts and Lucide React
+
+Check `package.json` for current versions and available scripts.
 
 ## Setup
 
 ```bash
-cp .env.sample .env.local   # NEXT_PUBLIC_APP_URL, NEXT_PUBLIC_API_URL, NEXT_PUBLIC_DOMAIN
-npm install                 # save-exact=true (no ^ ranges)
-npm run dev                 # localhost:3000
+cp .env.sample .env.local
+npm install
+npm run dev
 ```
+
+Dependencies use exact versions. Do not add `^` or `~` ranges.
 
 ## Commands
 
-| Command                       | What it does              |
-| ----------------------------- | ------------------------- |
-| `npm run dev`                 | Next.js dev server        |
-| `npm test`                    | Jest (full suite)         |
-| `npm run test:watch`          | Jest --watch              |
-| `npm run build`               | `next build`              |
-| `npm run start`               | `next start`              |
-| `npm run build:analyze`       | `ANALYZE=true next build` |
-| `npm run lint:tsc`            | `tsc --noEmit`            |
-| `npm run lint:eslint:check`   | ESLint check              |
-| `npm run lint:prettier:check` | Prettier check            |
-| `npm run lint:prettier:fix`   | Prettier write            |
-| `npm run validate`            | Prettier + ESLint + tsc   |
+`package.json` is the source of truth for scripts. The common ones:
 
-**Pre-commit** (husky): lint-staged → `prettier --check` + `eslint` on `*.{js,jsx,ts,tsx}`, prettier only on `*.{json,md,mdx,css,yaml,yml}`.  
-**Commit-msg** (husky): `commitlint` enforces conventional commits.
+| Command            | Purpose                              |
+| ------------------ | ------------------------------------ |
+| `npm run dev`      | Start the development server         |
+| `npm test`         | Run the full test suite              |
+| `npm run validate` | Run Prettier, ESLint, and TypeScript |
+| `npm run build`    | Create a production build            |
 
-## Repo map
+Run `npm run validate` and `npm test` before pushing. Git hooks format and lint staged files and enforce conventional commit messages.
+
+## Structure
 
 ```
 src/
-  app/              Routes (Portuguese), pages use App Router
-  actions/          Next.js Server Actions
-  components/       Reusable React components
-    ui/             Base primitives (cva variants, Base UI)
-  modules/          Feature-level business logic
-  providers/        React context providers
-  store/            Zustand stores (period, permissions)
-  lib/              Library configs (api client, tanstack-query, fonts)
-  config/           App config (env.ts with Zod validation, cache.ts)
-  constants/        Routes, cache keys, cookies, regex, etc.
-  enums/            Enums for params, patients, queries, etc.
-  helpers/          Business-logic helpers
-  hooks/            Custom hooks
-  schemas/          Zod schemas
-  types/            Global TS types
-  utils/            Pure utilities (cn, formatters, sanitizers)
-  proxy.ts          Next.js 16 proxy — checks session cookie for route protection
-tests/
-  components/       Test files mirror src/components structure
-  utils/            (empty)
-docs/               Full project docs (naming, files-and-folders, components, styling, permissions)
+  app/          Routes (Portuguese) and layouts
+  modules/      Feature-level business logic
+  components/   Shared components; ui/ holds Base UI primitives
+  actions/      Server Actions
+  lib/          Integrations and library configuration
+  config/       Application configuration
+  providers/    React context providers
+  store/        Zustand stores
+  hooks/        Custom hooks
+  helpers/      Business-logic helpers
+  schemas/      Zod schemas
+  constants/    Routes, cache keys, cookies, regex
+  enums/        Shared enums
+  types/        Global TypeScript types
+  utils/        Pure utilities
+tests/          Tests that mirror the component structure
+docs/           In-depth project documentation
 ```
+
+`src/proxy.ts` protects routes by checking the session cookie.
+
+If a new file does not fit an existing area, follow the closest pattern and read the matching guide in `docs/`.
 
 ## Conventions
 
-- **File naming**: kebab-case (`patient-list.tsx`)
-- **Component naming**: PascalCase with domain context (`PatientsListTable`, not `Table`)
-- **Route folders**: Portuguese (`pacientes/`, `entrar/`), grouping in English `(dashboard)/`, `(auth)/`
-- **Internal route folders** (non-route): prefix `_` (`_components/`, `_types/`)
-- **Page/Layout exports**: default export named `Page` or `Layout`
-- **Imports**: absolute `@/` alias, organized by `simple-import-sort` (external → internal → relative)
-- **Code**: English names (except Portuguese route names), no comments unless necessary
-- **CSS**: Tailwind v4 `@theme` directive for design tokens, `@utility` for custom utilities
-- **`cn()`**: from `@/utils/class-name-merge` (clsx + tailwind-merge)
-- **Commit messages**: Conventional commits, English, present tense, Zinsser-brief
+- **Files**: kebab-case (`patient-list.tsx`).
+- **Components**: PascalCase with domain context (`PatientsListTable`, not `Table`).
+- **Routes**: Portuguese (`pacientes/`, `entrar/`); grouping folders in English (`(dashboard)/`, `(auth)/`).
+- **Internal folders**: prefix with `_` (`_components/`, `_types/`).
+- **Pages and layouts**: default export named `Page` or `Layout`.
+- **Imports**: use the `@/` alias. `simple-import-sort` orders external, internal, then relative imports.
+- **Code**: English names, except Portuguese routes. Add comments only when the reason is not obvious.
+- **Styles**: follow `docs/styling/`. Define design tokens with `@theme` and custom utilities with `@utility` in the global stylesheet.
+- **Class names**: merge with `cn()` from `@/utils/class-name-merge`.
+- **Commits**: Conventional Commits in English, present tense, brief.
+
+Read `docs/naming.md` and `docs/files-and-folders.md` for the full rules.
 
 ## API pattern
 
-Server/client-safe fetch via `api<Data>(path, { params, ...fetchOptions })` from `@/lib/api`.  
-Automatically attaches cookies server-side, handles 401 redirects.  
-TanStack Query `staleTime`: 60s default.
+Import `api` from `@/lib/api` for server and client requests. It attaches cookies on the server and handles authentication redirects. Query defaults live in the TanStack Query configuration in `src/lib`.
 
 ## Permissions
 
-`canUser(feature, compareToId?)` server action in `@/actions/auth/can-user.ts` wraps `can()` from `@/lib/can.ts`.  
-Features follow `action:resource:scope` format (e.g. `read:user:others`, `create:appointment`).  
-Admin users bypass all checks. The `:others` suffix skips ownership matching.  
-Feature groups: `survey`, `patient`, `user`, `user-invite`, `appointment`, `referral`, `statistic`.
+`canUser(feature, compareToId?)` in `@/actions/auth/can-user.ts` wraps `can()` from `@/lib/can.ts`.
+
+Features use `action:resource:scope`, such as `read:user:others` or `create:appointment`. Admin users bypass checks. The `:others` suffix skips ownership matching. See `docs/permissions.md` for the full model.
 
 ## CI
 
-PRs to `main` and `staging` run:
+Pull requests run Prettier, ESLint, and the Jest suite. Run `npm run validate` and `npm test` locally before pushing.
 
-- **linting.yaml**: Prettier check + ESLint check
-- **tests.yaml**: `npm test` (Jest)
+## Environment
 
-## Env vars (validated by Zod in `src/config/env.ts`)
+`.env.sample` lists the required keys. `src/config/env.ts` validates them at startup.
 
-```
-NEXT_PUBLIC_APP_URL   http://localhost:3000
-NEXT_PUBLIC_API_URL   http://localhost:3333
-NEXT_PUBLIC_DOMAIN    localhost
-```
-
-Use `.env.local` for development, `.env.test` for Jest.
+Copy `.env.sample` to `.env.local` for development. Jest reads `.env.test`. Do not commit real values.
 
 ## Writing style (Zinsser)
 
